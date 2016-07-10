@@ -78,6 +78,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/">Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <p> 接着上篇<a href="http://blog.csdn.net/u010046908/article/details/51759125" target="_blank" rel="external">Android中WebView加载本地Html，与JavaScript与Android方法相互传值</a>，今天来一篇续集，为什么要来续集呢，感觉自己还有没有交代完的部分，于是在这里再次交代一下，在Android中我们需要将给复杂的数据传到Html页面，我们该怎么做？</p>
@@ -91,14 +101,14 @@
 <p>###3.MainActivity的实现</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> static <span class="keyword">final</span> <span class="type">String</span> <span class="type">TAG</span> = <span class="type">MainActivity</span>.<span class="keyword">class</span>.getSimpleName();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(<span class="type">R</span>.layout.activity_main);</div><div class="line">        <span class="type">WebView</span> webView = (<span class="type">WebView</span>) findViewById(<span class="type">R</span>.id.webView);</div><div class="line">        <span class="type">WebSettings</span> settings = webView.getSettings();</div><div class="line">        <span class="comment">//调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</span></div><div class="line">        settings.setJavaScriptEnabled(<span class="literal">true</span>);</div><div class="line">        webView.loadUrl(<span class="string">"file:///android_asset/index.html"</span>);</div><div class="line">        <span class="comment">//调用WebView关联的WebSettings中addJavaScriptInterface</span></div><div class="line">        webView.addJavascriptInterface(<span class="keyword">new</span> <span class="type">MyObject</span>(<span class="keyword">this</span>,<span class="string">"dd"</span>),<span class="string">"my"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>###4.index.html的实现</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>测试Android Json传值<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.hcharts.cn/highcharts/highcharts.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//通过暴露的my对象来获取数据</span></div><div class="line">    <span class="keyword">var</span> data = my.getData();</div><div class="line">    <span class="comment">//将json字符串转换为数组</span></div><div class="line">     <span class="keyword">var</span> f = <span class="built_in">eval</span>(data);</div><div class="line">    <span class="comment">//向表格填充数据 </span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;f.length;i++)&#123;</div><div class="line">     <span class="keyword">var</span> en = f[i];</div><div class="line">     $(<span class="string">"table"</span>).append(<span class="string">"&lt;tr&gt;&lt;td&gt;"</span>+en.age+<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>+en.name+<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>+en.uint+<span class="string">"&lt;/td&gt;&lt;/tr&gt;"</span>);</div><div class="line">     &#125;</div><div class="line">   &#125;);</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">人员表</div><div class="line"><span class="tag">&lt;<span class="name">div</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">id</span>=<span class="string">"table"</span> <span class="attr">border</span>=<span class="string">"1"</span>  <span class="attr">bgcolor</span>=<span class="string">"#ffddff"</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>测试Android Json传值<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.hcharts.cn/highcharts/highcharts.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//通过暴露的my对象来获取数据</span></div><div class="line">    <span class="keyword">var</span> data = my.getData();</div><div class="line">    <span class="comment">//将json字符串转换为数组</span></div><div class="line">     <span class="keyword">var</span> f = <span class="built_in">eval</span>(data);</div><div class="line">    <span class="comment">//向表格填充数据</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;f.length;i++)&#123;</div><div class="line">     <span class="keyword">var</span> en = f[i];</div><div class="line">     $(<span class="string">"table"</span>).append(<span class="string">"&lt;tr&gt;&lt;td&gt;"</span>+en.age+<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>+en.name+<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>+en.uint+<span class="string">"&lt;/td&gt;&lt;/tr&gt;"</span>);</div><div class="line">     &#125;</div><div class="line">   &#125;);</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">人员表</div><div class="line"><span class="tag">&lt;<span class="name">div</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">id</span>=<span class="string">"table"</span> <span class="attr">border</span>=<span class="string">"1"</span>  <span class="attr">bgcolor</span>=<span class="string">"#ffddff"</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这个案例基本上就四个步骤，通过这篇文章的学习妈妈在也不会担心android向html传复杂的数据了，谢谢学习</p>
 <p><img src="http://img.blog.csdn.net/20160702091354524" alt="这里写图片描述"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqfzmtu50003z4x29bnzk2in" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqfzqxuv00022zx2s5109ufj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -162,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqfzmtu20002z4x2c0xd1uva" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqfzqxuz00042zx236ny9yat" class="article-share-link">Share</a>
       
       
     </footer>
@@ -222,7 +232,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqfzmtug0006z4x28ksjvc1c" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqfzqxv100052zx2kprjz2o1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -287,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqfzmttx0001z4x2gwlfruoj" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqfzqxus00012zx2gny5nxw5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -345,7 +355,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqfzmttp0000z4x28jlcafwg" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqfzqxum00002zx200mepran" class="article-share-link">Share</a>
       
       
     </footer>
@@ -413,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android数据库新王者-Realm入门教程/" data-id="ciqfzmtu80004z4x2phuo3zio" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android数据库新王者-Realm入门教程/" data-id="ciqfzqxux00032zx2ud1vk5un" class="article-share-link">Share</a>
       
       
     </footer>
@@ -479,7 +489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" data-id="ciqfzmtub0005z4x2pm07rfsr" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" data-id="ciqfzqxvd00062zx2b9delfaj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -524,7 +534,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/hello-world/" data-id="ciqfzmtul0007z4x28ar5ezm2" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/hello-world/" data-id="ciqfzqxve00072zx25q1jlhp4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -564,7 +574,7 @@
       <ul>
         
           <li>
-            <a href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/">(no title)</a>
+            <a href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/">Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）</a>
           </li>
         
           <li>

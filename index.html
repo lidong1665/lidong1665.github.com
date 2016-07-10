@@ -108,7 +108,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqfzqxuv00022zx2s5109ufj" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqfzuash00036px2xlma6bpq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,6 +128,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/">Android中WebView加载本地Html，与JavaScript与Android方法相互传值</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近在做项目中，要使用HightChart来实现心电图，于是，使用WebView加载本地html页面，但是数据是通过蓝牙设备采集的数据，用Java代码获取的数据，需要将数据传到JavaScript中去，使用来绘制心电图。以前都加载服务器端返回的url地址，使用WebView加载，这次不同了，要自己实现心电图的绘制。于是细细的学习了JavaScript与Java代码相互传值，最后总结在这里。</p>
@@ -143,7 +153,7 @@
 <p>###1.2创建在Activity中加载HTML页面</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">WebSettings wSet =wb .getSettings();</div><div class="line">        <span class="comment">//调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</span></div><div class="line">       wSet.setJavaScriptEnabled(<span class="keyword">true</span>);</div><div class="line">       <span class="comment">//加载本地HTML页面</span></div><div class="line">       wb.loadUrl(<span class="string">"file:///android_asset/xd.html"</span>);</div><div class="line">       <span class="keyword">if</span> (mList != <span class="keyword">null</span> &amp;&amp; mList.<span class="built_in">size</span>()&gt;<span class="number">0</span>) &#123;</div><div class="line">       调用WebView关联的WebSettings中addJavaScriptInterface(<span class="keyword">Object</span> obj,<span class="keyword">String</span> name)。</div><div class="line">           wb.addJavascriptInterface(<span class="keyword">new</span> MyObject(getActivity(),  mList.<span class="built_in">get</span>(<span class="number">0</span>).getResult(),mList.<span class="built_in">get</span>(<span class="number">0</span>).getDateTime()),<span class="string">"myObj"</span>);<span class="comment">//这里的myObj是javaScript对象，直接调用getTime()方法，即 myObj.getTime();</span></div><div class="line">       &#125;</div></pre></td></tr></table></figure>
 <p>###1.3创建xd.hmtl文件</p>
-<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">"&lt;%=</span></span><span class="ruby">basePath</span><span class="xml"><span class="tag"><span class="string">%&gt;"</span>&gt;</span></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>心电<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"pragma"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"cache-control"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"expires"</span> <span class="attr">content</span>=<span class="string">"0"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"keyword1,keyword2,keyword3"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">"This is my page"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">    &lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">    --&gt;</div><div class="line">    <span class="comment">&lt;!--&lt;script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"&gt;&lt;/script&gt;--&gt;</span></div><div class="line">    <span class="comment">&lt;!--&lt;script src="http://cdn.hcharts.cn/highcharts/highcharts.js"&gt;&lt;/script&gt;--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"file:///android_asset/js/jquery-1.8.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"file:///android_asset/js/highcharts.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> data = myObj.getData();</div><div class="line">    <span class="keyword">var</span> time = myObj.getTime();</div><div class="line">    dataHighchartXdDt(data,time);</div><div class="line">   &#125;)</div><div class="line">      <span class="comment">//心电</span></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">dataHighchartXdDt</span>(<span class="params">dtxd,t</span>)</span>&#123;</div><div class="line">		<span class="comment">//以下是绘制心电的逻辑</span></div><div class="line">		<span class="comment">//省略</span></div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line"> </div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"middlecenter-left-data-top"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">"&lt;%=</span></span><span class="ruby">basePath</span><span class="xml"><span class="tag"><span class="string">%&gt;"</span>&gt;</span></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>心电<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"pragma"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"cache-control"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"expires"</span> <span class="attr">content</span>=<span class="string">"0"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"keyword1,keyword2,keyword3"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">"This is my page"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">    &lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">    --&gt;</div><div class="line">    <span class="comment">&lt;!--&lt;script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"&gt;&lt;/script&gt;--&gt;</span></div><div class="line">    <span class="comment">&lt;!--&lt;script src="http://cdn.hcharts.cn/highcharts/highcharts.js"&gt;&lt;/script&gt;--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"file:///android_asset/js/jquery-1.8.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"file:///android_asset/js/highcharts.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> data = myObj.getData();</div><div class="line">    <span class="keyword">var</span> time = myObj.getTime();</div><div class="line">    dataHighchartXdDt(data,time);</div><div class="line">   &#125;)</div><div class="line">      <span class="comment">//心电</span></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">dataHighchartXdDt</span>(<span class="params">dtxd,t</span>)</span>&#123;</div><div class="line">		<span class="comment">//以下是绘制心电的逻辑</span></div><div class="line">		<span class="comment">//省略</span></div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"middlecenter-left-data-top"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>注意：</p>
 <figure class="highlight excel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> data = myObj.getData();</div><div class="line"><span class="built_in">var</span> <span class="built_in">time</span> = myObj.getTime();</div></pre></td></tr></table></figure>
 <p>以上第一个方法就是获取心电数据，第二个方法就是获取测量时间。</p>
@@ -172,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqfzqxuz00042zx236ny9yat" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqfzuasg00026px2ei9jkldi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -232,7 +242,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqfzqxv100052zx2kprjz2o1" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqfzuasp00066px2icps2gdw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -297,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqfzqxus00012zx2gny5nxw5" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqfzuasc00016px2jpp24ieo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -355,7 +365,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqfzqxum00002zx200mepran" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqfzuarx00006px241py51wv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -423,7 +433,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android数据库新王者-Realm入门教程/" data-id="ciqfzqxux00032zx2ud1vk5un" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android数据库新王者-Realm入门教程/" data-id="ciqfzuask00046px27tf6y5bt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -489,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" data-id="ciqfzqxvd00062zx2b9delfaj" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" data-id="ciqfzuasm00056px2d9tsm2e3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -534,7 +544,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/hello-world/" data-id="ciqfzqxve00072zx25q1jlhp4" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/hello-world/" data-id="ciqfzuasr00076px2mt1ba7dq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -578,7 +588,7 @@
           </li>
         
           <li>
-            <a href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/">(no title)</a>
+            <a href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/">Android中WebView加载本地Html，与JavaScript与Android方法相互传值</a>
           </li>
         
           <li>

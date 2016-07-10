@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术 | 李东的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转载请标明出处；http://blog.csdn.net/u010046908/article/details/50767904 本文出自:【李东的博客】
+最近项目做完了，有闲暇时间，一直想做一个类似微信中微信发说说，既能实现拍照，选图库，多图案上传的案例，目前好多App都有类似微信朋友圈的功能，能过发表说说等附带图片上传。下面的就是实现该功能的过程：大家还没有看过Android Retrofit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术">
+<meta property="og:url" content="http://lidong1665.github.io/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/index.html">
+<meta property="og:site_name" content="李东的个人博客">
+<meta property="og:description" content="转载请标明出处；http://blog.csdn.net/u010046908/article/details/50767904 本文出自:【李东的博客】
+最近项目做完了，有闲暇时间，一直想做一个类似微信中微信发说说，既能实现拍照，选图库，多图案上传的案例，目前好多App都有类似微信朋友圈的功能，能过发表说说等附带图片上传。下面的就是实现该功能的过程：大家还没有看过Android Retrofit">
+<meta property="og:image" content="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164310.jpg">
+<meta property="og:image" content="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164301.jpg">
+<meta property="og:image" content="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164252.jpg">
+<meta property="og:updated_time" content="2016-07-10T06:01:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术">
+<meta name="twitter:description" content="转载请标明出处；http://blog.csdn.net/u010046908/article/details/50767904 本文出自:【李东的博客】
+最近项目做完了，有闲暇时间，一直想做一个类似微信中微信发说说，既能实现拍照，选图库，多图案上传的案例，目前好多App都有类似微信朋友圈的功能，能过发表说说等附带图片上传。下面的就是实现该功能的过程：大家还没有看过Android Retrofit">
+<meta name="twitter:image" content="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164310.jpg">
+<meta name="twitter:creator" content="@[object Object]">
+  
+    <link rel="alternate" href="/atom.xml" title="李东的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="imgs/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">李东的个人博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">细节决定成功，点滴铸就辉煌。</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">个人主页</a>
+        
+          <a class="main-nav-link" href="/archives">博客档案</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lidong1665.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="android-Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术" class="article article-type-android" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/" class="article-date">
+  <time datetime="2016-07-10T05:50:42.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>转载请标明出处；<a href="http://blog.csdn.net/u010046908/article/details/50767904" target="_blank" rel="external">http://blog.csdn.net/u010046908/article/details/50767904</a> 本文出自:【李东的博客】</p>
+<p>最近项目做完了，有闲暇时间，一直想做一个类似微信中微信发说说，既能实现拍照，选图库，多图案上传的案例，目前好多App都有类似微信朋友圈的功能，能过发表说说等附带图片上传。下面的就是实现该功能的过程：大家还没有看过Android Retrofit 2.0框架上传图片解决方案（一张与多张的处理）这篇文章，在看今天的就很容易，接在本项目中用到了一个library：photopicker，封装了图片的选择功能，是否选相机，还有选中图片后可以查看图片的功能。<br>1、 首先：将photopicker到工程中<br>1.1、先简单讲解一下PhotoPickerIntent的用法：</p>
+<p> PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);<br>             intent.setSelectModel(SelectModel.MULTI); //<br>             intent.setShowCarema(true); // 是否显示拍照<br>             intent.setMaxTotal(6); // 最多选择照片数量，默认为6<br>             intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态<br>             startActivityForResult(intent, REQUEST_CAMERA_CODE);</p>
+<p>1.2设置好之后，重写onActivityResult方法处理选中图片和预览加载适配器</p>
+<pre><code>@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if(resultCode == RESULT_OK) {
+        switch (requestCode) {
+            // 选择照片
+            case REQUEST_CAMERA_CODE:
+                loadAdpater(data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT));
+                break;
+            // 预览
+            case REQUEST_PREVIEW_CODE:
+                loadAdpater(data.getStringArrayListExtra(PhotoPreviewActivity.EXTRA_RESULT));
+                break;
+        }
+    }
+}
+</code></pre><p>2.实现思路</p>
+<p>就是添加一个默认图片路径，存放到List中，初始化Adapter，当图片路经的总数=选中的图片数量加1的时候，移除默认图片路径，否则不移除默认图片路径。根据默认图片选中是选图，还是预览其他图片。<br>2.1创建GridViewAdapter</p>
+<p>private class GridAdapter extends BaseAdapter{<br>        private ArrayList<string> listUrls;<br>        private LayoutInflater inflater;<br>        public GridAdapter(ArrayList<string> listUrls) {<br>            this.listUrls = listUrls;<br>            if(listUrls.size() == 7){<br>                listUrls.remove(listUrls.size()-1);<br>            }<br>            inflater = LayoutInflater.from(MainActivity.this);<br>        }</string></string></p>
+<pre><code>    public int getCount(){
+        return  listUrls.size();
+    }
+    @Override
+    public String getItem(int position) {
+        return listUrls.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder = null;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.item_image, parent,false);
+            holder.image = (ImageView) convertView.findViewById(R.id.imageView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder)convertView.getTag();
+        }
+
+        final String path=listUrls.get(position);
+        if (path.equals(&quot;000000&quot;)){
+            holder.image.setImageResource(R.mipmap.ic_launcher);
+        }else {
+            Glide.with(MainActivity.this)
+                    .load(path)
+                    .placeholder(R.mipmap.default_error)
+                    .error(R.mipmap.default_error)
+                    .centerCrop()
+                    .crossFade()
+                    .into(holder.image);
+        }
+        return convertView;
+    }
+    public class ViewHolder {
+        public ImageView image;
+    }
+}
+</code></pre><p>2.2设置Adapter时候加入默认图片</p>
+<p>  imagePaths.add(“000000”);//000000代表默认图片路径<br>        gridAdapter = new GridAdapter(imagePaths);<br>        gridView.setAdapter(gridAdapter);</p>
+<p>2.3选中图片和预览图片</p>
+<p> // preview<br>        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {<br>            @Override<br>            public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {<br>                String imgs = (String) parent.getItemAtPosition(position);<br>                if (“000000”.equals(imgs) ){<br>                    PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);<br>                    intent.setSelectModel(SelectModel.MULTI);<br>                    intent.setShowCarema(true); // 是否显示拍照<br>                    intent.setMaxTotal(6); // 最多选择照片数量，默认为6<br>                    intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态<br>                    startActivityForResult(intent, REQUEST_CAMERA_CODE);<br>                }else{<br>                        PhotoPreviewIntent intent = new PhotoPreviewIntent(MainActivity.this);<br>                        intent.setCurrentItem(position);<br>                        intent.setPhotoPaths(imagePaths);<br>                        startActivityForResult(intent, REQUEST_PREVIEW_CODE);<br>                }<br>            }<br>        });</p>
+<p>整体代码</p>
+<p>package com.lidong.photopickersample;</p>
+<p>import android.content.Intent;<br>import android.os.Bundle;<br>import android.support.v7.app.AppCompatActivity;<br>import android.util.Log;<br>import android.view.LayoutInflater;<br>import android.view.View;<br>import android.view.ViewGroup;<br>import android.widget.AdapterView;<br>import android.widget.BaseAdapter;<br>import android.widget.Button;<br>import android.widget.EditText;<br>import android.widget.GridView;<br>import android.widget.ImageView;</p>
+<p>import com.bumptech.glide.Glide;<br>import com.lidong.photopicker.ImageCaptureManager;<br>import com.lidong.photopicker.PhotoPickerActivity;<br>import com.lidong.photopicker.PhotoPreviewActivity;<br>import com.lidong.photopicker.SelectModel;<br>import com.lidong.photopicker.intent.PhotoPickerIntent;<br>import com.lidong.photopicker.intent.PhotoPreviewIntent;</p>
+<p>import org.json.JSONArray;</p>
+<p>import java.util.ArrayList;<br>import java.util.List;</p>
+<p>/**</p>
+<ul>
+<li>@</li>
+<li>@author lidong</li>
+<li><p>@date 2016-02-29<br>*/<br>public class MainActivity extends AppCompatActivity {</p>
+<p> private static final int REQUEST_CAMERA_CODE = 10;<br> private static final int REQUEST_PREVIEW_CODE = 20;<br> private ArrayList<string> imagePaths = new ArrayList&lt;&gt;();<br> private ImageCaptureManager captureManager; // 相机拍照处理类</string></p>
+<p> private GridView gridView;<br> private GridAdapter gridAdapter;<br> private Button mButton;<br> private String depp;<br> private EditText textView;<br> private String TAG =MainActivity.class.getSimpleName();</p>
+<p> @Override<br> protected void onCreate(Bundle savedInstanceState) {</p>
+<pre><code>super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+gridView = (GridView) findViewById(R.id.gridView);
+mButton = (Button) findViewById(R.id.button);
+textView= (EditText)findViewById(R.id.et_context);
+
+int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
+cols = cols &lt; 3 ? 3 : cols;
+gridView.setNumColumns(cols);
+
+// preview
+gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+        String imgs = (String) parent.getItemAtPosition(position);
+        if (&quot;000000&quot;.equals(imgs) ){
+            PhotoPickerIntent intent = new PhotoPickerIntent(MainActivity.this);
+            intent.setSelectModel(SelectModel.MULTI);
+            intent.setShowCarema(true); // 是否显示拍照
+            intent.setMaxTotal(6); // 最多选择照片数量，默认为6
+            intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
+            startActivityForResult(intent, REQUEST_CAMERA_CODE);
+        }else{
+                PhotoPreviewIntent intent = new PhotoPreviewIntent(MainActivity.this);
+                intent.setCurrentItem(position);
+                intent.setPhotoPaths(imagePaths);
+                startActivityForResult(intent, REQUEST_PREVIEW_CODE);
+        }
+    }
+});
+imagePaths.add(&quot;000000&quot;);
+gridAdapter = new GridAdapter(imagePaths);
+gridView.setAdapter(gridAdapter);
+
+mButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        depp =textView.getText().toString().trim()!=null?textView.getText().toString().trim():&quot;woowoeo&quot;;
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                FileUploadManager.upload(imagePaths,depp);
+            }
+        }.start();
+    }
+});
+</code></pre><p> }</p>
+<p> @Override<br> protected void onActivityResult(int requestCode, int resultCode, Intent data) {</p>
+<pre><code>super.onActivityResult(requestCode, resultCode, data);
+if(resultCode == RESULT_OK) {
+    switch (requestCode) {
+        // 选择照片
+        case REQUEST_CAMERA_CODE:
+            ArrayList&lt;String&gt; list = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
+            Log.d(TAG, &quot;list: &quot; + &quot;list = [&quot; + list.size());
+            loadAdpater(list);
+            break;
+        // 预览
+        case REQUEST_PREVIEW_CODE:
+            ArrayList&lt;String&gt; ListExtra = data.getStringArrayListExtra(PhotoPreviewActivity.EXTRA_RESULT);
+            Log.d(TAG, &quot;ListExtra: &quot; + &quot;ListExtra = [&quot; + ListExtra.size());
+            loadAdpater(ListExtra);
+            break;
+    }
+}
+</code></pre><p> }</p>
+<p> private void loadAdpater(ArrayList<string> paths){</string></p>
+<pre><code>if (imagePaths!=null&amp;&amp; imagePaths.size()&gt;0){
+    imagePaths.clear();
+}
+if (paths.contains(&quot;000000&quot;)){
+    paths.remove(&quot;000000&quot;);
+}
+paths.add(&quot;000000&quot;);
+imagePaths.addAll(paths);
+gridAdapter  = new GridAdapter(imagePaths);
+gridView.setAdapter(gridAdapter);
+try{
+    JSONArray obj = new JSONArray(imagePaths);
+    Log.e(&quot;--&quot;, obj.toString());
+}catch (Exception e){
+    e.printStackTrace();
+}
+</code></pre><p> }</p>
+<p> private class GridAdapter extends BaseAdapter{</p>
+<pre><code>private ArrayList&lt;String&gt; listUrls;
+private LayoutInflater inflater;
+public GridAdapter(ArrayList&lt;String&gt; listUrls) {
+    this.listUrls = listUrls;
+    if(listUrls.size() == 7){
+        listUrls.remove(listUrls.size()-1);
+    }
+    inflater = LayoutInflater.from(MainActivity.this);
+}
+
+public int getCount(){
+    return  listUrls.size();
+}
+@Override
+public String getItem(int position) {
+    return listUrls.get(position);
+}
+
+@Override
+public long getItemId(int position) {
+    return position;
+}
+
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+    ViewHolder holder = null;
+    if (convertView == null) {
+        holder = new ViewHolder();
+        convertView = inflater.inflate(R.layout.item_image, parent,false);
+        holder.image = (ImageView) convertView.findViewById(R.id.imageView);
+        convertView.setTag(holder);
+    } else {
+        holder = (ViewHolder)convertView.getTag();
+    }
+
+    final String path=listUrls.get(position);
+    if (path.equals(&quot;000000&quot;)){
+        holder.image.setImageResource(R.mipmap.ic_launcher);
+    }else {
+        Glide.with(MainActivity.this)
+                .load(path)
+                .placeholder(R.mipmap.default_error)
+                .error(R.mipmap.default_error)
+                .centerCrop()
+                .crossFade()
+                .into(holder.image);
+    }
+    return convertView;
+}
+public class ViewHolder {
+    public ImageView image;
+}
+</code></pre><p> }<br>}</p>
+</li>
+</ul>
+<p>上传管理类：</p>
+<p>import android.util.Log;</p>
+<p>import java.io.File;<br>import java.util.ArrayList;<br>import java.util.HashMap;<br>import java.util.Map;</p>
+<p>import okhttp3.MediaType;<br>import okhttp3.RequestBody;<br>import retrofit2.Call;<br>import retrofit2.Callback;<br>import retrofit2.Response;<br>import retrofit2.Retrofit;<br>import retrofit2.converter.gson.GsonConverterFactory;<br>import retrofit2.http.Multipart;<br>import retrofit2.http.POST;<br>import retrofit2.http.Part;<br>import retrofit2.http.PartMap;</p>
+<p>/**</p>
+<ul>
+<li><p>Created by lidong on 2016/1/28.<br>*/<br>public class FileUploadManager {</p>
+<p> private static final String ENDPOINT = “<a href="http://192.168.1.21:8080" target="_blank" rel="external">http://192.168.1.21:8080</a>“;<br> private static String TAG = FileUploadManager.class.getSimpleName();</p>
+<p> public interface FileUploadService {</p>
+<pre><code>/**
+ * 上传一张图片
+ * @param description
+ * @param imgs
+ * @return
+ */
+@Multipart
+@POST(&quot;/upload&quot;)
+Call&lt;String&gt; uploadImage(@Part(&quot;fileName&quot;) String description,
+                         @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs);
+</code></pre></li>
+</ul>
+<pre><code>    /**
+     * 上传6张图片
+      * @param description
+     * @param imgs1
+     * @param imgs2
+     * @param imgs3
+     * @param imgs4
+     * @param imgs5
+     * @param imgs6
+     * @return
+     */
+    @Multipart
+    @POST(&quot;/upload&quot;)
+    Call&lt;String&gt; uploadImage(@Part(&quot;description&quot;) String description,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs1,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs2,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs3,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs4,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs5,
+                             @Part(&quot;file\&quot;; filename=\&quot;image.png\&quot;&quot;) RequestBody imgs6);
+
+    /**
+     * 简便写法
+     * @param description
+     * @param imgs1
+     * @return
+     */
+    @Multipart
+    @POST(&quot;/upload&quot;)
+    Call&lt;String&gt; uploadImage(@Part(&quot;description&quot;) String description,@PartMap
+                             Map&lt;String, RequestBody&gt; imgs1);
+}
+
+private static final Retrofit sRetrofit = new Retrofit .Builder()
+        .baseUrl(ENDPOINT)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+
+private static final FileUploadService apiManager = sRetrofit.create(FileUploadService.class);
+
+
+/**
+ * 发说说
+ * @param paths
+ * @param desp
+ */
+public static void upload(ArrayList&lt;String&gt; paths,String desp){
+    RequestBody[] requestBody= new RequestBody[6];
+    if (paths.size()&gt;0) {
+        for (int i=0;i&lt;paths.size();i++) {
+            requestBody[i] =
+                    RequestBody.create(MediaType.parse(&quot;multipart/form-data&quot;), new File(paths.get(i)));
+        }
+    }
+    Call&lt;String&gt; call = apiManager.uploadImage( desp,requestBody[0],requestBody[1],requestBody[2],requestBody[3],requestBody[4],requestBody[5]);
+    call.enqueue(new Callback&lt;String&gt;() {
+        @Override
+        public void onResponse(Call&lt;String&gt; call, Response&lt;String&gt; response) {
+            Log.d(TAG, &quot;onResponse() called with: &quot; + &quot;call = [&quot; + call + &quot;], response = [&quot; + response + &quot;]&quot;);
+        }
+
+        @Override
+        public void onFailure(Call&lt;String&gt; call, Throwable t) {
+            Log.d(TAG, &quot;onFailure() called with: &quot; + &quot;call = [&quot; + call + &quot;], t = [&quot; + t + &quot;]&quot;);
+        }
+    });
+
+}
+
+/**
+ *
+ * @param paths
+ * @param desp
+ */
+public static void uploadMany(ArrayList&lt;String&gt; paths,String desp){
+    Map&lt;String,RequestBody&gt; photos = new HashMap&lt;&gt;();
+    if (paths.size()&gt;0) {
+        for (int i=0;i&lt;paths.size();i++) {
+            photos.put(&quot;photos\&quot;; filename=\&quot;icon.png&quot;,  RequestBody.create(MediaType.parse(&quot;multipart/form-data&quot;), new File(paths.get(i))));
+        }
+    }
+    Call&lt;String&gt; stringCall = apiManager.uploadImage(desp, photos);
+    stringCall.enqueue(new Callback&lt;String&gt;() {
+        @Override
+        public void onResponse(Call&lt;String&gt; call, Response&lt;String&gt; response) {
+            Log.d(TAG, &quot;onResponse() called with: &quot; + &quot;call = [&quot; + call + &quot;], response = [&quot; + response + &quot;]&quot;);
+        }
+
+        @Override
+        public void onFailure(Call&lt;String&gt; call, Throwable t) {
+            Log.d(TAG, &quot;onFailure() called with: &quot; + &quot;call = [&quot; + call + &quot;], t = [&quot; + t + &quot;]&quot;);
+        }
+    });
+}
+</code></pre><p>}</p>
+<p>#项目的运行效果：<br><img src="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164310.jpg" alt=""><br><img src="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164301.jpg" alt=""><br><img src="https://github.com/lidong1665/Android-UploadMultipartImage/blob/master/image/QQ%E5%9B%BE%E7%89%8720160229164252.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/" data-id="ciqg6z7y80000lzx2rauababu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 李东<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">个人主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">博客档案</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -71,6 +71,754 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Swift学习第七枪--协议（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Swift学习第七枪--协议（一）/" class="article-date">
+  <time datetime="2016-07-10T08:32:13.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Swift学习第七枪--协议（一）/">Swift学习第七枪--协议（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="协议（Protocols）"><a href="#协议（Protocols）" class="headerlink" title="协议（Protocols）"></a>协议（Protocols）</h1><p>协议 定义了一个蓝图，规定了用来实现某一特定工作或者功能所必需的方法和属性。类，结构体或枚举类型都可以遵循协议，并提供具体实现来完成协议定义的方法和功能。任意能够满足协议要求的类型被称为 遵循(confor<br>m) 这个协议。</p>
+<ul>
+<li>协议的语法（Protocol Syntax）</li>
+</ul>
+<ul>
+<li>对属性的规定（Property Requirements）</li>
+</ul>
+<ul>
+<li>对方法的规定（Method Requirements）</li>
+</ul>
+<ul>
+<li>对Mutating方法的规定（Mutating Method Requirements）</li>
+</ul>
+<ul>
+<li>对构造器的规定（Initializer Requirements）</li>
+</ul>
+<ul>
+<li>协议类型（Protocols as Types）</li>
+</ul>
+<ul>
+<li>委托(代理)模式（Delegation）</li>
+</ul>
+<ul>
+<li>在扩展中添加协议成员（Adding Protocol Conformance with an Extension）</li>
+</ul>
+<ul>
+<li>通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）</li>
+</ul>
+<ul>
+<li>集合中的协议类型（Collections of Protocol Types）</li>
+</ul>
+<ul>
+<li>协议的继承（Protocol Inheritance）</li>
+</ul>
+<ul>
+<li>类专属协议（Class-Only Protocol）</li>
+</ul>
+<ul>
+<li>协议合成（Protocol Composition）</li>
+</ul>
+<ul>
+<li>检验协议的一致性（Checking for Protocol Conformance）</li>
+</ul>
+<ul>
+<li>对可选协议的规定（Optional Protocol Requirements）</li>
+</ul>
+<ul>
+<li>协议扩展（Protocol Extensions）</li>
+</ul>
+<p>##1.协议的语法<br>协议的定义方式与类，结构体，枚举的定义非常相似。</p>
+<pre><code>protocol SomeProtocol {
+// 协议内容
+}
+</code></pre><p>要使类遵循某个协议，需要在类型名称后加上协议名称，中间以冒号 : 分隔，作为类型定义的一部分。遵循多个协议时，各协议之间用逗号 , 分隔。</p>
+<pre><code>struct SomeStructure: FirstProtocol, AnotherProtocol {
+// 结构体内容
+}
+</code></pre><p>如果类在遵循协议的同时拥有父类，应该将父类名放在协议名之前，以逗号分隔。</p>
+<pre><code>class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
+// 类的内容
+}
+</code></pre><p>##2.对属性的规定<br>协议可以规定其 遵循者 提供特定名称和类型的 实例属性(instance property) 或 类属性(type property) ，而不指定是 存储型属性(stored property) 还是 计算型属性(calculate property) 。此外还必须指明是只读的还是可读可写的。</p>
+<p>如果协议规定属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。</p>
+<p>协议中的通常用var来声明属性，在类型声明后加上 { set get } 来表示属性是可读可写的，只读属性则用 { get} 来表示。</p>
+<pre><code>protocol SomeProtocol {
+var mustBeSettable : Int { get set }
+var doesNotNeedToBeSettable: Int { get }
+}
+</code></pre><p>在协议中定义类属性(type property)时，总是使用 static 关键字作为前缀。当协议的遵循者是类时，可以使用 class 或 static 关键字来声明类属性，但是在协议的定义中，仍然要使用 static 关键字。</p>
+<pre><code>protocol AnotherProtocol {
+static var someTypeProperty: Int { get set }
+}
+</code></pre><p>如下所示，这是一个含有一个实例属性要求的协议。</p>
+<pre><code>protocol FullyNamed {
+var fullName: String { get }
+}
+</code></pre><p>FullyNamed 协议除了要求协议的遵循者提供fullName属性外，对协议对遵循者的类型并没有特别的要求。这个协议表示，任何遵循 FullyNamed 协议的类型，都具有一个可读的 String 类型实例属性 fullName 。</p>
+<p>下面是一个遵循 FullyNamed 协议的简单结构体。</p>
+<pre><code>struct Person: FullyNamed{
+var fullName: String
+}
+let john = Person(fullName: &quot;John Appleseed&quot;)
+//john.fullName 为 &quot;John Appleseed&quot;
+</code></pre><p>这个例子中定义了一个叫做 Person 的结构体，用来表示具有名字的人。从第一行代码中可以看出，它遵循了 FullyNamed 协议。</p>
+<p>Person 结构体的每一个实例都有一个叫做 fullName ， String 类型的存储型属性。这正好满足了 FullyNamed 协议的要求，也就意味着，Person 结构体完整的 遵循 了协议。(如果协议要求未被完全满足,在编译时会报错)</p>
+<p>下面是一个更为复杂的类，它采用并遵循了 FullyNamed 协议:</p>
+<pre><code>class Starship: FullyNamed {
+var prefix: String?
+var name: String
+init(name: String, prefix: String? = nil) {
+self.name = name
+self.prefix = prefix
+}
+var fullName: String {
+return (prefix != nil ? prefix! + &quot; &quot; : &quot;&quot;) + name
+}
+}
+var ncc1701 = Starship(name: &quot;Enterprise&quot;, prefix: &quot;USS&quot;)
+// ncc1701.fullName is &quot;USS Enterprise&quot;
+</code></pre><p>Starship类把 fullName 属性实现为只读的计算型属性。每一个 Starship 类的实例都有一个名为 name 的属性和一个名为 prefix 的可选属性。 当 prefix 存在时，将 prefix 插入到 name 之前来为Starship构建 fullName ， prefix 不存在时，则将直接用 name 构建 fullName 。</p>
+<h2 id="3-对方法的规定"><a href="#3-对方法的规定" class="headerlink" title="3.对方法的规定"></a>3.对方法的规定</h2><p>协议可以要求其遵循者实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通的方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相<br>同。但是在协议的方法定义中，不支持参数默认值。</p>
+<p>正如对属性的规定中所说的，在协议中定义类方法的时候，总是使用 static 关键字作为前缀。当协议的遵循者是类的时候，虽然你可以在类的实现中使用 class 或者 static 来实现类方法，但是在协议中声明类方法，仍然要使用 static 关键字。</p>
+<pre><code>protocol SomeProtocol {
+static func someTypeMethod()
+}
+</code></pre><p>下面的例子定义了含有一个实例方法的协议。</p>
+<pre><code>protocol RandomNumberGenerator {
+func random() -&gt; Double
+}
+</code></pre><p>RandomNumberGenerator 协议要求其遵循者必须拥有一个名为 random ， 返回值类型为 Double 的实例方法。尽管这里并未指明，但是我们假设返回值在[0，1)区间内。</p>
+<p>RandomNumberGenerator 协议并不在意每一个随机数是怎样生成的，它只强调这里有一个随机数生成器。</p>
+<p>如下所示，下边的是一个遵循了 RandomNumberGenerator 协议的类。该类实现了一个叫做 线性同余生成器(linear congruential generator) 的伪随机数算法。</p>
+<pre><code>class LinearCongruentialGenerator: RandomNumberGenerator {
+var lastRandom = 42.0
+let m = 139968.0
+let a = 3877.0
+let c = 29573.0
+func random() -&gt; Double {
+lastRandom = ((lastRandom * a + c) % m)
+return lastRandom / m
+}
+}
+let generator = LinearCongruentialGenerator()
+print(&quot;Here&apos;s a random number: \(generator.random())&quot;)
+// 输出 : &quot;Here&apos;s a random number: 0.37464991998171&quot;
+print(&quot;And another one: \(generator.random())&quot;)
+// 输出 : &quot;And another one: 0.729023776863283&quot;
+</code></pre><h2 id="4-对Mutating方法的规定"><a href="#4-对Mutating方法的规定" class="headerlink" title="4.对Mutating方法的规定"></a>4.对Mutating方法的规定</h2><p>有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将 mutating 关键字作为函数的前缀，写在 func 之前，表示可以在该方法中修改它所属的实例及其实例属性的值。</p>
+<p>如果你在协议中定义了一个方法旨在改变遵循该协议的实例，那么在协议定义时需要在方法前加 mutating 关键字。这使得结构和枚举遵循协议并满足此方法要求。</p>
+<p>注意:<br>用类实现协议中的 mutating 方法时，不用写 mutating 关键字;用结构体，枚举实现协议中的 mutating 方法时，必须写 mutating 关键字。<br>如下所示， Togglable 协议含有名为 toggle 的实例方法。根据名称推测， toggle() 方法将通过改变实例属性，来切换遵循该协议的实例的状态。</p>
+<p>toggle() 方法在定义的时候，使用 mutating 关键字标记，这表明当它被调用时该方法将会改变协议遵循者实例的状态。</p>
+<pre><code>protocol Togglable {
+mutating func toggle()
+}
+</code></pre><p>当使用 枚举 或 结构体 来实现 Togglable 协议时，需要提供一个带有 mutating 前缀的 toggle 方法。</p>
+<p>下面定义了一个名为 OnOffSwitch 的枚举类型。这个枚举类型在两种状态之间进行切换，用枚举成员 On 和 Off 表示。枚举类型的 toggle 方法被标记为 mutating 以满足 Togglable 协议的要求。</p>
+<pre><code>enum OnOffSwitch: Togglable {
+case Off, On
+mutating func toggle() {
+switch self {
+case Off:
+self = On
+case On:
+self = Off
+}
+}
+}
+var lightSwitch = OnOffSwitch.Off
+lightSwitch.toggle()
+//lightSwitch 现在的值为 .On
+</code></pre><p>##5.对构造器的规定 ##<br>协议可以要求它的遵循者实现指定的构造器。你可以像书写普通的构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：</p>
+<pre><code>protocol SomeProtocol {
+init(someParameter: Int)
+}
+</code></pre><p>###5.1 协议构造器规定在类中的实现<br>你可以在遵循该协议的类中实现构造器，并指定其为类的指定构造器(designated initializer)或者便利构造器(convenience initializer)。在这两种情况下，你都必须给构造器实现上”required”修饰符：</p>
+<pre><code>class SomeClass: SomeProtocol {
+required init(someParameter: Int) {
+//构造器实现
+}
+}
+</code></pre><p>使用 required 修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。</p>
+<p>注意：<br>如果类已经被标记为 final ，那么不需要在协议构造器的实现中使用 required 修饰符。因为final类不能有子类。</p>
+<p>如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示 required 和 override 修饰符</p>
+<pre><code>protocol SomeProtocol {
+init()
+}
+class SomeSuperClass {
+init() {
+// 构造器的实现
+}
+}
+class SomeSubClass: SomeSuperClass, SomeProtocol {
+// 因为遵循协议，需要加上&quot;required&quot;; 因为继承自父类，需要加上&quot;override&quot;
+required override init() {
+// 构造器实现
+}
+}
+</code></pre><p>###5.2可失败构造器的规定<br>可以通过给协议 Protocols 中添加可失败构造器 (页 0)来使遵循该协议的类型必须实现该可失败构造器。</p>
+<p>如果在协议中定义一个可失败构造器，则在遵顼该协议的类型中必须添加同名同参数的可失败构造器或非可失败</p>
+<p>构造器。如果在协议中定义一个非可失败构造器，则在遵循该协议的类型中必须添加同名同参数的非可失败构造器或隐式解析类型的可失败构造器（ init! ）。</p>
+<h2 id="6-协议类型"><a href="#6-协议类型" class="headerlink" title="6. 协议类型"></a>6. 协议类型</h2><p>尽管协议本身并不实现任何功能，但是协议可以被当做类型来使用。</p>
+<p>协议可以像其他普通类型一样使用，使用场景:</p>
+<ul>
+<li>作为函数、方法或构造器中的参数类型或返回值类型</li>
+</ul>
+<ul>
+<li>作为常量、变量或属性的类型</li>
+</ul>
+<ul>
+<li>作为数组、字典或其他容器中的元素类型</li>
+</ul>
+<p>注意：<br>协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用大写字母开头的驼峰式写法，例( FullyNamed 和 RandomNumberGenerator )如下所示，这个示例中将协议当做类型来使用</p>
+<pre><code>class Dice {
+let sides: Int
+let generator: RandomNumberGenerator
+init(sides: Int, generator: RandomNumberGenerator) {
+self.sides = sides
+self.generator = generator
+}
+func roll() -&gt; Int {
+return Int(generator.random() * Double(sides)) + 1
+}
+}
+</code></pre><p>例子中定义了一个 Dice 类，用来代表桌游中的拥有N个面的骰子。 Dice 的实例含有 sides 和 generator 两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器。</p>
+<p>generator 属性的类型为 RandomNumberGenerator ，因此任何遵循了 RandomNumberGenerator 协议的类型的实例都可以赋值给generator ，除此之外，无其他要求。</p>
+<p>Dice 类中也有一个构造器(initializer)，用来进行初始化操作。构造器中含有一个名为 generator ，类型为 RandomNumberGenerator 的形参。在调用构造方法时创建 Dice 的实例时，可以传入任何遵循RandomNumberGenerator 协议的实例给generator。</p>
+<p>Dice 类也提供了一个名为 roll 的实例方法用来模拟骰子的面值。它先使用 generator 的 random() 方法来创建一个[0,1)区间内的随机数，然后使用这个随机数生成正确的骰子面值。因为generator遵循了 RandomNumberGenerator 协议，因而保证了 random 方法可以被调用。<br>下面的例子展示了如何使用 LinearCongruentialGenerator 的实例作为随机数生成器创建一个六面骰子:</p>
+<pre><code>var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
+for _ in 1...5 {
+print(&quot;Random dice roll is \(d6.roll())&quot;)
+}
+//输出结果
+//Random dice roll is 3
+//Random dice roll is 5
+//Random dice roll is 4
+//Random dice roll is 5
+//Random dice roll is 4
+</code></pre><p>总结:这篇就今天就写到协议类型，下篇从委托(代理)模式开始总结。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lidong1665.github.io/2016/07/10/Swift学习第七枪--协议（一）/" data-id="ciqgckssw0006pux2atd8wbxm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Swift学习第八枪--协议（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Swift学习第八枪--协议（二）/" class="article-date">
+  <time datetime="2016-07-10T08:31:51.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Swift学习第八枪--协议（二）/">Swift学习第七枪--协议（二）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="协议（二）"><a href="#协议（二）" class="headerlink" title="协议（二）"></a>协议（二）</h1><p>下面是我的新建的Swift学习交流群，欢迎大家一起来共同学习Swift。<br><img src="http://img.blog.csdn.net/20160603213258019" alt="这里写图片描述"></p>
+<p>这篇紧接着前面的协议（一）继续总结。</p>
+<p>##1.委托(代理)模式</p>
+<p>委托是一种设计模式，它允许 类 或 结构体 将一些需要它们负责的功能 交由(委托) 给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法， 使其 遵循者 拥有这些被委托的 函数和方<br>法 。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。</p>
+<p>下面的例子是两个基于骰子游戏的协议:</p>
+<pre><code>protocol DiceGame {
+var dice: Dice { get }
+func play()
+}
+protocol DiceGameDelegate {
+func gameDidStart(game: DiceGame)
+func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll:Int)
+func gameDidEnd(game: DiceGame)
+}
+</code></pre><p>DiceGame 协议可以在任意含有骰子的游戏中实现。 DiceGameDelegate 协议可以用来追踪 DiceGame 的游戏过程</p>
+<p>如下所示， SnakesAndLadders 是 Snakes and Ladders (Control Flow章节有该游戏的详细介绍)游戏的新版本。新版本使用 Dice 作为骰子，并且实现了 DiceGame 和 DiceGameDelegate 协议，后者用来记录游戏的过程:</p>
+<pre><code>class SnakesAndLadders: DiceGame {
+let finalSquare = 25
+let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
+var square = 0
+var board: [Int]
+init() {
+board = [Int](count: finalSquare + 1, repeatedValue: 0)
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+}
+
+var delegate: DiceGameDelegate?
+func play() {
+square = 0
+delegate?.gameDidStart(self)
+gameLoop: while square != finalSquare {
+let diceRoll = dice.roll()
+delegate?.game(self,didStartNewTurnWithDiceRoll: diceRoll)
+switch square + diceRoll {
+case finalSquare:
+break gameLoop
+case let newSquare where newSquare &gt; finalSquare:
+continue gameLoop
+default:
+square += diceRoll
+square += board[square]
+}
+}
+delegate?.gameDidEnd(self)
+}
+}
+</code></pre><p>这个版本的游戏封装到了 SnakesAndLadders 类中，该类遵循了 DiceGame 协议，并且提供了相应的可读的 dice 属性和 play 实例方法。( dice 属性在构造之后就不再改变，且协议只要求 dice 为只读的，因此将 dice 声明为常量属性。)</p>
+<p>游戏使用 SnakesAndLadders 类的 构造器(initializer) 初始化游戏。所有的游戏逻辑被转移到了协议中的 play方法， play 方法使用协议规定的 dice 属性提供骰子摇出的值。</p>
+<p>注意: delegate 并不是游戏的必备条件，因此 delegate 被定义为遵循 DiceGameDelegate 协议的可选属性。因<br>为 delegate 是可选值，因此在初始化的时候被自动赋值为 nil 。随后，可以在游戏中为 delegate 设置适当的值。</p>
+<p>DicegameDelegate 协议提供了三个方法用来追踪游戏过程。被放置于游戏的逻辑中，即 play() 方法内。分别在游戏开始时，新一轮开始时，游戏结束时被调用。</p>
+<p>因为 delegate 是一个遵循 DiceGameDelegate 的可选属性，因此在 play() 方法中使用了 可选链 来调用委托方法。 若 delegate 属性为 nil ， 则delegate所调用的方法失效，并不会产生错误。若 delegate 不为 nil ，则方法能够被调用。如下所示， DiceGameTracker 遵循了 DiceGameDelegate 协议</p>
+<pre><code>class DiceGameTracker: DiceGameDelegate {
+
+var numberOfTurns = 0
+
+func gameDidStart(game: DiceGame) {
+numberOfTurns = 0
+if game is SnakesAndLadders {
+print(&quot;Started a new game of Snakes and Ladders&quot;)
+}
+print(&quot;The game is using a \(game.dice.sides)-sided dice&quot;)
+}
+
+func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+++numberOfTurns
+print(&quot;Rolled a \(diceRoll)&quot;)
+}
+func gameDidEnd(game: DiceGame) {
+print(&quot;The game lasted for \(numberOfTurns) turns&quot;)
+}
+}
+</code></pre><p>DiceGameTracker 实现了 DiceGameDelegate 协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时， numberOfTurns 属性被赋值为0; 在每新一轮中递增; 游戏结束后，输出打印游戏的总轮数。</p>
+<p>gameDidStart 方法从 game 参数获取游戏信息并输出。 game 在方法中被当做 DiceGame 类型而不是 SnakeAndLadders 类型，所以方法中只能访问 DiceGame 协议中的成员。当然了，这些方法也可以在类型转换之后<br>调用。在上例代码中，通过 is 操作符检查 game 是否SnakesAndLadders 类型的实例，如果是，则打印出相应的内容。</p>
+<p>无论当前进行的是何种游戏， game 都遵循 DiceGame 协议以确保 game 含有 dice 属性，因此在 gameDidStart(_:) 方法中可以通过传入的 game 参数来访问 dice 属性，进而打印出 dice 的 sides 属性的值。<br>DiceGameTracker 的运行情况，如下所示:</p>
+<pre><code>let tracker = DiceGameTracker()
+let game = SnakesAndLadders()
+game.delegate = tracker
+game.play()
+// Started a new game of Snakes and Ladders
+// The game is using a 6-sided dice
+// Rolled a 3
+// Rolled a 5
+// Rolled a 4
+// Rolled a 5
+// The game lasted for 4 turns
+</code></pre><h2 id="2-在扩展中添加协议成员"><a href="#2-在扩展中添加协议成员" class="headerlink" title="2.在扩展中添加协议成员"></a>2.在扩展中添加协议成员</h2><p>即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(类，结构体，枚举等 )。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。</p>
+<p>注意：<br>通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法。例如 TextRepresentable 协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本:</p>
+<pre><code>protocol TextRepresentable {
+func asText() -&gt; String
+}
+</code></pre><p>可以通过扩展，为上一节中提到的 Dice 增加类遵循TextRepresentable 协议的功能</p>
+<pre><code>extension Dice: TextRepresentable {
+func asText() -&gt; String {
+return &quot;A \(sides)-sided dice&quot;
+}
+}
+</code></pre><p>现在，通过扩展使得 Dice 类型遵循了一个新的协议，这和 Dice 类型在定义的时候声明为遵循 TextRepresentable 协议的效果相同。在扩展的时候，协议名称写在类型名之后，以冒号隔开，在大括号内写明新添加的协议内容。<br>现在所有 Dice 的实例都遵循了 TextRepresentable 协议:</p>
+<pre><code>let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
+print(d12.asText())
+// 输出 &quot;A 12-sided dice&quot;
+同样 SnakesAndLadders 类也可以通过 扩展 的方式来遵循 TextRepresentable 协议：
+extension SnakesAndLadders: TextRepresentable {
+func asText() -&gt; String {
+return &quot;A game of Snakes and Ladders with \(finalSquare) squares&quot;
+}
+}
+print(game.asText())
+// 输出 &quot;A game of Snakes and Ladders with 25 squares&quot;
+</code></pre><p>##3.通过扩展补充协议声明<br>当一个类型已经实现了协议中的所有要求，却没有声明为遵循该协议时，可以通过扩展(空的扩展体)来补充协议声明:</p>
+<pre><code>struct Hamster {
+var name: String
+func asText() -&gt; String {
+return &quot;A hamster named \(name)&quot;
+}
+}
+extension Hamster: TextRepresentable {}
+</code></pre><p>从现在起， Hamster 的实例可以作为 TextRepresentable 类型使用</p>
+<pre><code>let simonTheHamster = Hamster(name: &quot;Simon&quot;)
+let somethingTextRepresentable: TextRepresentable = simonTheHamster
+print(somethingTextRepresentable.asText())
+// 输出 &quot;A hamster named Simon&quot;
+</code></pre><p>注意<br>即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明。</p>
+<p>##4.集合中的协议类型<br>协议类型可以在集合使用，表示集合中的元素均为协议类型，下面的例子创建了一个类型为 TextRepresentable的数组:</p>
+<pre><code>let things: [TextRepresentable] =[game,d12,simonTheHamster]
+</code></pre><p>如下所示， things 数组可以被直接遍历，并打印每个元素的文本表示:</p>
+<pre><code>for thing in things {
+print(thing.asText())
+}
+// A game of Snakes and Ladders with 25 squares
+// A 12-sided dice
+// A hamster named Simon
+</code></pre><p>thing 被当做是 TextRepresentable 类型而不是 Dice ， DiceGame ， Hamster 等类型。因此能且仅能调用asText 方法</p>
+<p>##5.协议的继承 ##</p>
+<p>协议能够继承一个或多个其他协议，可以在继承的协议基础上增加新的内容要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔:</p>
+<pre><code>protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+// 协议定义
+}
+如下所示， PrettyTextRepresentable 协议继承了 TextRepresentable 协议
+protocol PrettyTextRepresentable: TextRepresentable {
+func asPrettyText() -&gt; String
+}
+</code></pre><p>例子中定义了一个新的协议 PrettyTextRepresentable ，它继承自 TextRepresentable 协议。任何遵循 PrettyTextRepresentable 协议的类型在满足该协议的要求时，也必须满足 TextRepresentable 协议的要求。在这个例子中， PrettyTextRepresentable 协议要求其遵循者提供一个返回值为 String 类型的 asPrettyText 方法。</p>
+<p>如下所示，扩展 SnakesAndLadders ，让其遵循PrettyTextRepresentable 协议:</p>
+<pre><code>extension SnakesAndLadders: PrettyTextRepresentable {
+func asPrettyText() -&gt; String {
+var output = asText() + &quot;:\n&quot;
+for index in 1...finalSquare {
+switch board[index] {
+case let ladder where ladder &gt; 0:
+output += &quot;▲ &quot;
+case let snake where snake &lt; 0:
+output += &quot;▼ &quot;
+default:
+output += &quot;○ &quot;
+}
+}
+return output
+}
+}
+</code></pre><p>上述扩展使得 SnakesAndLadders 遵循了 PrettyTextRepresentable 协议，并为每个 SnakesAndLadders 类型提供了了协议要求的 asPrettyText() 方法。每个 PrettyTextRepresentable 类型同时也是 TextRepresentable 类型，所以在 asPrettyText 的实现中，可以调用 asText() 方法。之后在每一行加上换行符，作为输出的开始。然后遍历数组中的元素，输出一个几何图形来表示遍历的结果:</p>
+<p>当从数组中取出的元素的值大于0时，用 ▲ 表示<br>当从数组中取出的元素的值小于0时，用 ▼ 表示<br>当从数组中取出的元素的值等于0时，用 ○ 表示</p>
+<p>任意 SankesAndLadders 的实例都可以使用 asPrettyText() 方法。</p>
+<pre><code>print(game.asPrettyText())
+// A game of Snakes and Ladders with 25 squares:
+// ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
+</code></pre><p>##6.类专属协议<br>你可以在协议的继承列表中,通过添加 class 关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该 class 关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。</p>
+<pre><code>protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+// class-only protocol definition goes here
+}
+</code></pre><p>在以上例子中，协议 SomeClassOnlyProtocol 只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。</p>
+<p>注意<br>当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。</p>
+<p>协议合成有时候需要同时遵循多个协议。你可以将多个协议采用 protocol<someprotocol， anotherprotocol=""> 这样的格<br>式进行组合，称为 协议合成(protocol composition) 。你可以在 &lt;&gt; 中罗列任意多个你想要遵循的协议，以逗号分隔。<br>下面的例子中，将 Named 和 Aged 两个协议按照上述的语法组合成一个协议:</someprotocol，></p>
+<pre><code>protocol Named {
+var name: String { get }
+}
+protocol Aged {
+var age: Int { get }
+}
+struct Person: Named, Aged {
+var name: String
+var age: Int
+}
+func wishHappyBirthday(celebrator: protocol&lt;Named, Aged&gt;) {
+print(&quot;Happy birthday \(celebrator.name) - you&apos;re \(celebrator.age)!&quot;)
+}
+let birthdayPerson = Person(name: &quot;Malcolm&quot;, age: 21)
+wishHappyBirthday(birthdayPerson)
+// 输出 &quot;Happy birthday Malcolm - you&apos;re 21!
+</code></pre><p>Named 协议包含 String 类型的 name 属性; Aged 协议包含 Int 类型的 age 属性。 Person 结构体 遵循 了这两个协议。</p>
+<p>wishHappyBirthday函数的形参 celebrator的类型protocol<named，aged> 。可以传入任意 遵循 这两个协议的类型的实例。</named，aged></p>
+<p>上面的例子创建了一个名为 birthdayPerson 的 Person 实例，作为参数传递给了 wishHappyBirthday(_:) 函数。因为 Person 同时遵循这两个协议，所以这个参数合法，函数将输出生日问候语。</p>
+<p>注意<br>协议合成 并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。</p>
+<p>##7.检验协议的一致性<br>你可以使用 is 和 as 操作符来检查是否遵循某一协议或强制转化为某一类型。</p>
+<ul>
+<li>is 操作符用来检查实例是否 遵循 了某个 协议</li>
+</ul>
+<ul>
+<li>as? 返回一个可选值，当实例 遵循 协议时，返回该协议类型;否则返回 nil</li>
+</ul>
+<ul>
+<li>as 用以强制向下转型，如果强转失败，会引起运行时错误。</li>
+</ul>
+<p>下面的例子定义了一个 HasArea 的协议，要求有一个 Double 类型可读的 area :</p>
+<pre><code>protocol HasArea {
+var area: Double { get }
+}
+</code></pre><p>如下所示，定义了 Circle 和 Country 类，它们都遵循了 HasArea 协议</p>
+<pre><code>class Circle: HasArea {
+let pi = 3.1415927
+var radius: Double
+var area: Double { return pi * radius * radius }
+init(radius: Double) { self.radius = radius }
+}
+class Country: HasArea {
+var area: Double
+init(area: Double) { self.area = area }
+}
+</code></pre><p>Circle 类把 area 实现为基于 存储型属性 radius的 计算型属性 ， Country 类则把 area 实现为 存储型属性 。这两个类都 遵循 了 HasArea 协议。</p>
+<p>如下所示，Animal是一个没有实现 HasArea 协议的类</p>
+<pre><code>class Animal {
+var legs: Int
+init(legs: Int) { self.legs = legs }
+}
+</code></pre><p>Circle ， Country ， Animal 并没有一个相同的基类，然而，它们都是类，它们的实例都可以作为 AnyObject类型的变量，存储在同一个数组中:</p>
+<pre><code>let objects: [AnyObject] = [
+Circle(radius: 2.0),
+Country(area: 243_610),
+Animal(legs: 4)
+]
+</code></pre><p>objects 数组使用字面量初始化，数组包含一个 radius 为2的 Circle 的实例，一个保存了英国面积的 Country实例和一个 legs 为4的 Animal 实例。</p>
+<p>如下所示， objects 数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了 HasArea 协议:</p>
+<pre><code>for object in objects {
+if let objectWithArea = object as? HasArea {
+print(&quot;Area is \(objectWithArea.area)&quot;)
+} else {
+print(&quot;Something that doesn&apos;t have an area&quot;)
+}
+}
+// Area is 12.5663708
+// Area is 243610.0
+// Something that doesn&apos;t have an area
+</code></pre><p>当迭代出的元素遵循 HasArea 协议时，通过 as? 操作符将其 可选绑定(optional binding) 到 objectWithArea 常量上。 objectWithArea 是 HasArea 协议类型的实例，因此 area 属性是可以被访问和打印的。<br>objects 数组中元素的类型并不会因为强转而丢失类型信息，它们仍然是 Circle ， Country ， Animal 类型。然而，当它们被赋值给 objectWithArea 常量时，则只被视为 HasArea 类型，因此只有 area 属性能够被访问。</p>
+<p>##8.对可选协议的规定</p>
+<p>协议可以含有可选成员，其 遵循者 可以选择是否实现这些成员。在协议中使用 optional 关键字作为前缀来定义可选成员。<br>可选协议在调用时使用 可选链 ，因为协议的遵循者可能没有实现可选内容。像 someOptionalMethod?(someArgument) 这样，你可以在可选方法名称后加上 ? 来检查该方法是否被实现。可选方法和可选属性都会返回一个 可选值(optional value) ，当其不可访问时， ? 之后语句不会执行，并整体返回 nil。</p>
+<p>注意<br>可选协议只能在含有 @objc 前缀的协议中生效。且 @objc 的协议只能被 类 遵循这个前缀表示协议将暴露给Objective-C代码，详情参见 Using Swift with Cocoa and Objective-C 。即使你不打算和Objective-C有什么交互，如果你想要指明协议包含可选属性，那么还是要加上 @obj 前缀。</p>
+<p>下面的例子定义了一个叫 Counter 的整数加法类，它使用外部的数据源来实现每次的增量。数据源是两个可选属性，在 CounterDataSource 协议中定义:</p>
+<pre><code>@objc protocol CounterDataSource {
+optional func incrementForCount(count: Int) -&gt; Int
+optional var fixedIncrement: Int { get }
+}
+</code></pre><p>CounterDataSource 含有 incrementForCount 可选方法和fiexdIncrement 可选属性，它们使用了不同的方法来从数据源中获取合适的增量值。</p>
+<p>注意<br>CounterDataSource 中的属性和方法都是可选的，因此可以在类中声明都不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。Counter 类含有 CounterDataSource? 类型的可选属性dataSource ，如下所示:</p>
+<pre><code>@objc class Counter {
+var count = 0
+var dataSource: CounterDataSource?
+func increment() {
+if let amount = dataSource?.incrementForCount?(count) {
+count += amount
+} else if let amount = dataSource?.fixedIncrement? {
+count += amount
+}
+}
+}
+</code></pre><p>类 Counter 使用 count 来存储当前的值。该类同时定义了一个 increment 方法，每次调用该方法的时候，将会增加 count 的值。</p>
+<p>increment() 方法首先试图使用 incrementForCount(<em>:) 方法来得到每次的增量。 increment() 方法使用可选链来尝试调用incrementForCount(</em>:) ，并将当前的 count 值作为参数传入。</p>
+<p>这里使用了两种可选链方法。由于 dataSource 可能为 nil ，因此在 dataSource 后边加上了 ? 标记来表明只在dataSource 非空时才去调用 incrementForCount 方法。即使 dataSource 存在，但是也无法保证其是否实现了 incrementForCount 方法，因此在 incrementForCount 方法后边也加有 ? 标记。</p>
+<p>调用 incrementForCount 方法在上述两种情形都有可能失败，所以返回值为 可选 Int 类型。虽然在 CounterDataSource 中， incrementForCount 被定义为一个非可选 Int (non-optional)，但是这里我们仍然需要返回 可选Int 类型。</p>
+<p>在调用 incrementForCount 方法后， Int 型 可选值 通过 可选绑定(optional binding) 自动拆包并赋值给常量 amount 。如果可选值确实包含一个数值，这表示 delegate 和方法都存在，之后便将 amount 加到 count 上，增加操作完成。</p>
+<p>如果没有从 incrementForCount(_:) 获取到值，可能是 dataSource 为nil，或者它并没有实现 incrementForCount 方法——那么 increment() 方法将试图从数据源的 fixedIncrement 属性中获取增量。 fixedIncrement 也是一个可选型，所以在属性名的后面添加 ? 来试图取回可选属性的值。和之前一样，返回值为可选型。</p>
+<p>ThreeSource 实现了 CounterDataSource 协议，它实现来可选属性 fixedIncrement ，每次返回值 3 :</p>
+<pre><code>@objc class ThreeSource: CounterDataSource {
+let fixedIncrement = 3
+}
+</code></pre><p>可以使用 ThreeSource 的实例作为 Counter 实例的数据源:</p>
+<pre><code>var counter = Counter()
+counter.dataSource = ThreeSource()
+for _ in 1...4 {
+counter.increment()
+print(counter.count)
+}
+// 3
+// 6
+// 9
+// 12
+</code></pre><p>上述代码新建了一个 Counter 实例；将它的数据源设置为 TreeSource 实例；调用 increment() 4次。和你预想的一样，每次在调用的时候， count 的值增加3.</p>
+<p>下面是一个更为复杂的数据源 TowardsZeroSource ，它将使得最后的值变为0:</p>
+<pre><code>class TowardsZeroSource: CounterDataSource {
+func incrementForCount(count: Int) -&gt; Int {
+if count == 0 {
+return 0
+} else if count &lt; 0 {
+return 1
+} else {
+return -1
+}
+}
+}
+</code></pre><p>TowardsZeroSource 实现了 CounterDataSource 协议中的 incrementForCount(_:) 方法，以 count 参数为依据，计算出每次的增量。如果 count 已经为0，方法返回0，这表示之后不会再有增量。<br>你可以配合使用 TowardsZeroSource 实例和 Counter 实例来从 -4 增加到 0 .一旦增加到 0 ，数值便不会再有变动。<br>在下面的例子中，将从 -4 增加到 0 。一旦结果为 0 ，便不在增加:</p>
+<pre><code>counter.count = -4
+counter.dataSource = TowardsZeroSource()
+for _ in 1...5 {
+counter.increment()
+print(counter.count)
+}
+// -3
+// -2
+// -1
+// 0
+// 0
+</code></pre><h2 id="9-协议扩展"><a href="#9-协议扩展" class="headerlink" title="9.协议扩展"></a>9.协议扩展</h2><p>使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。</p>
+<p>例如，可以扩展 RandomNumberGenerator 协议，让其提供 randomBool() 方法。该方法使用协议中要求的 random() 方法来实现:</p>
+<pre><code>extension RandomNumberGenerator {
+func randomBool() -&gt; Bool {
+return random() &gt; 0.5
+}
+}
+</code></pre><p>通过扩展协议，所有协议的遵循者，在不用任何修改的情况下，都自动得到了这个扩展所增加的方法。</p>
+<pre><code>let generator = LinearCongruentialGenerator()
+print(&quot;Here&apos;s a random number: \(generator.random())&quot;)
+// 输出 &quot;Here&apos;s a random number: 0.37464991998171&quot;
+print(&quot;And here&apos;s a random Boolean: \(generator.randomBool())&quot;)
+// 输出 &quot;And here&apos;s a random Boolean: true&quot;
+</code></pre><h3 id="9-1提供默认实现"><a href="#9-1提供默认实现" class="headerlink" title="9.1提供默认实现"></a>9.1提供默认实现</h3><p>可以通过协议扩展的方式来为协议规定的属性和方法提供默认的实现。如果协议的遵循者对规定的属性和方法提供了自己的实现，那么遵循者提供的实现将被使用。</p>
+<p>注意<br>通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。<br>例如， PrettyTextRepresentable 协议，继承了TextRepresentable 协议，可以为其提供一个默认的 asPrettyText() 方法来简化返回值<br>    extension PrettyTextRepresentable {<br>    func asPrettyText() -&gt; String {<br>    return asText()<br>    }<br>    }</p>
+<h3 id="9-2-为协议扩展添加限制条件"><a href="#9-2-为协议扩展添加限制条件" class="headerlink" title="9.2 为协议扩展添加限制条件"></a>9.2 为协议扩展添加限制条件</h3><p>在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用 where 关键字来描述限制情况。:</p>
+<p>例如，你可以扩展 CollectionType 协议，但是只适用于元素遵循 TextRepresentable 的情况:</p>
+<pre><code>extension CollectionType where Generator.Element : TextRepresentable {
+func asList() -&gt; String {
+return &quot;(&quot; + &quot;, &quot;.join(map({$0.asText()})) + &quot;)&quot;
+}
+}
+</code></pre><p>asList() 方法将每个元素以 asText() 的方式表示，最后以逗号分隔链接起来。<br>现在我们来看 Hamster ，它遵循 TextRepresentable :</p>
+<pre><code>let murrayTheHamster = Hamster(name: &quot;Murray&quot;)
+let morganTheHamster = Hamster(name: &quot;Morgan&quot;)
+let mauriceTheHamster = Hamster(name: &quot;Maurice&quot;)
+let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+</code></pre><p>因为 Array 遵循 CollectionType 协议，数组的元素又遵循 TextRepresentable 协议，所以数组可以使用 asList() 方法得到数组内容的文本表示:</p>
+<pre><code>print(hamsters.asList())
+// 输出 &quot;(A hamster named Murray, A hamster named Morgan, A hamster named Maurice)&quot;
+</code></pre><p>注意<br>如果有多个协议扩展，而一个协议的遵循者又同时满足它们的限制，那么将会使用所满足限制最多的那个扩展。</p>
+<p>总结：关于Swift中的协议的用法基本上就这些，谢谢阅读。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lidong1665.github.io/2016/07/10/Swift学习第八枪--协议（二）/" data-id="ciqgckst20008pux2a092xl6i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Swift学习第九枪之SQLite的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Swift学习第九枪之SQLite的使用/" class="article-date">
+  <time datetime="2016-07-10T08:31:18.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Swift学习第九枪之SQLite的使用/">Swift学习第七枪--SQLite的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前面写了一部分关于Swift的语法学习，今天要学习的是关于IOS中数据存储的一种存储方式之SQLite的使用。就Swift中操作SQLite的方法做一下，一是巩固知识点，二是为学习Swift的小伙伴提供点学习使用的SQLite的思路。扯了半会蛋了，现在言归正传，开始今天的讲解。</p>
+<p>Swift操作SQLite的流程有如下的几个步骤：</p>
+<ul>
+<li>建立桥接文件</li>
+<li>添加library-libsqlite3.0.tbd</li>
+<li>创建数据库管理工具类DBManager</li>
+<li>操作数据库的简单例子<br>##1.建立桥接文件<br>1.1在用Swift使用OC中得类文件的时候，需要进行桥接，首先建一个.h的头文件。<br>注意：桥接文件的命名规则：项目名-Bridging-Header.Swift  </li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#import</span> <span class="string">"SQLite3.h"</span></div></pre></td></tr></table></figure>
+<p>1.2 在Build-settings   -&gt;  Swift Complier  -  Code  Generaton —&gt;Objective C Briding Herder中添加自己的桥接文件。<br>如下图：<img src="http://img.blog.csdn.net/20160602210130783" alt="这里写图片描述"><br>这样的话，桥接文件已经OK。</p>
+<p>##2.添加library-libsqlite3.0.tbd</p>
+<p>在General - Linking frameworks  And  Library中添加library-libsqlite3.0.tbd。</p>
+<p><img src="http://img.blog.csdn.net/20160602210508387" alt="这里写图片描述"></p>
+<p>这样就表示已经添加成功。</p>
+<p>##3.用swift实现数据库管理工具类DBManager.Swift</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  DBManager.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/5/22.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> *数据库管理</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBManager</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> db: <span class="type">COpaquePointer</span> = <span class="literal">nil</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">let</span> instance = <span class="type">DBManager</span>()</div><div class="line">    <span class="comment">// 单例  全局的数据访问接口</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">var</span> <span class="title">sharedInstance</span>: <span class="title">DBManager</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> instance</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//打开数据库</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">openDatabase</span><span class="params">(dbName: String)</span></span> -&gt; <span class="type">Bool</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">let</span> documentPaths = <span class="type">NSSearchPathForDirectoriesInDomains</span>(<span class="type">NSSearchPathDirectory</span>.<span class="type">DocumentDirectory</span>,</div><div class="line">             <span class="type">NSSearchPathDomainMask</span>.<span class="type">UserDomainMask</span>, <span class="literal">true</span>)</div><div class="line">        <span class="keyword">let</span> documnetPath = documentPaths[<span class="number">0</span>]</div><div class="line">        <span class="built_in">print</span>(<span class="string">"documnetPath= <span class="subst">\(documnetPath)</span>"</span>)</div><div class="line">        <span class="keyword">let</span> error = sqlite3_open(documnetPath+dbName, &amp;db)</div><div class="line">        <span class="keyword">if</span> error != <span class="type">SQLITE_OK</span> &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"SQLiteDB - failed to open DB!"</span>)</div><div class="line">            sqlite3_close(db)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> error == <span class="type">SQLITE_OK</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//创建数据库表</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">createTable</span><span class="params">()</span></span> -&gt; <span class="type">Bool</span></div><div class="line">    &#123;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">let</span> sql =</div><div class="line">            <span class="string">"CREATE TABLE IF NOT EXISTS T_Employee ( \n"</span> +</div><div class="line">            <span class="string">"'id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n"</span> +</div><div class="line">            <span class="string">"'name' TEXT NOT NULL, \n"</span> +</div><div class="line">            <span class="string">"'age' TEXT NOT NULL, \n"</span> +</div><div class="line">            <span class="string">"'department_id' TEXT );"</span></div><div class="line">        <span class="comment">// 返回结果</span></div><div class="line">        <span class="keyword">return</span> sqlite3_exec(db, sql.cStringUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)!, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//执行SQL （插入，修改，删除）</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">execSql</span><span class="params">(sql: String)</span></span> -&gt; <span class="type">Bool</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 返回结果</span></div><div class="line">       <span class="keyword">let</span> d =  sqlite3_exec(db, sql.cStringUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)!, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span></div><div class="line">        <span class="keyword">return</span> d</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">closeDb</span><span class="params">()</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">return</span> sqlite3_close(db) == <span class="type">SQLITE_OK</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">selectAll</span><span class="params">(sql:String)</span></span> -&gt; <span class="type">Array</span>&lt;<span class="type">Employee</span>&gt; &#123;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> mArrs:<span class="type">Array</span>&lt;<span class="type">Employee</span>&gt; = []</div><div class="line">        <span class="keyword">var</span> stmt: <span class="type">COpaquePointer</span> = <span class="literal">nil</span></div><div class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, sql.cStringUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)!, -<span class="number">1</span>, &amp;stmt, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</div><div class="line"></div><div class="line">            <span class="keyword">while</span> sqlite3_step(stmt) == <span class="type">SQLITE_ROW</span> &#123;</div><div class="line">                <span class="keyword">let</span> e = <span class="type">Employee</span>()</div><div class="line"></div><div class="line">                <span class="keyword">let</span> id1 =  sqlite3_column_int(stmt, <span class="number">0</span>)</div><div class="line">                <span class="built_in">print</span>(<span class="string">"id = <span class="subst">\(id1)</span>"</span>)</div><div class="line">                <span class="keyword">let</span> chars = <span class="type">UnsafePointer</span>&lt;<span class="type">CChar</span>&gt;(sqlite3_column_text(stmt, <span class="number">1</span>))</div><div class="line">                <span class="keyword">let</span> str = <span class="type">String</span>(<span class="type">CString</span>: chars, encoding: <span class="type">NSUTF8StringEncoding</span>)!</div><div class="line">                <span class="built_in">print</span>(<span class="string">"name <span class="subst">\(str)</span>"</span>)</div><div class="line"></div><div class="line">                <span class="keyword">let</span> chars1 = <span class="type">UnsafePointer</span>&lt;<span class="type">CChar</span>&gt;(sqlite3_column_text(stmt, <span class="number">2</span>))</div><div class="line">                <span class="keyword">let</span> str1 = <span class="type">String</span>(<span class="type">CString</span>: chars1, encoding: <span class="type">NSUTF8StringEncoding</span>)!</div><div class="line">                <span class="built_in">print</span>(<span class="string">"年龄 <span class="subst">\(str1)</span>"</span>)</div><div class="line"></div><div class="line">                e.id = id1</div><div class="line">                e.name = str</div><div class="line">                e.age = str1</div><div class="line">                mArrs.append(e)</div><div class="line">            &#125;</div><div class="line">            sqlite3_finalize(stmt)</div><div class="line"></div><div class="line">            closeDb()</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> mArrs</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">///  执行 SQL 返回一个结果集(对象数组)</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">///  :param: sql SQL 字符串</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">recordSet</span><span class="params">(sql: String)</span></span> &#123;</div><div class="line">        <span class="comment">// 1. 准备语句</span></div><div class="line">        <span class="keyword">var</span> stmt: <span class="type">COpaquePointer</span> = <span class="literal">nil</span></div><div class="line">        <span class="comment">/**</span></div><div class="line">         1. 数据库句柄</div><div class="line">         2. SQL 的 C 语言的字符串</div><div class="line">         3. SQL 的 C 语言的字符串长度 strlen，-1 会自动计算</div><div class="line">         4. stmt 的指针</div><div class="line">         5. 通常传入 nil</div><div class="line">         */</div><div class="line">        <span class="keyword">if</span> sqlite3_prepare_v2(db, sql.cStringUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)!, -<span class="number">1</span>, &amp;stmt, <span class="literal">nil</span>) == <span class="type">SQLITE_OK</span> &#123;</div><div class="line">            <span class="comment">// 单步获取SQL执行的结果 -&gt; sqlite3_setup 对应一条记录</span></div><div class="line">            <span class="keyword">while</span> sqlite3_step(stmt) == <span class="type">SQLITE_ROW</span> &#123;</div><div class="line">                <span class="comment">// 获取每一条记录的数据</span></div><div class="line">                recordData(stmt)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">///  获取每一条数据的记录</span></div><div class="line">    <span class="comment">///</span></div><div class="line">    <span class="comment">///  :param: stmt prepared_statement 对象</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">recordData</span><span class="params">(stmt: COpaquePointer)</span></span> &#123;</div><div class="line">        <span class="comment">// 获取到记录</span></div><div class="line">        <span class="keyword">let</span> <span class="built_in">count</span> = sqlite3_column_count(stmt)</div><div class="line">        <span class="built_in">print</span>(<span class="string">"获取到记录，共有多少列 <span class="subst">\(<span class="built_in">count</span>)</span>"</span>)</div><div class="line">        <span class="comment">// 遍历每一列的数据</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;<span class="built_in">count</span> &#123;</div><div class="line">            <span class="keyword">let</span> type = sqlite3_column_type(stmt, i)</div><div class="line">            <span class="comment">// 根据字段的类型，提取对应列的值</span></div><div class="line">            <span class="keyword">switch</span> type &#123;</div><div class="line">            <span class="keyword">case</span> <span class="type">SQLITE_INTEGER</span>:</div><div class="line">                <span class="built_in">print</span>(<span class="string">"整数 <span class="subst">\(sqlite3_column_int64(stmt, i)</span>)"</span>)</div><div class="line">            <span class="keyword">case</span> <span class="type">SQLITE_FLOAT</span>:</div><div class="line">                <span class="built_in">print</span>(<span class="string">"小数 <span class="subst">\(sqlite3_column_double(stmt, i)</span>)"</span>)</div><div class="line">            <span class="keyword">case</span> <span class="type">SQLITE_NULL</span>:</div><div class="line">                <span class="built_in">print</span>(<span class="string">"空 <span class="subst">\(NSNull()</span>)"</span>)</div><div class="line">            <span class="keyword">case</span> <span class="type">SQLITE_TEXT</span>:</div><div class="line">                <span class="keyword">let</span> chars = <span class="type">UnsafePointer</span>&lt;<span class="type">CChar</span>&gt;(sqlite3_column_text(stmt, i))</div><div class="line">                <span class="keyword">let</span> str = <span class="type">String</span>(<span class="type">CString</span>: chars, encoding: <span class="type">NSUTF8StringEncoding</span>)!</div><div class="line">                <span class="built_in">print</span>(<span class="string">"字符串 <span class="subst">\(str)</span>"</span>)</div><div class="line">            <span class="keyword">case</span> <span class="keyword">let</span> type:</div><div class="line">                <span class="built_in">print</span>(<span class="string">"不支持的类型 <span class="subst">\(type)</span>"</span>)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##4.操作数据库的简单用例</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  SQLiteViewController.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/5/22.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="comment">/// SQLite的使用</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SQLiteViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">        <span class="comment">/// 数据库名</span></div><div class="line">    <span class="keyword">let</span> db_name = <span class="string">"/data.db3"</span></div><div class="line"></div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> btn_submit: <span class="type">UIButton</span>!</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> age: <span class="type">UITextField</span>!</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> select: <span class="type">UIButton</span>!</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> name: <span class="type">UITextField</span>!</div><div class="line">    <span class="keyword">var</span> dbManager : <span class="type">DBManager</span> = <span class="type">DBManager</span>.sharedInstance</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="keyword">init</span>(nibName nibNameOrNil: <span class="type">String</span>?, bundle nibBundleOrNil: <span class="type">NSBundle</span>?) &#123;</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(nibName: nibNameOrNil, bundle: nibBundleOrNil)</div><div class="line">           <span class="built_in">print</span>(nibName);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     加载xib</div><div class="line"></div><div class="line">     - returns: &lt;#return value description#&gt;</div><div class="line">     */</div><div class="line">    <span class="keyword">convenience</span> <span class="keyword">init</span>() &#123;</div><div class="line">        <span class="keyword">let</span> nibNameOrNil = <span class="type">String</span>?(<span class="string">"SQLiteViewController"</span>)</div><div class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(nibName: nibNameOrNil, bundle: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</div><div class="line">        <span class="built_in">fatalError</span>(<span class="string">"init(coder:) has not been implemented"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.title = <span class="string">"SQLite学习"</span></div><div class="line">        <span class="keyword">let</span> ddq = dbManager.openDatabase(db_name)</div><div class="line">        <span class="built_in">print</span>(<span class="string">"数据打开<span class="subst">\(ddq)</span>"</span>)</div><div class="line">        <span class="keyword">let</span> sucess = dbManager.createTable()</div><div class="line">        <span class="built_in">print</span>(<span class="string">"表创建=<span class="subst">\(sucess)</span>"</span>)</div><div class="line"></div><div class="line">        <span class="keyword">self</span>.btn_submit.addTarget(<span class="keyword">self</span>, action:#selector( <span class="type">SQLiteViewController</span>.submitAge(<span class="number">_</span>:)), forControlEvents: .<span class="type">TouchUpInside</span>)</div><div class="line"></div><div class="line">        <span class="keyword">self</span>.btn_submit.backgroundColor = <span class="type">UIColor</span>.blueColor()</div><div class="line"></div><div class="line">        <span class="keyword">self</span>.select.addTarget(<span class="keyword">self</span>, action:#selector( <span class="type">SQLiteViewController</span>.selectAllEmp(<span class="number">_</span>:)), forControlEvents: .<span class="type">TouchUpInside</span>)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     提交雇员信息</div><div class="line"></div><div class="line">     - parameter btn: &lt;#btn description#&gt;</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">submitAge</span><span class="params">(btn:UIButton)</span></span>  &#123;</div><div class="line"></div><div class="line">        <span class="keyword">let</span> username:<span class="type">String</span>! = <span class="keyword">self</span>.name.text</div><div class="line"></div><div class="line">        <span class="keyword">let</span>  age_:<span class="type">String</span>! = <span class="keyword">self</span>.age.text</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (username != <span class="literal">nil</span> &amp;&amp; age_ != <span class="literal">nil</span>)&#123;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keyword">let</span> sql = <span class="string">"insert into T_Employee(name,age) values('<span class="subst">\(<span class="keyword">self</span>.name.text!)</span>','<span class="subst">\(<span class="keyword">self</span>.age.text!)</span>')"</span></div><div class="line">            <span class="built_in">print</span>(<span class="string">"sql: <span class="subst">\(sql)</span>"</span>)</div><div class="line"></div><div class="line">            <span class="keyword">let</span> items =  dbManager.execSql(sql)</div><div class="line">            <span class="type">Util</span>.showToast(<span class="keyword">self</span>, message: <span class="string">"插入 = <span class="subst">\(items)</span>"</span>)</div><div class="line"></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="type">Util</span>.showToast(<span class="keyword">self</span>, message: <span class="string">"输入框不能为空"</span>)</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     查询所有雇员</div><div class="line"></div><div class="line">     - parameter btn: &lt;#btn description#&gt;</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">selectAllEmp</span><span class="params">(btn:UIButton)</span></span>  &#123;</div><div class="line">        <span class="keyword">let</span> sql = <span class="string">"select * from T_Employee"</span></div><div class="line">        <span class="keyword">let</span> items =  dbManager.selectAll(sql)</div><div class="line">            <span class="type">Util</span>.showToast(<span class="keyword">self</span>, message: <span class="string">"总数 = <span class="subst">\(items.<span class="built_in">count</span>)</span>"</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     更新用户信息</div><div class="line"></div><div class="line">     - parameter btn: 按钮</div><div class="line">     - parameter en:  雇员</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">UpDateRmp</span><span class="params">(btn:UIButton,en:Employee)</span></span>  &#123;</div><div class="line"></div><div class="line">        <span class="keyword">let</span> sql = <span class="string">"update T_Employee set name = 'kkkk',age = '10' where id  = 5"</span></div><div class="line"></div><div class="line">        <span class="keyword">let</span> items =  dbManager.execSql(sql)</div><div class="line">        <span class="type">Util</span>.showToast(<span class="keyword">self</span>, message: <span class="string">"更新 = <span class="subst">\(items)</span>"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">didReceiveMemoryWarning</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.didReceiveMemoryWarning()</div><div class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：SQLIte的学习基本就是从这四个步骤来实现。有疑问可以，在下面评论。</p>
+<p><a href="https://github.com/lidong1665/Swift-Demo/blob/master/HelloSwfit/HelloSwfit/DBManager.swift" target="_blank" rel="external">代码地址：</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lidong1665.github.io/2016/07/10/Swift学习第九枪之SQLite的使用/" data-id="ciqgckssx0007pux2kzpfj141" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Swift学习第十二枪----移动数据库王者Realm入门教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Swift学习第十二枪----移动数据库王者Realm入门教程/" class="article-date">
+  <time datetime="2016-07-10T08:30:52.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Swift学习第十二枪----移动数据库王者Realm入门教程/">Swift学习第十二枪-移动数据库新王者Realm入门教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天给大家带来的是堪称是一个可以替代SQLite，Core Data 的以及ORMlibraries的轻量级数据库—Realm移动端数据库。</p>
+<p>相比SQLite，Realm更快并且具有很多现代数据库的特性，比如支持JSON，流式api，数据变更通知，以及加密支持，这些都为IOS开发者带来了方便。</p>
+<p>Ream提供了五种编程方式的实现。分别是Java，Objective C，Swift，React-Native，tamarin。在前面我着重介绍在Android中的使用。现在来介绍在Swift中得使用。</p>
+<p>##1 .关于Realm的几个特点：<br>（1）使用简单，大部分常用的功能（比如插入、查询等）都可以用一行简单的代码轻松完成，学习成本低。<br>（2）Realm不是基于Core Data，也不是基于SQLite封装构建的。它有自己的数据库存储引擎。<br>（3）Realm具有良好的跨平台特性，可以在iOS和Android平台上共同使用。代码可以使用 Swift 、 Objective-C 以及 Java 语言来编写。<br>（4）Realm 还提供了一个轻量级的数据库查看工具（Realm Browser）。你也可以用它进行一些简单的编辑操作（比如插入和删除操作）</p>
+<p>##2.支持的类型</p>
+<ol>
+<li>Realm支持以下的属性类型：Bool、Int8、Int16、Int32、Int64、Double、Float、String、NSDate（精度到秒）以及NSData.</li>
+<li>也可以使用List<object> 和Object来建立诸如一对多、一对一之类的关系模型，此外Object的子类也支持此功能。</object></li>
+</ol>
+<p>##3.Realm的安装配置</p>
+<ol>
+<li>Realm的官网去下载最新框架：<a href="http://static.realm.io/downloads/swift/latest" target="_blank" rel="external">http://static.realm.io/downloads/swift/latest</a></li>
+<li>拖拽RealmSwift.framework和Realm.framework文件到”Embedded Binaries”选项中。选中Copy items if needed并点击Finish<br><img src="http://img.blog.csdn.net/20160611141050202" alt="这里写图片描述"></li>
+</ol>
+<p>##4.开始获取Realm</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  RealmUtil.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/6/11.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> RealmSwift</div><div class="line"><span class="comment">/// RealmUtil工具类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealmUtil</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">let</span> instance = <span class="type">RealmUtil</span>()</div><div class="line">    <span class="comment">// 单例  全局的数据访问接口</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">var</span> <span class="title">sharedInstance</span>: <span class="title">RealmUtil</span></span></div><div class="line">    &#123;</div><div class="line"></div><div class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">Static</span> </span>&#123;</div><div class="line">            <span class="keyword">static</span> <span class="keyword">var</span> onceToken : dispatch_once_t = <span class="number">0</span></div><div class="line">            <span class="keyword">static</span> <span class="keyword">var</span> instance : <span class="type">RealmUtil</span>? = <span class="literal">nil</span></div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        dispatch_once(&amp;<span class="type">Static</span>.onceToken) &#123;</div><div class="line">            <span class="type">Static</span>.instance = <span class="type">RealmUtil</span>()</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="type">Static</span>.instance!</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     得到Realm</div><div class="line"></div><div class="line">     - returns: &lt;#return value description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">getRealm</span><span class="params">()</span></span> -&gt; <span class="type">Realm</span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> config = <span class="type">Realm</span>.<span class="type">Configuration</span>()</div><div class="line"></div><div class="line">        <span class="comment">// Use the default directory, but replace the filename with the username</span></div><div class="line">        config.fileURL = config.fileURL!.<span class="type">URLByDeletingLastPathComponent</span>?</div><div class="line">            .<span class="type">URLByAppendingPathComponent</span>(<span class="string">"realm_demo.realm"</span>)</div><div class="line"></div><div class="line">        <span class="comment">// 创建一个有配置的realm</span></div><div class="line">        <span class="keyword">let</span> realm = <span class="keyword">try</span>! <span class="type">Realm</span>(configuration: config)</div><div class="line"></div><div class="line">        <span class="keyword">return</span> realm</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##5.创建RealmSwift.Object</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Dog.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/6/11.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="keyword">import</span> RealmSwift</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>: <span class="title">Object</span> </span>&#123;</div><div class="line">    <span class="keyword">dynamic</span> <span class="keyword">var</span> name = <span class="string">""</span></div><div class="line">    <span class="keyword">dynamic</span> <span class="keyword">var</span> age = <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>: <span class="title">Object</span> </span>&#123;</div><div class="line">    <span class="keyword">dynamic</span> <span class="keyword">var</span> name = <span class="string">""</span></div><div class="line">    <span class="keyword">dynamic</span> <span class="keyword">var</span> picture: <span class="type">NSData</span>? = <span class="literal">nil</span> <span class="comment">// optionals supported</span></div><div class="line">    <span class="keyword">var</span> dogs = <span class="type">List</span>&lt;<span class="type">Dog</span>&gt;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##6.开始对数据库进行简单的增删改查的操作</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  HandleData.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/6/11.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> RealmSwift</div><div class="line"><span class="comment">/// 处理数据</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HandleData</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     添加一个狗</div><div class="line"></div><div class="line">     - parameter dog: &lt;#dog description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">addDog</span><span class="params">(dog:Dog)</span></span>&#123;</div><div class="line">        <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line"></div><div class="line">        <span class="keyword">try</span>! realm.write &#123;</div><div class="line">            realm.add(dog)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     修改一个狗的信息</div><div class="line">     - parameter dog: &lt;#dog description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">updateDog</span><span class="params">(dog:Dog)</span></span>&#123;</div><div class="line">        <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line">        <span class="keyword">try</span>! realm.write &#123;</div><div class="line">            realm.add(dog,update:<span class="literal">true</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     删除一个狗的信息</div><div class="line">     - parameter dog: &lt;#dog description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">deleteDog</span><span class="params">(dog:Dog)</span></span>&#123;</div><div class="line">        <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line">        <span class="keyword">try</span>! realm.write &#123;</div><div class="line">            realm.delete(dog)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     查询所有狗的信息</div><div class="line"></div><div class="line">     - returns: &lt;#return value description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">findAll</span><span class="params">(code:String)</span></span>  -&gt; <span class="type">RealmSwift</span>.<span class="type">Results</span>&lt;<span class="type">Dog</span>&gt; &#123;</div><div class="line"></div><div class="line">    <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line"></div><div class="line">    <span class="keyword">let</span> results = realm.objects(<span class="type">Dog</span>.<span class="keyword">self</span>).<span class="built_in">filter</span>(<span class="string">"age = <span class="subst">\(code)</span>"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">return</span>  results</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     添加一个人</div><div class="line"></div><div class="line">     - parameter p:</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">addPerson</span><span class="params">(p:Person)</span></span>&#123;</div><div class="line">        <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line"></div><div class="line">        <span class="keyword">try</span>! realm.write &#123;</div><div class="line">            realm.add(p)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     查找所有的用户信息</div><div class="line"></div><div class="line">     - returns: &lt;#return value description#&gt;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">findAll</span><span class="params">()</span></span> -&gt;   <span class="type">RealmSwift</span>.<span class="type">Results</span>&lt;<span class="type">Person</span>&gt;&#123;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">let</span>  realm = <span class="type">RealmUtil</span>.sharedInstance.getRealm()</div><div class="line"></div><div class="line">        <span class="keyword">let</span> results = realm.objects(<span class="type">Person</span>.<span class="keyword">self</span>)</div><div class="line"></div><div class="line">        <span class="keyword">return</span>  results</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##7.在RealmViewController中简单调用</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  RealmDemo.swift</span></div><div class="line"><span class="comment">//  HelloSwfit</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/6/11.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 lidong. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="keyword">import</span> RealmSwift</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealmDemo</span>:<span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.whiteColor()</div><div class="line">       <span class="keyword">let</span> h =  <span class="type">HandleData</span>()</div><div class="line"><span class="comment">//        let dog = Dog()</span></div><div class="line"><span class="comment">//        dog.age = 2</span></div><div class="line"><span class="comment">//        dog.name = "gggg"</span></div><div class="line"><span class="comment">//        h.addDog(dog)</span></div><div class="line"><span class="comment">//        let dogs1 = List&lt;Dog&gt;()</span></div><div class="line"><span class="comment">//        dogs1.append(dog)</span></div><div class="line"><span class="comment">//        </span></div><div class="line"><span class="comment">//        let person = Person()</span></div><div class="line"><span class="comment">//        person.name = "lidong"</span></div><div class="line"><span class="comment">//        person.dogs = dogs1</span></div><div class="line"><span class="comment">//        </span></div><div class="line"><span class="comment">//        h.addPerson(person)</span></div><div class="line"></div><div class="line">      <span class="keyword">let</span> result =   h.findAll()</div><div class="line">        <span class="built_in">print</span>(result)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/lidong1665/Swift-Demo" target="_blank" rel="external">代码地址：</a></p>
+<p><img src="http://img.blog.csdn.net/20160611141702804" alt="数据中得数据"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lidong1665.github.io/2016/07/10/Swift学习第十二枪----移动数据库王者Realm入门教程/" data-id="ciqgckst5000apux2wv333on7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="android-Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术" class="article article-type-android" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/" class="article-date">
@@ -110,7 +858,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/" data-id="ciqg8jcdy000173x2cmcl03tk" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android 仿照微信发说说，既能实现拍照，选图库，多图案上传 使用Retrofit2.0技术/" data-id="ciqgckss30001pux2dfwhtujl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -160,7 +908,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqg8jcef000573x2a2e1jztt" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" data-id="ciqgckssk0004pux2d09vjrjo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -234,7 +982,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqg8jceb000373x2ulvvoj69" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/10/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" data-id="ciqgckssg0003pux2h13ga7op" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +1042,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqg8jcek000773x2w4acbxhs" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十枪-AFNetwoking3.0的封装/" data-id="ciqgckst7000bpux2gcaxgb5i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -359,7 +1107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqg8jce1000273x26z7ssrfh" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android中RxJava+Retrofit2.0+MVP模式的整合/" data-id="ciqgckssa0002pux22udti4hw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -417,186 +1165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqg8jcds000073x29rhary9s" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Android数据库新王者-Realm入门教程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/Android数据库新王者-Realm入门教程/" class="article-date">
-  <time datetime="2016-07-09T13:47:08.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/Android数据库新王者-Realm入门教程/">Android数据库库新王者-Realm入门教程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>好长时间没有写关于Android方面的学习文章了，今天给大家带来的是堪称是一个可以替代SQLite以及ORMlibraries的轻量级数据库—Realm移动端数据库。</p>
-<p>相比SQLite，Realm更快并且具有很多现代数据库的特性，比如支持JSON，流式api，数据变更通知，以及加密支持，这些都为安卓开发者带来了方便。</p>
-<p>Ream提供了五种编程方式的实现。分别是Java，Objective C，Swift，React-Native，tamarin。在这里我着重介绍在Android中的使用。后面也会介绍在Swift中得使用。</p>
-<p>##1.先介绍一下打开数据Realm数据库的工具：Realm Browser可视化工具</p>
-<p>Realm资源包中包含了一个很有用的实用工具，可以帮助我们更好地管理Realm数据库，那就是Realm Browser。Realm Browser可以让您轻松地读写Realm数据库（以.realm结尾），因此我们无需头疼如何去查看Realm专有数据库的逻辑结构以及其中的数据，可视化的操作就如同SQLite的其他数据库查看工具一样，十分简单、易用（虽然Realm Browser的功能还十分简陋，真的只能读写而已）。</p>
-<p><img src="http://img.blog.csdn.net/20160610225221541" alt="这里写图片描述"></p>
-<p>##2.Realm支持的数据类型</p>
-<ul>
-<li>支持基本数据结构：boolean, byte, short, ìnt, long, float, double, String, Dateand byte[]</li>
-<li>支持JSON等复杂的数据类型<br>##3.Realm的官方名词</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20160610230041746" alt="这里写图片描述"></p>
-<ul>
-<li>Realm：Realm是框架的核心所在，是我们构建数据库的访问点,使用建造者模式构建对象。</li>
-<li>RealmObject：这是我们自定义的realm数据模型。创建数据模型的行为将会影响到数据库的结构。要创建一个数据模型，我们只需要继承RealmObject，然后设计我们想要存储的属性即可。</li>
-<li>RealmQuery（查询）：要在数据库中检索信息，我们需要用到“检索”操作。如果需要检索更复杂的数据，那么还可以使用复合查询以及结果排序等等操作。</li>
-<li>RealmResults：这个类是执行任何查询请求后所返回的类，其中包含了一系列的Object对象。和List类似，我们可以用下标语法来对其进行访问，并且还可以决定它们之间的关系。不仅如此，它还拥有许多更强大的功能，包括排序、查找等等操作。</li>
-</ul>
-<p>##4、Realm在Android中的使用</p>
-<p>##4.1在项目的build.grade中配置下载库文件   </p>
-<p>在本案例中我使用的最新版本的1.0.0版本。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'realm-android'</span></div><div class="line"></div><div class="line"><span class="keyword">buildscript</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        jcenter()</div><div class="line">        maven &#123; url <span class="string">'https://jitpack.io'</span> &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">dependencies</span> &#123;</div><div class="line">        <span class="keyword">classpath</span> <span class="string">"io.realm:realm-gradle-plugin:1.0.0"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>##4.2创建数据库，获取去Realm</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lidong.demo.realm;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"></div><div class="line"><span class="keyword">import</span> io.realm.Realm;</div><div class="line"><span class="keyword">import</span> io.realm.RealmConfiguration;</div><div class="line"><span class="comment">/**</span></div><div class="line">*</div><div class="line">*<span class="doctag">@className</span>:RealmUtil</div><div class="line">*<span class="doctag">@desc</span>:RealmUtil工具类</div><div class="line">*<span class="doctag">@author</span>:lidong</div><div class="line">*<span class="doctag">@datetime</span>:16/6/10 下午9:55</div><div class="line"></div><div class="line">*/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealmUtil</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span>  RealmUtil sIntance;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> String realmName = <span class="string">"realm_demo.realm"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RealmUtil</span><span class="params">(Context mContext)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mContext = mContext;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 双检索单例</div><div class="line">     * <span class="doctag">@param</span> context</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  RealmUtil <span class="title">getIntance</span><span class="params">(Context context)</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (sIntance == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (RealmUtil.class) &#123;</div><div class="line">                <span class="keyword">if</span> (sIntance == <span class="keyword">null</span>) &#123;</div><div class="line">                    sIntance = <span class="keyword">new</span> RealmUtil(context);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span>  sIntance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">   * 获取realm对象</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">     <span class="function"><span class="keyword">public</span>  Realm <span class="title">getRealm</span><span class="params">()</span></span>&#123;</div><div class="line">Realm realm =Realm.getInstancenew RealmConfiguration.Builder(mContext)                             .name(realmName) .build());</div><div class="line">        <span class="keyword">return</span>  realm;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>##4.3创建一个RealmObject<br>只要继承了RealmObject类，任意JavaBean都能存储在Realm中。必须有一个默认构造器，成员变量有相应的getter/setter方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lidong.demo.realm;</div><div class="line"></div><div class="line"><span class="keyword">import</span> io.realm.RealmObject;</div><div class="line"><span class="keyword">import</span> io.realm.annotations.PrimaryKey;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Person</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">extends</span> <span class="title">RealmObject</span> </span>&#123;</div><div class="line">    <span class="meta">@PrimaryKey</span></div><div class="line">    <span class="keyword">private</span> String code;<span class="comment">//编号</span></div><div class="line">    <span class="keyword">private</span> String name;<span class="comment">//姓名</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;<span class="comment">//年龄</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> age, String code, String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">        <span class="keyword">this</span>.code = code;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(String code)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Person&#123;"</span> +</div><div class="line">                <span class="string">"code='"</span> + code + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", age="</span> + age +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>##4.4对数据Person进行增删改查操作</p>
-<p>PersonDao.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lidong.demo.realm;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by lidong on 16/6/9.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PersonDao</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 插入Person</div><div class="line">     * <span class="doctag">@param</span> person</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">   <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Person person)</span><span class="keyword">throws</span>  Exception</span>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取所有的用户</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">   <span class="function">List&lt;Person&gt; <span class="title">getAllPerson</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  更新用户</div><div class="line">      * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">   <span class="function">Person  <span class="title">updatePerson</span><span class="params">(Person person)</span><span class="keyword">throws</span> Exception</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除用户</div><div class="line">     * <span class="doctag">@param</span> code</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span>   <span class="title">deletePerson</span><span class="params">(String code)</span><span class="keyword">throws</span> Exception</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 异步插入Person</div><div class="line">     * <span class="doctag">@param</span> person</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insertPersonAsync</span><span class="params">(Person person)</span><span class="keyword">throws</span>  Exception</span>;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>PersonDaoImp.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lidong.demo.realm;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> io.realm.Realm;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">*</div><div class="line">*<span class="doctag">@className</span>:PersonDaoImpl</div><div class="line">*<span class="doctag">@desc</span>:</div><div class="line">*<span class="doctag">@author</span>:lidong</div><div class="line">*<span class="doctag">@datetime</span>:16/6/10 下午10:01</div><div class="line"></div><div class="line">*/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonDaoImpl</span> <span class="keyword">implements</span> <span class="title">PersonDao</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Context context;</div><div class="line">    <span class="keyword">private</span> Realm mRealm;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PersonDaoImpl</span><span class="params">(Context context)</span></span>&#123;</div><div class="line">        mRealm = RealmUtil.getIntance(context).getRealm();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * @同步插入用户</div><div class="line">     * <span class="doctag">@param</span> person</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(Person person)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealm(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取所有的用户</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Person&gt; <span class="title">getAllPerson</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        List&lt;Person&gt; mlist = <span class="keyword">null</span>;</div><div class="line">        mlist =  mRealm.where(Person.class).findAll();</div><div class="line">        mRealm.close();</div><div class="line">        <span class="keyword">return</span> mlist;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> person</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Person <span class="title">updatePerson</span><span class="params">(Person person)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealmOrUpdate(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">        <span class="keyword">return</span>  person1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deletePerson</span><span class="params">(String code)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Person person = mRealm.where(Person.class).equalTo(<span class="string">"code"</span>,code).findFirst();</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        person.deleteFromRealm();</div><div class="line">        mRealm.commitTransaction();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 异步插入Person</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> person</div><div class="line">     * <span class="doctag">@throws</span> Exception</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertPersonAsync</span><span class="params">(<span class="keyword">final</span> Person person)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       <span class="comment">//一个Realm只能在同一个线程中访问，在子线程中进行数据库操作必须重新获取Realm对象：</span></div><div class="line">        mRealm.executeTransaction(<span class="keyword">new</span> Realm.Transaction() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Realm realm)</span> </span>&#123;</div><div class="line">                realm.beginTransaction();</div><div class="line">                Person person1 = realm.copyToRealm(person);</div><div class="line">                realm.commitTransaction();</div><div class="line">                realm.close();<span class="comment">//并且要记得在离开线程时要关闭 realm.close();  </span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        mRealm.close();<span class="comment">//关闭Realm对象</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>##4.5在Activity中简单调用</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lidong.demo.realm;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.os.<span class="type">Bundle</span>;</div><div class="line"><span class="keyword">import</span> android.support.v7.app.<span class="type">AppCompatActivity</span>;</div><div class="line"><span class="keyword">import</span> android.util.<span class="type">Log</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.lidong.demo.<span class="type">R</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.<span class="type">List</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> io.realm.<span class="type">Realm</span>;</div><div class="line"></div><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">DemoRealmActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    static <span class="keyword">final</span> <span class="type">String</span> <span class="type">TAG</span> = <span class="type">DemoRealmActivity</span>.<span class="keyword">class</span>.getSimpleName();</div><div class="line">    <span class="type">Realm</span>  mRealm;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(<span class="type">R</span>.layout.activity_demo_realm);</div><div class="line"></div><div class="line"><span class="comment">//         mRealm= RealmUtil.getIntance(this).getRealm();</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//        mRealm.executeTransaction(new Realm.Transaction() &#123;</span></div><div class="line"><span class="comment">//            @Override</span></div><div class="line"><span class="comment">//            public void execute(Realm realm) &#123;</span></div><div class="line"><span class="comment">//                Person person = realm.createObject(Person.class);</span></div><div class="line"><span class="comment">//                person.setName("李东");</span></div><div class="line"><span class="comment">//                person.setAge(24);</span></div><div class="line"><span class="comment">//                person.setCode(UUID.randomUUID().toString());</span></div><div class="line"><span class="comment">//            &#125;</span></div><div class="line"><span class="comment">//        &#125;);</span></div><div class="line">        <span class="type">Person</span> person = <span class="keyword">new</span> <span class="type">Person</span>();</div><div class="line">                person.setName(<span class="string">"李东1"</span>);</div><div class="line">                person.setAge(<span class="number">28</span>);</div><div class="line">                person.setCode(<span class="string">"6e56d3aa-7119-429e-8c59-7ad8241e838d"</span>);</div><div class="line">        <span class="type">PersonDao</span> dao = <span class="keyword">new</span> <span class="type">PersonDaoImpl</span>(<span class="keyword">this</span>);</div><div class="line"><span class="comment">//        try &#123;</span></div><div class="line"><span class="comment">//            dao.insert(person);</span></div><div class="line"><span class="comment">//        &#125; catch (Exception e) &#123;</span></div><div class="line"><span class="comment">//            e.printStackTrace();</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            dao.deletePerson(<span class="string">"6e56d3aa-7119-429e-8c59-7ad8241e838d"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">Exception</span> e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="type">List</span>&lt;<span class="type">Person</span>&gt; persons = dao.getAllPerson();</div><div class="line">            <span class="type">Log</span>.d(<span class="type">TAG</span>, <span class="string">"onCreate: "</span>+persons);</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">Exception</span> e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> void onDestroy() &#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>总结：Android中使用Realm数据库基本上就这几点步骤，这是个入门，更加复杂的操作，我在后面会慢慢的深入。</p>
-<p><a href="https://github.com/lidong1665/AndroidRapidLibrary/tree/master/Android-Rapid-Development-Of-Library/app/src/main/java/com/lidong/demo/realm" target="_blank" rel="external">代码地址</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Android数据库新王者-Realm入门教程/" data-id="ciqg8jced000473x2wv8e78na" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" class="article-date">
-  <time datetime="2016-07-09T13:35:38.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/">Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前面总结了几篇关于Swift的使用，今天要讲的是关于使用Swift开发IOS中蓝牙4.0的开发流程，我以前只是会搞android的蓝牙开发，最近开始了Swift的学习，作为一个swift爱好者，想把蓝牙4.0的这个装逼神器在swift中使用一下。<br>使用Swift开发IOS中蓝牙4.0的开发流程有如下的几个步骤：</p>
-<ul>
-<li><p>建立桥接文件</p>
-</li>
-<li><p>案例的实现</p>
-</li>
-</ul>
-<p>##1. 建立桥接文件<br>1.1在用Swift使用OC中得类文件的时候，需要进行桥接，首先建一个.h的头文件。<br>注意：桥接文件的命名规则：项目名-Bridging-Header.Swift</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Swfit-BLE-Bridging-Header.h</span></div><div class="line"><span class="comment">//  Swift-BLE</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by lidong on 16/7/3.</span></div><div class="line"><span class="comment">//  Copyright © 2016年 李东. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;CoreBluetooth/CoreBluetooth.h&gt;</span></span></div></pre></td></tr></table></figure>
-<p>1.2 在Build-settings -&gt; Swift Complier - Code Generaton —&gt;Objective C Briding Herder中添加自己的桥接文件。<br>如下图：<br><img src="http://img.blog.csdn.net/20160704132842686" alt="这里写图片描述"></p>
-<p>##2.案例的实现</p>
-<p>首先，CoreBluetooth库文件为我们提供两个类CBCentralManagerDelegate,CBPeripheralDelegate ,是蓝牙操作的核心类。</p>
-<p>CBCentralManagerDelegate 中心管理器的代理类</p>
-<p>CBPeripheralDelegate  外围设备的代理类</p>
-<p>####2.1创建CBCentralManager,设置代理</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">var</span>  myCentralManager:CBCentralManager!</div><div class="line">myCentralManager = CBCentralManager()</div><div class="line">myCentralManager<span class="selector-class">.delegate</span> = self</div></pre></td></tr></table></figure>
-<p>####2.2启动扫描发现设备</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="string">"扫描设备。。。。 "</span>)         myCentralManager.scanForPeripheralsWithServices(<span class="literal">nil</span>, options: <span class="literal">nil</span>)</div><div class="line"><span class="comment">//蓝牙的状态</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">centralManager</span><span class="params">(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)</span></span> &#123;</div><div class="line">        <span class="keyword">switch</span> (central.state) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOn</span>:</div><div class="line">            <span class="built_in">print</span>(<span class="string">"蓝牙已打开, 请扫描外设!"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOff</span>:</div><div class="line">            <span class="built_in">print</span>(<span class="string">"蓝牙关闭，请先打开蓝牙"</span>);</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//发现设备</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">centralManager</span><span class="params">(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber)</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"--didDiscoverPeripheral-"</span>)</div><div class="line">        <span class="keyword">if</span> peripheral.name == <span class="type">DEVICENAME</span>&#123;</div><div class="line">            <span class="keyword">self</span>.myPeripheral = peripheral;</div><div class="line">            <span class="keyword">self</span>.myCentralManager = central;</div><div class="line">            central.connectPeripheral(<span class="keyword">self</span>.myPeripheral, options: <span class="literal">nil</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="keyword">self</span>.myPeripheral);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>####2.3 发现设备后，连接设备，连接成功，关闭中心啊管理者的扫描，发现设备的服务，设置外围设备的代理</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设备已经接成功</span></div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">centralManager</span><span class="params">(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral)</span></span> &#123;</div><div class="line">       <span class="built_in">print</span>(<span class="string">"---------didConnectPeripheral-"</span>)</div><div class="line">       <span class="built_in">print</span>(central)</div><div class="line">       <span class="built_in">print</span>(peripheral)</div><div class="line">       <span class="comment">//关闭扫描</span></div><div class="line">       <span class="keyword">self</span>.myCentralManager.stopScan()</div><div class="line">       <span class="keyword">self</span>.myPeripheral.delegate = <span class="keyword">self</span></div><div class="line">       <span class="keyword">self</span>.myPeripheral.discoverServices(<span class="literal">nil</span>)</div><div class="line">       <span class="built_in">print</span>(<span class="string">"扫描服务..."</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>####2.4 根据服务发现特征</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    发现服务调用次方法</div><div class="line">    </div><div class="line">    - parameter peripheral: &lt;#peripheral description#&gt;</div><div class="line">    - parameter error:      &lt;#error description#&gt;</div><div class="line">    */</div><div class="line">   </div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral, didDiscoverServices error: NSError?)</span></span> &#123;</div><div class="line">       <span class="built_in">print</span>(<span class="string">"---发现服务调用次方法-"</span>)</div><div class="line">       </div><div class="line">       <span class="keyword">for</span> s <span class="keyword">in</span> peripheral.services!&#123;</div><div class="line">           peripheral.discoverCharacteristics(<span class="literal">nil</span>, forService: s)</div><div class="line">           <span class="built_in">print</span>(s.<span class="type">UUID</span>.<span class="type">UUIDString</span>)</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="comment">/**</span></div><div class="line">    根据服务找特征</div><div class="line">    </div><div class="line">    - parameter peripheral: &lt;#peripheral description#&gt;</div><div class="line">    - parameter service:    &lt;#service description#&gt;</div><div class="line">    - parameter error:      &lt;#error description#&gt;</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?)</span></span> &#123;</div><div class="line">       <span class="built_in">print</span>(<span class="string">"----发现特征------"</span>)</div><div class="line">       </div><div class="line">       <span class="keyword">for</span> <span class="built_in">c</span> <span class="keyword">in</span> service.characteristics! &#123;</div><div class="line">           </div><div class="line">           <span class="keyword">if</span> <span class="built_in">c</span>.<span class="type">UUID</span>.<span class="type">UUIDString</span> == <span class="string">"2AF0"</span>&#123;</div><div class="line">               <span class="built_in">print</span>(<span class="built_in">c</span>.<span class="type">UUID</span>.<span class="type">UUIDString</span>)</div><div class="line">               peripheral.setNotifyValue(<span class="literal">true</span>, forCharacteristic: <span class="built_in">c</span>)</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">           </div><div class="line">           <span class="keyword">if</span> <span class="built_in">c</span>.<span class="type">UUID</span>.<span class="type">UUIDString</span> == <span class="string">"2AF1"</span>&#123;</div><div class="line">               <span class="built_in">print</span>(<span class="built_in">c</span>.<span class="type">UUID</span>.<span class="type">UUIDString</span>)</div><div class="line">               <span class="keyword">self</span>.writeCharacteristic = <span class="built_in">c</span></div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>####2.5向设备发送指令，获取数据</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    写入后的回掉方法</div><div class="line">    </div><div class="line">    - parameter peripheral:     &lt;#peripheral description#&gt;</div><div class="line">    - parameter characteristic: &lt;#characteristic description#&gt;</div><div class="line">    - parameter error:          &lt;#error description#&gt;</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?)</span></span> &#123;</div><div class="line">      <span class="built_in">print</span>(<span class="string">"didWriteValueForCharacteristic"</span>)</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="comment">/**</span></div><div class="line">    &lt;#设置特征为正在监听，读取数据#&gt;</div><div class="line">    </div><div class="line">    - parameter peripheral:     &lt;#peripheral description#&gt;</div><div class="line">    - parameter characteristic: &lt;#characteristic description#&gt;</div><div class="line">    - parameter error:          &lt;#error description#&gt;</div><div class="line">    */</div><div class="line">   </div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?)</span></span> &#123;</div><div class="line">       <span class="built_in">print</span>(<span class="string">"-----didUpdateNotificationStateForCharacteristic-----"</span>)</div><div class="line">       <span class="keyword">if</span> (error != <span class="literal">nil</span>) &#123;</div><div class="line">           <span class="built_in">print</span>(error?.code);</div><div class="line">       &#125;</div><div class="line">       <span class="comment">//Notification has started</span></div><div class="line">       <span class="keyword">if</span>(characteristic.isNotifying)&#123;</div><div class="line">           peripheral.readValueForCharacteristic(characteristic);</div><div class="line">          <span class="built_in">print</span>(characteristic.<span class="type">UUID</span>.<span class="type">UUIDString</span>);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="comment">/**</span></div><div class="line">    获取外设的数据</div><div class="line">    </div><div class="line">    - parameter peripheral:     &lt;#peripheral description#&gt;</div><div class="line">    - parameter characteristic: &lt;#characteristic description#&gt;</div><div class="line">    - parameter error:          &lt;#error description#&gt;</div><div class="line">    */</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?)</span></span> &#123;</div><div class="line">       <span class="built_in">print</span>(<span class="string">"----didUpdateValueForCharacteristic---"</span>)</div><div class="line">       </div><div class="line">       <span class="keyword">if</span>  characteristic.<span class="type">UUID</span>.<span class="type">UUIDString</span> == <span class="string">"2AF0"</span>  &#123;</div><div class="line">           <span class="keyword">let</span> data:<span class="type">NSData</span> = characteristic.value!</div><div class="line">           <span class="built_in">print</span>(data)</div><div class="line">           <span class="keyword">let</span>  d  = <span class="type">Array</span>(<span class="type">UnsafeBufferPointer</span>(start: <span class="type">UnsafePointer</span>&lt;<span class="type">UInt8</span>&gt;(data.bytes), <span class="built_in">count</span>: data.length))</div><div class="line">           <span class="built_in">print</span>(d)</div><div class="line">           </div><div class="line">           <span class="keyword">let</span> s:<span class="type">String</span> =  <span class="type">HexUtil</span>.encodeToString(d)</div><div class="line">           <span class="keyword">if</span> s != <span class="string">"00"</span> &#123;</div><div class="line">               result += s</div><div class="line">               <span class="built_in">print</span>(result )</div><div class="line">               <span class="built_in">print</span>(result.characters.<span class="built_in">count</span> )</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">           <span class="keyword">if</span> result.characters.<span class="built_in">count</span> == <span class="number">38</span> &#123;</div><div class="line">               lable.text = result</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>####2.6 发送指令的方法</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 发送指令到设备</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">writeToPeripheral</span><span class="params">(bytes:[UInt8])</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> writeCharacteristic != <span class="literal">nil</span> &#123;</div><div class="line">        <span class="keyword">let</span> data1:<span class="type">NSData</span> = dataWithHexstring(bytes)</div><div class="line">        </div><div class="line">        <span class="keyword">self</span>.myPeripheral.writeValue(data1, forCharacteristic: writeCharacteristic, type: <span class="type">CBCharacteristicWriteType</span>.<span class="type">WithResponse</span>)</div><div class="line">        </div><div class="line">    &#125; <span class="keyword">else</span>&#123;</div><div class="line">    </div><div class="line">   </div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> 将[UInt8]数组转换为NSData</div><div class="line"> </div><div class="line"> - parameter bytes: &lt;#bytes description#&gt;</div><div class="line"> </div><div class="line"> - returns: &lt;#return value description#&gt;</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">dataWithHexstring</span><span class="params">(bytes:[UInt8])</span></span> -&gt; <span class="type">NSData</span> &#123;</div><div class="line">    <span class="keyword">let</span> data = <span class="type">NSData</span>(bytes: bytes, length: bytes.<span class="built_in">count</span>)</div><div class="line">    <span class="keyword">return</span> data</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>总结：使用Swift开发IOS中蓝牙4.0的开发流程基本就是如上两大步骤，六小步骤，如果有不明白，可以联系我。</p>
-<p>注意：蓝牙调试代码只能真机，模拟器是没效果的。</p>
-<p><a href="https://github.com/lidong1665/Swift-BLE" target="_blank" rel="external">代码地址 ：</a></p>
-<p><img src="http://img.blog.csdn.net/20160704134747702" alt="截图"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/Swift学习第十三枪-使用Swift开发IOS中蓝牙4.0的开发流程/" data-id="ciqg8jcei000673x2aqcw3d42" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/09/hello-world/" class="article-date">
-  <time datetime="2016-07-09T12:38:25.000Z" itemprop="datePublished">2016-07-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/09/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lidong1665.github.io/2016/07/09/hello-world/" data-id="ciqg8jceo000873x27pdfv8l3" class="article-share-link">Share</a>
+      <a data-url="http://lidong1665.github.io/2016/07/09/Android BottomNavigationBar底部导航控制器的使用/" data-id="ciqgcksrt0000pux2vn3k25va" class="article-share-link">Share</a>
       
       
     </footer>
@@ -607,6 +1176,10 @@
 
   
 
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
       </div>

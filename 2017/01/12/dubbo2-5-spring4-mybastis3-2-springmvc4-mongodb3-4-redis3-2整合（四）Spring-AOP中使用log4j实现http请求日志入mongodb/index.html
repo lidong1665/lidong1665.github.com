@@ -1,0 +1,760 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1、面向切面编程的一些术语
+切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。
+连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。
+增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。
+切入点（Pointcut）：可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb">
+<meta property="og:url" content="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="1、面向切面编程的一些术语
+切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。
+连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。
+增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。
+切入点（Pointcut）：可以">
+<meta property="og:image" content="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-01-12T03:33:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb">
+<meta name="twitter:description" content="1、面向切面编程的一些术语
+切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。
+连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。
+增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。
+切入点（Pointcut）：可以">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/"/>
+
+
+
+
+
+  <title> dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:32:25+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1、面向切面编程的一些术语"><a href="#1、面向切面编程的一些术语" class="headerlink" title="1、面向切面编程的一些术语"></a>1、面向切面编程的一些术语</h2><ul>
+<li>切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。</li>
+<li>连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。</li>
+<li>增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。</li>
+<li>切入点（Pointcut）：可以插入增强处理的连接点。简而言之，当某个连接点满足指定的要求时，该连接点将添加增强处理，该连接点也就变成了切入点。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pointcut xxxPointcut（）：execution（void H*.say*()）</div></pre></td></tr></table></figure>
+<ul>
+<li>引入：将方法或字段添加到被代理的类中，Spring允许将新的接口引入到任何被调用的处理对象中。例如：你可以使用一个引入，使任何对象实现IsModified接口，以此来简化缓存。</li>
+<li>目标对象：被AOP框架进行增强处理的对象，也被称为被增强对象，如果AOP框架采用的是动态的AOP实现 ，那该对象就是一个被代理对象。</li>
+<li>AOP代理：AOP框架创建的对象，简单说，代理就是对目标对象的加强，Spring中的AOP代理可以是JDK的动态代理，也可以是cglib的动态代理，前者是实现接口 的目标对象的代理，后者为不实现接口的目标对象的代理。</li>
+<li>织入（Weaving）：将增强处理添加到目标对象中，并创一个被增强对象（AOP代理）的过程就是织入。织入有l两种实现方式—–编译时增强（AspectJ）和运行时增强（如Spring AOP）。Spring和其他纯Java AOP框架一样，在运行时织入。</li>
+</ul>
+<h2 id="2、AOP的基本概念"><a href="#2、AOP的基本概念" class="headerlink" title="2、AOP的基本概念"></a>2、AOP的基本概念</h2><p>AOP是从程序运行角度考虑程序的流程，提取业务处理的过程的切面，AOP面向的是程序运行中各个步骤，希望以更好的方式来组合业务处理的各个步骤。</p>
+<p>AOP框架并不会与特定的代码耦合，AOP框架能处理程序执行中特定的切入点（PointCut），而不是某个具体类的耦合。</p>
+<h1 id="3、AOP框架具有如下的两个特征。"><a href="#3、AOP框架具有如下的两个特征。" class="headerlink" title="3、AOP框架具有如下的两个特征。"></a>3、AOP框架具有如下的两个特征。</h1><ul>
+<li><p>各个步骤之间良好的隔离。</p>
+</li>
+<li><p>源代码无关。</p>
+<p>注：Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式处理。从而提高了更多的复用。</p>
+<h2 id="4-如何在Spring中引入AOP功能"><a href="#4-如何在Spring中引入AOP功能" class="headerlink" title="4.如何在Spring中引入AOP功能"></a>4.如何在Spring中引入AOP功能</h2></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;srping.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.aspectj&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.7.2&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h2 id="5、实现Web层的日志切面"><a href="#5、实现Web层的日志切面" class="headerlink" title="5、实现Web层的日志切面"></a>5、实现Web层的日志切面</h2><p>实现AOP的切面主要有以下几个要素：</p>
+<ul>
+<li>使用 @Aspect 注解将一个java类定义为切面类。</li>
+<li>使用 @Pointcut 定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。</li>
+<li>根据需要在切入点不同位置的切入内容</li>
+<li>使用 @Before 在切入点开始处切入内容</li>
+<li>使用 @After 在切入点结尾处切入内容</li>
+<li>使用 @AfterReturning 在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）</li>
+<li>使用 @Around 在切入点前后切入内容，并自己控制何时执行切入点自身的内容</li>
+<li>使用 @AfterThrowing 用来处理当切入内容部分抛出异常之后的处理逻辑</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Enumeration;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.springframework.core.annotation.Order;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import org.springframework.web.context.request.RequestContextHolder;</div><div class="line">import org.springframework.web.context.request.ServletRequestAttributes;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">/**</div><div class="line"> 1. 保存请求数据到mongodb</div><div class="line"> 2. @author lidong</div><div class="line"> 3. @createTime 2016年12月24日</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Order(1)</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line"></div><div class="line">    private Logger logger = Logger.getLogger(&quot;mongodb&quot;);</div><div class="line">    ThreadLocal&lt;Long&gt; startTime = new ThreadLocal&lt;&gt;();</div><div class="line">    HttpServletRequest request;</div><div class="line">    JoinPoint mJoinPoint;</div><div class="line">	@Pointcut(&quot;execution (* com.lidong.*.controller.*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">    	    startTime.set(System.currentTimeMillis());   </div><div class="line">       	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</div><div class="line">        request = attributes.getRequest();</div><div class="line">        mJoinPoint = joinPoint;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private BasicDBObject getBasicDBObject(HttpServletRequest request, JoinPoint joinPoint) &#123;</div><div class="line">        BasicDBObject r = new BasicDBObject();</div><div class="line">        r.append(&quot;requestURL&quot;, request.getRequestURL().toString());</div><div class="line">        r.append(&quot;requestURI&quot;, request.getRequestURI());</div><div class="line">        r.append(&quot;queryString&quot;, request.getQueryString());</div><div class="line">        r.append(&quot;remoteAddr&quot;, request.getRemoteAddr());</div><div class="line">        r.append(&quot;remoteHost&quot;, request.getRemoteHost());</div><div class="line">        r.append(&quot;remotePort&quot;, request.getRemotePort());</div><div class="line">        r.append(&quot;localAddr&quot;, request.getLocalAddr());</div><div class="line">        r.append(&quot;localName&quot;, request.getLocalName());</div><div class="line">        r.append(&quot;method&quot;, request.getMethod());</div><div class="line">        r.append(&quot;headers&quot;, getHeadersInfo(request));</div><div class="line">        r.append(&quot;parameters&quot;, request.getParameterMap());</div><div class="line">        r.append(&quot;classMethod&quot;, joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());</div><div class="line">        r.append(&quot;args&quot;, Arrays.toString(joinPoint.getArgs()));</div><div class="line">        return r;</div><div class="line">    &#125;</div><div class="line">  /**</div><div class="line">     * 获取请求头部的信息</div><div class="line">     * @param request</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private Map&lt;String, String&gt; getHeadersInfo(HttpServletRequest request) &#123;</div><div class="line">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</div><div class="line">        Enumeration headerNames = request.getHeaderNames();</div><div class="line">        while (headerNames.hasMoreElements()) &#123;</div><div class="line">            String key = (String) headerNames.nextElement();</div><div class="line">            String value = request.getHeader(key);</div><div class="line">            map.put(key, value);</div><div class="line">        &#125;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">    	     BasicDBObject logInfo = getBasicDBObject(request, mJoinPoint);    </div><div class="line">    	     // 处理完请求，返回内容</div><div class="line">    	     logInfo.append(&quot;response&quot;,ret.toString());</div><div class="line">    	     logInfo.append(&quot;spend_time&quot;, (System.currentTimeMillis() - startTime.get()));</div><div class="line">    	     logger.info(logInfo);</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>在WebLogAspect切面中，分别通过doBefore和doAfterReturning两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore处记录时间，并在doAfterReturning处通过当前时间与开始处记录的时间计算得到请求处理的消耗时间。</p>
+<h2 id="6、实现Web层的日志的日志保存到mongodb数据库中"><a href="#6、实现Web层的日志的日志保存到mongodb数据库中" class="headerlink" title="6、实现Web层的日志的日志保存到mongodb数据库中"></a>6、实现Web层的日志的日志保存到mongodb数据库中</h2><h4 id="6-1-通过自定义appender实现"><a href="#6-1-通过自定义appender实现" class="headerlink" title="6.1.通过自定义appender实现"></a>6.1.通过自定义appender实现</h4><p>思路：log4j提供的输出器实现自Appender接口，要自定义appender输出到MongoDB，只需要继承AppenderSkeleton类，并实现几个方法即可完成。</p>
+<ul>
+<li>引入mongodb的驱动，在pom.xml中引入下面依赖</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;  </div><div class="line">    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.2.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>实现MongoAppender</li>
+</ul>
+<p>编写MongoAppender类继承AppenderSkeleton，实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.apache.log4j.AppenderSkeleton;</div><div class="line">import org.apache.log4j.spi.LoggingEvent;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">import com.mongodb.MongoClient;</div><div class="line">import com.mongodb.MongoClientURI;</div><div class="line">import com.mongodb.client.MongoCollection;</div><div class="line">import com.mongodb.client.MongoDatabase;</div><div class="line">/**</div><div class="line"> * 自定义appender实现输出日志MongoDB</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class MongoAppender  extends AppenderSkeleton &#123;</div><div class="line"></div><div class="line">    private MongoClient mongoClient;</div><div class="line">    private MongoDatabase mongoDatabase;</div><div class="line">    private MongoCollection&lt;BasicDBObject&gt; logsCollection;</div><div class="line">    /**</div><div class="line">     * mongodb连接的url</div><div class="line">     */</div><div class="line">    private String connectionUrl;</div><div class="line">    /**</div><div class="line">     * 数据库的名称</div><div class="line">     */</div><div class="line">    private String databaseName;</div><div class="line">    /**</div><div class="line">     * 集合的名称</div><div class="line">     */</div><div class="line">    private String collectionName;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void append(LoggingEvent loggingEvent) &#123;</div><div class="line"></div><div class="line">        if(mongoDatabase == null) &#123;</div><div class="line">            MongoClientURI connectionString = new MongoClientURI(connectionUrl);</div><div class="line">            mongoClient = new MongoClient(connectionString);</div><div class="line">            mongoDatabase = mongoClient.getDatabase(databaseName);</div><div class="line">            logsCollection = mongoDatabase.getCollection(collectionName, BasicDBObject.class);</div><div class="line">        &#125;</div><div class="line">        //将日志插入到集合</div><div class="line">        logsCollection.insertOne((BasicDBObject) loggingEvent.getMessage());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void close() &#123;</div><div class="line">        if(mongoClient != null) &#123;</div><div class="line">            mongoClient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean requiresLayout() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	public MongoClient getMongoClient() &#123;</div><div class="line">		return mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoClient(MongoClient mongoClient) &#123;</div><div class="line">		this.mongoClient = mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoDatabase getMongoDatabase() &#123;</div><div class="line">		return mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoDatabase(MongoDatabase mongoDatabase) &#123;</div><div class="line">		this.mongoDatabase = mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoCollection&lt;BasicDBObject&gt; getLogsCollection() &#123;</div><div class="line">		return logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setLogsCollection(MongoCollection&lt;BasicDBObject&gt; logsCollection) &#123;</div><div class="line">		this.logsCollection = logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getConnectionUrl() &#123;</div><div class="line">		return connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setConnectionUrl(String connectionUrl) &#123;</div><div class="line">		this.connectionUrl = connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getDatabaseName() &#123;</div><div class="line">		return databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setDatabaseName(String databaseName) &#123;</div><div class="line">		this.databaseName = databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getCollectionName() &#123;</div><div class="line">		return collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setCollectionName(String collectionName) &#123;</div><div class="line">		this.collectionName = collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-3-在log4j-prperties中配置"><a href="#6-3-在log4j-prperties中配置" class="headerlink" title="6.3 在log4j.prperties中配置"></a>6.3 在log4j.prperties中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># mongodb输出</div><div class="line">log4j.logger.mongodb=INFO, mongodb</div><div class="line">log4j.appender.mongodb=com.lidong.util.MongoAppender</div><div class="line">log4j.appender.mongodb.connectionUrl=mongodb://127.0.0.1:27017</div><div class="line">log4j.appender.mongodb.databaseName=logs</div><div class="line">log4j.appender.mongodb.collectionName=logs_request</div></pre></td></tr></table></figure>
+<h3 id="6-4在spring-mvc-xml中开启统一处理请求日志"><a href="#6-4在spring-mvc-xml中开启统一处理请求日志" class="headerlink" title="6.4在spring-mvc.xml中开启统一处理请求日志"></a>6.4在spring-mvc.xml中开启统一处理请求日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- web统一管理  --&gt;</div><div class="line">&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</div><div class="line">&lt;bean class=&quot;com.lidong.util.WebLogAspect&quot; /&gt;</div></pre></td></tr></table></figure>
+<h3 id="6-5在数据库中查看保存的日志"><a href="#6-5在数据库中查看保存的日志" class="headerlink" title="6.5在数据库中查看保存的日志"></a>6.5在数据库中查看保存的日志</h3><p><img src="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" rel="next" title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离">
+                <i class="fa fa-chevron-left"></i> dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" rel="prev" title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用">
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/"
+     data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb"
+     data-content=""
+     data-url="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/"
+           data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb" data-url="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、面向切面编程的一些术语"><span class="nav-number">1.</span> <span class="nav-text">1、面向切面编程的一些术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、AOP的基本概念"><span class="nav-number">2.</span> <span class="nav-text">2、AOP的基本概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、AOP框架具有如下的两个特征。"><span class="nav-number"></span> <span class="nav-text">3、AOP框架具有如下的两个特征。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-如何在Spring中引入AOP功能"><span class="nav-number">1.</span> <span class="nav-text">4.如何在Spring中引入AOP功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、实现Web层的日志切面"><span class="nav-number">2.</span> <span class="nav-text">5、实现Web层的日志切面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、实现Web层的日志的日志保存到mongodb数据库中"><span class="nav-number">3.</span> <span class="nav-text">6、实现Web层的日志的日志保存到mongodb数据库中</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-通过自定义appender实现"><span class="nav-number">3.0.1.</span> <span class="nav-text">6.1.通过自定义appender实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-在log4j-prperties中配置"><span class="nav-number">3.1.</span> <span class="nav-text">6.3 在log4j.prperties中配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4在spring-mvc-xml中开启统一处理请求日志"><span class="nav-number">3.2.</span> <span class="nav-text">6.4在spring-mvc.xml中开启统一处理请求日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-5在数据库中查看保存的日志"><span class="nav-number">3.3.</span> <span class="nav-text">6.5在数据库中查看保存的日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码地址"><span class="nav-number">4.</span> <span class="nav-text">代码地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

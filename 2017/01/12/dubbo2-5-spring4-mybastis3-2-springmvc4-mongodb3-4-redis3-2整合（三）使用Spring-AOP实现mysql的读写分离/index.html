@@ -1,0 +1,772 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1. 为什么要进行（主从复制）读写分离分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。
+在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离">
+<meta property="og:url" content="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="1. 为什么要进行（主从复制）读写分离分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。
+在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操">
+<meta property="og:image" content="http://img.blog.csdn.net/20170102205919680?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170102202118690?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-01-12T03:31:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离">
+<meta name="twitter:description" content="1. 为什么要进行（主从复制）读写分离分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。
+在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170102205919680?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/"/>
+
+
+
+
+
+  <title> dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离 | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:29:59+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-为什么要进行（主从复制）读写分离"><a href="#1-为什么要进行（主从复制）读写分离" class="headerlink" title="1. 为什么要进行（主从复制）读写分离"></a>1. 为什么要进行（主从复制）读写分离</h2><p>分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。</p>
+<p>在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操作的时候访问从数据库Slave，在进行写操作的时候访问主数据库Master。这样的话就减轻了一台服务器的压力。</p>
+<p>在进行读写分离案例分析的时候。首先，配置数据库的主从复制，使用mysqlreplicate命令快速搭建 Mysql 主从复制。</p>
+<h3 id="2-MySQL主从复制的原理"><a href="#2-MySQL主从复制的原理" class="headerlink" title="2.MySQL主从复制的原理"></a>2.MySQL主从复制的原理</h3><h4 id="2-1MySQL主从复制的原理"><a href="#2-1MySQL主从复制的原理" class="headerlink" title="2.1MySQL主从复制的原理"></a>2.1MySQL主从复制的原理</h4><p><img src="http://img.blog.csdn.net/20170102205919680?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="2-2MySQL主从复制的基本过程"><a href="#2-2MySQL主从复制的基本过程" class="headerlink" title="2.2MySQL主从复制的基本过程"></a>2.2MySQL主从复制的基本过程</h4><p> MySQL主从复制的两种情况：同步复制和异步复制，实际复制架构中大部分为异步复制。复制的基本过程如下：</p>
+<ol>
+<li>Slave上面的IO进程连接上Master，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容。</li>
+<li>Master接收到来自Slave的IO进程的请求后，负责复制的IO进程会根据请求信息读取日志指定位置之后的日志信息，返回给Slave的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到Master端的bin-log文件的名称以及bin-log的位置。</li>
+<li>Slave的IO进程接收到信息后，将接收到的日志内容依次添加到Slave端的relay-log文件的最末端，并将读取到的Master端的 bin-log的文件名和位置记录到master-info文件中，以便在下一次读取的时候能够清楚的告诉Master“我需要从某个bin-log的哪个位置开始往后的日志内容，请发给我”。</li>
+<li>Slave的Sql进程检测到relay-log中新增加了内容后，会马上解析relay-log的内容成为在Master端真实执行时候的那些可执行的内容，并在自身执行。</li>
+</ol>
+<h2 id="3-开始MySQL5-7-12的主从复制教程："><a href="#3-开始MySQL5-7-12的主从复制教程：" class="headerlink" title="3.开始MySQL5.7.12的主从复制教程："></a>3.开始MySQL5.7.12的主从复制教程：</h2><h4 id="3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"><a href="#3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。" class="headerlink" title="3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"></a>3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。</h4><p>需要注意的是：GTID方式不支持临时表！所以如果你的业务系统要用到临时表的话就不要考虑这种方式了，至少目前最新版本MySQL5.6.12的GTID复制还是不支持临时表的。</p>
+<p>所以此篇教程主要是告诉大家如何通过日志（binlog）方式做主从复制！</p>
+<h4 id="3-2-MySQL官方提供的MySQL-Replication教程："><a href="#3-2-MySQL官方提供的MySQL-Replication教程：" class="headerlink" title="3.2 MySQL官方提供的MySQL Replication教程："></a>3.2 MySQL官方提供的MySQL Replication教程：</h4><p><a href="http://dev.mysql.com/doc/refman/5.6/en/replication.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/replication.html</a></p>
+<p>这个官方教程强烈建议大家阅读。</p>
+<h4 id="3-3、准备工作："><a href="#3-3、准备工作：" class="headerlink" title="3.3、准备工作："></a>3.3、准备工作：</h4><ol>
+<li>配置MySQL主从复制（读写分离）之前，需要在主从两台服务器先安装好MySQL5.7。</li>
+<li>目前最新的MySQL5.7 GA版本是MySQL5.7.12（点此下载MySQL5.7.12源码包）。</li>
+<li>需要注意如下两点：</li>
+</ol>
+<p>（1）如果你需要用于生产环境，安教程安装MySQL时不要急着做mysql启动操作。建议把mysql初始化生成的/usr/local/mysql/mysql.cnf删除，然后把你优化好的mysql配置文件my.cnf放到/etc下。<br>（2）建议主备两台服务器在同一局域网，主备两台数据库网络需要互通。</p>
+<ol>
+<li>我的所使用的环境：</li>
+</ol>
+<blockquote>
+<p>主数据库IP：192.168.0.104</p>
+<p>从数据库IP：192.168.0.105</p>
+</blockquote>
+<h4 id="3-4-修改主数据库的的配置文件："><a href="#3-4-修改主数据库的的配置文件：" class="headerlink" title="3.4 修改主数据库的的配置文件："></a>3.4 修改主数据库的的配置文件：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=1</div><div class="line">3     log-bin=mysqlmaster-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10    log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
+<p>修改之后要重启mysql服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure></p>
+<h4 id="3-5、修改从数据库的的配置文件："><a href="#3-5、修改从数据库的的配置文件：" class="headerlink" title="3.5、修改从数据库的的配置文件："></a>3.5、修改从数据库的的配置文件：</h4><p><strong>注意：</strong>（server-id配置为大于主数据库的server-id即可）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=2</div><div class="line">3     log-bin=mysqlslave-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10     log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
+<p>修改之后要重启mysql：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure>
+<p>附一个我已优化过的从数据库配置文件：点此下载</p>
+<h4 id="3-6、SSH登录到主数据库："><a href="#3-6、SSH登录到主数据库：" class="headerlink" title="3.6、SSH登录到主数据库："></a>3.6、SSH登录到主数据库：</h4><h4 id="3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）："><a href="#3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）：" class="headerlink" title="3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）："></a>3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1     # mysql -uroot -p</div><div class="line">2     mysql&gt; GRANT REPLICATION SLAVE ON *.* TO &apos;repl&apos;@&apos;192.168.0.104&apos; IDENTIFIED BY &apos;repl&apos;;</div></pre></td></tr></table></figure>
+<h4 id="3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："><a href="#3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：" class="headerlink" title="3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："></a>3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：</h4><blockquote>
+<p>mysql&gt; FLUSH TABLES WITH READ LOCK;</p>
+</blockquote>
+<h4 id="3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："><a href="#3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：" class="headerlink" title="3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："></a>3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：</h4><p><img src="http://img.blog.csdn.net/20170102202118690?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>在这个例子中，二进制日志文件是mysqlmaster-bin.000001，位置是332，记录下这两个值，稍后要用到。</p>
+<h4 id="3-6-4-在主数据库上使用mysqldump命令创建一个数据快照："><a href="#3-6-4-在主数据库上使用mysqldump命令创建一个数据快照：" class="headerlink" title="3.6.4 在主数据库上使用mysqldump命令创建一个数据快照："></a>3.6.4 在主数据库上使用mysqldump命令创建一个数据快照：</h4><blockquote>
+<p>mysqldump -uroot -p -h127.0.0.1 -P3306 –all-databases  –triggers –routines –events &gt;all.sql</p>
+</blockquote>
+<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导出完成。</p>
+<h4 id="3-6-5-解锁第2-6-2步主数据的锁表操作："><a href="#3-6-5-解锁第2-6-2步主数据的锁表操作：" class="headerlink" title="3.6.5 解锁第2.6.2步主数据的锁表操作："></a>3.6.5 解锁第2.6.2步主数据的锁表操作：</h4><blockquote>
+<p>mysql&gt; UNLOCK TABLES;</p>
+</blockquote>
+<h4 id="3-7、SSH登录到从数据库："><a href="#3-7、SSH登录到从数据库：" class="headerlink" title="3.7、SSH登录到从数据库："></a>3.7、SSH登录到从数据库：</h4><p>（1）通过FTP、SFTP或其他方式，将上一步备份的主数据库快照all.sql上传到从数据库某个路径，例如我放在了/home/lidong/目录下；</p>
+<p>（2）从导入主的快照：</p>
+<blockquote>
+<h1 id="cd-home-lidong"><a href="#cd-home-lidong" class="headerlink" title="cd /home/lidong"></a>cd /home/lidong</h1><pre><code># mysql -uroot -p -h127.0.0.1 -P3306 &lt; all.sql
+</code></pre></blockquote>
+<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导入完成。</p>
+<p>（3）给从数据库设置复制的主数据库信息（注意修改MASTER_LOG_FILE和MASTER_LOG_POS的值）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># mysql -uroot -p</div><div class="line">mysql&gt; CHANGE MASTER TO MASTER_HOST=&apos;192.168.100.2&apos;,MASTER_USER=&apos;repl&apos;,MASTER_PASSWORD=&apos;repl&apos;,MASTER_LOG_FILE=&apos;mysqlmaster-bin.000001&apos;,MASTER_LOG_POS=332;</div><div class="line"># 然后启动从数据库的复制线程：</div><div class="line">mysql&gt; START slave;</div><div class="line"># 接着查询数据库的slave状态：</div><div class="line">mysql&gt;  SHOW slave STATUS \G</div><div class="line"># 如果下面两个参数都是Yes，则说明主从配置成功！</div><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
+<p>（4）接下来我们可以在主数据库上创建数据库、表、插入数据，然后看从数据库是否同步了这些操作。</p>
+<p>一主一从的主从复制就实现了。</p>
+<h2 id="4、实现读写分离的两种方法"><a href="#4、实现读写分离的两种方法" class="headerlink" title="4、实现读写分离的两种方法"></a>4、实现读写分离的两种方法</h2><ol>
+<li>第一种方式是我们最常用的方式，就是定义2个数据库连接，一个是MasterDataSource,另一个是SlaveDataSource。更新数据时我们读取MasterDataSource，查询数据时我们读取SlaveDataSource。这种方式很简单。</li>
+<li>第二种方式动态数据源切换，就是在程序运行时，把数据源动态织入到程序中，从而选择读取主库还是从库。主要使用的技术是：Annotation，spring AOP ，反射。<h2 id="5-Spring-AOP-实现MySQL读写分离的具体实现"><a href="#5-Spring-AOP-实现MySQL读写分离的具体实现" class="headerlink" title="5.Spring AOP 实现MySQL读写分离的具体实现"></a>5.Spring AOP 实现MySQL读写分离的具体实现</h2><h4 id="5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java"><a href="#5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java" class="headerlink" title="5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java"></a>5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java</h4></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取数据源，用于动态切换数据源</div><div class="line"> */</div><div class="line">public class ChooseDataSource extends AbstractRoutingDataSource &#123;</div><div class="line"></div><div class="line">    public static Map&lt;String, List&lt;String&gt;&gt; METHOD_TYPE_MAP = new HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 实现父类中的抽象方法，获取数据源名称</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    protected Object determineCurrentLookupKey() &#123;</div><div class="line">        return DataSourceHandler.getDataSource();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 设置方法名前缀对应的数据源</div><div class="line">    public void setMethodType(Map&lt;String, String&gt; map) &#123;</div><div class="line">        for (String key : map.keySet()) &#123;</div><div class="line">            List&lt;String&gt; v = new ArrayList&lt;String&gt;();</div><div class="line">            String[] types = map.get(key).split(&quot;,&quot;);</div><div class="line">            for (String type : types) &#123;</div><div class="line">                if (StringUtils.isNotBlank(type)) &#123;</div><div class="line">                    v.add(type);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            METHOD_TYPE_MAP.put(key, v);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-2-DataSourceAspect进行具体方法的AOP拦截"><a href="#5-2-DataSourceAspect进行具体方法的AOP拦截" class="headerlink" title="5.2 DataSourceAspect进行具体方法的AOP拦截"></a>5.2 DataSourceAspect进行具体方法的AOP拦截</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.context.annotation.EnableAspectJAutoProxy;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 切换数据源(不同方法调用不同数据源)</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">@EnableAspectJAutoProxy(proxyTargetClass = true)</div><div class="line">public class DataSourceAspect &#123;</div><div class="line"></div><div class="line">    protected Logger logger = LoggerFactory.getLogger(this.getClass());</div><div class="line"></div><div class="line">    @Pointcut(&quot;execution(* com.lidong.core.*.dao.*.*(..))&quot;)</div><div class="line">    public void aspect() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 配置前置通知,使用在方法aspect()上注册的切入点</div><div class="line">     */</div><div class="line">    @Before(&quot;aspect()&quot;)</div><div class="line">    public void before(JoinPoint point) &#123;</div><div class="line">        String className = point.getTarget().getClass().getName();</div><div class="line">        String method = point.getSignature().getName();</div><div class="line">        logger.info(className + &quot;.&quot; + method + &quot;(&quot; + StringUtils.join(point.getArgs(), &quot;,&quot;) + &quot;)&quot;);</div><div class="line">        try &#123;</div><div class="line">            for (String key : ChooseDataSource.METHOD_TYPE_MAP.keySet()) &#123;</div><div class="line">                for (String type : ChooseDataSource.METHOD_TYPE_MAP.get(key)) &#123;</div><div class="line">                    if (method.startsWith(type)) &#123;</div><div class="line">                        DataSourceHandler.putDataSource(key);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-3-数据源的Handler类-DataSourceHandler-java"><a href="#5-3-数据源的Handler类-DataSourceHandler-java" class="headerlink" title="5.3 数据源的Handler类  DataSourceHandler.java"></a>5.3 数据源的Handler类  DataSourceHandler.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line">/**</div><div class="line"> * 数据源的Handler类</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class DataSourceHandler &#123;</div><div class="line">	 // 数据源名称线程池</div><div class="line">    public static final ThreadLocal&lt;String&gt; holder = new ThreadLocal&lt;String&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 在项目启动的时候将配置的读、写数据源加到holder中</div><div class="line">     */</div><div class="line">    public static void putDataSource(String datasource) &#123;</div><div class="line">        holder.set(datasource);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 从holer中获取数据源字符串</div><div class="line">     */</div><div class="line">    public static String getDataSource() &#123;</div><div class="line">        return holder.get();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-4-spring-db-xml读写数据源配置"><a href="#5-4-spring-db-xml读写数据源配置" class="headerlink" title="5.4 spring-db.xml读写数据源配置"></a>5.4 spring-db.xml读写数据源配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">driver=com.mysql.jdbc.Driver</div><div class="line">url=jdbc:mysql://127.0.0.1:3306/hms</div><div class="line">url1=jdbc:mysql://192.168.0.105:3306/hms</div><div class="line">username=root</div><div class="line">password=123456</div><div class="line">password1=  </div><div class="line">initialSize=0</div><div class="line">maxActive=20</div><div class="line">maxIdle=20</div><div class="line">minIdle=1</div><div class="line">maxWait=60000</div><div class="line">timeBetweenEvictionRunsMillis=3000</div><div class="line">minEvictableIdleTimeMillis=300000</div><div class="line">maxPoolPreparedStatementPerConnectionSize=20</div><div class="line">druid.filters=</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans    </div><div class="line">                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/context    </div><div class="line">                        http://www.springframework.org/schema/context/spring-context-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/mvc    </div><div class="line">                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入配置文件 &lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:jdbc.properties&quot; /&gt; &lt;/bean&gt; --&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot;</div><div class="line">		class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;locations&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;value&gt;classpath:jdbc.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:mongo.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:redis.properties&lt;/value&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;statFilter&quot; class=&quot;com.alibaba.druid.filter.stat.StatFilter&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;logSlowSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;mergeSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">	&lt;bean id=&quot;readDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;stat&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;20&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;3000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolPreparedStatements&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot;</div><div class="line">			value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;writeDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		destroy-method=&quot;close&quot; init-method=&quot;init&quot; lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;$&#123;initialSize&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;$&#123;maxActive&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;$&#123;maxWait&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;proxyFilters&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;ref bean=&quot;statFilter&quot; /&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;$&#123;druid.filters&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;connectionProperties&quot; value=&quot;password=$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenLogStatsMillis&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;$&#123;minEvictableIdleTimeMillis&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;$&#123;timeBetweenEvictionRunsMillis&#125;&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- 配置动态分配的读写 数据源 --&gt;</div><div class="line">	&lt;bean id=&quot;dataSource&quot; class=&quot;com.lidong.util.aspect.ChooseDataSource&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;targetDataSources&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot; value-type=&quot;javax.sql.DataSource&quot;&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value-ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value-ref=&quot;readDataSource&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;defaultTargetDataSource&quot; ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">		&lt;property name=&quot;methodType&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot;&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value=&quot;,get,select,count,list,query&quot; /&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value=&quot;,add,create,update,delete,remove,&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>配置了readDataSource和writeDataSource两个数据源，但是交给<br>SqlSessionFactoryBean进行管理的只有dataSource,使用了com.lidong.util.aspect.ChooseDataSource来进行数据源的选择，默认的数据源是writeDataSource。methodType是定义了方法的关键字，那些是选择读库，那个是写库。</p>
+<h4 id="5-5-在Dao层通过切面选择数据源"><a href="#5-5-在Dao层通过切面选择数据源" class="headerlink" title="5.5 在Dao层通过切面选择数据源"></a>5.5 在Dao层通过切面选择数据源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.service;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.lidong.api.service.user.IUserService;</div><div class="line">import com.lidong.core.user.dao.IUserDao;</div><div class="line">import com.lidong.model.user.User;</div><div class="line">@Service(&quot;userService&quot;)</div><div class="line">public class UserServiceImp implements IUserService &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	IUserDao mIUserDao;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserById(int userId) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserByUsername(String username) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryUsername(username);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void addUser(User user) &#123;</div><div class="line">	    mIUserDao.insert(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getAllUser() &#123;</div><div class="line">		return mIUserDao.selectAllUsers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int delUserById(Integer userId) &#123;</div><div class="line">		return mIUserDao.deleteByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int updateUser(User user) &#123;</div><div class="line">		return mIUserDao.updateByPrimaryKey(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：通过看com.alibaba.druid.pool.DruidDataSourceStatLoggerImpl 是一分钟发一次心跳，监听写数据源有没有宕机。如果宕机会进行重连。</p>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="[代码地址]"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">[代码地址]</a></h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/" rel="next" title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid">
+                <i class="fa fa-chevron-left"></i> dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" rel="prev" title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb">
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/"
+     data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离"
+     data-content=""
+     data-url="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/"
+           data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离" data-url="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-为什么要进行（主从复制）读写分离"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么要进行（主从复制）读写分离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL主从复制的原理"><span class="nav-number">1.1.</span> <span class="nav-text">2.MySQL主从复制的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1MySQL主从复制的原理"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.1MySQL主从复制的原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2MySQL主从复制的基本过程"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.2MySQL主从复制的基本过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-开始MySQL5-7-12的主从复制教程："><span class="nav-number">2.</span> <span class="nav-text">3.开始MySQL5.7.12的主从复制教程：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"><span class="nav-number">2.0.1.</span> <span class="nav-text">3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-MySQL官方提供的MySQL-Replication教程："><span class="nav-number">2.0.2.</span> <span class="nav-text">3.2 MySQL官方提供的MySQL Replication教程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3、准备工作："><span class="nav-number">2.0.3.</span> <span class="nav-text">3.3、准备工作：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-修改主数据库的的配置文件："><span class="nav-number">2.0.4.</span> <span class="nav-text">3.4 修改主数据库的的配置文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5、修改从数据库的的配置文件："><span class="nav-number">2.0.5.</span> <span class="nav-text">3.5、修改从数据库的的配置文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6、SSH登录到主数据库："><span class="nav-number">2.0.6.</span> <span class="nav-text">3.6、SSH登录到主数据库：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）："><span class="nav-number">2.0.7.</span> <span class="nav-text">3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："><span class="nav-number">2.0.8.</span> <span class="nav-text">3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："><span class="nav-number">2.0.9.</span> <span class="nav-text">3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-4-在主数据库上使用mysqldump命令创建一个数据快照："><span class="nav-number">2.0.10.</span> <span class="nav-text">3.6.4 在主数据库上使用mysqldump命令创建一个数据快照：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-5-解锁第2-6-2步主数据的锁表操作："><span class="nav-number">2.0.11.</span> <span class="nav-text">3.6.5 解锁第2.6.2步主数据的锁表操作：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7、SSH登录到从数据库："><span class="nav-number">2.0.12.</span> <span class="nav-text">3.7、SSH登录到从数据库：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-home-lidong"><span class="nav-number"></span> <span class="nav-text">cd /home/lidong</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4、实现读写分离的两种方法"><span class="nav-number">1.</span> <span class="nav-text">4、实现读写分离的两种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Spring-AOP-实现MySQL读写分离的具体实现"><span class="nav-number">2.</span> <span class="nav-text">5.Spring AOP 实现MySQL读写分离的具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java"><span class="nav-number">2.0.1.</span> <span class="nav-text">5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-DataSourceAspect进行具体方法的AOP拦截"><span class="nav-number">2.0.2.</span> <span class="nav-text">5.2 DataSourceAspect进行具体方法的AOP拦截</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-数据源的Handler类-DataSourceHandler-java"><span class="nav-number">2.0.3.</span> <span class="nav-text">5.3 数据源的Handler类  DataSourceHandler.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-spring-db-xml读写数据源配置"><span class="nav-number">2.0.4.</span> <span class="nav-text">5.4 spring-db.xml读写数据源配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-在Dao层通过切面选择数据源"><span class="nav-number">2.0.5.</span> <span class="nav-text">5.5 在Dao层通过切面选择数据源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码地址"><span class="nav-number">3.</span> <span class="nav-text">[代码地址]</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

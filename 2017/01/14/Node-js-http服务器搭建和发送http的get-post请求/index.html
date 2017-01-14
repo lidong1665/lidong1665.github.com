@@ -1,0 +1,719 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="node.js," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.Node.js 搭建http服务器1.1创建server.js12345678var http = require(&amp;apos;http&amp;apos;);var querystring = require(&amp;apos;querystring&amp;apos;);http.createServer(function (request, response) &amp;#123;    console.log(&amp;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js  http服务器搭建和发送http的get,post请求">
+<meta property="og:url" content="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="1.Node.js 搭建http服务器1.1创建server.js12345678var http = require(&amp;apos;http&amp;apos;);var querystring = require(&amp;apos;querystring&amp;apos;);http.createServer(function (request, response) &amp;#123;    console.log(&amp;a">
+<meta property="og:image" content="http://img.blog.csdn.net/20161006090853541">
+<meta property="og:image" content="http://img.blog.csdn.net/20161006091004463">
+<meta property="og:image" content="http://img.blog.csdn.net/20161006091828857">
+<meta property="og:image" content="http://img.blog.csdn.net/20161006092255174">
+<meta property="og:updated_time" content="2017-01-14T10:34:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node.js  http服务器搭建和发送http的get,post请求">
+<meta name="twitter:description" content="1.Node.js 搭建http服务器1.1创建server.js12345678var http = require(&amp;apos;http&amp;apos;);var querystring = require(&amp;apos;querystring&amp;apos;);http.createServer(function (request, response) &amp;#123;    console.log(&amp;a">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161006090853541">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/"/>
+
+
+
+
+
+  <title> Node.js  http服务器搭建和发送http的get,post请求 | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Node.js  http服务器搭建和发送http的get,post请求
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:31:43+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Node-js-搭建http服务器"><a href="#1-Node-js-搭建http服务器" class="headerlink" title="1.Node.js 搭建http服务器"></a>1.Node.js 搭建http服务器</h2><h3 id="1-1创建server-js"><a href="#1-1创建server-js" class="headerlink" title="1.1创建server.js"></a>1.1创建server.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line">http.createServer(function (request, response) &#123;</div><div class="line">    console.log(&apos;receive request&apos;);</div><div class="line">    response.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text-plain&apos; &#125;);</div><div class="line">    response.end(&apos;Hello World\n&apos;);</div><div class="line">&#125;).listen(8124);</div><div class="line">console.log(&quot;node server start ok  port &quot;+8124);</div></pre></td></tr></table></figure>
+<h3 id="1-2执行-server-js"><a href="#1-2执行-server-js" class="headerlink" title="1.2执行 server.js"></a>1.2执行 server.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node server.js</div></pre></td></tr></table></figure>
+<h3 id="1-3服务器启动"><a href="#1-3服务器启动" class="headerlink" title="1.3服务器启动"></a>1.3服务器启动</h3><p>如图：<br><img src="http://img.blog.csdn.net/20161006090853541" alt="这里写图片描述"></p>
+<p>通过浏览器地址请求：<a href="http://localhost:8124" target="_blank" rel="external">http://localhost:8124</a></p>
+<p><img src="http://img.blog.csdn.net/20161006091004463" alt="这里写图片描述"></p>
+<h2 id="2-发送GET请求"><a href="#2-发送GET请求" class="headerlink" title="2.发送GET请求"></a>2.发送GET请求</h2><h3 id="2-1发送get请求通过聚合服务器获取微信新闻数据"><a href="#2-1发送get请求通过聚合服务器获取微信新闻数据" class="headerlink" title="2.1发送get请求通过聚合服务器获取微信新闻数据"></a>2.1发送get请求通过聚合服务器获取微信新闻数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line"></div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line"></div><div class="line">http.get(&apos;http://v.juhe.cn/weixin/query?key=f16af393a63364b729fd81ed9fdd4b7d&amp;pno=1&amp;ps=10&apos;, function (response) &#123;</div><div class="line">    var body = [];</div><div class="line">    console.log(response.statusCode);</div><div class="line">    console.log(response.headers);</div><div class="line">    console.log(response);</div><div class="line">    response.on(&apos;data&apos;, function (chunk) &#123;</div><div class="line">        body.push(chunk);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    response.on(&apos;end&apos;, function () &#123;</div><div class="line">        body = Buffer.concat(body);</div><div class="line">        console.log(body.toString());</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="2-2-执行-get-demo-js"><a href="#2-2-执行-get-demo-js" class="headerlink" title="2.2 执行 get_demo.js"></a>2.2 执行 get_demo.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node get_demo.js</div></pre></td></tr></table></figure>
+<h3 id="2-3获取的结果打印"><a href="#2-3获取的结果打印" class="headerlink" title="2.3获取的结果打印"></a>2.3获取的结果打印</h3><p><img src="http://img.blog.csdn.net/20161006091828857" alt="这里写图片描述"></p>
+<h2 id="3-发送POST请求"><a href="#3-发送POST请求" class="headerlink" title="3.发送POST请求"></a>3.发送POST请求</h2><h3 id="3-1发送post请求通过聚合服务器获取微信闻数据"><a href="#3-1发送post请求通过聚合服务器获取微信闻数据" class="headerlink" title="3.1发送post请求通过聚合服务器获取微信闻数据"></a>3.1发送post请求通过聚合服务器获取微信闻数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line"></div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line"></div><div class="line">var postData = querystring.stringify(&#123;</div><div class="line">  &apos;key&apos; : &apos;f16af393a63364b729fd81ed9fdd4b7d&apos;,</div><div class="line">  &apos;pno&apos;:&apos;1&apos;,</div><div class="line">  &apos;ps&apos;:10</div><div class="line">&#125;);</div><div class="line"></div><div class="line">var options = &#123;</div><div class="line">  hostname: &apos;v.juhe.cn&apos;,</div><div class="line">  path: &apos;/weixin/query&apos;,</div><div class="line">  method: &apos;POST&apos;,</div><div class="line">  headers: &#123;</div><div class="line">    &apos;Content-Type&apos;: &apos;application/x-www-form-urlencoded&apos;,</div><div class="line">    &apos;Content-Length&apos;: Buffer.byteLength(postData)</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var req = http.request(options, (res) =&gt; &#123;</div><div class="line">  console.log(`STATUS: $&#123;res.statusCode&#125;`);</div><div class="line">  console.log(`HEADERS: $&#123;JSON.stringify(res.headers)&#125;`);</div><div class="line">  res.setEncoding(&apos;utf8&apos;);</div><div class="line">  res.on(&apos;data&apos;, (chunk) =&gt; &#123;</div><div class="line">    console.log(`BODY: $&#123;chunk&#125;`);</div><div class="line">  &#125;);</div><div class="line">  res.on(&apos;end&apos;, () =&gt; &#123;</div><div class="line">    console.log(&apos;No more data in response.&apos;)</div><div class="line">  &#125;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">req.on(&apos;error&apos;, (e) =&gt; &#123;</div><div class="line">  console.log(`problem with request: $&#123;e.message&#125;`);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// write data to request body</div><div class="line">req.write(postData);</div><div class="line">req.end();</div></pre></td></tr></table></figure>
+<h3 id="3-2-执行-post-demo-js"><a href="#3-2-执行-post-demo-js" class="headerlink" title="3.2 执行 post_demo.js"></a>3.2 执行 post_demo.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node post_demo.js</div></pre></td></tr></table></figure>
+<h3 id="3-3获取的结果打印"><a href="#3-3获取的结果打印" class="headerlink" title="3.3获取的结果打印"></a>3.3获取的结果打印</h3><p><img src="http://img.blog.csdn.net/20161006092255174" alt="这里写图片描述"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/14/微信小程序初体验-列表的上拉加载和下拉刷新的实现/" rel="next" title="微信小程序初体验-列表的上拉加载和下拉刷新的实现">
+                <i class="fa fa-chevron-left"></i> 微信小程序初体验-列表的上拉加载和下拉刷新的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/14/node-js-操作MongoDB数据库/" rel="prev" title="node.js 操作MongoDB数据库">
+                node.js 操作MongoDB数据库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/"
+     data-title="Node.js  http服务器搭建和发送http的get,post请求"
+     data-content=""
+     data-url="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/"
+           data-title="Node.js  http服务器搭建和发送http的get,post请求" data-url="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Node-js-搭建http服务器"><span class="nav-number">1.</span> <span class="nav-text">1.Node.js 搭建http服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1创建server-js"><span class="nav-number">1.1.</span> <span class="nav-text">1.1创建server.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2执行-server-js"><span class="nav-number">1.2.</span> <span class="nav-text">1.2执行 server.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3服务器启动"><span class="nav-number">1.3.</span> <span class="nav-text">1.3服务器启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-发送GET请求"><span class="nav-number">2.</span> <span class="nav-text">2.发送GET请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1发送get请求通过聚合服务器获取微信新闻数据"><span class="nav-number">2.1.</span> <span class="nav-text">2.1发送get请求通过聚合服务器获取微信新闻数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-执行-get-demo-js"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 执行 get_demo.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3获取的结果打印"><span class="nav-number">2.3.</span> <span class="nav-text">2.3获取的结果打印</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-发送POST请求"><span class="nav-number">3.</span> <span class="nav-text">3.发送POST请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1发送post请求通过聚合服务器获取微信闻数据"><span class="nav-number">3.1.</span> <span class="nav-text">3.1发送post请求通过聚合服务器获取微信闻数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-执行-post-demo-js"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 执行 post_demo.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3获取的结果打印"><span class="nav-number">3.3.</span> <span class="nav-text">3.3获取的结果打印</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

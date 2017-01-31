@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -246,6 +246,304 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/12/Android-打开本地pdf文件/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/12/Android-打开本地pdf文件/" itemprop="url">
+                  Android 打开本地pdf文件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-12T12:46:18+08:00">
+                2016-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/12/Android-打开本地pdf文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/12/Android-打开本地pdf文件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Android 中打开pdf文件也是一种很常见的场景，但是上网找了好多资料，有用WebView加载的，但是要用vpn才能搞，最后发现一个库挺不错的，再次分享给大家<br>android-pdfview。下面主要说一下该库的使用方法。</p>
+<h3 id="1-该库的下载地址"><a href="#1-该库的下载地址" class="headerlink" title="1.  该库的下载地址"></a>1.  该库的下载地址</h3><p><a href="https://github.com/JoanZapata/android-pdfview" target="_blank" rel="external">https://github.com/JoanZapata/android-pdfview</a></p>
+<h3 id="2-android-pdfview的简单介绍"><a href="#2-android-pdfview的简单介绍" class="headerlink" title="2. android-pdfview的简单介绍"></a>2. android-pdfview的简单介绍</h3><p>   PDFView是这个库中最核心的类，用于加载pdf文件，PDFView是的实现是继承于SurfaceView来实现的。主要用到了建造者模式来设置相关的属性。</p>
+<ul>
+<li>fromFile(file)  //设置pdf文件地址</li>
+<li>fromAsset(assetFileName)   //设置pdf文件地址</li>
+<li>defaultPage(1)         //设置默认显示第1页</li>
+<li>onPageChange(this)     //设置翻页监听</li>
+<li>onLoad(this)           //设置加载监听</li>
+<li>onDraw(this)            //绘图监听</li>
+<li>showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</li>
+<li>swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</li>
+<li>enableSwipe(true)   //是否允许翻页，默认是允许翻页</li>
+<li>pages()  //把2 , 3 , 4 , 5 过滤掉</li>
+<li>load();</li>
+</ul>
+<h3 id="3-在项目的build-gradle添加这个依赖"><a href="#3-在项目的build-gradle添加这个依赖" class="headerlink" title="3. 在项目的build.gradle添加这个依赖"></a>3. 在项目的build.gradle添加这个依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.joanzapata.pdfview:android-pdfview:1.0.4@aar&apos;</div></pre></td></tr></table></figure>
+<h3 id="4-写一个布局文件"><a href="#4-写一个布局文件" class="headerlink" title="4.写一个布局文件"></a>4.写一个布局文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    android:id=&quot;@+id/activity_main&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    tools:context=&quot;com.lidong.pdf.androidpdf.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;com.joanzapata.pdfview.PDFView</div><div class="line">        android:id=&quot;@+id/pdfView&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        /&gt;</div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
+<h3 id="5-Activity的实现"><a href="#5-Activity的实现" class="headerlink" title="5.Activity的实现"></a>5.Activity的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">package com.lidong.pdf.androidpdf;</div><div class="line"></div><div class="line">import android.graphics.Canvas;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.os.Bundle;</div><div class="line">import android.view.ViewTreeObserver;</div><div class="line">import android.widget.Toast;</div><div class="line"></div><div class="line">import com.joanzapata.pdfview.PDFView;</div><div class="line">import com.joanzapata.pdfview.listener.OnDrawListener;</div><div class="line">import com.joanzapata.pdfview.listener.OnLoadCompleteListener;</div><div class="line">import com.joanzapata.pdfview.listener.OnPageChangeListener;</div><div class="line"></div><div class="line">import java.io.File;</div><div class="line"></div><div class="line">public class MainActivity extends AppCompatActivity implements OnPageChangeListener</div><div class="line">        ,OnLoadCompleteListener, OnDrawListener &#123;</div><div class="line">    private PDFView pdfView ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        pdfView = (PDFView) findViewById( R.id.pdfView );</div><div class="line"></div><div class="line">        //从assets目录读取pdf</div><div class="line">        displayFromAssets(&quot;0010000022464002F__李东.pdf&quot;);</div><div class="line"></div><div class="line">        //从文件中读取pdf</div><div class="line">//        displayFromFile( new File( &quot;fileName&quot;));</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void displayFromAssets(String assetFileName ) &#123;</div><div class="line">        pdfView.fromAsset(assetFileName)   //设置pdf文件地址</div><div class="line">                .defaultPage(1)         //设置默认显示第1页</div><div class="line">                .onPageChange(this)     //设置翻页监听</div><div class="line">                .onLoad(this)           //设置加载监听</div><div class="line">                .onDraw(this)            //绘图监听</div><div class="line">                .showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</div><div class="line">                .swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</div><div class="line">                .enableSwipe(true)   //是否允许翻页，默认是允许翻页</div><div class="line">//                 .pages()  //把 5 过滤掉</div><div class="line">                .load();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void displayFromFile( File file ) &#123;</div><div class="line">        pdfView.fromFile(file)   //设置pdf文件地址</div><div class="line">                .defaultPage(6)         //设置默认显示第1页</div><div class="line">                .onPageChange(this)     //设置翻页监听</div><div class="line">                .onLoad(this)           //设置加载监听</div><div class="line">                .onDraw(this)            //绘图监听</div><div class="line">                .showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</div><div class="line">                .swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</div><div class="line">                .enableSwipe(true)   //是否允许翻页，默认是允许翻</div><div class="line">                // .pages( 2 ，5  )  //把2  5 过滤掉</div><div class="line">                .load();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 翻页回调</div><div class="line">     * @param page</div><div class="line">     * @param pageCount</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void onPageChanged(int page, int pageCount) &#123;</div><div class="line">        Toast.makeText( MainActivity.this , &quot;page= &quot; + page +</div><div class="line">                &quot; pageCount= &quot; + pageCount , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 加载完成回调</div><div class="line">     * @param nbPages  总共的页数</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void loadComplete(int nbPages) &#123;</div><div class="line">        Toast.makeText( MainActivity.this ,  &quot;加载完成&quot; + nbPages  , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onLayerDrawn(Canvas canvas, float pageWidth, float pageHeight, int displayedPage) &#123;</div><div class="line">        // Toast.makeText( MainActivity.this ,  &quot;pageWidth= &quot; + pageWidth + &quot;</div><div class="line">        // pageHeight= &quot; + pageHeight + &quot; displayedPage=&quot;  + displayedPage , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果实现：<br><img src="http://img.blog.csdn.net/20161102151734260" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20161102151756760" alt="这里写图片描述"></p>
+<p>今天主要是简单使用一下，后面准备将该库进行拓展，是打开网络的pdf文件的功能。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/05/快速定位解决Android内存泄漏/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/05/快速定位解决Android内存泄漏/" itemprop="url">
+                  快速定位解决Android内存泄漏
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-05T12:56:59+08:00">
+                2016-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/05/快速定位解决Android内存泄漏/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/05/快速定位解决Android内存泄漏/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>此文章来源于APP架构师这个公众号</p>
+<p>今天的主题是Android开发中的内存泄漏,之所以说这个是因为前几天做了项目中的内存泄漏排查与解决，在这里总结一下，被提供一种快速定位解决Android内存泄漏的方案，希望大家看完有所收获。</p>
+<h2 id="1-奠基之石——内存泄漏概述"><a href="#1-奠基之石——内存泄漏概述" class="headerlink" title="1 奠基之石——内存泄漏概述"></a>1 奠基之石——内存泄漏概述</h2><p>   在介绍内存泄漏之前很有必要提及一下Android系统的垃圾回收机制。Java GC（Garbage Collection，垃圾收集，垃圾回收）机制，是Java与C++/C的主要区别之一，作为Java开发者，一般不需要专门编写内存回收和垃圾清理代码，对内存泄露和溢出的问题，也不需要像C程序员那样战战兢兢。这是因为在Java虚拟机中，存在自动内存管理和垃圾清扫机制。概括地说，该机制对虚拟机中的内存进行标记，并确定哪些内存需要回收，根据一定的回收策略，自动的回收内存，永不停息（Nerver Stop）的保证虚拟机中的内存空间，防止出现内存泄露和溢出问题。Android系统的垃圾回收是基于可达性分析算法（根搜索算法）的。如下图所示，从GC Roots（每种具体实现对GC Roots有不同的定义）作为起点，向下搜索它们引用的对象，可以生成一棵引用树，树的节点视为可达对象，反之视为不可达。<br>不可达的对象（如下图中的object5，6，7）会在系统GC的时候被回收，从而释放内存空间。<br><img src="http://img.blog.csdn.net/20161026093109166" alt="这里写图片描述"><br>如果所有的对象都可以被顺利回收就没有本文的诞生了，举个简单的例子，我们在开发中经常使用单例模式，单例的静态特性导致其生命周期同应用一样长。有时创建单例时如果我们需要Context对象，如果传入的是Application的Context那么不会有问题。如果传入的是Activity的Context对象，那么当Activity生命周期结束时，该Activity的引用依然被单例持有，所以不会被回收，而单例的生命周期又是跟应用一样长，这个情况就叫做内存泄露(Memory Leak)。它指的是当你不再需要某个实例后，但是这个对象却仍然被引用，防止被垃圾回收(Prevent from being bargage collected)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Util &#123;</div><div class="line">    private Context mContext;</div><div class="line">    private static Util sInstance;</div><div class="line">    private Util(Context context) &#123;</div><div class="line">        this.mContext = context;</div><div class="line">    &#125;</div><div class="line">    public static Util getInstance(Context context) &#123;</div><div class="line">        if (sInstance == null) &#123;</div><div class="line">            sInstance = new Util(context);</div><div class="line">        &#125;</div><div class="line">        return sInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>本杰明 富兰克林曾说：A small leak will sink a great ship.意即：小漏不补沉大船。基于Android系统的设备一般来说内存就不大，特别是早期的Android设备，内存泄漏是很致命的，内存泄漏积攒到一定程度会引发内存溢出（OOM），如果处理不当直接导致程序崩溃退出。</p>
+<h2 id="2-了然于胸——常见的内存泄漏"><a href="#2-了然于胸——常见的内存泄漏" class="headerlink" title="2.了然于胸——常见的内存泄漏"></a>2.了然于胸——常见的内存泄漏</h2><p>一般来说在开发中我们经常会犯下下面几个错误，导致内存泄漏。这几个都是前人踩坑总结出来的，非常有参考价值，至少我在排查解决内存泄漏的时候是这样的。</p>
+<h4 id="2-1、单例造成的内存泄漏"><a href="#2-1、单例造成的内存泄漏" class="headerlink" title="2.1、单例造成的内存泄漏"></a>2.1、单例造成的内存泄漏</h4><p>Android的单例模式非常受开发者的喜爱，不过使用的不恰当的话也会造成内存泄漏。因为单例的静态特性使得单例的生命周期和应用的生命周期一样长，这就说明了如果一个对象已经不需要使用了，而单例对象还持有该对象的引用，那么这个对象将不能被正常回收，这就导致了内存泄漏。例子见上面那段代码。</p>
+<h4 id="2-2、非静态内部类创建静态实例造成的内存泄漏"><a href="#2-2、非静态内部类创建静态实例造成的内存泄漏" class="headerlink" title="2.2、非静态内部类创建静态实例造成的内存泄漏"></a>2.2、非静态内部类创建静态实例造成的内存泄漏</h4><p>有的时候我们可能会在启动频繁的Activity中，为了避免重复创建相同的数据资源，在Activity内部创建了一个非静态内部类的单例，每次启动Activity时都会使用该单例的数据，这样虽然避免了资源的重复创建，不过这种写法却会造成内存泄漏，因为非静态内部类默认会持有外部类的引用，而又使用了该非静态内部类创建了一个静态的实例，该实例的生命周期和应用的一样长，这就导致了该静态实例一直会持有该Activity的引用，导致Activity的内存资源不能正常回收。例子如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private static TestResource mResource = null;</div><div class="line"></div><div class="line">    @Override</div><div class="line"></div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line"></div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        if (mManager == null) &#123;</div><div class="line"></div><div class="line">            mManager = new TestResource();</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    class TestResource &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-3、Handler造成的内存泄漏"><a href="#2-3、Handler造成的内存泄漏" class="headerlink" title="2.3、Handler造成的内存泄漏"></a>2.3、Handler造成的内存泄漏</h4><p>Handler的使用造成的内存泄漏问题应该说最为常见了，平时在处理网络任务或者封装一些请求回调等api都应该会借助Handler来处理，我们经常在Activity里面这样定义一个私有的Handler对象并初始化，这种创建Handler的方式会造成内存泄漏，由于mHandler是Handler的非静态匿名内部类的实例，所以它持有外部类Activity的引用，我们知道消息队列是在一个Looper线程中不断轮询处理消息，那么当这个Activity退出时消息队列中还有未处理的消息或者正在处理消息，而消息队列中的Message持有mHandler实例的引用，mHandler又持有Activity的引用，所以导致该Activity的内存资源无法及时回收，引发内存泄漏。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private Handler mHandler = new Handler() &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line"></div><div class="line">    public void handleMessage(Message msg) &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="2-4、资源未关闭造成的内存泄漏"><a href="#2-4、资源未关闭造成的内存泄漏" class="headerlink" title="2.4、资源未关闭造成的内存泄漏"></a>2.4、资源未关闭造成的内存泄漏</h4><p>对于使用了BraodcastReceiver，ContentObserver，File，Cursor，Stream，Bitmap等资源的使用，应该在Activity销毁时及时关闭或者注销，否则这些资源将不会被回收，造成内存泄漏。</p>
+<h2 id="3-神兵利器——检测内存泄漏的常见工具"><a href="#3-神兵利器——检测内存泄漏的常见工具" class="headerlink" title="3 神兵利器——检测内存泄漏的常见工具"></a>3 神兵利器——检测内存泄漏的常见工具</h2><p>见到这个标题有经验的开发者可能要吐槽我是标题党了，特别是从Eclipse时代走过来的开发者，以为我一要开始贴那张像**一样的MAT内存模型图或者AndroidStudio中Monitors下的实时内存占用图，又要开始分析那一条条剪不断理还乱的内存引用链，然后费尽九牛二虎之力去查找项目中无数的内存泄漏中的一个。但是，我要告诉你，你错了。其实，以前我看到内存泄漏分析文章的时候也是这样的想法，看着恐怖的MAT内存模型图，觉得内存泄漏的排查和解决简直是Android开发中登峰造极的技能。直到我遇到了她——LeakCanary，我才直到原来内存泄漏的排查和解决可以那么的优雅。LeakCanary是Square开源了一个内存泄露自动探测神器 。这是项目的github仓库地址：<a href="https://github.com/square/leakcanary" target="_blank" rel="external">https://github.com/square/leakcanary</a>  。使用非常简单，在build.gradle中引入包依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">debugCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android:1.5&apos;</div><div class="line">releaseCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android-no-op:1.5&apos;</div><div class="line">testCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android-no-op:1.5&apos;</div></pre></td></tr></table></figure>
+<p>在Application中的onCreate方法中增加初始化代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if (LeakCanary.isInAnalyzerProcess(this)) &#123;</div><div class="line">    // This process is dedicated to LeakCanary for</div><div class="line">    // heap analysis.</div><div class="line">    // You should not init your app in this process.</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line">LeakCanary.install(this);</div></pre></td></tr></table></figure>
+<p>集成后什么都不用做，按照正常测试，当有内存泄漏发生后，应用会通过系统通知栏发出通知，点击通知就可以进入查看内存泄漏的具体信息。在这里举个实践中的例子。把LeakCanary集成到项目中后，等App启动后一会，系统通知到了，点击通知，跳转到泄漏的详情页面进行查看：<br><img src="http://img.blog.csdn.net/20161026093501264" alt="这里写图片描述"><br>很明显，WebSiteQueryActivity泄露了。首先，static 的MaskHeadView.fLayout变量引用了FrameLayout.mContext对象，这个对象的引用就是指向了WebSiteQueryActivity的实例，导致了它的泄漏，在第二节中我们说过static对象是内部的static对象是比较容易造成内存泄漏的，检查代码发现，MaskHeadView直接在WebSiteQueryActivity的xml文件中使用了，因此持有WebSiteQueryActivity的实例，因为fLayout对象是静态的，因此它的生命周期与Application同样长，因此WebSiteQueryActivity退出后，它的实例引用依然被fLayout持有，导致它无法被回收从而内存泄露了。仔细检查代码，发现fLayout并没有被外部使用到，应该是之前的开发者手抖加了个static字段上去或者是现在不用了，但是没有去掉，在这里我直接去掉了这个修饰符，在此build代码，这个内存泄漏的现象消失了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//去掉static修饰符，避免static对象引起的内存泄漏</div><div class="line">private static FrameLayout fLayout;</div><div class="line"></div><div class="line"></div><div class="line">public MaskHeadView(Context context, AttributeSet attrs) &#123;</div><div class="line">   super(context, attrs);</div><div class="line">   this.context=context;</div><div class="line">   initView(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void initView(Context context2) &#123;</div><div class="line">   view = LayoutInflater.from(context).inflate(R.layout.</div><div class="line">   mask_head_view, this);</div><div class="line">   fLayout=(FrameLayout) view.findViewById(R.id.</div><div class="line">   mask_container);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这只是个极简单的例子，但方法是一样的。顺便提一句，其实无论是MAT工具的内存分析，还是AndroidStudio中自带的分析工具亦或是LeakCanary，原理都是一样的，都是dump java heap出来进行分析，找到泄漏的问题，只是LeakCanary帮我们把分析的工作做了。<br>曾几何时，你以为内存泄漏分析都是这样的</p>
+<p><img src="http://img.blog.csdn.net/20161026093707675" alt="这里写图片描述"></p>
+<p>但是现在你会发现其实也可以是酱紫的：<br><img src="http://img.blog.csdn.net/20161026093821159" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -296,7 +594,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-12T13:01:09+08:00">
                 2016-06-12
@@ -428,7 +726,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-12T12:44:30+08:00">
                 2016-01-12
@@ -632,8 +930,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -643,8 +941,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -692,7 +990,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

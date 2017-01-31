@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -246,6 +246,286 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/29/mac-安装消息中间件-ActiveMQ/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/29/mac-安装消息中间件-ActiveMQ/" itemprop="url">
+                  mac 安装消息中间件---ActiveMQ
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-29T15:48:02+08:00">
+                2017-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/29/mac-安装消息中间件-ActiveMQ/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/29/mac-安装消息中间件-ActiveMQ/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一般在mac上安装软件大家都是比较喜欢用brew来安装，今天就用brew来安装ActiveMQ。</p>
+<h3 id="1-使用brew来安装-ActiveMQ"><a href="#1-使用brew来安装-ActiveMQ" class="headerlink" title="1.使用brew来安装 ActiveMQ"></a>1.使用brew来安装 ActiveMQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install activemq</div></pre></td></tr></table></figure>
+<p>看到如下的结果时候，可以很庆幸的告诉你，你已经成功安装了activemq。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div></pre></td><td class="code"><pre><div class="line">localhost:~ lidong$ brew install activemq</div><div class="line">Updating Homebrew...</div><div class="line">==&gt; Auto-updated Homebrew!</div><div class="line">Updated 1 tap (homebrew/core).</div><div class="line">==&gt; New Formulae</div><div class="line">bit                 gobby               molecule            statik</div><div class="line">carrot2             gsmartcontrol       opencoarrays        tarsnap-gui</div><div class="line">cnats               gtk-chtheme         orc-tools           terminator</div><div class="line">easy-tag            imagemagick@6       source-to-image     todoman</div><div class="line">geeqie              klavaro             speexdsp            watchexec</div><div class="line">gifcap              mingw-w64-binutils  sqlparse</div><div class="line">==&gt; Updated Formulae</div><div class="line">abcde                      gradle                     opus</div><div class="line">adns                       grafana                    orientdb</div><div class="line">afl-fuzz                   groonga                    osc</div><div class="line">amazon-ecs-cli             grsync                     osquery</div><div class="line">ammonite-repl              gsoap                      packer</div><div class="line">ansible                    gtk+                       packetbeat</div><div class="line">ansible-cmdb               gtk+3                      pandoc</div><div class="line">ant                        h2o                        parallel</div><div class="line">antigen                    hana                       pazpar2</div><div class="line">apktool                    haproxy                    pbzip2</div><div class="line">app-engine-go-64           harfbuzz                   pcsc-lite</div><div class="line">arangodb                   heroku                     pdf2htmlex</div><div class="line">aria2                      hivemind                   pdfcrack</div><div class="line">armor                      htmlcleaner                pdftoedn</div><div class="line">arping                     httrack                    pdns</div><div class="line">asio                       hunspell                   pev</div><div class="line">assh                       hyperscan                  pgformatter</div><div class="line">aubio                      icarus-verilog             pgrouting</div><div class="line">autotrace                  icoutils                   pius</div><div class="line">aws-elasticbeanstalk       ievms                      pkcs11-helper</div><div class="line">aws-sdk-cpp                imagemagick                plantuml</div><div class="line">awscli                     influxdb                   pngcrush</div><div class="line">b2-tools                   innotop                    pod2man</div><div class="line">beansdb                    intercal                   poppler</div><div class="line">berkeley-db                ios-webkit-debug-proxy ✔   postgrest</div><div class="line">bfg                        iperf3                     pre-commit</div><div class="line">bib-tool                   irssi                      prips</div><div class="line">bibutils                   iso-codes                  prometheus</div><div class="line">bind                       jack                       pstoedit</div><div class="line">bitlbee                    javarepl                   pulseaudio</div><div class="line">bitrise                    jdnssec-tools              purescript</div><div class="line">blockhash                  jenkins                    pushpin</div><div class="line">bogofilter                 jid                        pwntools</div><div class="line">buku                       jigdo                      pyenv</div><div class="line">cabal-install              joe                        pyqt5</div><div class="line">caddy                      jruby                      qbs</div><div class="line">cadubi                     kapacitor                  qcachegrind</div><div class="line">caf                        kawa                       qemu</div><div class="line">carina                     khal                       qjackctl</div><div class="line">cattle                     kibana                     qscintilla2</div><div class="line">cdk                        kobalt                     quantlib</div><div class="line">certbot                    kotlin                     rabbitmq</div><div class="line">clasp                      kubernetes-cli             rancher-cli</div><div class="line">cloc                       kubernetes-helm            rancher-compose</div><div class="line">cmake                      languagetool               rancid</div><div class="line">coffeescript               lastpass-cli               ranger</div><div class="line">collectd                   lean-cli                   ripgrep</div><div class="line">commandbox                 leptonica                  rocksdb</div><div class="line">conan                      lft                        rpm</div><div class="line">consul-template            libass                     rswift</div><div class="line">coturn                     libcec                     rtags</div><div class="line">cromwell                   libcouchbase               rtv</div><div class="line">crystal-lang               libdap                     ruby-build</div><div class="line">curlpp                     libev                      rust</div><div class="line">dar                        libfabric                  sbcl</div><div class="line">darcs                      libgcrypt                  sdb</div><div class="line">darkice                    libgit2                    serd</div><div class="line">datetime-fortran           libgit2-glib               sfk</div><div class="line">datomic                    libgosu                    shadowsocks-libev</div><div class="line">dbhash                     libgphoto2                 shmcat</div><div class="line">dbt                        libgtop                    sip</div><div class="line">dbxml                      liblas                     snap7</div><div class="line">dcmtk                      libmikmod                  snort</div><div class="line">deis                       libmill                    soci</div><div class="line">deisctl                    libming                    sops</div><div class="line">dependency-check           libmwaw                    sord</div><div class="line">diff-pdf                   libosmium                  sourcekitten</div><div class="line">diffoscope                 libphonenumber             speedtest_cli</div><div class="line">dirt                       libpng                     sphinx-doc</div><div class="line">dmd                        libproxy                   sqldiff</div><div class="line">dnscrypt-proxy             libsass                    sqlite</div><div class="line">docker                     libslax                    sqlite-analyzer</div><div class="line">docker-compose             libspectre                 sshguard</div><div class="line">docker-machine             libsvm                     sstp-client</div><div class="line">docker-machine-nfs         libtasn1 ✔                 stern</div><div class="line">docker-machine-parallels   libtiff                    stoken</div><div class="line">docker-swarm               libupnp                    stormpath-cli</div><div class="line">dockward                   libusb ✔                   svtplay-dl</div><div class="line">doitlive                   libvirt                    swaks</div><div class="line">dpkg                       libvpx                     swift</div><div class="line">dub                        libxc                      swiftformat</div><div class="line">duplicity                  libxml2 ✔                  swiftgen</div><div class="line">dwarfutils                 lighttpd                   swiftlint</div><div class="line">ecl                        link-grammar               swig</div><div class="line">eiffelstudio               linkerd                    syncthing</div><div class="line">ejabberd                   liquigraph                 synfig</div><div class="line">eject                      lmdb                       syntaxerl</div><div class="line">elasticsearch              logentries                 tbox</div><div class="line">elasticsearch@2.4          logstash                   tcpkali</div><div class="line">elixir                     logtalk                    telegraf</div><div class="line">elixirscript               lrdf                       terraform</div><div class="line">emscripten                 lsyncd                     terragrunt</div><div class="line">etcd                       ltc-tools                  thefuck</div><div class="line">euca2ools                  lz4                        thrift</div><div class="line">extract_url                macvim                     tile38</div><div class="line">fabio                      makeself                   tin</div><div class="line">fdk-aac                    mariadb                    tintin</div><div class="line">fftw                       mcabber                    tippecanoe</div><div class="line">filebeat                   mediaconch                 tomcat</div><div class="line">flatbuffers                memcached ✔                transcrypt</div><div class="line">flow ✔                     memcacheq                  tty-clock</div><div class="line">fluent-bit                 mercurial                  ttyd</div><div class="line">fontforge                  metaproxy                  tvnamer</div><div class="line">fonttools                  metricbeat                 twarc</div><div class="line">fossil                     micropython                typescript</div><div class="line">fping ✔                    mikutter                   u-boot-tools</div><div class="line">fq                         minizip                    udunits</div><div class="line">freeswitch                 mktorrent                  unittest-cpp</div><div class="line">freetds                    mkvtoolnix                 unrar</div><div class="line">fwup                       moc                        unshield</div><div class="line">fzf                        mongo-c-driver             vapoursynth</div><div class="line">gammu                      mongodb ✔                  vdirsyncer</div><div class="line">gcal                       mongoose                   vice</div><div class="line">gdb                        mono                       vim</div><div class="line">geckodriver                mpd                        wavpack</div><div class="line">geoipupdate                mpv                        webalizer</div><div class="line">ghc                        msgpack                    weechat</div><div class="line">ghostscript                mypy                       whatmp3</div><div class="line">ginac                      neofetch                   wireguard-tools</div><div class="line">git-cola                   nexus                      xapian</div><div class="line">git-lfs                    nghttp2                    xmlrpc-c</div><div class="line">git-subrepo                nim                        xonsh</div><div class="line">git-test                   no-more-secrets            xqilla</div><div class="line">git-tracker                node ✔                     xrootd</div><div class="line">giter8                     node-build                 xxhash</div><div class="line">gitlab-ci-multi-runner     node@0.12                  xz</div><div class="line">gitup                      node@4                     yadm</div><div class="line">gitversion                 node@6                     yank</div><div class="line">gmime                      nodeenv                    yarn</div><div class="line">gnu-cobol                  notmuch                    yash</div><div class="line">gnu-sed                    nss                        yaws</div><div class="line">gnupg-pkcs11-scd           nvc                        yaz</div><div class="line">gnupg2                     nvi                        yle-dl</div><div class="line">gnuradio                   open-cobol                 you-get</div><div class="line">gnutls                     open-jtalk                 youtube-dl</div><div class="line">go                         open-mesh                  zabbix ✔</div><div class="line">godep                      open-ocd                   zbar</div><div class="line">gofabric8                  openconnect                zeromq</div><div class="line">google-java-format         opencore-amr               zimg</div><div class="line">gosu                       openshift-cli              zplug</div><div class="line">==&gt; Renamed Formulae</div><div class="line">eigen32 -&gt; eigen@3.2       scala210 -&gt; scala@2.10     scala211 -&gt; scala@2.11</div><div class="line">==&gt; Deleted Formulae</div><div class="line">cpp-netlib      dmtx-utils      dynamodb-local  gcc@6           qtplay</div><div class="line"></div><div class="line">==&gt; Using the sandbox</div><div class="line">==&gt; Downloading https://www.apache.org/dyn/closer.cgi?path=/activemq/5.14.3/apac</div><div class="line">==&gt; Best Mirror http://mirrors.cnnic.cn/apache/activemq/5.14.3/apache-activemq-5</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Caveats</div><div class="line">To have launchd start activemq now and restart at login:</div><div class="line">  brew services start activemq</div><div class="line">Or, if you don&apos;t want/need a background service you can just run:</div><div class="line">  activemq start</div><div class="line">==&gt; Summary</div><div class="line">��  /usr/local/Cellar/activemq/5.14.3: 555 files, 59.7M, built in 1 minute 39 seconds</div><div class="line">localhost:~ lidong$</div></pre></td></tr></table></figure></p>
+<h4 id="2-使用activemq-–version来查看安装的版本"><a href="#2-使用activemq-–version来查看安装的版本" class="headerlink" title="2.使用activemq –version来查看安装的版本"></a>2.使用activemq –version来查看安装的版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">localhost:~ lidong$ activemq --version</div><div class="line">INFO: Loading &apos;/usr/local/Cellar/activemq/5.14.3/libexec//bin/env&apos;</div><div class="line">INFO: Using java &apos;/Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/bin/java&apos;</div><div class="line">Java Runtime: Oracle Corporation 1.8.0_92 /Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/jre</div><div class="line">  Heap sizes: current=62976k  free=61648k  max=932352k</div><div class="line">    JVM args: -Xms64M -Xmx1G -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=/usr/local/Cellar/activemq/5.14.3/libexec//conf/login.config -Dactivemq.classpath=/usr/local/Cellar/activemq/5.14.3/libexec//conf:/usr/local/Cellar/activemq/5.14.3/libexec//../lib/: -Dactivemq.home=/usr/local/Cellar/activemq/5.14.3/libexec/ -Dactivemq.base=/usr/local/Cellar/activemq/5.14.3/libexec/ -Dactivemq.conf=/usr/local/Cellar/activemq/5.14.3/libexec//conf -Dactivemq.data=/usr/local/Cellar/activemq/5.14.3/libexec//data</div><div class="line">Extensions classpath:</div><div class="line">  [/usr/local/Cellar/activemq/5.14.3/libexec/lib,/usr/local/Cellar/activemq/5.14.3/libexec/lib/camel,/usr/local/Cellar/activemq/5.14.3/libexec/lib/optional,/usr/local/Cellar/activemq/5.14.3/libexec/lib/web,/usr/local/Cellar/activemq/5.14.3/libexec/lib/extra]</div><div class="line">ACTIVEMQ_HOME: /usr/local/Cellar/activemq/5.14.3/libexec</div><div class="line">ACTIVEMQ_BASE: /usr/local/Cellar/activemq/5.14.3/libexec</div><div class="line">ACTIVEMQ_CONF: /usr/local/Cellar/activemq/5.14.3/libexec/conf</div><div class="line">ACTIVEMQ_DATA: /usr/local/Cellar/activemq/5.14.3/libexec/data</div><div class="line"></div><div class="line">ActiveMQ 5.14.3</div><div class="line">For help or more information please see: http://activemq.apache.org</div></pre></td></tr></table></figure>
+<h4 id="3-activemq常用的命令"><a href="#3-activemq常用的命令" class="headerlink" title="3.activemq常用的命令"></a>3.activemq常用的命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Tasks:</div><div class="line">    browse                   - Display selected messages in a specified destination.</div><div class="line">    bstat                    - Performs a predefined query that displays useful statistics regarding the specified broker</div><div class="line">    consumer                 - Receives messages from the broker</div><div class="line">    create                   - Creates a runnable broker instance in the specified path.</div><div class="line">    decrypt                  - Decrypts given text</div><div class="line">    dstat                    - Performs a predefined query that displays useful tabular statistics regarding the specified destination type</div><div class="line">    encrypt                  - Encrypts given text</div><div class="line">    export                   - Exports a stopped brokers data files to an archive file</div><div class="line">    list                     - Lists all available brokers in the specified JMX context</div><div class="line">    producer                 - Sends messages to the broker</div><div class="line">    purge                    - Delete selected destination&apos;s messages that matches the message selector</div><div class="line">    query                    - Display selected broker component&apos;s attributes and statistics.</div><div class="line">    start                    - Creates and starts a broker using a configuration file, or a broker URI.</div><div class="line">    stop                     - Stops a running broker specified by the broker name.</div><div class="line"></div><div class="line">Task Options (Options specific to each task):</div><div class="line">    --extdir &lt;dir&gt;  - Add the jar files in the directory to the classpath.</div><div class="line">    --version       - Display the version information.</div><div class="line">    -h,-?,--help    - Display this help information. To display task specific help, use Main [task] -h,-?,--help</div></pre></td></tr></table></figure>
+<h4 id="4-启动activeMQ服务"><a href="#4-启动activeMQ服务" class="headerlink" title="4.启动activeMQ服务"></a>4.启动activeMQ服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">activemq start</div></pre></td></tr></table></figure>
+<p>看到如下信息，就表示已经安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">localhost:~ lidong$ activemq start</div><div class="line">INFO: Loading &apos;/usr/local/Cellar/activemq/5.14.3/libexec//bin/env&apos;</div><div class="line">INFO: Using java &apos;/Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/bin/java&apos;</div><div class="line">INFO: Starting - inspect logfiles specified in logging.properties and log4j.properties to get details</div><div class="line">INFO: pidfile created : &apos;/usr/local/Cellar/ActiveMQ/5.14.3/libexec//data/activemq.pid&apos; (pid &apos;2402&apos;)</div></pre></td></tr></table></figure>
+<p>然后就可以访问管理web console。在浏览器中输入url: <a href="http://localhost:8161/" target="_blank" rel="external">http://localhost:8161/</a></p>
+<p><img src="http://img.blog.csdn.net/20170125091216179" alt="这里写图片描述"></p>
+<p>点击 Manager ActiveMQ boker 输入用户名：admin 密码admin</p>
+<p><img src="http://img.blog.csdn.net/20170125091238695" alt="这里写图片描述"></p>
+<p>看到这个页面，就可以到ActiveMQ 启动成功了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/29/mac-安装RabbitMQ/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/29/mac-安装RabbitMQ/" itemprop="url">
+                  mac 安装RabbitMQ
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-29T15:46:22+08:00">
+                2017-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/29/mac-安装RabbitMQ/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/29/mac-安装RabbitMQ/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一般在mac上安装软件大家都是比较喜欢用brew来安装，今天就用brew来安装RabbitMQ。详细信息可以查看官网<a href="http://www.rabbitmq.com/install-standalone-mac.html" target="_blank" rel="external">http://www.rabbitmq.com/install-standalone-mac.html</a></p>
+<h3 id="1-使用brew来安装-RabbitMQ"><a href="#1-使用brew来安装-RabbitMQ" class="headerlink" title="1.使用brew来安装 RabbitMQ"></a>1.使用brew来安装 RabbitMQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install rabbitmq</div></pre></td></tr></table></figure>
+<p>看到如下的代码表示RabbitMQ安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">localhost:~ lidong$ brew install rabbitmq</div><div class="line">Updating Homebrew...</div><div class="line">==&gt; Installing dependencies for rabbitmq: jpeg, libpng, libtiff, wxmac, erlang</div><div class="line">==&gt; Installing rabbitmq dependency: jpeg</div><div class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/jpeg-8d.sierra.bottle.2.tar</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Pouring jpeg-8d.sierra.bottle.2.tar.gz</div><div class="line">🍺  /usr/local/Cellar/jpeg/8d: 19 files, 708.3K</div><div class="line">==&gt; Installing rabbitmq dependency: libpng</div><div class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/libpng-1.6.28.sierra.bottle</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Pouring libpng-1.6.28.sierra.bottle.tar.gz</div><div class="line">🍺  /usr/local/Cellar/libpng/1.6.28: 26 files, 1.2M</div><div class="line">==&gt; Installing rabbitmq dependency: libtiff</div><div class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/libtiff-4.0.7_1.sierra.bott</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Pouring libtiff-4.0.7_1.sierra.bottle.tar.gz</div><div class="line">🍺  /usr/local/Cellar/libtiff/4.0.7_1: 248 files, 3.4M</div><div class="line">==&gt; Installing rabbitmq dependency: wxmac</div><div class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/wxmac-3.0.2_4.sierra.bottle</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Pouring wxmac-3.0.2_4.sierra.bottle.tar.gz</div><div class="line">🍺  /usr/local/Cellar/wxmac/3.0.2_4: 810 files, 24.6M</div><div class="line">==&gt; Installing rabbitmq dependency: erlang</div><div class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/erlang-19.2.sierra.bottle.t</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; Pouring erlang-19.2.sierra.bottle.tar.gz</div><div class="line">==&gt; Caveats</div><div class="line">Man pages can be found in:</div><div class="line">  /usr/local/opt/erlang/lib/erlang/man</div><div class="line"></div><div class="line">Access them with `erl -man`, or add this directory to MANPATH.</div><div class="line">==&gt; Summary</div><div class="line">🍺  /usr/local/Cellar/erlang/19.2: 7,310 files, 280.9M</div><div class="line">==&gt; Installing rabbitmq </div><div class="line">==&gt; Using the sandbox</div><div class="line">==&gt; Downloading https://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitm</div><div class="line">######################################################################## 100.0%</div><div class="line">==&gt; /usr/bin/unzip -qq -j /usr/local/Cellar/rabbitmq/3.6.6/plugins/rabbitmq_mana</div><div class="line">==&gt; Caveats</div><div class="line">Management Plugin enabled by default at http://localhost:15672</div><div class="line"></div><div class="line">Bash completion has been installed to:</div><div class="line">  /usr/local/etc/bash_completion.d</div><div class="line"></div><div class="line">To have launchd start rabbitmq now and restart at login:</div><div class="line">  brew services start rabbitmq</div><div class="line">Or, if you don&apos;t want/need a background service you can just run:</div><div class="line">  rabbitmq-server</div><div class="line">==&gt; Summary</div><div class="line">🍺  /usr/local/Cellar/rabbitmq/3.6.6: 188 files, 5.8M, built in 9 minutes 12 seconds</div></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong>  rabbitmq的安装目录： /usr/local/Cellar/rabbitmq/3.6.6</p>
+<h3 id="3-RabbitMQ-的启动"><a href="#3-RabbitMQ-的启动" class="headerlink" title="3.RabbitMQ 的启动"></a>3.RabbitMQ 的启动</h3><p>进入到 /usr/local/Cellar/rabbitmq/3.6.6，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:3.6.6 lidong$ sbin/rabbitmq-server</div></pre></td></tr></table></figure>
+<h3 id="4-RabbitMQ-启动插件"><a href="#4-RabbitMQ-启动插件" class="headerlink" title="4.RabbitMQ 启动插件"></a>4.RabbitMQ 启动插件</h3><p>待RabbitMQ 的启动完毕之后，另起终端进入cd   /Users/lidong/javaEE/rabbitmq_server-3.6.6/sbin 。启动插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ./rabbitmq-plugins enable rabbitmq_management（执行一次以后不用再次执行）</div></pre></td></tr></table></figure></p>
+<h3 id="5-登陆管理界面"><a href="#5-登陆管理界面" class="headerlink" title="5.登陆管理界面"></a>5.登陆管理界面</h3><pre><code>浏览器输入：http://localhost:15672/
+</code></pre><p><img src="http://img.blog.csdn.net/20170129145033583" alt="这里写图片描述"></p>
+<p>账号密码初始默认都为guest</p>
+<p><img src="http://img.blog.csdn.net/20170129154409713" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -296,7 +576,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:08:21+08:00">
                 2017-01-23
@@ -428,7 +708,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:01:11+08:00">
                 2017-01-23
@@ -570,7 +850,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:48:04+08:00">
                 2017-01-14
@@ -666,297 +946,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android数据库新王者-Realm入门教程/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/Android数据库新王者-Realm入门教程/" itemprop="url">
-                  Android数据库新王者-Realm入门教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:43:18+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/Android数据库新王者-Realm入门教程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android数据库新王者-Realm入门教程/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>好长时间没有写关于Android方面的学习文章了，今天给大家带来的是堪称是一个可以替代SQLite以及ORMlibraries的轻量级数据库—Realm移动端数据库。</p>
-<p>相比SQLite，Realm更快并且具有很多现代数据库的特性，比如支持JSON，流式api，数据变更通知，以及加密支持，这些都为安卓开发者带来了方便。</p>
-<p>Ream提供了五种编程方式的实现。分别是Java，Objective C，Swift，React-Native，tamarin。在这里我着重介绍在Android中的使用。后面也会介绍在Swift中得使用。</p>
-<h2 id="1-先介绍一下打开数据Realm数据库的工具：Realm-Browser可视化工具"><a href="#1-先介绍一下打开数据Realm数据库的工具：Realm-Browser可视化工具" class="headerlink" title="1.先介绍一下打开数据Realm数据库的工具：Realm Browser可视化工具"></a>1.先介绍一下打开数据Realm数据库的工具：Realm Browser可视化工具</h2><p>Realm资源包中包含了一个很有用的实用工具，可以帮助我们更好地管理Realm数据库，那就是Realm Browser。Realm Browser可以让您轻松地读写Realm数据库（以.realm结尾），因此我们无需头疼如何去查看Realm专有数据库的逻辑结构以及其中的数据，可视化的操作就如同SQLite的其他数据库查看工具一样，十分简单、易用（虽然Realm Browser的功能还十分简陋，真的只能读写而已）。</p>
-<p><img src="http://img.blog.csdn.net/20160610225221541" alt="这里写图片描述"></p>
-<h2 id="2-Realm支持的数据类型"><a href="#2-Realm支持的数据类型" class="headerlink" title="2.Realm支持的数据类型"></a>2.Realm支持的数据类型</h2><ul>
-<li>支持基本数据结构：boolean, byte, short, ìnt, long, float, double, String, Dateand byte[]</li>
-<li>支持JSON等复杂的数据类型<h2 id="3-Realm的官方名词"><a href="#3-Realm的官方名词" class="headerlink" title="3.Realm的官方名词"></a>3.Realm的官方名词</h2></li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20160610230041746" alt="这里写图片描述"></p>
-<ul>
-<li>Realm：Realm是框架的核心所在，是我们构建数据库的访问点,使用建造者模式构建对象。</li>
-<li>RealmObject：这是我们自定义的realm数据模型。创建数据模型的行为将会影响到数据库的结构。要创建一个数据模型，我们只需要继承RealmObject，然后设计我们想要存储的属性即可。</li>
-<li>RealmQuery（查询）：要在数据库中检索信息，我们需要用到“检索”操作。如果需要检索更复杂的数据，那么还可以使用复合查询以及结果排序等等操作。</li>
-<li>RealmResults：这个类是执行任何查询请求后所返回的类，其中包含了一系列的Object对象。和List类似，我们可以用下标语法来对其进行访问，并且还可以决定它们之间的关系。不仅如此，它还拥有许多更强大的功能，包括排序、查找等等操作。</li>
-</ul>
-<h2 id="4、Realm在Android中的使用"><a href="#4、Realm在Android中的使用" class="headerlink" title="4、Realm在Android中的使用"></a>4、Realm在Android中的使用</h2><h2 id="4-1在项目的build-grade中配置下载库文件"><a href="#4-1在项目的build-grade中配置下载库文件" class="headerlink" title="4.1在项目的build.grade中配置下载库文件"></a>4.1在项目的build.grade中配置下载库文件</h2><p>在本案例中我使用的最新版本的1.0.0版本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;realm-android&apos;</div><div class="line"></div><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">        maven &#123; url &apos;https://jitpack.io&apos; &#125;</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath &quot;io.realm:realm-gradle-plugin:1.0.0&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="4-2创建数据库，获取去Realm"><a href="#4-2创建数据库，获取去Realm" class="headerlink" title="4.2创建数据库，获取去Realm"></a>4.2创建数据库，获取去Realm</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line">import io.realm.RealmConfiguration;</div><div class="line">/**</div><div class="line">*</div><div class="line">*@className:RealmUtil</div><div class="line">*@desc:RealmUtil工具类</div><div class="line">*@author:lidong</div><div class="line">*@datetime:16/6/10 下午9:55</div><div class="line"></div><div class="line">*/</div><div class="line">public class RealmUtil &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    private static  RealmUtil sIntance;</div><div class="line">    public final Context mContext;</div><div class="line">    private String realmName = &quot;realm_demo.realm&quot;;</div><div class="line"></div><div class="line">    public RealmUtil(Context mContext) &#123;</div><div class="line">        this.mContext = mContext;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 双检索单例</div><div class="line">     * @param context</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public  static  RealmUtil getIntance(Context context)&#123;</div><div class="line"></div><div class="line">        if (sIntance == null) &#123;</div><div class="line">            synchronized (RealmUtil.class) &#123;</div><div class="line">                if (sIntance == null) &#123;</div><div class="line">                    sIntance = new RealmUtil(context);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return  sIntance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">   * 获取realm对象</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">     public  Realm getRealm()&#123;</div><div class="line">Realm realm =Realm.getInstancenew RealmConfiguration.Builder(mContext)                             .name(realmName) .build());</div><div class="line">        return  realm;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="4-3创建一个RealmObject"><a href="#4-3创建一个RealmObject" class="headerlink" title="4.3创建一个RealmObject"></a>4.3创建一个RealmObject</h2><p>只要继承了RealmObject类，任意JavaBean都能存储在Realm中。必须有一个默认构造器，成员变量有相应的getter/setter方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import io.realm.RealmObject;</div><div class="line">import io.realm.annotations.PrimaryKey;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Person</div><div class="line"> */</div><div class="line">public class Person extends RealmObject &#123;</div><div class="line">    @PrimaryKey</div><div class="line">    private String code;//编号</div><div class="line">    private String name;//姓名</div><div class="line">    private int age;//年龄</div><div class="line"></div><div class="line">    public Person() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Person(int age, String code, String name) &#123;</div><div class="line">        this.age = age;</div><div class="line">        this.code = code;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getCode() &#123;</div><div class="line">        return code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setCode(String code) &#123;</div><div class="line">        this.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(int age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Person&#123;&quot; +</div><div class="line">                &quot;code=&apos;&quot; + code + &apos;\&apos;&apos; +</div><div class="line">                &quot;, name=&apos;&quot; + name + &apos;\&apos;&apos; +</div><div class="line">                &quot;, age=&quot; + age +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="4-4对数据Person进行增删改查操作"><a href="#4-4对数据Person进行增删改查操作" class="headerlink" title="4.4对数据Person进行增删改查操作"></a>4.4对数据Person进行增删改查操作</h2><p>PersonDao.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/6/9.</div><div class="line"> */</div><div class="line">public interface PersonDao &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 插入Person</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">   void insert(Person person)throws  Exception;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取所有的用户</div><div class="line">     * @return</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">   List&lt;Person&gt; getAllPerson()throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *  更新用户</div><div class="line">      * @throws Exception</div><div class="line">     */</div><div class="line">   Person  updatePerson(Person person)throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 删除用户</div><div class="line">     * @param code</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    void   deletePerson(String code)throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 异步插入Person</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    void insertPersonAsync(Person person)throws  Exception;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>PersonDaoImp.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line"></div><div class="line">/**</div><div class="line">*</div><div class="line">*@className:PersonDaoImpl</div><div class="line">*@desc:</div><div class="line">*@author:lidong</div><div class="line">*@datetime:16/6/10 下午10:01</div><div class="line"></div><div class="line">*/</div><div class="line">public class PersonDaoImpl implements PersonDao &#123;</div><div class="line"></div><div class="line">    private Context context;</div><div class="line">    private Realm mRealm;</div><div class="line"></div><div class="line">    public PersonDaoImpl(Context context)&#123;</div><div class="line">        mRealm = RealmUtil.getIntance(context).getRealm();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * @同步插入用户</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void insert(Person person) throws Exception &#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealm(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取所有的用户</div><div class="line">     *</div><div class="line">     * @return</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public List&lt;Person&gt; getAllPerson() throws Exception &#123;</div><div class="line">        List&lt;Person&gt; mlist = null;</div><div class="line">        mlist =  mRealm.where(Person.class).findAll();</div><div class="line">        mRealm.close();</div><div class="line">        return mlist;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public Person updatePerson(Person person) throws Exception &#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealmOrUpdate(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">        return  person1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void deletePerson(String code) throws Exception &#123;</div><div class="line">        Person person = mRealm.where(Person.class).equalTo(&quot;code&quot;,code).findFirst();</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        person.deleteFromRealm();</div><div class="line">        mRealm.commitTransaction();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 异步插入Person</div><div class="line">     *</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void insertPersonAsync(final Person person) throws Exception &#123;</div><div class="line">       //一个Realm只能在同一个线程中访问，在子线程中进行数据库操作必须重新获取Realm对象：</div><div class="line">        mRealm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">            @Override</div><div class="line">            public void execute(Realm realm) &#123;</div><div class="line">                realm.beginTransaction();</div><div class="line">                Person person1 = realm.copyToRealm(person);</div><div class="line">                realm.commitTransaction();</div><div class="line">                realm.close();//并且要记得在离开线程时要关闭 realm.close();  </div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        mRealm.close();//关闭Realm对象</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="4-5在Activity中简单调用"><a href="#4-5在Activity中简单调用" class="headerlink" title="4.5在Activity中简单调用"></a>4.5在Activity中简单调用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.os.Bundle;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.util.Log;</div><div class="line"></div><div class="line">import com.lidong.demo.R;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line"></div><div class="line">public class DemoRealmActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    static final String TAG = DemoRealmActivity.class.getSimpleName();</div><div class="line">    Realm  mRealm;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_demo_realm);</div><div class="line"></div><div class="line">//         mRealm= RealmUtil.getIntance(this).getRealm();</div><div class="line">//</div><div class="line">//</div><div class="line">//        mRealm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">//            @Override</div><div class="line">//            public void execute(Realm realm) &#123;</div><div class="line">//                Person person = realm.createObject(Person.class);</div><div class="line">//                person.setName(&quot;李东&quot;);</div><div class="line">//                person.setAge(24);</div><div class="line">//                person.setCode(UUID.randomUUID().toString());</div><div class="line">//            &#125;</div><div class="line">//        &#125;);</div><div class="line">        Person person = new Person();</div><div class="line">                person.setName(&quot;李东1&quot;);</div><div class="line">                person.setAge(28);</div><div class="line">                person.setCode(&quot;6e56d3aa-7119-429e-8c59-7ad8241e838d&quot;);</div><div class="line">        PersonDao dao = new PersonDaoImpl(this);</div><div class="line">//        try &#123;</div><div class="line">//            dao.insert(person);</div><div class="line">//        &#125; catch (Exception e) &#123;</div><div class="line">//            e.printStackTrace();</div><div class="line">//        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            dao.deletePerson(&quot;6e56d3aa-7119-429e-8c59-7ad8241e838d&quot;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            List&lt;Person&gt; persons = dao.getAllPerson();</div><div class="line">            Log.d(TAG, &quot;onCreate: &quot;+persons);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>总结：Android中使用Realm数据库基本上就这几点步骤，这是个入门，更加复杂的操作，我在后面会慢慢的深入。</p>
-<p><a href="https://github.com/lidong1665/AndroidRapidLibrary/tree/master/Android-Rapid-Development-Of-Library/app/src/main/java/com/lidong/demo/realm" target="_blank" rel="external">代码地址</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" itemprop="url">
-                  Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:42:16+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p> 接着上篇<a href="http://blog.csdn.net/u010046908/article/details/51759125" target="_blank" rel="external">Android中WebView加载本地Html，与JavaScript与Android方法相互传值</a>，今天来一篇续集，为什么要来续集呢，感觉自己还有没有交代完的部分，于是在这里再次交代一下，在Android中我们需要将给复杂的数据传到Html页面，我们该怎么做？</p>
-<p>大家作为一直搞android或IOS的小伙伴们，有好多对Html都了解不是太多，于是思考了一番，无非就是向Html页面传值吗？我就只会传字符串等基本的数据类型，遇到像List或Map中多层嵌套的复杂数据我该怎么办？<strong><em>我只会字符串，我只会字符串，我只会字符串，</em></strong>于是我是想到了JSON，JSON作为数据交换的一种方式，我是该选择JSON字符串来帮我完成复杂的数据交换,是因为Android或JavaScript中都JSON转换的方法，能够方便的数据转换。</p>
-<p>上面我已经把问题抛了出来问题，解决的方法也已经给出。下面来一个简单的例子来说明一下实现方法。</p>
-<p>案例说明，我要将一个List<person>传到页面做一个表格，就这么简单。</person></p>
-<h3 id="1-创建一个Person对象"><a href="#1-创建一个Person对象" class="headerlink" title="1.创建一个Person对象"></a>1.创建一个Person对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package com.lidong.androiddemo;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/7/2</div><div class="line"> */</div><div class="line">public class Person &#123;</div><div class="line"></div><div class="line">    public String name;</div><div class="line">   public String age;</div><div class="line">   public String uint;</div><div class="line"></div><div class="line">    public Person(String name, String age, String uint) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">        this.uint = uint;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-创建MyObeject"><a href="#2-创建MyObeject" class="headerlink" title="2.创建MyObeject"></a>2.创建MyObeject</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">package com.lidong.androiddemo;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line">import android.util.Log;</div><div class="line">import android.webkit.JavascriptInterface;</div><div class="line"></div><div class="line">import com.google.gson.Gson;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/6/29.</div><div class="line"> */</div><div class="line">public class MyObject &#123;</div><div class="line"></div><div class="line">    public static final String TAG = MyObject.class.getSimpleName() ;</div><div class="line">    private Context mContext;</div><div class="line">    private String data;</div><div class="line">    public MyObject(Context c,String data)&#123;</div><div class="line">        this.data = data;</div><div class="line">        mContext = c;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取person字符串传Html</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getData()&#123;</div><div class="line"></div><div class="line">        List&lt;Person&gt; mlist = new ArrayList&lt;&gt;();</div><div class="line">        for (int i = 0; i &lt;10 ; i++) &#123;</div><div class="line">            mlist.add(new Person(&quot;Li&quot;+i,i+&quot;&quot;,&quot;com&quot;+i));</div><div class="line">        &#125;</div><div class="line">        Gson gson = new Gson();</div><div class="line">        String d  = gson.toJson(mlist);</div><div class="line">        Log.d(TAG, &quot;getData: dddd&quot;+d);</div><div class="line">        return d;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-MainActivity的实现"><a href="#3-MainActivity的实现" class="headerlink" title="3.MainActivity的实现"></a>3.MainActivity的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private static final String TAG = MainActivity.class.getSimpleName();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        WebView webView = (WebView) findViewById(R.id.webView);</div><div class="line">        WebSettings settings = webView.getSettings();</div><div class="line">        //调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</div><div class="line">        settings.setJavaScriptEnabled(true);</div><div class="line">        webView.loadUrl(&quot;file:///android_asset/index.html&quot;);</div><div class="line">        //调用WebView关联的WebSettings中addJavaScriptInterface</div><div class="line">        webView.addJavascriptInterface(new MyObject(this,&quot;dd&quot;),&quot;my&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="4-index-html的实现"><a href="#4-index-html的实现" class="headerlink" title="4.index.html的实现"></a>4.index.html的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;测试Android Json传值&lt;/title&gt;</div><div class="line">    &lt;script src=&quot;http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;http://cdn.hcharts.cn/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;</div><div class="line"></div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">$(function()&#123;</div><div class="line">    //通过暴露的my对象来获取数据</div><div class="line">    var data = my.getData();</div><div class="line">    //将json字符串转换为数组</div><div class="line">     var f = eval(data);</div><div class="line">    //向表格填充数据 </div><div class="line">    for(var i = 0;i&lt;f.length;i++)&#123;</div><div class="line">     var en = f[i];</div><div class="line">     $(&quot;table&quot;).append(&quot;&lt;tr&gt;&lt;td&gt;&quot;+en.age+&quot;&lt;/td&gt;&lt;td&gt;&quot;+en.name+&quot;&lt;/td&gt;&lt;td&gt;&quot;+en.uint+&quot;&lt;/td&gt;&lt;/tr&gt;&quot;);</div><div class="line">     &#125;</div><div class="line">   &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">人员表</div><div class="line">&lt;div &gt;</div><div class="line">    &lt;table id=&quot;table&quot; border=&quot;1&quot;  bgcolor=&quot;#ffddff&quot;&gt;&lt;/table&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>这个案例基本上就四个步骤，通过这篇文章的学习妈妈在也不会担心android向html传复杂的数据了，谢谢学习</p>
-<p><img src="http://img.blog.csdn.net/20160702091354524" alt="这里写图片描述"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1004,8 +993,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1015,8 +1004,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -1064,7 +1053,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

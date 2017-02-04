@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -296,7 +296,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-04T17:32:26+08:00">
                 2017-02-04
@@ -402,7 +402,9 @@
 <h4 id="8-5-配置spring-rabbitmq-xml"><a href="#8-5-配置spring-rabbitmq-xml" class="headerlink" title="8.5 配置spring-rabbitmq.xml"></a>8.5 配置spring-rabbitmq.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:rabbit=&quot;http://www.springframework.org/schema/rabbit&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</div><div class="line">     http://www.springframework.org/schema/beans</div><div class="line">     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</div><div class="line">     http://www.springframework.org/schema/rabbit</div><div class="line">     http://www.springframework.org/schema/rabbit/spring-rabbit-1.6.xsd&quot;&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;!--配置connection-factory，指定连接rabbit server参数 --&gt;</div><div class="line">    &lt;rabbit:connection-factory id=&quot;rabbitConnectionFactory&quot;</div><div class="line">                               username=&quot;$&#123;rabbit_username&#125;&quot;</div><div class="line">                               password=&quot;$&#123;rabbit_password&#125;&quot;</div><div class="line">                               host=&quot;$&#123;rabbit_host&#125;&quot;</div><div class="line">                               port=&quot;$&#123;rabbit_port&#125;&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;!--定义rabbit template用于数据的接收和发送 --&gt;</div><div class="line">    &lt;rabbit:template id=&quot;amqpTemplate&quot;  connection-factory=&quot;rabbitConnectionFactory&quot;</div><div class="line">                     exchange=&quot;exchangeTest&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 --&gt;</div><div class="line">    &lt;rabbit:admin connection-factory=&quot;rabbitConnectionFactory&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;!--定义queue --&gt;</div><div class="line">    &lt;rabbit:queue name=&quot;queueTest&quot; durable=&quot;true&quot; auto-delete=&quot;false&quot; exclusive=&quot;false&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;!-- 定义direct exchange，绑定queueTest --&gt;</div><div class="line">    &lt;rabbit:direct-exchange name=&quot;exchangeTest&quot; durable=&quot;true&quot; auto-delete=&quot;false&quot;&gt;</div><div class="line">        &lt;rabbit:bindings&gt;</div><div class="line">            &lt;rabbit:binding</div><div class="line">                    queue=&quot;queueTest&quot;</div><div class="line">                    key=&quot;queueTestKey&quot;&gt;</div><div class="line">            &lt;/rabbit:binding&gt;</div><div class="line">        &lt;/rabbit:bindings&gt;</div><div class="line">    &lt;/rabbit:direct-exchange&gt;</div><div class="line"></div><div class="line">    &lt;!-- 消息接收者 --&gt;</div><div class="line">    &lt;bean id=&quot;messageReceiver&quot; class=&quot;com.lidong.dubbo.core.util.customer.MessageConsumer&quot;&gt;&lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象--&gt;</div><div class="line">    &lt;rabbit:listener-container</div><div class="line">            connection-factory=&quot;rabbitConnectionFactory&quot;&gt;</div><div class="line">        &lt;rabbit:listener queues=&quot;queueTest&quot;</div><div class="line">                         ref=&quot;messageReceiver&quot;/&gt;</div><div class="line">    &lt;/rabbit:listener-container&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
 <h4 id="8-6-测试消息"><a href="#8-6-测试消息" class="headerlink" title="8.6 测试消息"></a>8.6 测试消息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@RequestMapping(&quot;/sendRabbitMessage&quot;)</div><div class="line">@ResponseBody</div><div class="line">public  void  sendRabbitMessage()&#123;</div><div class="line">    logger.info(&quot;--------------------&quot;);</div><div class="line">    User user = new User();</div><div class="line">    user.setName(&quot;lidong&quot;);</div><div class="line">    user.setAge(25);</div><div class="line">    user.setPassword(&quot;123456&quot;);</div><div class="line">    user.setId(12);</div><div class="line">    iMessageProducer.sendMessage(user);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注意：本例子采用的direct exchange交换机 。</p>
-
+<blockquote>
+</blockquote>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
           
         
       
@@ -480,7 +482,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-29T15:48:02+08:00">
                 2017-01-29
@@ -621,7 +623,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-29T15:46:22+08:00">
                 2017-01-29
@@ -760,7 +762,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:08:21+08:00">
                 2017-01-23
@@ -892,7 +894,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:01:11+08:00">
                 2017-01-23
@@ -1033,7 +1035,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">30</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1044,7 +1046,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -1092,7 +1094,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

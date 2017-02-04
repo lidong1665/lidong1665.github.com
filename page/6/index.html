@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -246,6 +246,145 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/15/微信小程序网络请求的封装与填坑之路/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/15/微信小程序网络请求的封装与填坑之路/" itemprop="url">
+                  微信小程序网络请求的封装与填坑之路
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-15T13:02:35+08:00">
+                2016-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/15/微信小程序网络请求的封装与填坑之路/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/15/微信小程序网络请求的封装与填坑之路/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以前写过一篇关于微信小程序上拉加载，上拉刷新的文章，今天写的是关于小程序网络请求的封装。<br>在这里首先声明一个小程序文档的bug，导致大伙们在请求的时候，服务器收到不到参数的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">示例代码：</div><div class="line"></div><div class="line">wx.request(&#123;</div><div class="line">  url: &apos;test.php&apos;, //仅为示例，并非真实的接口地址</div><div class="line">  data: &#123;</div><div class="line">     x: &apos;&apos; ,</div><div class="line">     y: &apos;&apos;</div><div class="line">  &#125;,</div><div class="line">  header: &#123;</div><div class="line">      &apos;Content-Type&apos;: &apos;application/json&apos;</div><div class="line">  &#125;,</div><div class="line">  success: function(res) &#123;</div><div class="line">    console.log(res.data)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>其中header 中的Content-Type，应该用小写content-type才能让服务器收到参数。让我折腾的好久，改了服务器仍然不行，原来是这个问题。参数在request  payload中，服务器不能收到，使用如下转换之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function json2Form(json) &#123;  </div><div class="line">    var str = [];  </div><div class="line">    for(var p in json)&#123;  </div><div class="line">        str.push(encodeURIComponent(p) + &quot;=&quot; + encodeURIComponent(json[p]));  </div><div class="line">    &#125;  </div><div class="line">    return str.join(&quot;&amp;&quot;);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161115124900538" alt="这里写图片描述"></p>
+<p>最终还是认为是content-type的问题。最后改小写就ok，觉得微信这么牛逼的团队，犯了一个很低级 的错误，把我开发者折腾的爬了。不说，上代码吧。</p>
+<h3 id="1-、Http请求的类"><a href="#1-、Http请求的类" class="headerlink" title="1 、Http请求的类"></a>1 、Http请求的类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">import util from &apos;util.js&apos;;</div><div class="line">/**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _get( url, success, fail ) &#123;</div><div class="line"></div><div class="line">    console.log( &quot;------start---_get----&quot; );</div><div class="line">    wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            // &apos;Content-Type&apos;: &apos;application/json&apos;</div><div class="line">        &#125;,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    console.log( &quot;----end-----_get----&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _post_from(url,data, success, fail ) &#123;</div><div class="line">     console.log( &quot;----_post--start-------&quot; );</div><div class="line">     wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            &apos;content-type&apos;: &apos;application/x-www-form-urlencoded&apos;,</div><div class="line">        &#125;,</div><div class="line">        method:&apos;POST&apos;,</div><div class="line">        data:&#123;data: data&#125;,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">     console.log( &quot;----end-----_get----&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line"> /**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _post_json(url,data, success, fail ) &#123;</div><div class="line">     console.log( &quot;----_post--start-------&quot; );</div><div class="line">    wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            &apos;content-type&apos;: &apos;application/json&apos;,</div><div class="line">        &#125;,</div><div class="line">        method:&apos;POST&apos;,</div><div class="line">        data:data,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    console.log( &quot;----end----_post-----&quot; );</div><div class="line">&#125;</div><div class="line">module.exports = &#123;</div><div class="line">    _get: _get,</div><div class="line">    _post:_post,</div><div class="line">    _post_json:_post_json</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2、测试用例"><a href="#2、测试用例" class="headerlink" title="2、测试用例"></a>2、测试用例</h2><h3 id="2-1-get请求"><a href="#2-1-get请求" class="headerlink" title="2.1 get请求"></a>2.1 get请求</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//GET方式</div><div class="line"> let map = new Map();</div><div class="line"> map.set( &apos;receiveId&apos;, &apos;0010000022464&apos; );</div><div class="line"> let d = json_util.mapToJson( util.tokenAndKo( map ) );</div><div class="line"> console.log( d );</div><div class="line"> var url1 = api.getBaseUrl() + &apos;SearchTaskByReceiveId?data=&apos;+d;</div><div class="line"> network_util._get( url1,d,</div><div class="line">   function( res ) &#123;</div><div class="line">     console.log( res );</div><div class="line">     that.setData(&#123;</div><div class="line">       taskEntrys:res.data.taskEntrys</div><div class="line">     &#125;);</div><div class="line">   &#125;, function( res ) &#123;</div><div class="line">     console.log( res );</div><div class="line">   &#125;);</div></pre></td></tr></table></figure>
+<h3 id="2-2-POST请求"><a href="#2-2-POST请求" class="headerlink" title="2.2  POST请求"></a>2.2  POST请求</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//Post方式</div><div class="line"> let map = new Map();</div><div class="line">    map.set( &apos;receiveId&apos;, &apos;0010000022464&apos; );</div><div class="line">    let d = json_util.mapToJson( util.tokenAndKo( map ) );</div><div class="line">    console.log( d );</div><div class="line">    var url1 = api.getBaseUrl() + &apos;SearchTaskByReceiveId&apos;;</div><div class="line">    network_util._post( url1,d,</div><div class="line">      function( res ) &#123;</div><div class="line">        console.log( res );</div><div class="line">        that.setData(&#123;</div><div class="line">          taskEntrys:res.data.taskEntrys</div><div class="line">        &#125;);</div><div class="line">      &#125;, function( res ) &#123;</div><div class="line">        console.log( res );</div><div class="line">      &#125;);</div></pre></td></tr></table></figure>
+<p>效果<img src="http://img.blog.csdn.net/20161115115337010" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20161115115437299" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -296,7 +435,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-12T12:46:18+08:00">
                 2016-10-12
@@ -445,7 +584,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-05T12:56:59+08:00">
                 2016-09-05
@@ -594,7 +733,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-12T13:01:09+08:00">
                 2016-06-12
@@ -726,7 +865,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-12T12:44:30+08:00">
                 2016-01-12
@@ -930,8 +1069,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -941,8 +1080,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -990,7 +1129,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

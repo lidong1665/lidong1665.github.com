@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -246,6 +246,137 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android应用开发中三种常见的图片压缩方法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="url">
+                  Android应用开发中三种常见的图片压缩方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:38:25+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>   Android应用开发中三种常见的图片压缩方法，分别是：质量压缩法、比例压缩法（根据路径获取图片并压缩）和比例压缩法（根据Bitmap图片压缩）。</p>
+<h3 id="1、质量压缩法"><a href="#1、质量压缩法" class="headerlink" title="1、质量压缩法"></a>1、质量压缩法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private Bitmap compressImage(Bitmap image) &#123;</div><div class="line"> </div><div class="line">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中</div><div class="line">        int options = 100;</div><div class="line">        while ( baos.toByteArray().length / 1024&gt;100) &#123; //循环判断如果压缩后图片是否大于100kb,大于继续压缩</div><div class="line">            baos.reset();//重置baos即清空baos</div><div class="line">            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中</div><div class="line">            options -= 10;//每次都减少10</div><div class="line">        &#125;</div><div class="line">        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片</div><div class="line">        return bitmap;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"><a href="#2、图片按比例大小压缩方法（根据路径获取图片并压缩）" class="headerlink" title="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"></a>2、图片按比例大小压缩方法（根据路径获取图片并压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private Bitmap getimage(String srcPath) &#123;</div><div class="line">        BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">        //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">        newOpts.inJustDecodeBounds = true;</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空</div><div class="line">         </div><div class="line">        newOpts.inJustDecodeBounds = false;</div><div class="line">        int w = newOpts.outWidth;</div><div class="line">        int h = newOpts.outHeight;</div><div class="line">        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">        float hh = 800f;//这里设置高度为800f</div><div class="line">        float ww = 480f;//这里设置宽度为480f</div><div class="line">        //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">        int be = 1;//be=1表示不缩放</div><div class="line">        if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outWidth / ww);</div><div class="line">        &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outHeight / hh);</div><div class="line">        &#125;</div><div class="line">        if (be &lt;= 0)</div><div class="line">            be = 1;</div><div class="line">        newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">        //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);</div><div class="line">        return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"><a href="#3、图片按比例大小压缩方法（根据Bitmap图片压缩）" class="headerlink" title="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"></a>3、图片按比例大小压缩方法（根据Bitmap图片压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private Bitmap comp(Bitmap image) &#123;</div><div class="line">     </div><div class="line">    ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">    image.compress(Bitmap.CompressFormat.JPEG, 100, baos);</div><div class="line">    if( baos.toByteArray().length / 1024&gt;1024) &#123;//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出</div><div class="line">        baos.reset();//重置baos即清空baos</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 50, baos);//这里压缩50%，把压缩后的数据存放到baos中</div><div class="line">    &#125;</div><div class="line">    ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">    //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">    newOpts.inJustDecodeBounds = true;</div><div class="line">    Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    newOpts.inJustDecodeBounds = false;</div><div class="line">    int w = newOpts.outWidth;</div><div class="line">    int h = newOpts.outHeight;</div><div class="line">    //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">    float hh = 800f;//这里设置高度为800f</div><div class="line">    float ww = 480f;//这里设置宽度为480f</div><div class="line">    //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">    int be = 1;//be=1表示不缩放</div><div class="line">    if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outWidth / ww);</div><div class="line">    &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outHeight / hh);</div><div class="line">    &#125;</div><div class="line">    if (be &lt;= 0)</div><div class="line">        be = 1;</div><div class="line">    newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">    //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">    isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -296,7 +427,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:37:13+08:00">
                 2017-01-14
@@ -438,7 +569,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:33:11+08:00">
                 2017-01-14
@@ -571,7 +702,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:31:43+08:00">
                 2017-01-14
@@ -710,7 +841,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:23:34+08:00">
                 2017-01-14
@@ -804,156 +935,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Redis的安装、部署、主从配置/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/Redis的安装、部署、主从配置/" itemprop="url">
-                  Redis的安装、部署、主从配置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:43:09+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-Redis的简介"><a href="#1-Redis的简介" class="headerlink" title="1. Redis的简介"></a>1. Redis的简介</h2><p>Redis是一个开源的，先进的 key-value 存储可用于构建高性能，可扩展的 Web 应用程序的解决方案。</p>
-<p>Redis官方网网站是：<a href="http://www.redis.io/" target="_blank" rel="external">http://www.redis.io/</a>，如下：<br><img src="http://img.blog.csdn.net/20161226102106348?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>Redis 有三个主要使其有别于其它很多竞争对手的特点：<br>Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的；<br>Redis相比许多键值数据存储系统有相对丰富的数据类型；<br>Redis可以将数据复制到任意数量的从服务器中；</p>
-<h2 id="2-Redis优点"><a href="#2-Redis优点" class="headerlink" title="2. Redis优点"></a>2. Redis优点</h2><ul>
-<li>异常快速 : Redis是非常快的，每秒可以执行大约110000设置操作，81000个/每秒的读取操作。</li>
-<li><p>支持丰富的数据类型 : Redis支持最大多数开发人员已经知道如列表，集合，可排序集合，哈希等数据类型。这使得在应用中很容易解决的各种问题，因为我们知道哪些问题处理使用哪种数据类型更好解决。</p>
-</li>
-<li><p>操作都是原子的 : 所有 Redis 的操作都是原子，从而确保当两个客户同时访问 Redis 服务器得到的是更新后的值（最新值）。</p>
-</li>
-<li>MultiUtility工具：Redis是一个多功能实用工具，可以在很多如：缓存，消息传递队列中使用（Redis原生支持发布/订阅），在应用程序中，如：Web应用程序session，网站页面点击数等任何短暂的数据，最新的100条评论等；<h2 id="3-Redis环境"><a href="#3-Redis环境" class="headerlink" title="3.Redis环境"></a>3.Redis环境</h2>要在 Ubuntu 上安装 Redis，打开终端，然后输入以下命令：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$sudo apt-get update</div><div class="line">$sudo apt-get install redis-server</div></pre></td></tr></table></figure>
-<p>这将在您的计算机上安装Redis<br>启动 Redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-server</div></pre></td></tr></table></figure>
-<p>查看 redis 是否还在运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-cli</div></pre></td></tr></table></figure>
-<p>这将打开一个 Redis 提示符，如下图所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<p>在上面的提示信息中：127.0.0.1 是本机的IP地址，6379是 Redis 服务器运行的端口。现在输入 PING 命令，如下图所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; ping</div><div class="line">PONG</div></pre></td></tr></table></figure>
-<p>这说明现在你已经成功地在计算机上安装了 Redis。<br>在Ubuntu上安装Redis桌面管理器<br>要在Ubuntu 上安装 Redis桌面管理，可以从 <a href="http://redisdesktop.com/download" target="_blank" rel="external">http://redisdesktop.com/download</a> 下载包并安装它。<br>Redis 桌面管理器会给你用户界面来管理 Redis 键和数据。<br><img src="http://img.blog.csdn.net/20161226102712366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="4-Redis的主从配置（以window为例）"><a href="#4-Redis的主从配置（以window为例）" class="headerlink" title="4. Redis的主从配置（以window为例）"></a>4. Redis的主从配置（以window为例）</h2><p>在window中安装redis服务器，然后将文件复制一份，如下图：</p>
-<p><img src="http://img.blog.csdn.net/20161226103100055?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>修改文件夹名称分别为主服务器为Redis-master，从服务器为Redis - slave，<br>时候为修改从服务器redis.windows.conf文件中的端口prot为6380，在6380的redis.windows.conf中指定 是6379的slave，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#配置6379主服务器配置一个从服务器6380</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
-<p>这样Redis的一主一从就配置好了。接下来启动两个主从服务器：</p>
-<h4 id="4-1-启动Redis-master："><a href="#4-1-启动Redis-master：" class="headerlink" title="4.1. 启动Redis-master："></a>4.1. 启动Redis-master：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161226104237509?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="4-2-启动Redis-slave："><a href="#4-2-启动Redis-slave：" class="headerlink" title="4.2. 启动Redis - slave："></a>4.2. 启动Redis - slave：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161226104332776?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="4-3-连接主Redis-master服务并保存数据："><a href="#4-3-连接主Redis-master服务并保存数据：" class="headerlink" title="4.3 连接主Redis-master服务并保存数据："></a>4.3 连接主Redis-master服务并保存数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis-master&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; set test1  text_1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<h4 id="4-4-连接主Redis-slave服务查看数据："><a href="#4-4-连接主Redis-slave服务查看数据：" class="headerlink" title="4.4.连接主Redis - slave服务查看数据："></a>4.4.连接主Redis - slave服务查看数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis - slave&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<h4 id="4-5-用Redis-Desktop-Manager查看数据"><a href="#4-5-用Redis-Desktop-Manager查看数据" class="headerlink" title="4.5 用Redis Desktop Manager查看数据"></a>4.5 用Redis Desktop Manager查看数据</h4><p><img src="http://img.blog.csdn.net/20161226105125330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>总结：Redis简单使用就这么多，谢谢的的阅读。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1001,8 +982,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1012,8 +993,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -1061,7 +1042,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

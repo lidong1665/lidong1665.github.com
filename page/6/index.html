@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/15/微信小程序网络请求的封装与填坑之路/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="李东">
@@ -281,8 +281,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/15/微信小程序网络请求的封装与填坑之路/" itemprop="url">
-                  微信小程序网络请求的封装与填坑之路
+                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/" itemprop="url">
+                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（六）Spring中Redis的缓存的使用
                 </a>
               
             
@@ -296,10 +296,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-15T13:02:35+08:00">
-                2016-11-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:36:01+08:00">
+                2017-01-12
               </time>
             
 
@@ -317,8 +317,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/15/微信小程序网络请求的封装与填坑之路/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/15/微信小程序网络请求的封装与填坑之路/" itemprop="commentCount"></span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,654 +346,769 @@
       
         
           
-            <p>以前写过一篇关于微信小程序上拉加载，上拉刷新的文章，今天写的是关于小程序网络请求的封装。<br>在这里首先声明一个小程序文档的bug，导致大伙们在请求的时候，服务器收到不到参数的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">示例代码：</div><div class="line"></div><div class="line">wx.request(&#123;</div><div class="line">  url: &apos;test.php&apos;, //仅为示例，并非真实的接口地址</div><div class="line">  data: &#123;</div><div class="line">     x: &apos;&apos; ,</div><div class="line">     y: &apos;&apos;</div><div class="line">  &#125;,</div><div class="line">  header: &#123;</div><div class="line">      &apos;Content-Type&apos;: &apos;application/json&apos;</div><div class="line">  &#125;,</div><div class="line">  success: function(res) &#123;</div><div class="line">    console.log(res.data)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>其中header 中的Content-Type，应该用小写content-type才能让服务器收到参数。让我折腾的好久，改了服务器仍然不行，原来是这个问题。参数在request  payload中，服务器不能收到，使用如下转换之后</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function json2Form(json) &#123;  </div><div class="line">    var str = [];  </div><div class="line">    for(var p in json)&#123;  </div><div class="line">        str.push(encodeURIComponent(p) + &quot;=&quot; + encodeURIComponent(json[p]));  </div><div class="line">    &#125;  </div><div class="line">    return str.join(&quot;&amp;&quot;);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161115124900538" alt="这里写图片描述"></p>
-<p>最终还是认为是content-type的问题。最后改小写就ok，觉得微信这么牛逼的团队，犯了一个很低级 的错误，把我开发者折腾的爬了。不说，上代码吧。</p>
-<h3 id="1-、Http请求的类"><a href="#1-、Http请求的类" class="headerlink" title="1 、Http请求的类"></a>1 、Http请求的类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">import util from &apos;util.js&apos;;</div><div class="line">/**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _get( url, success, fail ) &#123;</div><div class="line"></div><div class="line">    console.log( &quot;------start---_get----&quot; );</div><div class="line">    wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            // &apos;Content-Type&apos;: &apos;application/json&apos;</div><div class="line">        &#125;,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    console.log( &quot;----end-----_get----&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _post_from(url,data, success, fail ) &#123;</div><div class="line">     console.log( &quot;----_post--start-------&quot; );</div><div class="line">     wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            &apos;content-type&apos;: &apos;application/x-www-form-urlencoded&apos;,</div><div class="line">        &#125;,</div><div class="line">        method:&apos;POST&apos;,</div><div class="line">        data:&#123;data: data&#125;,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">     console.log( &quot;----end-----_get----&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line"> /**</div><div class="line"> * url 请求地址</div><div class="line"> * success 成功的回调</div><div class="line"> * fail 失败的回调</div><div class="line"> */</div><div class="line">function _post_json(url,data, success, fail ) &#123;</div><div class="line">     console.log( &quot;----_post--start-------&quot; );</div><div class="line">    wx.request( &#123;</div><div class="line">        url: url,</div><div class="line">        header: &#123;</div><div class="line">            &apos;content-type&apos;: &apos;application/json&apos;,</div><div class="line">        &#125;,</div><div class="line">        method:&apos;POST&apos;,</div><div class="line">        data:data,</div><div class="line">        success: function( res ) &#123;</div><div class="line">            success( res );</div><div class="line">        &#125;,</div><div class="line">        fail: function( res ) &#123;</div><div class="line">            fail( res );</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    console.log( &quot;----end----_post-----&quot; );</div><div class="line">&#125;</div><div class="line">module.exports = &#123;</div><div class="line">    _get: _get,</div><div class="line">    _post:_post,</div><div class="line">    _post_json:_post_json</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="2、测试用例"><a href="#2、测试用例" class="headerlink" title="2、测试用例"></a>2、测试用例</h2><h3 id="2-1-get请求"><a href="#2-1-get请求" class="headerlink" title="2.1 get请求"></a>2.1 get请求</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//GET方式</div><div class="line"> let map = new Map();</div><div class="line"> map.set( &apos;receiveId&apos;, &apos;0010000022464&apos; );</div><div class="line"> let d = json_util.mapToJson( util.tokenAndKo( map ) );</div><div class="line"> console.log( d );</div><div class="line"> var url1 = api.getBaseUrl() + &apos;SearchTaskByReceiveId?data=&apos;+d;</div><div class="line"> network_util._get( url1,d,</div><div class="line">   function( res ) &#123;</div><div class="line">     console.log( res );</div><div class="line">     that.setData(&#123;</div><div class="line">       taskEntrys:res.data.taskEntrys</div><div class="line">     &#125;);</div><div class="line">   &#125;, function( res ) &#123;</div><div class="line">     console.log( res );</div><div class="line">   &#125;);</div></pre></td></tr></table></figure>
-<h3 id="2-2-POST请求"><a href="#2-2-POST请求" class="headerlink" title="2.2  POST请求"></a>2.2  POST请求</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//Post方式</div><div class="line"> let map = new Map();</div><div class="line">    map.set( &apos;receiveId&apos;, &apos;0010000022464&apos; );</div><div class="line">    let d = json_util.mapToJson( util.tokenAndKo( map ) );</div><div class="line">    console.log( d );</div><div class="line">    var url1 = api.getBaseUrl() + &apos;SearchTaskByReceiveId&apos;;</div><div class="line">    network_util._post( url1,d,</div><div class="line">      function( res ) &#123;</div><div class="line">        console.log( res );</div><div class="line">        that.setData(&#123;</div><div class="line">          taskEntrys:res.data.taskEntrys</div><div class="line">        &#125;);</div><div class="line">      &#125;, function( res ) &#123;</div><div class="line">        console.log( res );</div><div class="line">      &#125;);</div></pre></td></tr></table></figure>
-<p>效果<img src="http://img.blog.csdn.net/20161115115337010" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20161115115437299" alt="这里写图片描述"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/12/Android-打开本地pdf文件/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/12/Android-打开本地pdf文件/" itemprop="url">
-                  Android 打开本地pdf文件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-12T12:46:18+08:00">
-                2016-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/12/Android-打开本地pdf文件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/12/Android-打开本地pdf文件/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Android 中打开pdf文件也是一种很常见的场景，但是上网找了好多资料，有用WebView加载的，但是要用vpn才能搞，最后发现一个库挺不错的，再次分享给大家<br>android-pdfview。下面主要说一下该库的使用方法。</p>
-<h3 id="1-该库的下载地址"><a href="#1-该库的下载地址" class="headerlink" title="1.  该库的下载地址"></a>1.  该库的下载地址</h3><p><a href="https://github.com/JoanZapata/android-pdfview" target="_blank" rel="external">https://github.com/JoanZapata/android-pdfview</a></p>
-<h3 id="2-android-pdfview的简单介绍"><a href="#2-android-pdfview的简单介绍" class="headerlink" title="2. android-pdfview的简单介绍"></a>2. android-pdfview的简单介绍</h3><p>   PDFView是这个库中最核心的类，用于加载pdf文件，PDFView是的实现是继承于SurfaceView来实现的。主要用到了建造者模式来设置相关的属性。</p>
+            <p>前面已经写了四篇关于dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合的文章：</p>
+<ol>
+<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（一）Dubbo的使用</a></p>
+</li>
+<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid</a></p>
+</li>
+<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离</a></p>
+</li>
+<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb</a></p>
+</li>
+<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用</a></p>
+<p>接着上一篇文章，今天来写一篇关于Spring-data-redis在Spring中的缓存的使用</p>
+</li>
+</ol>
+<p>缓存（Caching）可以存储经常会用到的信息，这样每次需要的时候，这些信息都可以立即可用的。尽管Spring自身并没有实现缓存的解决方案，但是他对缓存功能提供了声明式的支持，能够与各种流行的缓存进行集成。几天主要介绍的是redis的缓存的支持。</p>
+<h2 id="1-Spring中启用对缓存管理的支持"><a href="#1-Spring中启用对缓存管理的支持" class="headerlink" title="1. Spring中启用对缓存管理的支持"></a>1. Spring中启用对缓存管理的支持</h2><p>Spring中对缓存管理器的支持有两种方式：</p>
 <ul>
-<li>fromFile(file)  //设置pdf文件地址</li>
-<li>fromAsset(assetFileName)   //设置pdf文件地址</li>
-<li>defaultPage(1)         //设置默认显示第1页</li>
-<li>onPageChange(this)     //设置翻页监听</li>
-<li>onLoad(this)           //设置加载监听</li>
-<li>onDraw(this)            //绘图监听</li>
-<li>showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</li>
-<li>swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</li>
-<li>enableSwipe(true)   //是否允许翻页，默认是允许翻页</li>
-<li>pages()  //把2 , 3 , 4 , 5 过滤掉</li>
-<li>load();</li>
+<li>注解驱动的缓存</li>
+<li>XML声明的缓存</li>
 </ul>
-<h3 id="3-在项目的build-gradle添加这个依赖"><a href="#3-在项目的build-gradle添加这个依赖" class="headerlink" title="3. 在项目的build.gradle添加这个依赖"></a>3. 在项目的build.gradle添加这个依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.joanzapata.pdfview:android-pdfview:1.0.4@aar&apos;</div></pre></td></tr></table></figure>
-<h3 id="4-写一个布局文件"><a href="#4-写一个布局文件" class="headerlink" title="4.写一个布局文件"></a>4.写一个布局文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    android:id=&quot;@+id/activity_main&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    tools:context=&quot;com.lidong.pdf.androidpdf.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;com.joanzapata.pdfview.PDFView</div><div class="line">        android:id=&quot;@+id/pdfView&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        /&gt;</div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
-<h3 id="5-Activity的实现"><a href="#5-Activity的实现" class="headerlink" title="5.Activity的实现"></a>5.Activity的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">package com.lidong.pdf.androidpdf;</div><div class="line"></div><div class="line">import android.graphics.Canvas;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.os.Bundle;</div><div class="line">import android.view.ViewTreeObserver;</div><div class="line">import android.widget.Toast;</div><div class="line"></div><div class="line">import com.joanzapata.pdfview.PDFView;</div><div class="line">import com.joanzapata.pdfview.listener.OnDrawListener;</div><div class="line">import com.joanzapata.pdfview.listener.OnLoadCompleteListener;</div><div class="line">import com.joanzapata.pdfview.listener.OnPageChangeListener;</div><div class="line"></div><div class="line">import java.io.File;</div><div class="line"></div><div class="line">public class MainActivity extends AppCompatActivity implements OnPageChangeListener</div><div class="line">        ,OnLoadCompleteListener, OnDrawListener &#123;</div><div class="line">    private PDFView pdfView ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        pdfView = (PDFView) findViewById( R.id.pdfView );</div><div class="line"></div><div class="line">        //从assets目录读取pdf</div><div class="line">        displayFromAssets(&quot;0010000022464002F__李东.pdf&quot;);</div><div class="line"></div><div class="line">        //从文件中读取pdf</div><div class="line">//        displayFromFile( new File( &quot;fileName&quot;));</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void displayFromAssets(String assetFileName ) &#123;</div><div class="line">        pdfView.fromAsset(assetFileName)   //设置pdf文件地址</div><div class="line">                .defaultPage(1)         //设置默认显示第1页</div><div class="line">                .onPageChange(this)     //设置翻页监听</div><div class="line">                .onLoad(this)           //设置加载监听</div><div class="line">                .onDraw(this)            //绘图监听</div><div class="line">                .showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</div><div class="line">                .swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</div><div class="line">                .enableSwipe(true)   //是否允许翻页，默认是允许翻页</div><div class="line">//                 .pages()  //把 5 过滤掉</div><div class="line">                .load();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void displayFromFile( File file ) &#123;</div><div class="line">        pdfView.fromFile(file)   //设置pdf文件地址</div><div class="line">                .defaultPage(6)         //设置默认显示第1页</div><div class="line">                .onPageChange(this)     //设置翻页监听</div><div class="line">                .onLoad(this)           //设置加载监听</div><div class="line">                .onDraw(this)            //绘图监听</div><div class="line">                .showMinimap(false)     //pdf放大的时候，是否在屏幕的右上角生成小地图</div><div class="line">                .swipeVertical( false )  //pdf文档翻页是否是垂直翻页，默认是左右滑动翻页</div><div class="line">                .enableSwipe(true)   //是否允许翻页，默认是允许翻</div><div class="line">                // .pages( 2 ，5  )  //把2  5 过滤掉</div><div class="line">                .load();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 翻页回调</div><div class="line">     * @param page</div><div class="line">     * @param pageCount</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void onPageChanged(int page, int pageCount) &#123;</div><div class="line">        Toast.makeText( MainActivity.this , &quot;page= &quot; + page +</div><div class="line">                &quot; pageCount= &quot; + pageCount , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 加载完成回调</div><div class="line">     * @param nbPages  总共的页数</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void loadComplete(int nbPages) &#123;</div><div class="line">        Toast.makeText( MainActivity.this ,  &quot;加载完成&quot; + nbPages  , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onLayerDrawn(Canvas canvas, float pageWidth, float pageHeight, int displayedPage) &#123;</div><div class="line">        // Toast.makeText( MainActivity.this ,  &quot;pageWidth= &quot; + pageWidth + &quot;</div><div class="line">        // pageHeight= &quot; + pageHeight + &quot; displayedPage=&quot;  + displayedPage , Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>效果实现：<br><img src="http://img.blog.csdn.net/20161102151734260" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20161102151756760" alt="这里写图片描述"></p>
-<p>今天主要是简单使用一下，后面准备将该库进行拓展，是打开网络的pdf文件的功能。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/05/快速定位解决Android内存泄漏/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/05/快速定位解决Android内存泄漏/" itemprop="url">
-                  快速定位解决Android内存泄漏
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-05T12:56:59+08:00">
-                2016-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/09/05/快速定位解决Android内存泄漏/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/05/快速定位解决Android内存泄漏/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>此文章来源于APP架构师这个公众号</p>
-<p>今天的主题是Android开发中的内存泄漏,之所以说这个是因为前几天做了项目中的内存泄漏排查与解决，在这里总结一下，被提供一种快速定位解决Android内存泄漏的方案，希望大家看完有所收获。</p>
-<h2 id="1-奠基之石——内存泄漏概述"><a href="#1-奠基之石——内存泄漏概述" class="headerlink" title="1 奠基之石——内存泄漏概述"></a>1 奠基之石——内存泄漏概述</h2><p>   在介绍内存泄漏之前很有必要提及一下Android系统的垃圾回收机制。Java GC（Garbage Collection，垃圾收集，垃圾回收）机制，是Java与C++/C的主要区别之一，作为Java开发者，一般不需要专门编写内存回收和垃圾清理代码，对内存泄露和溢出的问题，也不需要像C程序员那样战战兢兢。这是因为在Java虚拟机中，存在自动内存管理和垃圾清扫机制。概括地说，该机制对虚拟机中的内存进行标记，并确定哪些内存需要回收，根据一定的回收策略，自动的回收内存，永不停息（Nerver Stop）的保证虚拟机中的内存空间，防止出现内存泄露和溢出问题。Android系统的垃圾回收是基于可达性分析算法（根搜索算法）的。如下图所示，从GC Roots（每种具体实现对GC Roots有不同的定义）作为起点，向下搜索它们引用的对象，可以生成一棵引用树，树的节点视为可达对象，反之视为不可达。<br>不可达的对象（如下图中的object5，6，7）会在系统GC的时候被回收，从而释放内存空间。<br><img src="http://img.blog.csdn.net/20161026093109166" alt="这里写图片描述"><br>如果所有的对象都可以被顺利回收就没有本文的诞生了，举个简单的例子，我们在开发中经常使用单例模式，单例的静态特性导致其生命周期同应用一样长。有时创建单例时如果我们需要Context对象，如果传入的是Application的Context那么不会有问题。如果传入的是Activity的Context对象，那么当Activity生命周期结束时，该Activity的引用依然被单例持有，所以不会被回收，而单例的生命周期又是跟应用一样长，这个情况就叫做内存泄露(Memory Leak)。它指的是当你不再需要某个实例后，但是这个对象却仍然被引用，防止被垃圾回收(Prevent from being bargage collected)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Util &#123;</div><div class="line">    private Context mContext;</div><div class="line">    private static Util sInstance;</div><div class="line">    private Util(Context context) &#123;</div><div class="line">        this.mContext = context;</div><div class="line">    &#125;</div><div class="line">    public static Util getInstance(Context context) &#123;</div><div class="line">        if (sInstance == null) &#123;</div><div class="line">            sInstance = new Util(context);</div><div class="line">        &#125;</div><div class="line">        return sInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>本杰明 富兰克林曾说：A small leak will sink a great ship.意即：小漏不补沉大船。基于Android系统的设备一般来说内存就不大，特别是早期的Android设备，内存泄漏是很致命的，内存泄漏积攒到一定程度会引发内存溢出（OOM），如果处理不当直接导致程序崩溃退出。</p>
-<h2 id="2-了然于胸——常见的内存泄漏"><a href="#2-了然于胸——常见的内存泄漏" class="headerlink" title="2.了然于胸——常见的内存泄漏"></a>2.了然于胸——常见的内存泄漏</h2><p>一般来说在开发中我们经常会犯下下面几个错误，导致内存泄漏。这几个都是前人踩坑总结出来的，非常有参考价值，至少我在排查解决内存泄漏的时候是这样的。</p>
-<h4 id="2-1、单例造成的内存泄漏"><a href="#2-1、单例造成的内存泄漏" class="headerlink" title="2.1、单例造成的内存泄漏"></a>2.1、单例造成的内存泄漏</h4><p>Android的单例模式非常受开发者的喜爱，不过使用的不恰当的话也会造成内存泄漏。因为单例的静态特性使得单例的生命周期和应用的生命周期一样长，这就说明了如果一个对象已经不需要使用了，而单例对象还持有该对象的引用，那么这个对象将不能被正常回收，这就导致了内存泄漏。例子见上面那段代码。</p>
-<h4 id="2-2、非静态内部类创建静态实例造成的内存泄漏"><a href="#2-2、非静态内部类创建静态实例造成的内存泄漏" class="headerlink" title="2.2、非静态内部类创建静态实例造成的内存泄漏"></a>2.2、非静态内部类创建静态实例造成的内存泄漏</h4><p>有的时候我们可能会在启动频繁的Activity中，为了避免重复创建相同的数据资源，在Activity内部创建了一个非静态内部类的单例，每次启动Activity时都会使用该单例的数据，这样虽然避免了资源的重复创建，不过这种写法却会造成内存泄漏，因为非静态内部类默认会持有外部类的引用，而又使用了该非静态内部类创建了一个静态的实例，该实例的生命周期和应用的一样长，这就导致了该静态实例一直会持有该Activity的引用，导致Activity的内存资源不能正常回收。例子如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private static TestResource mResource = null;</div><div class="line"></div><div class="line">    @Override</div><div class="line"></div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line"></div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        if (mManager == null) &#123;</div><div class="line"></div><div class="line">            mManager = new TestResource();</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    class TestResource &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-3、Handler造成的内存泄漏"><a href="#2-3、Handler造成的内存泄漏" class="headerlink" title="2.3、Handler造成的内存泄漏"></a>2.3、Handler造成的内存泄漏</h4><p>Handler的使用造成的内存泄漏问题应该说最为常见了，平时在处理网络任务或者封装一些请求回调等api都应该会借助Handler来处理，我们经常在Activity里面这样定义一个私有的Handler对象并初始化，这种创建Handler的方式会造成内存泄漏，由于mHandler是Handler的非静态匿名内部类的实例，所以它持有外部类Activity的引用，我们知道消息队列是在一个Looper线程中不断轮询处理消息，那么当这个Activity退出时消息队列中还有未处理的消息或者正在处理消息，而消息队列中的Message持有mHandler实例的引用，mHandler又持有Activity的引用，所以导致该Activity的内存资源无法及时回收，引发内存泄漏。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private Handler mHandler = new Handler() &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line"></div><div class="line">    public void handleMessage(Message msg) &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h4 id="2-4、资源未关闭造成的内存泄漏"><a href="#2-4、资源未关闭造成的内存泄漏" class="headerlink" title="2.4、资源未关闭造成的内存泄漏"></a>2.4、资源未关闭造成的内存泄漏</h4><p>对于使用了BraodcastReceiver，ContentObserver，File，Cursor，Stream，Bitmap等资源的使用，应该在Activity销毁时及时关闭或者注销，否则这些资源将不会被回收，造成内存泄漏。</p>
-<h2 id="3-神兵利器——检测内存泄漏的常见工具"><a href="#3-神兵利器——检测内存泄漏的常见工具" class="headerlink" title="3 神兵利器——检测内存泄漏的常见工具"></a>3 神兵利器——检测内存泄漏的常见工具</h2><p>见到这个标题有经验的开发者可能要吐槽我是标题党了，特别是从Eclipse时代走过来的开发者，以为我一要开始贴那张像**一样的MAT内存模型图或者AndroidStudio中Monitors下的实时内存占用图，又要开始分析那一条条剪不断理还乱的内存引用链，然后费尽九牛二虎之力去查找项目中无数的内存泄漏中的一个。但是，我要告诉你，你错了。其实，以前我看到内存泄漏分析文章的时候也是这样的想法，看着恐怖的MAT内存模型图，觉得内存泄漏的排查和解决简直是Android开发中登峰造极的技能。直到我遇到了她——LeakCanary，我才直到原来内存泄漏的排查和解决可以那么的优雅。LeakCanary是Square开源了一个内存泄露自动探测神器 。这是项目的github仓库地址：<a href="https://github.com/square/leakcanary" target="_blank" rel="external">https://github.com/square/leakcanary</a>  。使用非常简单，在build.gradle中引入包依赖：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">debugCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android:1.5&apos;</div><div class="line">releaseCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android-no-op:1.5&apos;</div><div class="line">testCompile &apos;com.squareup.leakcanary:leakcanary-</div><div class="line">android-no-op:1.5&apos;</div></pre></td></tr></table></figure>
-<p>在Application中的onCreate方法中增加初始化代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if (LeakCanary.isInAnalyzerProcess(this)) &#123;</div><div class="line">    // This process is dedicated to LeakCanary for</div><div class="line">    // heap analysis.</div><div class="line">    // You should not init your app in this process.</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line">LeakCanary.install(this);</div></pre></td></tr></table></figure>
-<p>集成后什么都不用做，按照正常测试，当有内存泄漏发生后，应用会通过系统通知栏发出通知，点击通知就可以进入查看内存泄漏的具体信息。在这里举个实践中的例子。把LeakCanary集成到项目中后，等App启动后一会，系统通知到了，点击通知，跳转到泄漏的详情页面进行查看：<br><img src="http://img.blog.csdn.net/20161026093501264" alt="这里写图片描述"><br>很明显，WebSiteQueryActivity泄露了。首先，static 的MaskHeadView.fLayout变量引用了FrameLayout.mContext对象，这个对象的引用就是指向了WebSiteQueryActivity的实例，导致了它的泄漏，在第二节中我们说过static对象是内部的static对象是比较容易造成内存泄漏的，检查代码发现，MaskHeadView直接在WebSiteQueryActivity的xml文件中使用了，因此持有WebSiteQueryActivity的实例，因为fLayout对象是静态的，因此它的生命周期与Application同样长，因此WebSiteQueryActivity退出后，它的实例引用依然被fLayout持有，导致它无法被回收从而内存泄露了。仔细检查代码，发现fLayout并没有被外部使用到，应该是之前的开发者手抖加了个static字段上去或者是现在不用了，但是没有去掉，在这里我直接去掉了这个修饰符，在此build代码，这个内存泄漏的现象消失了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//去掉static修饰符，避免static对象引起的内存泄漏</div><div class="line">private static FrameLayout fLayout;</div><div class="line"></div><div class="line"></div><div class="line">public MaskHeadView(Context context, AttributeSet attrs) &#123;</div><div class="line">   super(context, attrs);</div><div class="line">   this.context=context;</div><div class="line">   initView(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void initView(Context context2) &#123;</div><div class="line">   view = LayoutInflater.from(context).inflate(R.layout.</div><div class="line">   mask_head_view, this);</div><div class="line">   fLayout=(FrameLayout) view.findViewById(R.id.</div><div class="line">   mask_container);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这只是个极简单的例子，但方法是一样的。顺便提一句，其实无论是MAT工具的内存分析，还是AndroidStudio中自带的分析工具亦或是LeakCanary，原理都是一样的，都是dump java heap出来进行分析，找到泄漏的问题，只是LeakCanary帮我们把分析的工作做了。<br>曾几何时，你以为内存泄漏分析都是这样的</p>
-<p><img src="http://img.blog.csdn.net/20161026093707675" alt="这里写图片描述"></p>
-<p>但是现在你会发现其实也可以是酱紫的：<br><img src="http://img.blog.csdn.net/20161026093821159" alt="这里写图片描述"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/12/android设置toolbar的menu-itemTextView颜色/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/12/android设置toolbar的menu-itemTextView颜色/" itemprop="url">
-                  android设置toolbar的menu itemTextView颜色
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-12T13:01:09+08:00">
-                2016-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/06/12/android设置toolbar的menu-itemTextView颜色/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/12/android设置toolbar的menu-itemTextView颜色/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>大家可以能会修改Toolbar中menu的文字颜色，直接使用style是没有用的，使用theme就可以让你完成想要的效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;!-- ToolBar --&gt;</div><div class="line"> &lt;style name=&quot;ToolBarStyle&quot; parent=&quot;@style/ThemeOverlay.AppCompat.ActionBar&quot;&gt;</div><div class="line">     &lt;item name=&quot;android:textColorPrimary&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textColorSecondary&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:actionMenuTextColor&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;actionMenuTextColor&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textColor&quot;&gt;@color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textSize&quot;&gt;18sp&lt;/item&gt; &lt;!--  修改字体大小--&gt;</div><div class="line"> &lt;/style&gt;</div></pre></td></tr></table></figure>
-<p>app:theme=”@style/ToolBarStyle”</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;android.support.v7.widget.Toolbar</div><div class="line">    android:id=&quot;@+id/id_tool_bar&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;?attr/actionBarSize&quot;</div><div class="line">    android:background=&quot;?attr/colorPrimary&quot;</div><div class="line">    app:navigationIcon=&quot;?attr/homeAsUpIndicator&quot;</div><div class="line">    app:theme=&quot;@style/ToolBarStyle&quot;&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/12/Macaca自动化测试Android和IOS应用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/12/Macaca自动化测试Android和IOS应用/" itemprop="url">
-                  Macaca自动化测试Android和IOS应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-12T12:44:30+08:00">
-                2016-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/01/12/Macaca自动化测试Android和IOS应用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/12/Macaca自动化测试Android和IOS应用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-Macaca简介"><a href="#1-Macaca简介" class="headerlink" title="1.Macaca简介"></a>1.Macaca简介</h2><p>Macaca是阿里巴巴集团开发的一套完整的自动化测试解决方案。</p>
-<h2 id="2-Macaca特性："><a href="#2-Macaca特性：" class="headerlink" title="2.Macaca特性："></a>2.Macaca特性：</h2><ul>
-<li>支持移动端和PC端</li>
-<li>支持Native, Hybrid, H5 等多种应用类型</li>
-<li>提供客户端工具和持续集成服务</li>
+<h4 id="1-1-注解驱动的缓存"><a href="#1-1-注解驱动的缓存" class="headerlink" title="1.1 注解驱动的缓存"></a>1.1 注解驱动的缓存</h4><p> 使用Spring的缓存抽象时，最为通用的方式就是在方法上添加@Cacheable和@CacheEvict注解。</p>
+<p>在往bean添加缓存注解之前，必须要启用Spring对注解驱动的支持。如果我们使用java配置的话，那么可以在其中一个配置上添加@EnableCaching，这样的话就能启动注解驱动的缓存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line"></div><div class="line">import java.lang.reflect.Method;</div><div class="line"></div><div class="line">import org.springframework.cache.CacheManager;</div><div class="line">import org.springframework.cache.annotation.CachingConfigurerSupport;</div><div class="line">import org.springframework.cache.annotation.EnableCaching;</div><div class="line">import org.springframework.cache.interceptor.KeyGenerator;</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">import org.springframework.data.redis.cache.RedisCacheManager;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line"></div><div class="line">@Configuration</div><div class="line">@EnableCaching</div><div class="line">public class CachingConfig extends CachingConfigurerSupport&#123;</div><div class="line"></div><div class="line">	@Bean  </div><div class="line">    public KeyGenerator wiselyKeyGenerator()&#123;  </div><div class="line">        return new KeyGenerator() &#123;</div><div class="line"></div><div class="line">			@Override</div><div class="line">			public Object generate(Object target, Method method,</div><div class="line">					Object... params) &#123;</div><div class="line">				StringBuilder sb = new StringBuilder();  </div><div class="line">                sb.append(target.getClass().getName());  </div><div class="line">                sb.append(method.getName());  </div><div class="line">                for (Object obj : params) &#123;  </div><div class="line">                    sb.append(obj.toString());  </div><div class="line">                &#125;  </div><div class="line">                return sb.toString();</div><div class="line">			&#125;  </div><div class="line"></div><div class="line">        &#125;;  </div><div class="line"></div><div class="line">    &#125;  </div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 声明缓存管理器</div><div class="line">	 * @param redisTemplate</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	@Bean</div><div class="line">	public CacheManager cacheManager(RedisTemplate&lt;String, Object&gt; redisTemplate) &#123;</div><div class="line">		return new RedisCacheManager(redisTemplate);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="1-2-XML声明的缓存"><a href="#1-2-XML声明的缓存" class="headerlink" title="1.2 XML声明的缓存"></a>1.2 XML声明的缓存</h4><p>如果以XML的方式配置应用的话，那么可以是使用Spring cache命名空间的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;cache:annotation-driven/&gt;</div></pre></td></tr></table></figure>
+<p>元素来启动注解驱动的缓存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:cache=&quot;http://www.springframework.org/schema/cache&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd&quot;&gt;</div><div class="line">    &lt;!--启用缓存--&gt;</div><div class="line">    &lt;cache:annotation-driven/&gt;  </div><div class="line">     &lt;!--声明缓存管理器--&gt;</div><div class="line">    &lt;bean    id=&quot;org.springframework.data.redis.cache.RedisCacheManager&quot;/&gt;</div><div class="line"></div><div class="line">  &lt;/beans&gt;</div></pre></td></tr></table></figure>
+<h2 id="2-Spring中配置缓存管理器"><a href="#2-Spring中配置缓存管理器" class="headerlink" title="2. Spring中配置缓存管理器"></a>2. Spring中配置缓存管理器</h2><p>Spring 3.1内置了五个缓存管理器</p>
+<ul>
+<li>SimpleCacheManager</li>
+<li>NoOpCacheManager</li>
+<li>ConcrrentMapCacheManager</li>
+<li>CompositeCacheManager</li>
+<li>EhCacheCacheManager</li>
 </ul>
-<h2 id="3-macaca-cli客户端的安装："><a href="#3-macaca-cli客户端的安装：" class="headerlink" title="3.macaca-cli客户端的安装："></a>3.macaca-cli客户端的安装：</h2><h4 id="3-1安装-Node-js"><a href="#3-1安装-Node-js" class="headerlink" title="3.1安装 Node.js"></a>3.1安装 Node.js</h4><p>请安装 Node.js v4.0 或者更高版本，装好 Node.js 后命令行里就已经集成了 npm 工具，为了提高安装模块的速度，请使用国内的 cnpm。</p>
-<h4 id="3-2-iOS-环境安装"><a href="#3-2-iOS-环境安装" class="headerlink" title="3.2 iOS 环境安装"></a>3.2 iOS 环境安装</h4><p>请安装 Xcode8 或者更高版本<br>需要安装 usbmuxd 以便于通过 USB 通道测试 iOS 真机，不需要测试真机则不用安装</p>
+<p>Spring 3.2引入了另外的一个缓存管理器，这个缓存管理器可以在基于JCache（JSR-107）的缓存提供商之中。除了核心的Spring框架，Spring data又提供了两个缓存管理器。</p>
+<ul>
+<li>RedisCacheManager 来自于Spring-data-redis项目</li>
+<li>GemfireCacheManager 来自于Spring-data-GemFire项目</li>
+</ul>
+<p>所以我们选择缓存管理器时候，取决于使用底层缓存供应商。</p>
+<h2 id="3-Spring中配置Redis缓存管理器"><a href="#3-Spring中配置Redis缓存管理器" class="headerlink" title="3. Spring中配置Redis缓存管理器"></a>3. Spring中配置Redis缓存管理器</h2><p>缓存的条目不过就是一个键值对（key-vlaue），其中key描述了产生value的操作和参数。因此你，Redis作为key-value存储，非常适合于做缓存。<br>Redis可以用来为spring缓存抽象机制存储缓存条目，Spring-data-redis提供了RedisCacheManager，这是CacheManager的一个实现。RedisCacheManager 会与一个Redis服务器协作，并且通过RedisTemplate将缓存条目存储到Redis中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@EnableCaching</div><div class="line">public class RedisCachingConfig extends CachingConfigurerSupport&#123;</div><div class="line"></div><div class="line">	@Bean  </div><div class="line">    public KeyGenerator wiselyKeyGenerator()&#123;  </div><div class="line">        return new KeyGenerator() &#123;</div><div class="line"></div><div class="line">			@Override</div><div class="line">			public Object generate(Object target, Method method,</div><div class="line">					Object... params) &#123;</div><div class="line">				StringBuilder sb = new StringBuilder();  </div><div class="line">                sb.append(target.getClass().getName());  </div><div class="line">                sb.append(method.getName());  </div><div class="line">                for (Object obj : params) &#123;  </div><div class="line">                    sb.append(obj.toString());  </div><div class="line">                &#125;  </div><div class="line">                return sb.toString();</div><div class="line">			&#125;  </div><div class="line"></div><div class="line">        &#125;;  </div><div class="line"></div><div class="line">    &#125;  </div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 声明缓存管理器RedisCacheManager</div><div class="line">	 * @param redisTemplate</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	@Bean</div><div class="line">	public CacheManager cacheManager(RedisTemplate&lt;String, Object&gt; redisTemplate) &#123;</div><div class="line">		return new RedisCacheManager(redisTemplate);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-为方法添加注解以支持缓存"><a href="#4-为方法添加注解以支持缓存" class="headerlink" title="4. 为方法添加注解以支持缓存"></a>4. 为方法添加注解以支持缓存</h2><p>Spring 的缓存抽象在很大程度上是围绕切面的构建的。在Spring中启用缓存时，会创建一个切面，它触发一个或更多的Spring的缓存注解。</p>
+<p>Spring中提供了四个注解来声明缓存规则</p>
+<ul>
+<li>@Cacheable    声明Spring在调用方法之前，首先应该在缓存中查找方法的返回值。如果这个值能够找到，就会返回存储的值，否则的话，这个方法就会被调用，返回值会放在缓存之中。</li>
+<li>@CachePut  表明Spring应该将方法的返回值放到缓存中，在方法的调用前并不会检查缓存，方法始终都会被调用</li>
+<li>@CacheEvict表明Spring应该在缓存中清除一个或多个条目</li>
+<li>@Caching 这是一个分组的注解，能够同时应用多个其他的缓存注解</li>
+</ul>
+<p>在Service层缓存数据的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.service;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line"></div><div class="line">import org.springframework.cache.annotation.CacheEvict;</div><div class="line">import org.springframework.cache.annotation.Cacheable;</div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.lidong.api.service.user.IUserService;</div><div class="line">import com.lidong.core.user.dao.IUserDao;</div><div class="line">import com.lidong.model.user.User;</div><div class="line">@Service(&quot;userService&quot;)</div><div class="line">public class UserServiceImp implements IUserService &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	IUserDao mIUserDao;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public String sayHello(String name) &#123;</div><div class="line">		  return &quot;Hello &quot; + name;  </div><div class="line">	&#125;</div><div class="line">	@Cacheable(value=&#123;&quot;getUserById&quot;&#125;)</div><div class="line">	@Override</div><div class="line">	public User getUserById(int userId) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserByUsername(String username) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryUsername(username);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public void addUser(User user) &#123;</div><div class="line">	    mIUserDao.insert(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Cacheable(value=&#123;&quot;getAllUser&quot;&#125;)</div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getAllUser() &#123;</div><div class="line">		return mIUserDao.selectAllUsers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;,&quot;getUserById&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public int delUserById(Integer userId) &#123;</div><div class="line">		return mIUserDao.deleteByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;,&quot;getUserById&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public int updateUser(User user) &#123;</div><div class="line">		return mIUserDao.updateByPrimaryKey(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>数据缓存成功</p>
+<p><img src="http://img.blog.csdn.net/20170107224416669?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>再次获取用户列表的时候；直接从缓存中读取用户的列表。</p>
+<p>注意：缓存java对象时必须实现Serilaizable接口，因为Spring会将对象先序列化之后再存入到Redis中。</p>
 <blockquote>
-<p>$ brew install usbmuxd</p>
+<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
 </blockquote>
-<p>应用中如含有 WebView，请安装 ios-webkit-debug-proxy</p>
-<blockquote>
-<p>$ brew install ios-webkit-debug-proxy</p>
-</blockquote>
-<p><strong>备注：</strong>使用brew命令需要安装Homebrew（一款常用的 MacOS 的包管理器），请按照官网提示安装。<br>准备 App 包：如需要测试 iOS 应用，请使用 Scheme 设置为 debug 的 .app 包。</p>
-<h4 id="3-3-Android环境安装"><a href="#3-3-Android环境安装" class="headerlink" title="3.3 Android环境安装"></a>3.3 Android环境安装</h4><h5 id="3-3-1-安装-JDK"><a href="#3-3-1-安装-JDK" class="headerlink" title="3.3.1 安装 JDK"></a>3.3.1 安装 JDK</h5><p>配置 JAVA_HOME，根据你所使用的 shell 工具修改不同的文件，比如 ~/.bashrc, ~/.bash_profile, ~/.zshrc</p>
-<blockquote>
-<p>shell export JAVA_HOME=path/to/your/Java/Home</p>
-</blockquote>
-<h4 id="3-3-2安装安卓-SDK"><a href="#3-3-2安装安卓-SDK" class="headerlink" title="3.3.2安装安卓 SDK"></a>3.3.2安装安卓 SDK</h4><p>运行 brew install android-sdk，然后安装18-24版本中的任一 SDK<br>shell 环境设置 ANDROID_HOME 根据你所使用的Terminal修改不同的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件，比如~/.bashrc, ~/.bash_profile, ~/.zshrc</div><div class="line"># 如果是通过homebrew安装的android-sdk，则路径如下</div><div class="line"></div><div class="line">export ANDROID_HOME = /usr/local/opt/android-sdk</div><div class="line"></div><div class="line"># 如果通过其他方式安装的sdk，路径设置为对应的android sdk的路径</div><div class="line"></div><div class="line">export ANDROID_HOME = path/to/your/Android/sdk</div></pre></td></tr></table></figure>
-<p><strong>注意：</strong>准备 App 包：如需要测试 Android 应用，请使用 .apk 格式的包。</p>
-<h4 id="3-4-全局安装macaca"><a href="#3-4-全局安装macaca" class="headerlink" title="3.4 全局安装macaca"></a>3.4 全局安装macaca</h4><blockquote>
-<p> $ npm i -g macaca-cli</p>
-</blockquote>
-<p>如果看到如下可爱的小猴子，那恭喜你安装成功啦！重新安装则会覆盖更新。</p>
-<p><img src="http://ww4.sinaimg.cn/large/6d308bd9gw1faie2w55hnj20rs0ov4fu.jpg" alt="这里写图片描述"></p>
-<h4 id="3-5安装驱动"><a href="#3-5安装驱动" class="headerlink" title="3.5安装驱动"></a>3.5安装驱动</h4><p><img src="http://img.blog.csdn.net/20170104170953073?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>####3.6 环境检查<br>通过 macaca doctor 可以检查环境是否配置成功</p>
-<blockquote>
-<p>$ macaca doctor<br><img src="http://img.blog.csdn.net/20170104171206181?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-</blockquote>
-<p>如上图所示则表示环境均配置正常，如果有错误，会出现红色的提示。</p>
-<h2 id="4-运行官方示例"><a href="#4-运行官方示例" class="headerlink" title="4 运行官方示例"></a>4 运行官方示例</h2><p>将官方示例(mobile-app-sample-nodejs)克隆到本地，更多的示例请访问macaca-sample。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/macaca-sample/mobile-app-sample-nodejs.git --depth=1</div><div class="line">$ cd mobile-app-sample-nodejs</div><div class="line">$ npm i</div><div class="line"># 更多运行方式见Makefile</div><div class="line">$ macaca run --verbose</div></pre></td></tr></table></figure>
-<h3 id="4-1-Android-的自动化测试"><a href="#4-1-Android-的自动化测试" class="headerlink" title="4.1 Android 的自动化测试"></a>4.1 Android 的自动化测试</h3><p>先在mobile-app-sample-nodejs/macaca-test/mobile-app-sample.test.js脚本文件中如果是ios该为Android。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var platform = process.env.platform || &apos;Android&apos;;</div><div class="line">platform = platform.toLowerCase();</div></pre></td></tr></table></figure>
-<p>在mobile-app-sample-nodejs目录下执行</p>
-<blockquote>
-<p>macaca run</p>
-</blockquote>
-<p>测试的过程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:mobile-app-sample-nodejs lidong$ macaca run ./macaca-test/macaca-mobile-sample.test.js</div><div class="line">&gt;&gt; webdriver sdk launched</div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;   macaca mobile sample</div><div class="line"></div><div class="line">&gt;&gt; get /Users/lidong/.macaca-temp/android_app_bootstrap-debug.apk from cache</div><div class="line">&gt;&gt; sha:e2ca601f9ee1ec101326d12377a2e8d4</div><div class="line">INSTRUMENTATION_STATUS: numtests=1</div><div class="line">INSTRUMENTATION_STATUS: stream=</div><div class="line">com.android.uiautomator.client.Initialize:</div><div class="line">INSTRUMENTATION_STATUS: id=UiAutomatorTestRunner</div><div class="line">INSTRUMENTATION_STATUS: test=testStartServer</div><div class="line">INSTRUMENTATION_STATUS: class=com.android.uiautomator.client.Initialize</div><div class="line">INSTRUMENTATION_STATUS: current=1</div><div class="line">INSTRUMENTATION_STATUS_CODE: 1</div><div class="line"></div><div class="line">uiautomator start socket server.</div><div class="line"></div><div class="line">&gt;&gt; socket server ready</div><div class="line">&gt;&gt; socket client ready</div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;wake&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getWindowSize&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:&quot;&#123;\&quot;width\&quot;:1080,\&quot;height\&quot;:1794&#125;&quot;&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt; current window size &#123;&quot;width&quot;:1080,&quot;height&quot;:1794&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;1&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;2&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;setText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;,&quot;text&quot;:&quot;中文+Test+12345678&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;3&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;4&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;4&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;setText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;4&quot;,&quot;text&quot;:&quot;111111&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;name&quot;,&quot;selector&quot;:&quot;Login&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;5&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;click&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;5&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line">&gt;&gt;     ✓ #1 should login success (19613ms)</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getSource&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line"></div><div class="line">&gt;&gt; &#123; hierarchy:</div><div class="line">   &#123; rotation: &apos;0&apos;,</div><div class="line">     node:</div><div class="line">      &#123; index: &apos;0&apos;,</div><div class="line">        class: &apos;android.widget.FrameLayout&apos;,</div><div class="line">        package: &apos;com.github.android_app_bootstrap&apos;,</div><div class="line">        checkable: &apos;false&apos;,</div><div class="line">        checked: &apos;false&apos;,</div><div class="line">        clickable: &apos;false&apos;,</div><div class="line">        enabled: &apos;true&apos;,</div><div class="line">        focusable: &apos;false&apos;,</div><div class="line">        focused: &apos;false&apos;,</div><div class="line">        scrollable: &apos;false&apos;,</div><div class="line">        &apos;long-clickable&apos;: &apos;false&apos;,</div><div class="line">        password: &apos;false&apos;,</div><div class="line">        selected: &apos;false&apos;,</div><div class="line">        bounds: &apos;[0,0][1080,1794]&apos;,</div><div class="line">        node: [Object] &#125; &#125; &#125;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line">&gt;&gt;     ✓ #2 should display home (911ms)</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;name&quot;,&quot;selector&quot;:&quot;list&quot;,&quot;multiple&quot;:false&#125;&#125;</div><div class="line">等等</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20170104172206402?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h3 id="4-2-IOS-的自动化测试"><a href="#4-2-IOS-的自动化测试" class="headerlink" title="4.2 IOS 的自动化测试"></a>4.2 IOS 的自动化测试</h3><p>先在mobile-app-sample-nodejs/macaca-test/mobile-app-sample.test.js脚本文件中如果是Android改为ios。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var platform = process.env.platform || &apos;ios&apos;;</div><div class="line">platform = platform.toLowerCase();</div></pre></td></tr></table></figure>
-<p>在mobile-app-sample-nodejs目录下执行</p>
-<blockquote>
-<p>macaca run</p>
-</blockquote>
-<p>测试过程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:mobile-app-sample-nodejs lidong$ macaca run ./macaca-test/macaca-mobile-sample.test.js</div><div class="line">&gt;&gt; webdriver sdk launched</div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;   macaca mobile sample</div><div class="line"></div><div class="line">&gt;&gt; get /Users/lidong/.macaca-temp/android_app_bootstrap-debug.apk from cache</div><div class="line">&gt;&gt; sha:e2ca601f9ee1ec101326d12377a2e8d4</div><div class="line">INSTRUMENTATION_STATUS: numtests=1</div><div class="line">INSTRUMENTATION_STATUS: stream=</div><div class="line">com.android.uiautomator.client.Initialize:</div><div class="line">INSTRUMENTATION_STATUS: id=UiAutomatorTestRunner</div><div class="line">INSTRUMENTATION_STATUS: test=testStartServer</div><div class="line">INSTRUMENTATION_STATUS: class=com.android.uiautomator.client.Initialize</div><div class="line">INSTRUMENTATION_STATUS: current=1</div><div class="line">INSTRUMENTATION_STATUS_CODE: 1</div><div class="line"></div><div class="line">uiautomator start socket server.</div><div class="line"></div><div class="line">&gt;&gt; socket server ready</div><div class="line">&gt;&gt; socket client ready</div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;wake&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getWindowSize&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:&quot;&#123;\&quot;width\&quot;:1080,\&quot;height\&quot;:1794&#125;&quot;&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt; current window size &#123;&quot;width&quot;:1080,&quot;height&quot;:1794&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;1&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;2&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20170104172747363?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="5-脚本初始化参数"><a href="#5-脚本初始化参数" class="headerlink" title="5.脚本初始化参数"></a>5.脚本初始化参数</h2><h4 id="5-1-常见的参数"><a href="#5-1-常见的参数" class="headerlink" title="5.1 常见的参数"></a>5.1 常见的参数</h4><ol>
-<li>platformName  String   当前用例运行的平台 { iOS / Android / Desktop }</li>
-<li>browserName      String    当前测试的浏览器名称 { iOS: Safari } { Android: Chrome } { Desktop: Chrome / Electron }</li>
-</ol>
-<h4 id="5-2-App-相关参数"><a href="#5-2-App-相关参数" class="headerlink" title="5.2 App 相关参数"></a>5.2 App 相关参数</h4><ol>
-<li><p>deviceName    String    模拟器的名称，例如 ‘iPhone 6’ 或者 ‘Nexus 5x’。</p>
-</li>
-<li><p>app    Stirng    .ipa，.app 或者 .apk 文件的绝对地址或者远程地址，或者是包含上述文件格式的 Zip 文件。</p>
-</li>
-<li><p>udid    String    测试设备的唯一设备 ID。</p>
-<h4 id="5-3-Android-的参数介绍"><a href="#5-3-Android-的参数介绍" class="headerlink" title="5.3 Android 的参数介绍"></a>5.3 Android 的参数介绍</h4></li>
-<li><p>reuse    Number    0: 启动并安装 app。{1 (默认): 卸载并重装 app。 2: 仅重装 app。3: 在测试结束后保持 app 状态。}</p>
-</li>
-<li>package    String    Android app 的 package name。</li>
-<li>activity    String    启动时的 Activity name。</li>
-</ol>
-<h4 id="5-4-iOS-的参数介绍"><a href="#5-4-iOS-的参数介绍" class="headerlink" title="5.4 iOS 的参数介绍"></a>5.4 iOS 的参数介绍</h4><ol>
-<li>reuse       Number      0: 清楚数据并重装 app。 1: (默认) 卸载并重装 app。 2: 仅重装 app。 3: 在测试结束后保持 app 状态。</li>
-<li>bundleId      String    应用的 Bundle ID，例如 com.apple.Maps。</li>
-<li>autoAcceptAlerts      Boolean      自动接受所有的系统弹窗信息。默认是 false。</li>
-<li>autoDismissAlerts    Boolean    自动拒绝所有的系统弹窗信息。默认是 false。<h3 id="5-5-基本用法"><a href="#5-5-基本用法" class="headerlink" title="5.5 基本用法"></a>5.5 基本用法</h3></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">require(&apos;should&apos;);</div><div class="line">var xml2map = require(&apos;xml2map&apos;);</div><div class="line"></div><div class="line">var platform = process.env.platform || &apos;ios&apos;;</div><div class="line">platform = platform.toLowerCase();</div><div class="line"></div><div class="line">var pkg = require(&apos;../package&apos;);</div><div class="line"></div><div class="line">/**</div><div class="line"> * download app form npm</div><div class="line"> *</div><div class="line"> * or use online resource: https://npmcdn.com/ios-app-bootstrap@latest/build/ios-app-bootstrap.zip</div><div class="line"> *</div><div class="line"> * npm i ios-app-bootstrap --save-dev</div><div class="line"> *</div><div class="line"> * var opts = &#123;</div><div class="line"> *   app: path.join(__dirname, &apos;..&apos;, &apos;node_modules&apos;, &apos;ios-app-bootstrap&apos;, &apos;build&apos;, &apos;ios-app-bootstrap.zip&apos;);</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"></div><div class="line">// see: https://macacajs.github.io/desired-caps</div><div class="line"></div><div class="line">var iOSOpts = &#123;</div><div class="line">  deviceName: &apos;iPhone 5s&apos;,</div><div class="line">  platformName: &apos;iOS&apos;,</div><div class="line">  autoAcceptAlerts: false,</div><div class="line">  //reuse: 3,</div><div class="line">  //udid: &apos;&apos;,</div><div class="line">  //bundleId: &apos;xudafeng.ios-app-bootstrap&apos;,</div><div class="line">  app: &apos;http://localhost:8087/ios-app-bootstrap.zip&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var androidOpts = &#123;</div><div class="line">  platformName: &apos;Android&apos;,</div><div class="line">  autoAcceptAlerts: false,</div><div class="line">  // reuse: 3,</div><div class="line">  // udid: &apos;&apos;,</div><div class="line">  // package: &apos;com.github.android_app_bootstrap&apos;,</div><div class="line">  // activity: &apos;com.github.android_app_bootstrap.activity.WelcomeActivity&apos;,</div><div class="line">  app: &apos;http://localhost:8087/android_app_bootstrap-debug.apk&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const isIOS = platform === &apos;ios&apos;;</div><div class="line">const infoBoardId = isIOS ? &apos;info&apos; : &apos;com.github.android_app_bootstrap:id/info&apos;;</div><div class="line"></div><div class="line">const wd = require(&apos;macaca-wd&apos;);</div><div class="line"></div><div class="line">// override custom wd</div><div class="line">require(&apos;./wd-extend&apos;)(wd, isIOS);</div><div class="line"></div><div class="line">describe(&apos;macaca mobile sample&apos;, function() &#123;</div><div class="line">  this.timeout(5 * 60 * 1000);</div><div class="line"></div><div class="line">  const driver = wd.promiseChainRemote(&#123;</div><div class="line">    host: &apos;localhost&apos;,</div><div class="line">    port: 3456</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  driver.configureHttp(&#123;</div><div class="line">    timeout: 600 * 1000</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  before(function() &#123;</div><div class="line">    return driver</div><div class="line">      .init(isIOS ? iOSOpts : androidOpts);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  after(function() &#123;</div><div class="line">    return driver</div><div class="line">      .sleep(1000)</div><div class="line">      .quit();</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  it(&apos;#1 should login success&apos;, function() &#123;</div><div class="line">    return driver</div><div class="line">      .getWindowSize()</div><div class="line">      .then(size =&gt; &#123;</div><div class="line">        console.log(`current window size $&#123;JSON.stringify(size)&#125;`);</div><div class="line">      &#125;)</div><div class="line">      .appLogin(&apos;中文+Test+12345678&apos;, &apos;111111&apos;)</div><div class="line">      .sleep(1000);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
-<p>Macaca自动化测试Android和IOS应用,基本上说到这里就要结束。后面我们还是学习如何自己写测试脚本。</p>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="url">
+                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:34:37+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前面已经写了四篇关于dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合的文章：</p>
+<ol>
+<li><a href="http://blog.csdn.net/u010046908/article/details/53868659" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（一）Dubbo的使用</a></li>
+<li><a href="http://blog.csdn.net/u010046908/article/details/53870144" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid</a></li>
+<li><a href="http://blog.csdn.net/u010046908/article/details/53982620" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离</a></li>
+<li><a href="http://blog.csdn.net/u010046908/article/details/53978250" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb</a></li>
+</ol>
+<p>今天继续写一篇关于Spring中spring-data-redis的使用。</p>
+<p>Redis是一种特殊的类型的数据库，它被称为一种key-value存储。key-value存储保存的是键值对。实际上，key-value存储于哈希Map有很大的相似。<br>spring data是一种面向模板的数据访问，能够在使用Redis的时候，为我们提供了帮助。于是就有了spring-data-redis。</p>
+<h3 id="1-spring-data-redis的简介"><a href="#1-spring-data-redis的简介" class="headerlink" title="1. spring-data-redis的简介"></a>1. spring-data-redis的简介</h3><p>spring-data-redis包含了多个模板实现，用来完成Redis数据库的存取功能。创建spring-data-redis模板之前，我们首先需要一个Redis连接工厂，spring-data-redis提供了四个连接工厂供我们选择。</p>
+<h3 id="2-spring-data-redis所需要依赖"><a href="#2-spring-data-redis所需要依赖" class="headerlink" title="2.spring-data-redis所需要依赖"></a>2.spring-data-redis所需要依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      &lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;redis.clients&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;jedis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.8.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.6.2.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h3 id="3-spring-data-redis的使用"><a href="#3-spring-data-redis的使用" class="headerlink" title="3. spring-data-redis的使用"></a>3. spring-data-redis的使用</h3><h4 id="3-1-连接到Redis"><a href="#3-1-连接到Redis" class="headerlink" title="3.1 连接到Redis"></a>3.1 连接到Redis</h4><p>   Redis连接工厂会生成到Redis数据库服务器的连接。spring-data-redis为四种Redis客户端实现了连接工厂：</p>
+<ul>
+<li>JedisConnectionFactory</li>
+<li>JredisConnectionFactory</li>
+<li>LettuceConnectionFactory</li>
+<li><p>SrpConnectionFactory</p>
+<p>具体选择哪一种取决于自己。</p>
+</li>
+</ul>
+<p>(1)创建redis.properties:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">maxTotal=8</div><div class="line">#最大空闲时间</div><div class="line">maxIdle=8</div><div class="line">#最短空闲时间</div><div class="line">minIdle=0</div><div class="line">#最大的等待时间</div><div class="line">maxWaitMillis=6000</div><div class="line">#Redis的连接地址</div><div class="line">hostR=127.0.0.1</div><div class="line">#端口</div><div class="line">portR=6379</div></pre></td></tr></table></figure>
+<p>(2)创建spring-redis.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns:rabbit=&quot;http://www.springframework.org/schema/rabbit&quot;</div><div class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">http://www.springframework.org/schema/beans</div><div class="line">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</div><div class="line">http://www.springframework.org/schema/context</div><div class="line">http://www.springframework.org/schema/context/spring-context-3.0.xsd</div><div class="line">http://www.springframework.org/schema/rabbit</div><div class="line">http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入redis.properties配置文件--&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:redis.properties&quot; /&gt; &lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redis连接池的配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisPoolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;</div><div class="line">		&lt;property name=&quot;maxTotal&quot; value=&quot;$&#123;maxTotal&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxIdle&quot; value=&quot;$&#123;maxIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWaitMillis&quot; value=&quot;10000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;numTestsPerEvictionRun&quot; value=&quot;3&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot;&gt;&lt;/property&gt;</div><div class="line">   &lt;/bean&gt;</div><div class="line">	&lt;!-- 工厂类配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisConnectionFactory&quot;</div><div class="line">		class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;&gt;</div><div class="line">		&lt;property name=&quot;hostName&quot; value=&quot;$&#123;hostR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;port&quot; value=&quot;$&#123;portR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolConfig&quot; ref=&quot;jedisPoolConfig&quot; /&gt;</div><div class="line">		 &lt;property name=&quot;timeout&quot; value=&quot;15000&quot;&gt;&lt;/property&gt;</div><div class="line">	    &lt;property name=&quot;usePool&quot; value=&quot;true&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redisTemplate配置 --&gt;</div><div class="line">	&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.RedisTemplate&quot;&gt;</div><div class="line">		&lt;property name=&quot;connectionFactory&quot; ref=&quot;jedisConnectionFactory&quot; /&gt;</div><div class="line">		&lt;property name=&quot;keySerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.StringRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;valueSerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.JdkSerializationRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;enableTransactionSupport&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>以上是我配置的jedisPoolConfig，jedisConnectionFactory，redisTemplate。</p>
+<h4 id="3-2-使用RedisTemplate"><a href="#3-2-使用RedisTemplate" class="headerlink" title="3.2 使用RedisTemplate"></a>3.2 使用RedisTemplate</h4><p>Redis连接工厂会生成到Redis key-value存储的连接（以RedisConnection的形式。）借助RedisConnection，可以存储和读取数据。</p>
+<p>spring-redis-data以模板的形式提供了较好等级的数据访问方案。实际上，spring-data-redis提供了两个模板：</p>
+<ul>
+<li>RedisTemplate</li>
+<li>StringRedisTemplate</li>
+</ul>
+<p>其中RedisTemplate使用两个类型进行了参数。第一个参数是key的类型,第二个参数是value的类型，而StringRedisTemplate是RedisTemplate的扩展，只关注String类型，也就是key和vlaue都是String类型。</p>
+<h5 id="3-2-1-RedisTemplate使用简单值"><a href="#3-2-1-RedisTemplate使用简单值" class="headerlink" title="3.2.1 RedisTemplate使用简单值"></a>3.2.1 RedisTemplate使用简单值</h5><p>假设我们想通过RedisTemplate<string, user=""> 保存User，其中key是users属性的值。借助opsForValue()方法完成该功能：</string,></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User findById(String key) &#123;</div><div class="line">		return (User) redisTemplate.opsForValue().get(key);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForValue().set(key, user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="3-2-2-RedisTemplate使用List值"><a href="#3-2-2-RedisTemplate使用List值" class="headerlink" title="3.2.2 RedisTemplate使用List值"></a>3.2.2 RedisTemplate使用List值</h5><p>使用List类型的value与之类似，只需要使用opForList()方法，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.dao;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import com.lidong.model.user.User;</div><div class="line">import com.lidong.util.AbstractBaseRedisTemplete;</div><div class="line"></div><div class="line">public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getUserList(String key,long start,long end) &#123;</div><div class="line">		 return  redisTemplate.opsForList().range(key, 0, end);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Long addUserToUserList(String key, User user) &#123;</div><div class="line">		return redisTemplate.opsForList().leftPush(key, user);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="3-2-3-RedisTemplate使用Set值"><a href="#3-2-3-RedisTemplate使用Set值" class="headerlink" title="3.2.3 RedisTemplate使用Set值"></a>3.2.3 RedisTemplate使用Set值</h5><p>除了使用List类型和value类型，我们还可以使用opForSet()的方法操作Set，最为常用的的就是向Set中添加一个元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForSet().add(key, user);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>在我们有多个Set,并对这些Set集合进行差、交、并的操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Set&lt;User&gt; difference = redisTemplate.opsForSet().difference(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; union = redisTemplate.opsForSet().union(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; intersect = redisTemplate.opsForSet().intersect(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  //我还可以移除Set中的元素</div><div class="line">	  Long remove = redisTemplate.opsForSet().remove(&quot;user1&quot;, user);</div></pre></td></tr></table></figure>
+<h5 id="3-2-4-RedisTemplete绑定到某个key上"><a href="#3-2-4-RedisTemplete绑定到某个key上" class="headerlink" title="3.2.4 RedisTemplete绑定到某个key上"></a>3.2.4 RedisTemplete绑定到某个key上</h5><p>我们可以将Value、List、Set等可以绑定到指定的key上。这些用个的不太多，但是也简单。这里就不具体写了。</p>
+<h5 id="3-2-5-构造AbstractBaseRedisTemplete"><a href="#3-2-5-构造AbstractBaseRedisTemplete" class="headerlink" title="3.2.5 构造AbstractBaseRedisTemplete"></a>3.2.5 构造AbstractBaseRedisTemplete</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.springframework.beans.BeansException;</div><div class="line">import org.springframework.context.ApplicationContext;</div><div class="line">import org.springframework.context.ApplicationContextAware;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line">/**</div><div class="line"> * 基础的RedisTemplete</div><div class="line"> * @author lidong</div><div class="line"> * @param &lt;T&gt;</div><div class="line"> * @date 2017-1-5</div><div class="line"> */</div><div class="line">public abstract class AbstractBaseRedisTemplete&lt;T&gt; implements</div><div class="line">		ApplicationContextAware &#123;</div><div class="line"></div><div class="line"></div><div class="line">	protected RedisTemplate&lt;String,T&gt;  redisTemplate;</div><div class="line"></div><div class="line">	 /**</div><div class="line">     * @Description RedisTemplate</div><div class="line">     * @param redisTemplate</div><div class="line">     */  </div><div class="line">    public void setRedisTemplate(RedisTemplate&lt;String,T&gt; redisTemplate) &#123;  </div><div class="line">        this.redisTemplate = redisTemplate;  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void setApplicationContext(ApplicationContext applicationContext)</div><div class="line">			throws BeansException &#123;</div><div class="line">		@SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">		RedisTemplate&lt;String,T&gt; redisTemplate = applicationContext.getBean(  </div><div class="line">                &quot;redisTemplate&quot;, RedisTemplate.class);  </div><div class="line">		setRedisTemplate(redisTemplate);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Spring-Data-Redis的使用基本最常用 的就是这三种类型value类型、List类型、Set类型。</p>
+<blockquote>
+<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="url">
+                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:32:25+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、面向切面编程的一些术语"><a href="#1、面向切面编程的一些术语" class="headerlink" title="1、面向切面编程的一些术语"></a>1、面向切面编程的一些术语</h2><ul>
+<li>切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。</li>
+<li>连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。</li>
+<li>增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。</li>
+<li>切入点（Pointcut）：可以插入增强处理的连接点。简而言之，当某个连接点满足指定的要求时，该连接点将添加增强处理，该连接点也就变成了切入点。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pointcut xxxPointcut（）：execution（void H*.say*()）</div></pre></td></tr></table></figure>
+<ul>
+<li>引入：将方法或字段添加到被代理的类中，Spring允许将新的接口引入到任何被调用的处理对象中。例如：你可以使用一个引入，使任何对象实现IsModified接口，以此来简化缓存。</li>
+<li>目标对象：被AOP框架进行增强处理的对象，也被称为被增强对象，如果AOP框架采用的是动态的AOP实现 ，那该对象就是一个被代理对象。</li>
+<li>AOP代理：AOP框架创建的对象，简单说，代理就是对目标对象的加强，Spring中的AOP代理可以是JDK的动态代理，也可以是cglib的动态代理，前者是实现接口 的目标对象的代理，后者为不实现接口的目标对象的代理。</li>
+<li>织入（Weaving）：将增强处理添加到目标对象中，并创一个被增强对象（AOP代理）的过程就是织入。织入有l两种实现方式—–编译时增强（AspectJ）和运行时增强（如Spring AOP）。Spring和其他纯Java AOP框架一样，在运行时织入。</li>
+</ul>
+<h2 id="2、AOP的基本概念"><a href="#2、AOP的基本概念" class="headerlink" title="2、AOP的基本概念"></a>2、AOP的基本概念</h2><p>AOP是从程序运行角度考虑程序的流程，提取业务处理的过程的切面，AOP面向的是程序运行中各个步骤，希望以更好的方式来组合业务处理的各个步骤。</p>
+<p>AOP框架并不会与特定的代码耦合，AOP框架能处理程序执行中特定的切入点（PointCut），而不是某个具体类的耦合。</p>
+<h1 id="3、AOP框架具有如下的两个特征。"><a href="#3、AOP框架具有如下的两个特征。" class="headerlink" title="3、AOP框架具有如下的两个特征。"></a>3、AOP框架具有如下的两个特征。</h1><ul>
+<li><p>各个步骤之间良好的隔离。</p>
+</li>
+<li><p>源代码无关。</p>
+<p>注：Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式处理。从而提高了更多的复用。</p>
+<h2 id="4-如何在Spring中引入AOP功能"><a href="#4-如何在Spring中引入AOP功能" class="headerlink" title="4.如何在Spring中引入AOP功能"></a>4.如何在Spring中引入AOP功能</h2></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;srping.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.aspectj&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.7.2&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h2 id="5、实现Web层的日志切面"><a href="#5、实现Web层的日志切面" class="headerlink" title="5、实现Web层的日志切面"></a>5、实现Web层的日志切面</h2><p>实现AOP的切面主要有以下几个要素：</p>
+<ul>
+<li>使用 @Aspect 注解将一个java类定义为切面类。</li>
+<li>使用 @Pointcut 定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。</li>
+<li>根据需要在切入点不同位置的切入内容</li>
+<li>使用 @Before 在切入点开始处切入内容</li>
+<li>使用 @After 在切入点结尾处切入内容</li>
+<li>使用 @AfterReturning 在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）</li>
+<li>使用 @Around 在切入点前后切入内容，并自己控制何时执行切入点自身的内容</li>
+<li>使用 @AfterThrowing 用来处理当切入内容部分抛出异常之后的处理逻辑</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Enumeration;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.springframework.core.annotation.Order;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import org.springframework.web.context.request.RequestContextHolder;</div><div class="line">import org.springframework.web.context.request.ServletRequestAttributes;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">/**</div><div class="line"> 1. 保存请求数据到mongodb</div><div class="line"> 2. @author lidong</div><div class="line"> 3. @createTime 2016年12月24日</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Order(1)</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line"></div><div class="line">    private Logger logger = Logger.getLogger(&quot;mongodb&quot;);</div><div class="line">    ThreadLocal&lt;Long&gt; startTime = new ThreadLocal&lt;&gt;();</div><div class="line">    HttpServletRequest request;</div><div class="line">    JoinPoint mJoinPoint;</div><div class="line">	@Pointcut(&quot;execution (* com.lidong.*.controller.*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">    	    startTime.set(System.currentTimeMillis());   </div><div class="line">       	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</div><div class="line">        request = attributes.getRequest();</div><div class="line">        mJoinPoint = joinPoint;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private BasicDBObject getBasicDBObject(HttpServletRequest request, JoinPoint joinPoint) &#123;</div><div class="line">        BasicDBObject r = new BasicDBObject();</div><div class="line">        r.append(&quot;requestURL&quot;, request.getRequestURL().toString());</div><div class="line">        r.append(&quot;requestURI&quot;, request.getRequestURI());</div><div class="line">        r.append(&quot;queryString&quot;, request.getQueryString());</div><div class="line">        r.append(&quot;remoteAddr&quot;, request.getRemoteAddr());</div><div class="line">        r.append(&quot;remoteHost&quot;, request.getRemoteHost());</div><div class="line">        r.append(&quot;remotePort&quot;, request.getRemotePort());</div><div class="line">        r.append(&quot;localAddr&quot;, request.getLocalAddr());</div><div class="line">        r.append(&quot;localName&quot;, request.getLocalName());</div><div class="line">        r.append(&quot;method&quot;, request.getMethod());</div><div class="line">        r.append(&quot;headers&quot;, getHeadersInfo(request));</div><div class="line">        r.append(&quot;parameters&quot;, request.getParameterMap());</div><div class="line">        r.append(&quot;classMethod&quot;, joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());</div><div class="line">        r.append(&quot;args&quot;, Arrays.toString(joinPoint.getArgs()));</div><div class="line">        return r;</div><div class="line">    &#125;</div><div class="line">  /**</div><div class="line">     * 获取请求头部的信息</div><div class="line">     * @param request</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private Map&lt;String, String&gt; getHeadersInfo(HttpServletRequest request) &#123;</div><div class="line">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</div><div class="line">        Enumeration headerNames = request.getHeaderNames();</div><div class="line">        while (headerNames.hasMoreElements()) &#123;</div><div class="line">            String key = (String) headerNames.nextElement();</div><div class="line">            String value = request.getHeader(key);</div><div class="line">            map.put(key, value);</div><div class="line">        &#125;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">    	     BasicDBObject logInfo = getBasicDBObject(request, mJoinPoint);    </div><div class="line">    	     // 处理完请求，返回内容</div><div class="line">    	     logInfo.append(&quot;response&quot;,ret.toString());</div><div class="line">    	     logInfo.append(&quot;spend_time&quot;, (System.currentTimeMillis() - startTime.get()));</div><div class="line">    	     logger.info(logInfo);</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>在WebLogAspect切面中，分别通过doBefore和doAfterReturning两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore处记录时间，并在doAfterReturning处通过当前时间与开始处记录的时间计算得到请求处理的消耗时间。</p>
+<h2 id="6、实现Web层的日志的日志保存到mongodb数据库中"><a href="#6、实现Web层的日志的日志保存到mongodb数据库中" class="headerlink" title="6、实现Web层的日志的日志保存到mongodb数据库中"></a>6、实现Web层的日志的日志保存到mongodb数据库中</h2><h4 id="6-1-通过自定义appender实现"><a href="#6-1-通过自定义appender实现" class="headerlink" title="6.1.通过自定义appender实现"></a>6.1.通过自定义appender实现</h4><p>思路：log4j提供的输出器实现自Appender接口，要自定义appender输出到MongoDB，只需要继承AppenderSkeleton类，并实现几个方法即可完成。</p>
+<ul>
+<li>引入mongodb的驱动，在pom.xml中引入下面依赖</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;  </div><div class="line">    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.2.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>实现MongoAppender</li>
+</ul>
+<p>编写MongoAppender类继承AppenderSkeleton，实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.apache.log4j.AppenderSkeleton;</div><div class="line">import org.apache.log4j.spi.LoggingEvent;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">import com.mongodb.MongoClient;</div><div class="line">import com.mongodb.MongoClientURI;</div><div class="line">import com.mongodb.client.MongoCollection;</div><div class="line">import com.mongodb.client.MongoDatabase;</div><div class="line">/**</div><div class="line"> * 自定义appender实现输出日志MongoDB</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class MongoAppender  extends AppenderSkeleton &#123;</div><div class="line"></div><div class="line">    private MongoClient mongoClient;</div><div class="line">    private MongoDatabase mongoDatabase;</div><div class="line">    private MongoCollection&lt;BasicDBObject&gt; logsCollection;</div><div class="line">    /**</div><div class="line">     * mongodb连接的url</div><div class="line">     */</div><div class="line">    private String connectionUrl;</div><div class="line">    /**</div><div class="line">     * 数据库的名称</div><div class="line">     */</div><div class="line">    private String databaseName;</div><div class="line">    /**</div><div class="line">     * 集合的名称</div><div class="line">     */</div><div class="line">    private String collectionName;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void append(LoggingEvent loggingEvent) &#123;</div><div class="line"></div><div class="line">        if(mongoDatabase == null) &#123;</div><div class="line">            MongoClientURI connectionString = new MongoClientURI(connectionUrl);</div><div class="line">            mongoClient = new MongoClient(connectionString);</div><div class="line">            mongoDatabase = mongoClient.getDatabase(databaseName);</div><div class="line">            logsCollection = mongoDatabase.getCollection(collectionName, BasicDBObject.class);</div><div class="line">        &#125;</div><div class="line">        //将日志插入到集合</div><div class="line">        logsCollection.insertOne((BasicDBObject) loggingEvent.getMessage());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void close() &#123;</div><div class="line">        if(mongoClient != null) &#123;</div><div class="line">            mongoClient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean requiresLayout() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	public MongoClient getMongoClient() &#123;</div><div class="line">		return mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoClient(MongoClient mongoClient) &#123;</div><div class="line">		this.mongoClient = mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoDatabase getMongoDatabase() &#123;</div><div class="line">		return mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoDatabase(MongoDatabase mongoDatabase) &#123;</div><div class="line">		this.mongoDatabase = mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoCollection&lt;BasicDBObject&gt; getLogsCollection() &#123;</div><div class="line">		return logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setLogsCollection(MongoCollection&lt;BasicDBObject&gt; logsCollection) &#123;</div><div class="line">		this.logsCollection = logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getConnectionUrl() &#123;</div><div class="line">		return connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setConnectionUrl(String connectionUrl) &#123;</div><div class="line">		this.connectionUrl = connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getDatabaseName() &#123;</div><div class="line">		return databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setDatabaseName(String databaseName) &#123;</div><div class="line">		this.databaseName = databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getCollectionName() &#123;</div><div class="line">		return collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setCollectionName(String collectionName) &#123;</div><div class="line">		this.collectionName = collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-3-在log4j-prperties中配置"><a href="#6-3-在log4j-prperties中配置" class="headerlink" title="6.3 在log4j.prperties中配置"></a>6.3 在log4j.prperties中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># mongodb输出</div><div class="line">log4j.logger.mongodb=INFO, mongodb</div><div class="line">log4j.appender.mongodb=com.lidong.util.MongoAppender</div><div class="line">log4j.appender.mongodb.connectionUrl=mongodb://127.0.0.1:27017</div><div class="line">log4j.appender.mongodb.databaseName=logs</div><div class="line">log4j.appender.mongodb.collectionName=logs_request</div></pre></td></tr></table></figure>
+<h3 id="6-4在spring-mvc-xml中开启统一处理请求日志"><a href="#6-4在spring-mvc-xml中开启统一处理请求日志" class="headerlink" title="6.4在spring-mvc.xml中开启统一处理请求日志"></a>6.4在spring-mvc.xml中开启统一处理请求日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- web统一管理  --&gt;</div><div class="line">&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</div><div class="line">&lt;bean class=&quot;com.lidong.util.WebLogAspect&quot; /&gt;</div></pre></td></tr></table></figure>
+<h3 id="6-5在数据库中查看保存的日志"><a href="#6-5在数据库中查看保存的日志" class="headerlink" title="6.5在数据库中查看保存的日志"></a>6.5在数据库中查看保存的日志</h3><p><img src="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" itemprop="url">
+                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:29:59+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-为什么要进行（主从复制）读写分离"><a href="#1-为什么要进行（主从复制）读写分离" class="headerlink" title="1. 为什么要进行（主从复制）读写分离"></a>1. 为什么要进行（主从复制）读写分离</h2><p>分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。</p>
+<p>在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操作的时候访问从数据库Slave，在进行写操作的时候访问主数据库Master。这样的话就减轻了一台服务器的压力。</p>
+<p>在进行读写分离案例分析的时候。首先，配置数据库的主从复制，使用mysqlreplicate命令快速搭建 Mysql 主从复制。</p>
+<h3 id="2-MySQL主从复制的原理"><a href="#2-MySQL主从复制的原理" class="headerlink" title="2.MySQL主从复制的原理"></a>2.MySQL主从复制的原理</h3><h4 id="2-1MySQL主从复制的原理"><a href="#2-1MySQL主从复制的原理" class="headerlink" title="2.1MySQL主从复制的原理"></a>2.1MySQL主从复制的原理</h4><p><img src="http://img.blog.csdn.net/20170102205919680?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="2-2MySQL主从复制的基本过程"><a href="#2-2MySQL主从复制的基本过程" class="headerlink" title="2.2MySQL主从复制的基本过程"></a>2.2MySQL主从复制的基本过程</h4><p> MySQL主从复制的两种情况：同步复制和异步复制，实际复制架构中大部分为异步复制。复制的基本过程如下：</p>
+<ol>
+<li>Slave上面的IO进程连接上Master，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容。</li>
+<li>Master接收到来自Slave的IO进程的请求后，负责复制的IO进程会根据请求信息读取日志指定位置之后的日志信息，返回给Slave的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到Master端的bin-log文件的名称以及bin-log的位置。</li>
+<li>Slave的IO进程接收到信息后，将接收到的日志内容依次添加到Slave端的relay-log文件的最末端，并将读取到的Master端的 bin-log的文件名和位置记录到master-info文件中，以便在下一次读取的时候能够清楚的告诉Master“我需要从某个bin-log的哪个位置开始往后的日志内容，请发给我”。</li>
+<li>Slave的Sql进程检测到relay-log中新增加了内容后，会马上解析relay-log的内容成为在Master端真实执行时候的那些可执行的内容，并在自身执行。</li>
+</ol>
+<h2 id="3-开始MySQL5-7-12的主从复制教程："><a href="#3-开始MySQL5-7-12的主从复制教程：" class="headerlink" title="3.开始MySQL5.7.12的主从复制教程："></a>3.开始MySQL5.7.12的主从复制教程：</h2><h4 id="3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"><a href="#3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。" class="headerlink" title="3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"></a>3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。</h4><p>需要注意的是：GTID方式不支持临时表！所以如果你的业务系统要用到临时表的话就不要考虑这种方式了，至少目前最新版本MySQL5.6.12的GTID复制还是不支持临时表的。</p>
+<p>所以此篇教程主要是告诉大家如何通过日志（binlog）方式做主从复制！</p>
+<h4 id="3-2-MySQL官方提供的MySQL-Replication教程："><a href="#3-2-MySQL官方提供的MySQL-Replication教程：" class="headerlink" title="3.2 MySQL官方提供的MySQL Replication教程："></a>3.2 MySQL官方提供的MySQL Replication教程：</h4><p><a href="http://dev.mysql.com/doc/refman/5.6/en/replication.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/replication.html</a></p>
+<p>这个官方教程强烈建议大家阅读。</p>
+<h4 id="3-3、准备工作："><a href="#3-3、准备工作：" class="headerlink" title="3.3、准备工作："></a>3.3、准备工作：</h4><ol>
+<li>配置MySQL主从复制（读写分离）之前，需要在主从两台服务器先安装好MySQL5.7。</li>
+<li>目前最新的MySQL5.7 GA版本是MySQL5.7.12（点此下载MySQL5.7.12源码包）。</li>
+<li>需要注意如下两点：</li>
+</ol>
+<p>（1）如果你需要用于生产环境，安教程安装MySQL时不要急着做mysql启动操作。建议把mysql初始化生成的/usr/local/mysql/mysql.cnf删除，然后把你优化好的mysql配置文件my.cnf放到/etc下。<br>（2）建议主备两台服务器在同一局域网，主备两台数据库网络需要互通。</p>
+<ol>
+<li>我的所使用的环境：</li>
+</ol>
+<blockquote>
+<p>主数据库IP：192.168.0.104</p>
+<p>从数据库IP：192.168.0.105</p>
+</blockquote>
+<h4 id="3-4-修改主数据库的的配置文件："><a href="#3-4-修改主数据库的的配置文件：" class="headerlink" title="3.4 修改主数据库的的配置文件："></a>3.4 修改主数据库的的配置文件：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=1</div><div class="line">3     log-bin=mysqlmaster-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10    log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
+<p>修改之后要重启mysql服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure></p>
+<h4 id="3-5、修改从数据库的的配置文件："><a href="#3-5、修改从数据库的的配置文件：" class="headerlink" title="3.5、修改从数据库的的配置文件："></a>3.5、修改从数据库的的配置文件：</h4><p><strong>注意：</strong>（server-id配置为大于主数据库的server-id即可）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=2</div><div class="line">3     log-bin=mysqlslave-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10     log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
+<p>修改之后要重启mysql：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure>
+<p>附一个我已优化过的从数据库配置文件：点此下载</p>
+<h4 id="3-6、SSH登录到主数据库："><a href="#3-6、SSH登录到主数据库：" class="headerlink" title="3.6、SSH登录到主数据库："></a>3.6、SSH登录到主数据库：</h4><h4 id="3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）："><a href="#3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）：" class="headerlink" title="3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）："></a>3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1     # mysql -uroot -p</div><div class="line">2     mysql&gt; GRANT REPLICATION SLAVE ON *.* TO &apos;repl&apos;@&apos;192.168.0.104&apos; IDENTIFIED BY &apos;repl&apos;;</div></pre></td></tr></table></figure>
+<h4 id="3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："><a href="#3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：" class="headerlink" title="3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："></a>3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：</h4><blockquote>
+<p>mysql&gt; FLUSH TABLES WITH READ LOCK;</p>
+</blockquote>
+<h4 id="3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："><a href="#3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：" class="headerlink" title="3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："></a>3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：</h4><p><img src="http://img.blog.csdn.net/20170102202118690?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>在这个例子中，二进制日志文件是mysqlmaster-bin.000001，位置是332，记录下这两个值，稍后要用到。</p>
+<h4 id="3-6-4-在主数据库上使用mysqldump命令创建一个数据快照："><a href="#3-6-4-在主数据库上使用mysqldump命令创建一个数据快照：" class="headerlink" title="3.6.4 在主数据库上使用mysqldump命令创建一个数据快照："></a>3.6.4 在主数据库上使用mysqldump命令创建一个数据快照：</h4><blockquote>
+<p>mysqldump -uroot -p -h127.0.0.1 -P3306 –all-databases  –triggers –routines –events &gt;all.sql</p>
+</blockquote>
+<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导出完成。</p>
+<h4 id="3-6-5-解锁第2-6-2步主数据的锁表操作："><a href="#3-6-5-解锁第2-6-2步主数据的锁表操作：" class="headerlink" title="3.6.5 解锁第2.6.2步主数据的锁表操作："></a>3.6.5 解锁第2.6.2步主数据的锁表操作：</h4><blockquote>
+<p>mysql&gt; UNLOCK TABLES;</p>
+</blockquote>
+<h4 id="3-7、SSH登录到从数据库："><a href="#3-7、SSH登录到从数据库：" class="headerlink" title="3.7、SSH登录到从数据库："></a>3.7、SSH登录到从数据库：</h4><p>（1）通过FTP、SFTP或其他方式，将上一步备份的主数据库快照all.sql上传到从数据库某个路径，例如我放在了/home/lidong/目录下；</p>
+<p>（2）从导入主的快照：</p>
+<blockquote>
+<h1 id="cd-home-lidong"><a href="#cd-home-lidong" class="headerlink" title="cd /home/lidong"></a>cd /home/lidong</h1><pre><code># mysql -uroot -p -h127.0.0.1 -P3306 &lt; all.sql
+</code></pre></blockquote>
+<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导入完成。</p>
+<p>（3）给从数据库设置复制的主数据库信息（注意修改MASTER_LOG_FILE和MASTER_LOG_POS的值）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># mysql -uroot -p</div><div class="line">mysql&gt; CHANGE MASTER TO MASTER_HOST=&apos;192.168.100.2&apos;,MASTER_USER=&apos;repl&apos;,MASTER_PASSWORD=&apos;repl&apos;,MASTER_LOG_FILE=&apos;mysqlmaster-bin.000001&apos;,MASTER_LOG_POS=332;</div><div class="line"># 然后启动从数据库的复制线程：</div><div class="line">mysql&gt; START slave;</div><div class="line"># 接着查询数据库的slave状态：</div><div class="line">mysql&gt;  SHOW slave STATUS \G</div><div class="line"># 如果下面两个参数都是Yes，则说明主从配置成功！</div><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
+<p>（4）接下来我们可以在主数据库上创建数据库、表、插入数据，然后看从数据库是否同步了这些操作。</p>
+<p>一主一从的主从复制就实现了。</p>
+<h2 id="4、实现读写分离的两种方法"><a href="#4、实现读写分离的两种方法" class="headerlink" title="4、实现读写分离的两种方法"></a>4、实现读写分离的两种方法</h2><ol>
+<li>第一种方式是我们最常用的方式，就是定义2个数据库连接，一个是MasterDataSource,另一个是SlaveDataSource。更新数据时我们读取MasterDataSource，查询数据时我们读取SlaveDataSource。这种方式很简单。</li>
+<li>第二种方式动态数据源切换，就是在程序运行时，把数据源动态织入到程序中，从而选择读取主库还是从库。主要使用的技术是：Annotation，spring AOP ，反射。<h2 id="5-Spring-AOP-实现MySQL读写分离的具体实现"><a href="#5-Spring-AOP-实现MySQL读写分离的具体实现" class="headerlink" title="5.Spring AOP 实现MySQL读写分离的具体实现"></a>5.Spring AOP 实现MySQL读写分离的具体实现</h2><h4 id="5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java"><a href="#5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java" class="headerlink" title="5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java"></a>5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java</h4></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取数据源，用于动态切换数据源</div><div class="line"> */</div><div class="line">public class ChooseDataSource extends AbstractRoutingDataSource &#123;</div><div class="line"></div><div class="line">    public static Map&lt;String, List&lt;String&gt;&gt; METHOD_TYPE_MAP = new HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 实现父类中的抽象方法，获取数据源名称</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    protected Object determineCurrentLookupKey() &#123;</div><div class="line">        return DataSourceHandler.getDataSource();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 设置方法名前缀对应的数据源</div><div class="line">    public void setMethodType(Map&lt;String, String&gt; map) &#123;</div><div class="line">        for (String key : map.keySet()) &#123;</div><div class="line">            List&lt;String&gt; v = new ArrayList&lt;String&gt;();</div><div class="line">            String[] types = map.get(key).split(&quot;,&quot;);</div><div class="line">            for (String type : types) &#123;</div><div class="line">                if (StringUtils.isNotBlank(type)) &#123;</div><div class="line">                    v.add(type);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            METHOD_TYPE_MAP.put(key, v);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-2-DataSourceAspect进行具体方法的AOP拦截"><a href="#5-2-DataSourceAspect进行具体方法的AOP拦截" class="headerlink" title="5.2 DataSourceAspect进行具体方法的AOP拦截"></a>5.2 DataSourceAspect进行具体方法的AOP拦截</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.context.annotation.EnableAspectJAutoProxy;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 切换数据源(不同方法调用不同数据源)</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">@EnableAspectJAutoProxy(proxyTargetClass = true)</div><div class="line">public class DataSourceAspect &#123;</div><div class="line"></div><div class="line">    protected Logger logger = LoggerFactory.getLogger(this.getClass());</div><div class="line"></div><div class="line">    @Pointcut(&quot;execution(* com.lidong.core.*.dao.*.*(..))&quot;)</div><div class="line">    public void aspect() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 配置前置通知,使用在方法aspect()上注册的切入点</div><div class="line">     */</div><div class="line">    @Before(&quot;aspect()&quot;)</div><div class="line">    public void before(JoinPoint point) &#123;</div><div class="line">        String className = point.getTarget().getClass().getName();</div><div class="line">        String method = point.getSignature().getName();</div><div class="line">        logger.info(className + &quot;.&quot; + method + &quot;(&quot; + StringUtils.join(point.getArgs(), &quot;,&quot;) + &quot;)&quot;);</div><div class="line">        try &#123;</div><div class="line">            for (String key : ChooseDataSource.METHOD_TYPE_MAP.keySet()) &#123;</div><div class="line">                for (String type : ChooseDataSource.METHOD_TYPE_MAP.get(key)) &#123;</div><div class="line">                    if (method.startsWith(type)) &#123;</div><div class="line">                        DataSourceHandler.putDataSource(key);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-3-数据源的Handler类-DataSourceHandler-java"><a href="#5-3-数据源的Handler类-DataSourceHandler-java" class="headerlink" title="5.3 数据源的Handler类  DataSourceHandler.java"></a>5.3 数据源的Handler类  DataSourceHandler.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line">/**</div><div class="line"> * 数据源的Handler类</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class DataSourceHandler &#123;</div><div class="line">	 // 数据源名称线程池</div><div class="line">    public static final ThreadLocal&lt;String&gt; holder = new ThreadLocal&lt;String&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 在项目启动的时候将配置的读、写数据源加到holder中</div><div class="line">     */</div><div class="line">    public static void putDataSource(String datasource) &#123;</div><div class="line">        holder.set(datasource);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 从holer中获取数据源字符串</div><div class="line">     */</div><div class="line">    public static String getDataSource() &#123;</div><div class="line">        return holder.get();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-4-spring-db-xml读写数据源配置"><a href="#5-4-spring-db-xml读写数据源配置" class="headerlink" title="5.4 spring-db.xml读写数据源配置"></a>5.4 spring-db.xml读写数据源配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">driver=com.mysql.jdbc.Driver</div><div class="line">url=jdbc:mysql://127.0.0.1:3306/hms</div><div class="line">url1=jdbc:mysql://192.168.0.105:3306/hms</div><div class="line">username=root</div><div class="line">password=123456</div><div class="line">password1=  </div><div class="line">initialSize=0</div><div class="line">maxActive=20</div><div class="line">maxIdle=20</div><div class="line">minIdle=1</div><div class="line">maxWait=60000</div><div class="line">timeBetweenEvictionRunsMillis=3000</div><div class="line">minEvictableIdleTimeMillis=300000</div><div class="line">maxPoolPreparedStatementPerConnectionSize=20</div><div class="line">druid.filters=</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans    </div><div class="line">                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/context    </div><div class="line">                        http://www.springframework.org/schema/context/spring-context-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/mvc    </div><div class="line">                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入配置文件 &lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:jdbc.properties&quot; /&gt; &lt;/bean&gt; --&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot;</div><div class="line">		class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;locations&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;value&gt;classpath:jdbc.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:mongo.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:redis.properties&lt;/value&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;statFilter&quot; class=&quot;com.alibaba.druid.filter.stat.StatFilter&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;logSlowSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;mergeSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">	&lt;bean id=&quot;readDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;stat&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;20&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;3000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolPreparedStatements&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot;</div><div class="line">			value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;writeDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		destroy-method=&quot;close&quot; init-method=&quot;init&quot; lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;$&#123;initialSize&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;$&#123;maxActive&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;$&#123;maxWait&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;proxyFilters&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;ref bean=&quot;statFilter&quot; /&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;$&#123;druid.filters&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;connectionProperties&quot; value=&quot;password=$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenLogStatsMillis&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;$&#123;minEvictableIdleTimeMillis&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;$&#123;timeBetweenEvictionRunsMillis&#125;&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- 配置动态分配的读写 数据源 --&gt;</div><div class="line">	&lt;bean id=&quot;dataSource&quot; class=&quot;com.lidong.util.aspect.ChooseDataSource&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;targetDataSources&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot; value-type=&quot;javax.sql.DataSource&quot;&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value-ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value-ref=&quot;readDataSource&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;defaultTargetDataSource&quot; ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">		&lt;property name=&quot;methodType&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot;&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value=&quot;,get,select,count,list,query&quot; /&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value=&quot;,add,create,update,delete,remove,&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>配置了readDataSource和writeDataSource两个数据源，但是交给<br>SqlSessionFactoryBean进行管理的只有dataSource,使用了com.lidong.util.aspect.ChooseDataSource来进行数据源的选择，默认的数据源是writeDataSource。methodType是定义了方法的关键字，那些是选择读库，那个是写库。</p>
+<h4 id="5-5-在Dao层通过切面选择数据源"><a href="#5-5-在Dao层通过切面选择数据源" class="headerlink" title="5.5 在Dao层通过切面选择数据源"></a>5.5 在Dao层通过切面选择数据源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.service;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.lidong.api.service.user.IUserService;</div><div class="line">import com.lidong.core.user.dao.IUserDao;</div><div class="line">import com.lidong.model.user.User;</div><div class="line">@Service(&quot;userService&quot;)</div><div class="line">public class UserServiceImp implements IUserService &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	IUserDao mIUserDao;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserById(int userId) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserByUsername(String username) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryUsername(username);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void addUser(User user) &#123;</div><div class="line">	    mIUserDao.insert(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getAllUser() &#123;</div><div class="line">		return mIUserDao.selectAllUsers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int delUserById(Integer userId) &#123;</div><div class="line">		return mIUserDao.deleteByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int updateUser(User user) &#123;</div><div class="line">		return mIUserDao.updateByPrimaryKey(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：通过看com.alibaba.druid.pool.DruidDataSourceStatLoggerImpl 是一分钟发一次心跳，监听写数据源有没有宕机。如果宕机会进行重连。</p>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="[代码地址]"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">[代码地址]</a></h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/" itemprop="url">
+                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:25:07+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Druid简介"><a href="#1-Druid简介" class="headerlink" title="1 Druid简介"></a>1 Druid简介</h2><p>Druid是阿里巴巴开源平台上的一个项目，整个项目由数据库连接池、插件框架和SQL解析器组成。该项目主要是为了扩展JDBC的一些限制，可以让程序员实现一些特殊的需求，比如向密钥服务请求凭证、统计SQL信息、SQL性能收集、SQL注入检查、SQL翻译等，程序员可以通过定制来实现自己需要的功能。</p>
+<p>Druid是目前最好的数据库连接池，在功能、性能、扩展性方面，都超过其他数据库连接池，包括DBCP、C3P0、BoneCP、Proxool、JBoss DataSource。Druid已经在阿里巴巴部署了超过600个应用，经过一年多生产环境大规模部署的严苛考验。</p>
+<h2 id="2-Druid的功能"><a href="#2-Druid的功能" class="headerlink" title="2.Druid的功能"></a>2.Druid的功能</h2><p>1、替换DBCP和C3P0。Druid提供了一个高效、功能强大、可扩展性好的数据库连接池。</p>
+<p>2、可以监控数据库访问性能，Druid内置提供了一个功能强大的StatFilter插件，能够详细统计SQL的执行性能，这对于线上分析数据库访问性能有帮助。</p>
+<p>3、数据库密码加密。直接把数据库密码写在配置文件中，这是不好的行为，容易导致安全问题。DruidDruiver和DruidDataSource都支持PasswordCallback。</p>
+<p>4、SQL执行日志，Druid提供了不同的LogFilter，能够支持Common-Logging、Log4j和JdkLog，你可以按需要选择相应的LogFilter，监控你应用的数据库访问情况。</p>
+<p>5、扩展JDBC，如果你要对JDBC层有编程的需求，可以通过Druid提供的Filter机制，很方便编写JDBC层的扩展插件。</p>
+<h2 id="3-Druid怎么配置maven"><a href="#3-Druid怎么配置maven" class="headerlink" title="3.Druid怎么配置maven"></a>3.Druid怎么配置maven</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">     &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">     &lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">     &lt;version&gt;$&#123;druid-version&#125;&lt;/version&gt;</div><div class="line"> &lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h2 id="4-Druid支持的数据库"><a href="#4-Druid支持的数据库" class="headerlink" title="4.Druid支持的数据库"></a>4.Druid支持的数据库</h2><p>理论上说，支持所有有jdbc驱动的数据库。实际测试过的有</p>
+<hr>
+<ol>
+<li>mysql     支持，大规模使用</li>
+<li>oracle     支持，大规模使用</li>
+<li>sqlserver     支持</li>
+<li>postgres     支持</li>
+<li>db2     支持</li>
+<li>h2     支持</li>
+<li>derby     支持</li>
+<li>sqlite     支持</li>
+<li>sybase     支持</li>
+</ol>
+<h2 id="5-配置DruidDataSource"><a href="#5-配置DruidDataSource" class="headerlink" title="5.配置DruidDataSource"></a>5.配置DruidDataSource</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot; init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</div><div class="line">      &lt;!-- 基本属性 url、user、password --&gt;</div><div class="line">      &lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc_url&#125;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc_user&#125;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc_password&#125;&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置初始化大小、最小、最大 --&gt;</div><div class="line">      &lt;property name=&quot;initialSize&quot; value=&quot;1&quot; /&gt;</div><div class="line">      &lt;property name=&quot;minIdle&quot; value=&quot;1&quot; /&gt;</div><div class="line">      &lt;property name=&quot;maxActive&quot; value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置获取连接等待超时的时间 --&gt;</div><div class="line">      &lt;property name=&quot;maxWait&quot; value=&quot;60000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 --&gt;</div><div class="line">      &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置一个连接在池中最小生存的时间，单位是毫秒 --&gt;</div><div class="line">      &lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 打开PSCache，并且指定每个连接上PSCache的大小 --&gt;</div><div class="line">      &lt;property name=&quot;poolPreparedStatements&quot; value=&quot;true&quot; /&gt;</div><div class="line">      &lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot; value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置监控统计拦截的filters --&gt;</div><div class="line">      &lt;property name=&quot;filters&quot; value=&quot;stat&quot; /&gt;</div><div class="line">  &lt;/bean&gt;</div></pre></td></tr></table></figure>
+<p>通常来说，只需要修改initialSize、minIdle、maxActive。</p>
+<p>如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。</p>
+<h2 id="6-配置-StatFilter"><a href="#6-配置-StatFilter" class="headerlink" title="6.配置_StatFilter"></a>6.配置_StatFilter</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;</div><div class="line">    &lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;</div><div class="line">    &lt;servlet-class&gt;com.alibaba.druid.support.http.StatViewServlet&lt;/servlet-class&gt;</div><div class="line">  &lt;/servlet&gt;</div><div class="line">  &lt;servlet-mapping&gt;</div><div class="line">    &lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;</div><div class="line">    &lt;url-pattern&gt;/druid/*&lt;/url-pattern&gt;</div><div class="line">  &lt;/servlet-mapping&gt;</div><div class="line">  &lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;com.alibaba.druid.support.http.WebStatFilter&lt;/filter-class&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;exclusions&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;profileEnable&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;true&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;principalCookieName&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;USER_COOKIE&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;principalSessionName&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;USER_SESSION&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">  &lt;/filter&gt;</div><div class="line">  &lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">  &lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+<h2 id="7-结果展示"><a href="#7-结果展示" class="headerlink" title="7.结果展示"></a>7.结果展示</h2><h4 id="7-1-首页"><a href="#7-1-首页" class="headerlink" title="7.1.首页"></a>7.1.首页</h4><p><img src="http://img.blog.csdn.net/20161225153519639?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="7-2-SQL监控"><a href="#7-2-SQL监控" class="headerlink" title="7.2 SQL监控"></a>7.2 SQL监控</h3><p><img src="http://img.blog.csdn.net/20161225153539468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
           
         
       
@@ -1026,7 +1141,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1069,8 +1184,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1080,8 +1195,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -1129,7 +1244,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

@@ -203,7 +203,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -213,7 +213,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Redis的安装、部署、主从配置/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="李东">
@@ -281,8 +281,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/12/Redis的安装、部署、主从配置/" itemprop="url">
-                  Redis的安装、部署、主从配置
+                <a class="post-title-link" href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" itemprop="url">
+                  Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）
                 </a>
               
             
@@ -296,10 +296,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:43:09+08:00">
-                2017-01-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:42:16+08:00">
+                2017-01-14
               </time>
             
 
@@ -310,6 +310,18 @@
 
           
 
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值（续）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -334,40 +346,16 @@
       
         
           
-            <h2 id="1-Redis的简介"><a href="#1-Redis的简介" class="headerlink" title="1. Redis的简介"></a>1. Redis的简介</h2><p>Redis是一个开源的，先进的 key-value 存储可用于构建高性能，可扩展的 Web 应用程序的解决方案。</p>
-<p>Redis官方网网站是：<a href="http://www.redis.io/" target="_blank" rel="external">http://www.redis.io/</a>，如下：<br><img src="http://img.blog.csdn.net/20161226102106348?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>Redis 有三个主要使其有别于其它很多竞争对手的特点：<br>Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的；<br>Redis相比许多键值数据存储系统有相对丰富的数据类型；<br>Redis可以将数据复制到任意数量的从服务器中；</p>
-<h2 id="2-Redis优点"><a href="#2-Redis优点" class="headerlink" title="2. Redis优点"></a>2. Redis优点</h2><ul>
-<li>异常快速 : Redis是非常快的，每秒可以执行大约110000设置操作，81000个/每秒的读取操作。</li>
-<li><p>支持丰富的数据类型 : Redis支持最大多数开发人员已经知道如列表，集合，可排序集合，哈希等数据类型。这使得在应用中很容易解决的各种问题，因为我们知道哪些问题处理使用哪种数据类型更好解决。</p>
-</li>
-<li><p>操作都是原子的 : 所有 Redis 的操作都是原子，从而确保当两个客户同时访问 Redis 服务器得到的是更新后的值（最新值）。</p>
-</li>
-<li>MultiUtility工具：Redis是一个多功能实用工具，可以在很多如：缓存，消息传递队列中使用（Redis原生支持发布/订阅），在应用程序中，如：Web应用程序session，网站页面点击数等任何短暂的数据，最新的100条评论等；<h2 id="3-Redis环境"><a href="#3-Redis环境" class="headerlink" title="3.Redis环境"></a>3.Redis环境</h2>要在 Ubuntu 上安装 Redis，打开终端，然后输入以下命令：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$sudo apt-get update</div><div class="line">$sudo apt-get install redis-server</div></pre></td></tr></table></figure>
-<p>这将在您的计算机上安装Redis<br>启动 Redis</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-server</div></pre></td></tr></table></figure>
-<p>查看 redis 是否还在运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-cli</div></pre></td></tr></table></figure>
-<p>这将打开一个 Redis 提示符，如下图所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<p>在上面的提示信息中：127.0.0.1 是本机的IP地址，6379是 Redis 服务器运行的端口。现在输入 PING 命令，如下图所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; ping</div><div class="line">PONG</div></pre></td></tr></table></figure>
-<p>这说明现在你已经成功地在计算机上安装了 Redis。<br>在Ubuntu上安装Redis桌面管理器<br>要在Ubuntu 上安装 Redis桌面管理，可以从 <a href="http://redisdesktop.com/download" target="_blank" rel="external">http://redisdesktop.com/download</a> 下载包并安装它。<br>Redis 桌面管理器会给你用户界面来管理 Redis 键和数据。<br><img src="http://img.blog.csdn.net/20161226102712366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="4-Redis的主从配置（以window为例）"><a href="#4-Redis的主从配置（以window为例）" class="headerlink" title="4. Redis的主从配置（以window为例）"></a>4. Redis的主从配置（以window为例）</h2><p>在window中安装redis服务器，然后将文件复制一份，如下图：</p>
-<p><img src="http://img.blog.csdn.net/20161226103100055?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>修改文件夹名称分别为主服务器为Redis-master，从服务器为Redis - slave，<br>时候为修改从服务器redis.windows.conf文件中的端口prot为6380，在6380的redis.windows.conf中指定 是6379的slave，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#配置6379主服务器配置一个从服务器6380</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
-<p>这样Redis的一主一从就配置好了。接下来启动两个主从服务器：</p>
-<h4 id="4-1-启动Redis-master："><a href="#4-1-启动Redis-master：" class="headerlink" title="4.1. 启动Redis-master："></a>4.1. 启动Redis-master：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161226104237509?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="4-2-启动Redis-slave："><a href="#4-2-启动Redis-slave：" class="headerlink" title="4.2. 启动Redis - slave："></a>4.2. 启动Redis - slave：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161226104332776?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="4-3-连接主Redis-master服务并保存数据："><a href="#4-3-连接主Redis-master服务并保存数据：" class="headerlink" title="4.3 连接主Redis-master服务并保存数据："></a>4.3 连接主Redis-master服务并保存数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis-master&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; set test1  text_1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<h4 id="4-4-连接主Redis-slave服务查看数据："><a href="#4-4-连接主Redis-slave服务查看数据：" class="headerlink" title="4.4.连接主Redis - slave服务查看数据："></a>4.4.连接主Redis - slave服务查看数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis - slave&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
-<h4 id="4-5-用Redis-Desktop-Manager查看数据"><a href="#4-5-用Redis-Desktop-Manager查看数据" class="headerlink" title="4.5 用Redis Desktop Manager查看数据"></a>4.5 用Redis Desktop Manager查看数据</h4><p><img src="http://img.blog.csdn.net/20161226105125330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>总结：Redis简单使用就这么多，谢谢的的阅读。</p>
+            <p> 接着上篇<a href="http://blog.csdn.net/u010046908/article/details/51759125" target="_blank" rel="external">Android中WebView加载本地Html，与JavaScript与Android方法相互传值</a>，今天来一篇续集，为什么要来续集呢，感觉自己还有没有交代完的部分，于是在这里再次交代一下，在Android中我们需要将给复杂的数据传到Html页面，我们该怎么做？</p>
+<p>大家作为一直搞android或IOS的小伙伴们，有好多对Html都了解不是太多，于是思考了一番，无非就是向Html页面传值吗？我就只会传字符串等基本的数据类型，遇到像List或Map中多层嵌套的复杂数据我该怎么办？<strong><em>我只会字符串，我只会字符串，我只会字符串，</em></strong>于是我是想到了JSON，JSON作为数据交换的一种方式，我是该选择JSON字符串来帮我完成复杂的数据交换,是因为Android或JavaScript中都JSON转换的方法，能够方便的数据转换。</p>
+<p>上面我已经把问题抛了出来问题，解决的方法也已经给出。下面来一个简单的例子来说明一下实现方法。</p>
+<p>案例说明，我要将一个List<person>传到页面做一个表格，就这么简单。</person></p>
+<h3 id="1-创建一个Person对象"><a href="#1-创建一个Person对象" class="headerlink" title="1.创建一个Person对象"></a>1.创建一个Person对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package com.lidong.androiddemo;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/7/2</div><div class="line"> */</div><div class="line">public class Person &#123;</div><div class="line"></div><div class="line">    public String name;</div><div class="line">   public String age;</div><div class="line">   public String uint;</div><div class="line"></div><div class="line">    public Person(String name, String age, String uint) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">        this.uint = uint;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-创建MyObeject"><a href="#2-创建MyObeject" class="headerlink" title="2.创建MyObeject"></a>2.创建MyObeject</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">package com.lidong.androiddemo;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line">import android.util.Log;</div><div class="line">import android.webkit.JavascriptInterface;</div><div class="line"></div><div class="line">import com.google.gson.Gson;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/6/29.</div><div class="line"> */</div><div class="line">public class MyObject &#123;</div><div class="line"></div><div class="line">    public static final String TAG = MyObject.class.getSimpleName() ;</div><div class="line">    private Context mContext;</div><div class="line">    private String data;</div><div class="line">    public MyObject(Context c,String data)&#123;</div><div class="line">        this.data = data;</div><div class="line">        mContext = c;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取person字符串传Html</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getData()&#123;</div><div class="line"></div><div class="line">        List&lt;Person&gt; mlist = new ArrayList&lt;&gt;();</div><div class="line">        for (int i = 0; i &lt;10 ; i++) &#123;</div><div class="line">            mlist.add(new Person(&quot;Li&quot;+i,i+&quot;&quot;,&quot;com&quot;+i));</div><div class="line">        &#125;</div><div class="line">        Gson gson = new Gson();</div><div class="line">        String d  = gson.toJson(mlist);</div><div class="line">        Log.d(TAG, &quot;getData: dddd&quot;+d);</div><div class="line">        return d;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-MainActivity的实现"><a href="#3-MainActivity的实现" class="headerlink" title="3.MainActivity的实现"></a>3.MainActivity的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private static final String TAG = MainActivity.class.getSimpleName();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        WebView webView = (WebView) findViewById(R.id.webView);</div><div class="line">        WebSettings settings = webView.getSettings();</div><div class="line">        //调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</div><div class="line">        settings.setJavaScriptEnabled(true);</div><div class="line">        webView.loadUrl(&quot;file:///android_asset/index.html&quot;);</div><div class="line">        //调用WebView关联的WebSettings中addJavaScriptInterface</div><div class="line">        webView.addJavascriptInterface(new MyObject(this,&quot;dd&quot;),&quot;my&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-index-html的实现"><a href="#4-index-html的实现" class="headerlink" title="4.index.html的实现"></a>4.index.html的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;测试Android Json传值&lt;/title&gt;</div><div class="line">    &lt;script src=&quot;http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;http://cdn.hcharts.cn/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;</div><div class="line"></div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">$(function()&#123;</div><div class="line">    //通过暴露的my对象来获取数据</div><div class="line">    var data = my.getData();</div><div class="line">    //将json字符串转换为数组</div><div class="line">     var f = eval(data);</div><div class="line">    //向表格填充数据 </div><div class="line">    for(var i = 0;i&lt;f.length;i++)&#123;</div><div class="line">     var en = f[i];</div><div class="line">     $(&quot;table&quot;).append(&quot;&lt;tr&gt;&lt;td&gt;&quot;+en.age+&quot;&lt;/td&gt;&lt;td&gt;&quot;+en.name+&quot;&lt;/td&gt;&lt;td&gt;&quot;+en.uint+&quot;&lt;/td&gt;&lt;/tr&gt;&quot;);</div><div class="line">     &#125;</div><div class="line">   &#125;);</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">人员表</div><div class="line">&lt;div &gt;</div><div class="line">    &lt;table id=&quot;table&quot; border=&quot;1&quot;  bgcolor=&quot;#ffddff&quot;&gt;&lt;/table&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>这个案例基本上就四个步骤，通过这篇文章的学习妈妈在也不会担心android向html传复杂的数据了，谢谢学习</p>
+<p><img src="http://img.blog.csdn.net/20160702091354524" alt="这里写图片描述"></p>
 
           
         
@@ -406,7 +394,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Zookeeper-安装和部署/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="李东">
@@ -431,8 +419,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/12/Zookeeper-安装和部署/" itemprop="url">
-                  Zookeeper 安装和部署
+                <a class="post-title-link" href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" itemprop="url">
+                  Android中WebView加载本地Html，与JavaScript与Android方法相互传值
                 </a>
               
             
@@ -446,10 +434,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:40:47+08:00">
-                2017-01-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:40:40+08:00">
+                2017-01-14
               </time>
             
 
@@ -467,8 +455,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/01/12/Zookeeper-安装和部署/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/Zookeeper-安装和部署/" itemprop="commentCount"></span>
+                <a href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -496,240 +484,33 @@
       
         
           
-            <h2 id="1-Zookeeper-简介"><a href="#1-Zookeeper-简介" class="headerlink" title="1. Zookeeper 简介"></a>1. Zookeeper 简介</h2><p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
-<p>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。<br>ZooKeeper包含一个简单的原语集， 提供Java和C的接口。<br>ZooKeeper代码版本中，提供了分布式独享锁、选举、队列的接口，代码在zookeeper-3.4.8\src\recipes。其中分布锁和队列有Java和C两个版本，选举只有Java版本。</p>
-<h2 id="2-Zookeeper原理"><a href="#2-Zookeeper原理" class="headerlink" title="2. Zookeeper原理"></a>2. Zookeeper原理</h2><p>ZooKeeper是以Fast Paxos算法为基础的，Paxos 算法存在活锁的问题，即当有多个proposer交错提交时，有可能互相排斥导致没有一个proposer能提交成功，而Fast Paxos作了一些优化，通过选举产生一个leader (领导者)，只有leader才能提交proposer，具体算法可见Fast Paxos。因此，要想弄懂ZooKeeper首先得对Fast Paxos有所了解。<br>ZooKeeper的基本运转流程：<br>1、选举Leader。<br>2、同步数据。<br>3、选举Leader过程中算法有很多，但要达到的选举标准是一致的。<br>4、Leader要具有最高的zxid。<br>5、集群中大多数的机器得到响应并follow选出的Leader。[3]</p>
-<h2 id="3-Zookeeper特点"><a href="#3-Zookeeper特点" class="headerlink" title="3. Zookeeper特点"></a>3. Zookeeper特点</h2><p>在Zookeeper中，znode是一个跟Unix文件系统路径相似的节点，可以往这个节点存储或获取数据。如果在创建znode时Flag设置为EPHEMERAL，那么当创建这个znode的节点和Zookeeper失去连接后，这个znode将不再存在在Zookeeper里，Zookeeper使用Watcher察觉事件信息。当客户端接收到事件信息，比如连接超时、节点数据改变、子节点改变，可以调用相应的行为来处理数据。Zookeeper的Wiki页面展示了如何使用Zookeeper来处理事件通知，队列，优先队列，锁，共享锁，可撤销的共享锁，两阶段提交。</p>
-<p>那么Zookeeper能做什么事情呢，简单的例子：假设我们有20个搜索引擎的服务器(每个负责总索引中的一部分的搜索任务)和一个总服务器(负责向这20个搜索引擎的服务器发出搜索请求并合并结果集)，一个备用的总服务器(负责当总服务器宕机时替换总服务器)，一个web的cgi(向总服务器发出搜索请求)。搜索引擎的服务器中的15个服务器提供搜索服务，5个服务器正在生成索引。这20个搜索引擎的服务器经常要让正在提供搜索服务的服务器停止提供服务开始生成索引，或生成索引的服务器已经把索引生成完成可以提供搜索服务了。使用Zookeeper可以保证总服务器自动感知有多少提供搜索引擎的服务器并向这些服务器发出搜索请求，当总服务器宕机时自动启用备用的总服务器。</p>
-<h2 id="4-Zookeeper的下载"><a href="#4-Zookeeper的下载" class="headerlink" title="4. Zookeeper的下载"></a>4. Zookeeper的下载</h2><p>可以从 <a href="https://zookeeper.apache.org/releases.html" target="_blank" rel="external">https://zookeeper.apache.org/releases.html</a> 下载ZooKeeper，目前最新的稳定版本为 3.4.8 版本，用户可以自行选择一个速度较快的镜像来下载即可。</p>
-<h2 id="5-Zookeeper的目录结构"><a href="#5-Zookeeper的目录结构" class="headerlink" title="5. Zookeeper的目录结构"></a>5. Zookeeper的目录结构</h2><p>下载并解压ZooKeeper软件压缩包后，可以看到zk包含以下的文件和目录：</p>
-<p><img src="http://img.blog.csdn.net/20161225192742067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20161225193818972?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>ZooKeeper软件的文件和目录</p>
-<ul>
-<li>bin目录<br>zk的可执行脚本目录，包括zk服务进程，zk客户端，等脚本。其中，.sh是Linux环境下的脚本，.cmd是Windows环境下的脚本。</li>
-<li>lib目录<br>zk依赖的包。</li>
-<li>libexec目录<br>一些用于操作zk的工具包。<h2 id="5-单机模式"><a href="#5-单机模式" class="headerlink" title="5.单机模式"></a>5.单机模式</h2></li>
-</ul>
-<p>ZooKeeper的安装包括单机模式安装，以及集群模式安装。</p>
-<p>单机模式较简单，是指只部署一个zk进程，客户端直接与该zk进程进行通信。<br>在开发测试环境下，通过来说没有较多的物理资源，因此我们常使用单机模式。当然在单台物理机上也可以部署集群模式，但这会增加单台物理机的资源消耗。故在开发环境中，我们一般使用单机模式。</p>
-<h4 id="5-1-运行配置"><a href="#5-1-运行配置" class="headerlink" title="5.1 运行配置"></a>5.1 运行配置</h4><p>在etc/zookeeper/目录下提供了zoo.cfg，打开zoo.cfg，可以看到默认的一些配置。</p>
-<p>tickTime<br>时长单位为毫秒，为zk使用的基本时间度量单位。例如，1 <em> tickTime是客户端与zk服务端的心跳时间，2 </em> tickTime是客户端会话的超时时间。<br>tickTime的默认值为2000毫秒，更低的tickTime值可以更快地发现超时问题，但也会导致更高的网络流量（心跳消息）和更高的CPU使用率（会话的跟踪处理）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div></pre></td></tr></table></figure>
-<p>clientPort<br>zk服务进程监听的TCP端口，默认情况下，服务端会监听2181端口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clientPort=2181</div></pre></td></tr></table></figure>
-<p>dataDir<br>无默认配置，必须配置，用于配置存储快照文件的目录。如果没有配置dataLogDir，那么事务日志也会存储在此目录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dataDir=/usr/local/var/run/zookeeper/data</div><div class="line">dataLogDir=/usr/local/var/run/zookeeper/logs</div></pre></td></tr></table></figure>
-<h4 id="5-2-启动"><a href="#5-2-启动" class="headerlink" title="5.2 启动"></a>5.2 启动</h4><p>在mac环境下，将zookeeper的bin目录配置到环境变量中，直接执行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkServer start</div></pre></td></tr></table></figure>
-<p>这个命令使得zk服务进程在后台进行。</p>
-<p><img src="http://img.blog.csdn.net/20161225195052441?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>如果想在前台中运行以便查看服务器进程的输出日志，可以通过以下命令运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkServer start-foreground</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161225195251828?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>执行此命令，可以看到大量详细信息的输出，以便允许查看服务器发生了什么。</p>
-<h4 id="5-3-连接"><a href="#5-3-连接" class="headerlink" title="5.3 连接"></a>5.3 连接</h4><p>如果是连接同一台主机上的zk进程，那么直接运行bin/目录下的zkCli.cmd（Windows环境下）或者zkCli.sh（mac环境下），即可连接上zk。<br>直接执行zkCli.cmd或者zkCli.sh命令默认以主机号 127.0.0.1，端口号 2181 来连接zk，如果要连接不同机器上的zk，可以使用 -server 参数，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkCli -server 192.168.0.1:2181</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20161225195602198?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="6-集群模式"><a href="#6-集群模式" class="headerlink" title="6.集群模式"></a>6.集群模式</h2><p>单机模式的zk进程虽然便于开发与测试，但并不适合在生产环境使用。在生产环境下，我们需要使用集群模式来对zk进行部署。</p>
-<p>注意<br>在集群模式下，建议至少部署3个zk进程，或者部署奇数个zk进程。如果只部署2个zk进程，当其中一个zk进程挂掉后，剩下的一个进程并不能构成一个quorum的大多数。因此，部署2个进程甚至比单机模式更不可靠，因为2个进程其中一个不可用的可能性比一个进程不可用的可能性还大。</p>
-<h4 id="6-1-运行配置"><a href="#6-1-运行配置" class="headerlink" title="6. 1 运行配置"></a>6. 1 运行配置</h4><p>在集群模式下，所有的zk进程可以使用相同的配置文件（是指各个zk进程部署在不同的机器上面），例如如下配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">dataDir=/home/lidong/zookeeper</div><div class="line">clientPort=2181</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">server.1=192.168.0.105:2888:3888</div><div class="line">server.2=192.168.0.108:2888:3888</div></pre></td></tr></table></figure>
-<p>initLimit<br>ZooKeeper集群模式下包含多个zk进程，其中一个进程为leader，余下的进程为follower。<br>当follower最初与leader建立连接时，它们之间会传输相当多的数据，尤其是follower的数据落后leader很多。initLimit配置follower与leader之间建立连接后进行同步的最长时间。<br>syncLimit<br>配置follower和leader之间发送消息，请求和应答的最大时间长度。<br>tickTime<br>tickTime则是上述两个超时配置的基本单位，例如对于initLimit，其配置值为5，说明其超时时间为 2000ms * 5 = 10秒。<br>server.id=host:port1:port2<br>其中id为一个数字，表示zk进程的id，这个id也是dataDir目录下myid文件的内容。<br>host是该zk进程所在的IP地址，port1表示follower和leader交换消息所使用的端口，port2表示选举leader所使用的端口。<br>dataDir<br>其配置的含义跟单机模式下的含义类似，不同的是集群模式下还有一个myid文件。myid文件的内容只有一行，且内容只能为1 - 255之间的数字，这个数字亦即上面介绍server.id中的id，表示zk进程的id。<br>注意<br>如果仅为了测试部署集群模式而在同一台机器上部署zk进程，server.id=host:port1:port2配置中的port参数必须不同。但是，为了减少机器宕机的风险，强烈建议在部署集群模式时，将zk进程部署不同的物理机器上面。</p>
-<h4 id="6-2启动"><a href="#6-2启动" class="headerlink" title="6. 2启动"></a>6. 2启动</h4><p>假如我们打算在两台不同的机器 192.168.0.105（windows），192.168.0.108（mac os）上各部署一个zk进程，以构成一个zk集群。<br>两个zk进程均使用相同的 zoo.cfg 配置：<br>192.168.0.105（windows）<br>tickTime=2000<br>dataDir=D:/zookeeper<br>clientPort=2181<br>initLimit=5<br>syncLimit=2<br>server.1=192.168.0.105:2888:3888<br>server.2=192.168.0.108:2888:3888<br><img src="http://img.blog.csdn.net/20161225212855701?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>192.168.0.100（mac os）<br>tickTime=2000<br>dataDir=/home/lidong/zookeeper<br>clientPort=2181<br>initLimit=5<br>syncLimit=2<br>server.1=192.168.0.105:2888:3888<br>server.2=192.168.0.108:2888:3888</p>
-<p><img src="http://img.blog.csdn.net/20161225212920389?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>在window主机器dataDir目录（ D:/zookeeper目录）下，分别生成一个myid文件，其内容分别为1，2。<br>在Mac os主机器dataDir目录（ /home/lidong/zookeeper）下，分别生成一个myid文件，其内容分别为1，2。<br>然后分别在这两台机器上启动zk进程，这样我们便将zk集群启动了起来。</p>
-<h4 id="6-3连接"><a href="#6-3连接" class="headerlink" title="6. 3连接"></a>6. 3连接</h4><p>可以使用以下命令来连接一个zk集群：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkCli -server 192.168.0.105:2181,192.168.0.108:2181</div></pre></td></tr></table></figure>
-<p>成功连接后，可以看到如下输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Connecting to 192.168.0.105:2181,192.168.0.108:2181</div><div class="line">Welcome to ZooKeeper!</div><div class="line">JLine support is enabled</div><div class="line"></div><div class="line">WATCHER::</div><div class="line"></div><div class="line">WatchedEvent state:SyncConnected type:None path:null</div><div class="line">[zk: 192.168.0.105:2181,192.168.0.108:2181(CONNECTED) 0]</div></pre></td></tr></table></figure>
-<p>从日志输出可以看到，客户端连接的是192.168.0.108:2181进程，客户端已成功连接上zk集群。</p>
-<p>注意：连接到那个集群是随机的。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（六）Spring中Redis的缓存的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:36:01+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（六）Spring中Redis的缓存的使用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前面已经写了四篇关于dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合的文章：</p>
-<ol>
-<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（一）Dubbo的使用</a></p>
-</li>
-<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid</a></p>
-</li>
-<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离</a></p>
-</li>
-<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb</a></p>
-</li>
-<li><p><a href="">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用</a></p>
-<p>接着上一篇文章，今天来写一篇关于Spring-data-redis在Spring中的缓存的使用</p>
-</li>
+            <p>最近在做项目中，要使用HightChart来实现心电图，于是，使用WebView加载本地html页面，但是数据是通过蓝牙设备采集的数据，用Java代码获取的数据，需要将数据传到JavaScript中去，使用来绘制心电图。以前都加载服务器端返回的url地址，使用WebView加载，这次不同了，要自己实现心电图的绘制。于是细细的学习了JavaScript与Java代码相互传值，最后总结在这里。</p>
+<p>为了让WebView中的JavaScript脚本调用Android方法，WebView提供了一套WebSettings工具类，该工具了提供了大量的方法来管理WebView的选项设置，其中setJavaScriptEnable(true),是让WebView中的JavaScript脚本来调用Android方法。<br>还有一个最重要的方法addJavaScriptInterface(Object obj,String name)方法，该方法负责把object对象暴漏成JavaScript中的name对象。</p>
+<h2 id="1-在WebView调用Android只需要三步"><a href="#1-在WebView调用Android只需要三步" class="headerlink" title="1.在WebView调用Android只需要三步"></a>1.在WebView调用Android只需要三步</h2><ol>
+<li>调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</li>
+<li>调用WebView关联的WebSettings中addJavaScriptInterface(Object obj,String name)。</li>
+<li>在JavaScript中通过暴露出来的name调用Android中的方法。</li>
 </ol>
-<p>缓存（Caching）可以存储经常会用到的信息，这样每次需要的时候，这些信息都可以立即可用的。尽管Spring自身并没有实现缓存的解决方案，但是他对缓存功能提供了声明式的支持，能够与各种流行的缓存进行集成。几天主要介绍的是redis的缓存的支持。</p>
-<h2 id="1-Spring中启用对缓存管理的支持"><a href="#1-Spring中启用对缓存管理的支持" class="headerlink" title="1. Spring中启用对缓存管理的支持"></a>1. Spring中启用对缓存管理的支持</h2><p>Spring中对缓存管理器的支持有两种方式：</p>
-<ul>
-<li>注解驱动的缓存</li>
-<li>XML声明的缓存</li>
-</ul>
-<h4 id="1-1-注解驱动的缓存"><a href="#1-1-注解驱动的缓存" class="headerlink" title="1.1 注解驱动的缓存"></a>1.1 注解驱动的缓存</h4><p> 使用Spring的缓存抽象时，最为通用的方式就是在方法上添加@Cacheable和@CacheEvict注解。</p>
-<p>在往bean添加缓存注解之前，必须要启用Spring对注解驱动的支持。如果我们使用java配置的话，那么可以在其中一个配置上添加@EnableCaching，这样的话就能启动注解驱动的缓存。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line"></div><div class="line">import java.lang.reflect.Method;</div><div class="line"></div><div class="line">import org.springframework.cache.CacheManager;</div><div class="line">import org.springframework.cache.annotation.CachingConfigurerSupport;</div><div class="line">import org.springframework.cache.annotation.EnableCaching;</div><div class="line">import org.springframework.cache.interceptor.KeyGenerator;</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">import org.springframework.data.redis.cache.RedisCacheManager;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line"></div><div class="line">@Configuration</div><div class="line">@EnableCaching</div><div class="line">public class CachingConfig extends CachingConfigurerSupport&#123;</div><div class="line"></div><div class="line">	@Bean  </div><div class="line">    public KeyGenerator wiselyKeyGenerator()&#123;  </div><div class="line">        return new KeyGenerator() &#123;</div><div class="line"></div><div class="line">			@Override</div><div class="line">			public Object generate(Object target, Method method,</div><div class="line">					Object... params) &#123;</div><div class="line">				StringBuilder sb = new StringBuilder();  </div><div class="line">                sb.append(target.getClass().getName());  </div><div class="line">                sb.append(method.getName());  </div><div class="line">                for (Object obj : params) &#123;  </div><div class="line">                    sb.append(obj.toString());  </div><div class="line">                &#125;  </div><div class="line">                return sb.toString();</div><div class="line">			&#125;  </div><div class="line"></div><div class="line">        &#125;;  </div><div class="line"></div><div class="line">    &#125;  </div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 声明缓存管理器</div><div class="line">	 * @param redisTemplate</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	@Bean</div><div class="line">	public CacheManager cacheManager(RedisTemplate&lt;String, Object&gt; redisTemplate) &#123;</div><div class="line">		return new RedisCacheManager(redisTemplate);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="1-2-XML声明的缓存"><a href="#1-2-XML声明的缓存" class="headerlink" title="1.2 XML声明的缓存"></a>1.2 XML声明的缓存</h4><p>如果以XML的方式配置应用的话，那么可以是使用Spring cache命名空间的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;cache:annotation-driven/&gt;</div></pre></td></tr></table></figure>
-<p>元素来启动注解驱动的缓存。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:cache=&quot;http://www.springframework.org/schema/cache&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd&quot;&gt;</div><div class="line">    &lt;!--启用缓存--&gt;</div><div class="line">    &lt;cache:annotation-driven/&gt;  </div><div class="line">     &lt;!--声明缓存管理器--&gt;</div><div class="line">    &lt;bean    id=&quot;org.springframework.data.redis.cache.RedisCacheManager&quot;/&gt;</div><div class="line"></div><div class="line">  &lt;/beans&gt;</div></pre></td></tr></table></figure>
-<h2 id="2-Spring中配置缓存管理器"><a href="#2-Spring中配置缓存管理器" class="headerlink" title="2. Spring中配置缓存管理器"></a>2. Spring中配置缓存管理器</h2><p>Spring 3.1内置了五个缓存管理器</p>
-<ul>
-<li>SimpleCacheManager</li>
-<li>NoOpCacheManager</li>
-<li>ConcrrentMapCacheManager</li>
-<li>CompositeCacheManager</li>
-<li>EhCacheCacheManager</li>
-</ul>
-<p>Spring 3.2引入了另外的一个缓存管理器，这个缓存管理器可以在基于JCache（JSR-107）的缓存提供商之中。除了核心的Spring框架，Spring data又提供了两个缓存管理器。</p>
-<ul>
-<li>RedisCacheManager 来自于Spring-data-redis项目</li>
-<li>GemfireCacheManager 来自于Spring-data-GemFire项目</li>
-</ul>
-<p>所以我们选择缓存管理器时候，取决于使用底层缓存供应商。</p>
-<h2 id="3-Spring中配置Redis缓存管理器"><a href="#3-Spring中配置Redis缓存管理器" class="headerlink" title="3. Spring中配置Redis缓存管理器"></a>3. Spring中配置Redis缓存管理器</h2><p>缓存的条目不过就是一个键值对（key-vlaue），其中key描述了产生value的操作和参数。因此你，Redis作为key-value存储，非常适合于做缓存。<br>Redis可以用来为spring缓存抽象机制存储缓存条目，Spring-data-redis提供了RedisCacheManager，这是CacheManager的一个实现。RedisCacheManager 会与一个Redis服务器协作，并且通过RedisTemplate将缓存条目存储到Redis中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@EnableCaching</div><div class="line">public class RedisCachingConfig extends CachingConfigurerSupport&#123;</div><div class="line"></div><div class="line">	@Bean  </div><div class="line">    public KeyGenerator wiselyKeyGenerator()&#123;  </div><div class="line">        return new KeyGenerator() &#123;</div><div class="line"></div><div class="line">			@Override</div><div class="line">			public Object generate(Object target, Method method,</div><div class="line">					Object... params) &#123;</div><div class="line">				StringBuilder sb = new StringBuilder();  </div><div class="line">                sb.append(target.getClass().getName());  </div><div class="line">                sb.append(method.getName());  </div><div class="line">                for (Object obj : params) &#123;  </div><div class="line">                    sb.append(obj.toString());  </div><div class="line">                &#125;  </div><div class="line">                return sb.toString();</div><div class="line">			&#125;  </div><div class="line"></div><div class="line">        &#125;;  </div><div class="line"></div><div class="line">    &#125;  </div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 声明缓存管理器RedisCacheManager</div><div class="line">	 * @param redisTemplate</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	@Bean</div><div class="line">	public CacheManager cacheManager(RedisTemplate&lt;String, Object&gt; redisTemplate) &#123;</div><div class="line">		return new RedisCacheManager(redisTemplate);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="4-为方法添加注解以支持缓存"><a href="#4-为方法添加注解以支持缓存" class="headerlink" title="4. 为方法添加注解以支持缓存"></a>4. 为方法添加注解以支持缓存</h2><p>Spring 的缓存抽象在很大程度上是围绕切面的构建的。在Spring中启用缓存时，会创建一个切面，它触发一个或更多的Spring的缓存注解。</p>
-<p>Spring中提供了四个注解来声明缓存规则</p>
-<ul>
-<li>@Cacheable    声明Spring在调用方法之前，首先应该在缓存中查找方法的返回值。如果这个值能够找到，就会返回存储的值，否则的话，这个方法就会被调用，返回值会放在缓存之中。</li>
-<li>@CachePut  表明Spring应该将方法的返回值放到缓存中，在方法的调用前并不会检查缓存，方法始终都会被调用</li>
-<li>@CacheEvict表明Spring应该在缓存中清除一个或多个条目</li>
-<li>@Caching 这是一个分组的注解，能够同时应用多个其他的缓存注解</li>
-</ul>
-<p>在Service层缓存数据的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.service;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line"></div><div class="line">import org.springframework.cache.annotation.CacheEvict;</div><div class="line">import org.springframework.cache.annotation.Cacheable;</div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.lidong.api.service.user.IUserService;</div><div class="line">import com.lidong.core.user.dao.IUserDao;</div><div class="line">import com.lidong.model.user.User;</div><div class="line">@Service(&quot;userService&quot;)</div><div class="line">public class UserServiceImp implements IUserService &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	IUserDao mIUserDao;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public String sayHello(String name) &#123;</div><div class="line">		  return &quot;Hello &quot; + name;  </div><div class="line">	&#125;</div><div class="line">	@Cacheable(value=&#123;&quot;getUserById&quot;&#125;)</div><div class="line">	@Override</div><div class="line">	public User getUserById(int userId) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserByUsername(String username) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryUsername(username);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public void addUser(User user) &#123;</div><div class="line">	    mIUserDao.insert(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Cacheable(value=&#123;&quot;getAllUser&quot;&#125;)</div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getAllUser() &#123;</div><div class="line">		return mIUserDao.selectAllUsers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;,&quot;getUserById&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public int delUserById(Integer userId) &#123;</div><div class="line">		return mIUserDao.deleteByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@CacheEvict(value=&#123;&quot;getAllUser&quot;,&quot;getUserById&quot;&#125;,allEntries=true)</div><div class="line">	@Override</div><div class="line">	public int updateUser(User user) &#123;</div><div class="line">		return mIUserDao.updateByPrimaryKey(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>数据缓存成功</p>
-<p><img src="http://img.blog.csdn.net/20170107224416669?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>再次获取用户列表的时候；直接从缓存中读取用户的列表。</p>
-<p>注意：缓存java对象时必须实现Serilaizable接口，因为Spring会将对象先序列化之后再存入到Redis中。</p>
-<blockquote>
-<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
-</blockquote>
+<h3 id="1-1首先创建一个Java类"><a href="#1-1首先创建一个Java类" class="headerlink" title="1.1首先创建一个Java类"></a>1.1首先创建一个Java类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class MyObject &#123;</div><div class="line">    private Context mContext;</div><div class="line">    private String data;</div><div class="line">    private String time;</div><div class="line">    public MyObject(Context c,String data,String time)&#123;</div><div class="line">        this.data = data;</div><div class="line">        this.time = time;</div><div class="line">        mContext = c;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取心电数据</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getData()&#123;</div><div class="line">         String[] dd = new String[0];</div><div class="line">        try &#123;</div><div class="line">            dd = data.substring(data.indexOf(&quot;Ъ&quot;)+2, data.length()-1).split(&quot;,&quot;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return Arrays.toString(dd).toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取测量时间</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getTime()&#123;</div><div class="line">        return time;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="1-2创建在Activity中加载HTML页面"><a href="#1-2创建在Activity中加载HTML页面" class="headerlink" title="1.2创建在Activity中加载HTML页面"></a>1.2创建在Activity中加载HTML页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">WebSettings wSet =wb .getSettings();</div><div class="line">        //调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</div><div class="line">       wSet.setJavaScriptEnabled(true);</div><div class="line">       //加载本地HTML页面</div><div class="line">       wb.loadUrl(&quot;file:///android_asset/xd.html&quot;);</div><div class="line">       if (mList != null &amp;&amp; mList.size()&gt;0) &#123;</div><div class="line">       调用WebView关联的WebSettings中addJavaScriptInterface(Object obj,String name)。</div><div class="line">           wb.addJavascriptInterface(new MyObject(getActivity(),  mList.get(0).getResult(),mList.get(0).getDateTime()),&quot;myObj&quot;);//这里的myObj是javaScript对象，直接调用getTime()方法，即 myObj.getTime();</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<h3 id="1-3创建xd-hmtl文件"><a href="#1-3创建xd-hmtl文件" class="headerlink" title="1.3创建xd.hmtl文件"></a>1.3创建xd.hmtl文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;</div><div class="line"></div><div class="line">    &lt;title&gt;心电&lt;/title&gt;</div><div class="line"></div><div class="line">    &lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;description&quot; content=&quot;This is my page&quot;&gt;</div><div class="line"></div><div class="line">    &lt;!--</div><div class="line">    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;</div><div class="line">    --&gt;</div><div class="line">    &lt;!--&lt;script src=&quot;http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;--&gt;</div><div class="line">    &lt;!--&lt;script src=&quot;http://cdn.hcharts.cn/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;--&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;file:///android_asset/js/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;file:///android_asset/js/highcharts.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">$(function()&#123;</div><div class="line">    var data = myObj.getData();</div><div class="line">    var time = myObj.getTime();</div><div class="line">    dataHighchartXdDt(data,time);</div><div class="line">   &#125;)</div><div class="line">      //心电</div><div class="line">	function dataHighchartXdDt(dtxd,t)&#123;</div><div class="line">		//以下是绘制心电的逻辑</div><div class="line">		//省略</div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line"></div><div class="line">    &lt;/script&gt;</div><div class="line">    &lt;style&gt;</div><div class="line"> </div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div class=&quot;middlecenter-left-data-top&quot; id=&quot;container&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>注意：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var data = myObj.getData();</div><div class="line">var time = myObj.getTime();</div></pre></td></tr></table></figure>
+<p>以上第一个方法就是获取心电数据，第二个方法就是获取测量时间。</p>
+<h2 id="2-在Android调用JavaScript方法"><a href="#2-在Android调用JavaScript方法" class="headerlink" title="2.在Android调用JavaScript方法"></a>2.在Android调用JavaScript方法</h2><h3 id="2-1webView调用js的基本格式为"><a href="#2-1webView调用js的基本格式为" class="headerlink" title="2.1webView调用js的基本格式为"></a>2.1webView调用js的基本格式为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webView.loadUrl(“javascript:methodName(parameterValues)”)</div></pre></td></tr></table></figure>
+<h3 id="2-2调用js无参无返回值函数"><a href="#2-2调用js无参无返回值函数" class="headerlink" title="2.2调用js无参无返回值函数"></a>2.2调用js无参无返回值函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:sayHello()&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
+<h3 id="2-3调用js有参无返回值函数"><a href="#2-3调用js有参无返回值函数" class="headerlink" title="2.3调用js有参无返回值函数"></a>2.3调用js有参无返回值函数</h3><p>注意对于字符串作为参数值需要进行转义双引号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:alertMessage(&quot;&quot; + &quot;content&quot; + &quot;&quot;)&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
+<h3 id="2-4调用js有参数有返回值的函数"><a href="#2-4调用js有参数有返回值的函数" class="headerlink" title="2.4调用js有参数有返回值的函数"></a>2.4调用js有参数有返回值的函数</h3><p>Android在4.4之前并没有提供直接调用js函数并获取值的方法，所以在此之前，常用的思路是 java调用js方法，js方法执行完毕，再次调用java代码将值返回。</p>
+<h4 id="2-4-1-Java调用js代码"><a href="#2-4-1-Java调用js代码" class="headerlink" title="2.4.1.Java调用js代码"></a>2.4.1.Java调用js代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:sumToJava(1,2)&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
+<h4 id="2-4-2-js函数处理，并将结果通过调用java方法返回"><a href="#2-4-2-js函数处理，并将结果通过调用java方法返回" class="headerlink" title="2.4.2 js函数处理，并将结果通过调用java方法返回"></a>2.4.2 js函数处理，并将结果通过调用java方法返回</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function sumToJava(number1, number2)&#123;</div><div class="line">       window.control.onSumResult(number1 + number2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-4-3-Java在回调方法中获取js函数返回值"><a href="#2-4-3-Java在回调方法中获取js函数返回值" class="headerlink" title="2.4.3.Java在回调方法中获取js函数返回值"></a>2.4.3.Java在回调方法中获取js函数返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@JavascriptInterface</div><div class="line">public void onSumResult(int result) &#123;</div><div class="line">  Log.i(LOGTAG, &quot;onSumResult result=&quot; + result);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-5-java代码时用evaluateJavascript方法调用"><a href="#2-5-java代码时用evaluateJavascript方法调用" class="headerlink" title="2.5 java代码时用evaluateJavascript方法调用"></a>2.5 java代码时用evaluateJavascript方法调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function getGreetings() &#123;</div><div class="line">      return 1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">private void testevaluateJavascript(WebView webView) &#123;</div><div class="line">  webView.evaluateJavascript(&quot;getGreetings()&quot;, new ValueCallback&lt;String&gt;() &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void onReceiveValue(String value) &#123;</div><div class="line">      Log.i(LOGTAG, &quot;onReceiveValue value=&quot; + value);</div><div class="line">  &#125;&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果</p>
+<p>I/MainActivity( 1432): onReceiveValue value=1<br>注意</p>
+<p>上面限定了结果返回结果为String，对于简单的类型会尝试转换成字符串返回，对于复杂的数据类型，建议以字符串形式的json返回。<br>evaluateJavascript方法必须在UI线程（主线程）调用，因此onReceiveValue也执行在主线程。</p>
+<p>总结，JavaScript与Android方法相互传值，基本上就这么多了。</p>
 
           
         
@@ -768,7 +549,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/ES6中箭头函数的使用/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="李东">
@@ -793,8 +574,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用
+                <a class="post-title-link" href="/2017/01/14/ES6中箭头函数的使用/" itemprop="url">
+                  ES6中箭头函数的使用
                 </a>
               
             
@@ -808,10 +589,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:34:37+08:00">
-                2017-01-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:39:24+08:00">
+                2017-01-14
               </time>
             
 
@@ -829,8 +610,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="commentCount"></span>
+                <a href="/2017/01/14/ES6中箭头函数的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/ES6中箭头函数的使用/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -858,230 +639,462 @@
       
         
           
-            <p>前面已经写了四篇关于dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合的文章：</p>
+            <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>ES6允许使用“箭头”（=&gt;）定义函数。</p>
+<blockquote>
+<p>var f = v =&gt; v;</p>
+</blockquote>
+<p>上面的箭头函数等同于：</p>
+<blockquote>
+<p>var f = function(v) {<br>  return v;<br>};</p>
+</blockquote>
+<p>如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。</p>
+<blockquote>
+<p>var f = () =&gt; 5;<br>// 等同于<br>var f = function () { return 5 };</p>
+<p>var sum = (num1, num2) =&gt; num1 + num2;<br>// 等同于<br>var sum = function(num1, num2) {<br>  return num1 + num2;<br>};</p>
+</blockquote>
+<p>如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回。</p>
+<blockquote>
+<p>var sum = (num1, num2) =&gt; { return num1 + num2; }</p>
+</blockquote>
+<p>由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号。</p>
+<blockquote>
+<p>var getTempItem = id =&gt; ({ id: id, name: “Temp” });</p>
+</blockquote>
+<h2 id="箭头函数可以与变量解构结合使用。"><a href="#箭头函数可以与变量解构结合使用。" class="headerlink" title="箭头函数可以与变量解构结合使用。"></a>箭头函数可以与变量解构结合使用。</h2><blockquote>
+<p>const full = ({ first, last }) =&gt; first + ‘ ‘ + last;</p>
+<p>// 等同于<br>function full(person) {<br>  return person.first + ‘ ‘ + person.last;<br>}</p>
+<p>箭头函数使得表达更加简洁。</p>
+<p>const isEven = n =&gt; n % 2 == 0;<br>const square = n =&gt; n * n;</p>
+</blockquote>
+<p>上面代码只用了两行，就定义了两个简单的工具函数。如果不用箭头函数，可能就要占用多行，而且还不如现在这样写醒目。</p>
+<h2 id="箭头函数的一个用处是简化回调函数。"><a href="#箭头函数的一个用处是简化回调函数。" class="headerlink" title="箭头函数的一个用处是简化回调函数。"></a>箭头函数的一个用处是简化回调函数。</h2><blockquote>
+<p>// 正常函数写法<br>[1,2,3].map(function (x) {<br>  return x * x;<br>});</p>
+<p>// 箭头函数写法<br> [1,2,3].map(x =&gt; x * x);</p>
+</blockquote>
+<p>另一个例子是</p>
+<p>// 正常函数写法<br>var result = values.sort(function (a, b) {<br>  return a - b;<br>});</p>
+<p>// 箭头函数写法</p>
+<blockquote>
+<p>var result = values.sort((a, b) =&gt; a - b);</p>
+</blockquote>
+<p>下面是rest参数与箭头函数结合的例子。</p>
+<blockquote>
+<p>const numbers = (…nums) =&gt; nums;</p>
+<p>numbers(1, 2, 3, 4, 5)<br>// [1,2,3,4,5]</p>
+<p>const headAndTail = (head, …tail) =&gt; [head, tail];</p>
+<p>headAndTail(1, 2, 3, 4, 5)<br>// [1,[2,3,4,5]]</p>
+</blockquote>
+<h2 id="使用注意点"><a href="#使用注意点" class="headerlink" title="使用注意点"></a>使用注意点</h2><p>箭头函数有几个使用注意点。</p>
+<ul>
+<li><p>（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</p>
+</li>
+<li><p>（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</p>
+</li>
+<li><p>（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</p>
+</li>
+<li><p>（4）不可以使用yield命令，因此箭头函数不能用作Generator函数。</p>
+</li>
+</ul>
+<p>上面四点中，第一点尤其值得注意。this对象的指向是可变的，但是在箭头函数中，它是固定的。</p>
+<blockquote>
+<p>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘id:’, this.id);<br>  }, 100);<br>}</p>
+<p>var id = 21;</p>
+<p>foo.call({ id: 42 });<br>// id: 42</p>
+</blockquote>
+<p>上面代码中，setTimeout的参数是一个箭头函数，这个箭头函数的定义生效是在foo函数生成时，而它的真正执行要等到100毫秒后。如果是普通函数，执行时this应该指向全局对象window，这时应该输出21。但是，箭头函数导致this总是指向函数定义生效时所在的对象（本例是{id: 42}），所以输出的是42。</p>
+<p>箭头函数可以让setTimeout里面的this，绑定定义时所在的作用域，而不是指向运行时所在的作用域。下面是另一个例子。</p>
+<blockquote>
+<p>function Timer() {<br>  this.s1 = 0;<br>  this.s2 = 0;<br>  // 箭头函数<br>  setInterval(() =&gt; this.s1++, 1000);<br>  // 普通函数<br>  setInterval(function () {<br>    this.s2++;<br>  }, 1000);<br>}</p>
+<p>var timer = new Timer();</p>
+<p>setTimeout(() =&gt; console.log(‘s1: ‘, timer.s1), 3100);<br>setTimeout(() =&gt; console.log(‘s2: ‘, timer.s2), 3100);<br>// s1: 3<br>// s2: 0</p>
+</blockquote>
+<p>上面代码中，Timer函数内部设置了两个定时器，分别使用了箭头函数和普通函数。前者的this绑定定义时所在的作用域（即Timer函数），后者的this指向运行时所在的作用域（即全局对象）。所以，3100毫秒之后，timer.s1被更新了3次，而timer.s2一次都没更新。</p>
+<h2 id="箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。"><a href="#箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。" class="headerlink" title="箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。"></a>箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。</h2><blockquote>
+<p>var handler = {<br>  id: ‘123456’,</p>
+<p>  init: function() {<br>    document.addEventListener(‘click’,<br>      event =&gt; this.doSomething(event.type), false);<br>  },</p>
+<p>  doSomething: function(type) {<br>    console.log(‘Handling ‘ + type  + ‘ for ‘ + this.id);<br>  }<br>};</p>
+<p>上面代码的init方法中，使用了箭头函数，这导致这个箭头函数里面的this，总是指向handler对象。否则，回调函数运行时，this.doSomething这一行会报错，因为此时this指向document对象。</p>
+</blockquote>
+<p>this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</p>
+<p>所以，箭头函数转成ES5的代码如下。</p>
+<blockquote>
+<p>// ES6<br>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘id:’, this.id);<br>  }, 100);<br>}</p>
+<p>// ES5<br>function foo() {<br>  var _this = this;</p>
+<p>  setTimeout(function () {<br>    console.log(‘id:’, _this.id);<br>  }, 100);<br>}</p>
+<p>上面代码中，转换后的ES5版本清楚地说明了，箭头函数里面根本没有自己的this，而是引用外层的this。</p>
+</blockquote>
+<p>请问下面的代码之中有几个this？</p>
+<blockquote>
+<p>function foo() {<br>  return () =&gt; {<br>    return () =&gt; {<br>      return () =&gt; {<br>        console.log(‘id:’, this.id);<br>      };<br>    };<br>  };<br>}</p>
+<p>var f = foo.call({id: 1});</p>
+<p>var t1 = f.call({id: 2})()(); // id: 1<br>var t2 = f().call({id: 3})(); // id: 1<br>var t3 = f()().call({id: 4}); // id: 1</p>
+</blockquote>
+<p>上面代码之中，只有一个this，就是函数foo的this，所以t1、t2、t3都输出同样的结果。因为所有的内层函数都是箭头函数，都没有自己的this，它们的this其实都是最外层foo函数的this。</p>
+<p>除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target。</p>
+<blockquote>
+<p>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘args:’, arguments);<br>  }, 100);<br>}</p>
+<p>foo(2, 4, 6, 8)<br>// args: [2, 4, 6, 8]</p>
+</blockquote>
+<p>上面代码中，箭头函数内部的变量arguments，其实是函数foo的arguments变量。</p>
+<p>另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。</p>
+<blockquote>
+<p>(function() {<br>  return [<br>    (() =&gt; this.x).bind({ x: ‘inner’ })()<br>  ];<br>}).call({ x: ‘outer’ });<br>// [‘outer’]</p>
+</blockquote>
+<p>上面代码中，箭头函数没有自己的this，所以bind方法无效，内部的this指向外部的this。</p>
+<p>长期以来，JavaScript语言的this对象一直是一个令人头痛的问题，在对象方法中使用this，必须非常小心。箭头函数”绑定”this，很大程度上解决了这个困扰。<br>嵌套的箭头函数</p>
+<h2 id="箭头函数内部，还可以再使用箭头函数。"><a href="#箭头函数内部，还可以再使用箭头函数。" class="headerlink" title="箭头函数内部，还可以再使用箭头函数。"></a>箭头函数内部，还可以再使用箭头函数。</h2><p>下面是一个ES5语法的多重嵌套函数。</p>
+<blockquote>
+<p>function insert(value) {<br>  return {into: function (array) {<br>    return {after: function (afterValue) {<br>      array.splice(array.indexOf(afterValue) + 1, 0, value);<br>      return array;<br>    }};<br>  }};<br>}</p>
+<p>insert(2).into([1, 3]).after(1); //[1, 2, 3]</p>
+</blockquote>
+<p>上面这个函数，可以使用箭头函数改写。</p>
+<blockquote>
+<p>let insert = (value) =&gt; ({into: (array) =&gt; ({after: (afterValue) =&gt; {<br>  array.splice(array.indexOf(afterValue) + 1, 0, value);<br>  return array;<br>}})});</p>
+</blockquote>
+<p>insert(2).into([1, 3]).after(1); //[1, 2, 3]</p>
+<p>下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。</p>
+<blockquote>
+<p>const pipeline = (…funcs) =&gt;<br>  val =&gt; funcs.reduce((a, b) =&gt; b(a), val);</p>
+<p>const plus1 = a =&gt; a + 1;<br>const mult2 = a =&gt; a * 2;<br>const addThenMult = pipeline(plus1, mult2);</p>
+<p>addThenMult(5)<br>// 12</p>
+</blockquote>
+<p>如果觉得上面的写法可读性比较差，也可以采用下面的写法。</p>
+<blockquote>
+<p>const plus1 = a =&gt; a + 1;<br>const mult2 = a =&gt; a * 2;</p>
+<p>mult2(plus1(5))<br>// 12</p>
+</blockquote>
+<h2 id="箭头函数还有一个功能，就是可以很方便地改写λ演算。"><a href="#箭头函数还有一个功能，就是可以很方便地改写λ演算。" class="headerlink" title="箭头函数还有一个功能，就是可以很方便地改写λ演算。"></a>箭头函数还有一个功能，就是可以很方便地改写λ演算。</h2><blockquote>
+<p>// λ演算的写法<br>fix = λf.(λx.f(λv.x(x)(v)))(λx.f(λv.x(x)(v)))</p>
+<p>// ES6的写法<br>var fix = f =&gt; (x =&gt; f(v =&gt; x(x)(v)))<br>               (x =&gt; f(v =&gt; x(x)(v)));</p>
+</blockquote>
+<p>上面两种写法，几乎是一一对应的。由于λ演算对于计算机科学非常重要，这使得我们可以用ES6作为替代工具，探索计算机科学。<br>函数绑定</p>
+<p>箭头函数可以绑定this对象，大大减少了显式绑定this对象的写法（call、apply、bind）。但是，箭头函数并不适用于所有场合，所以ES7提出了“函数绑定”（function bind）运算符，用来取代call、apply、bind调用。虽然该语法还是ES7的一个提案，但是Babel转码器已经支持。</p>
+<p>函数绑定运算符是并排的两个双冒号（::），双冒号左边是一个对象，右边是一个函数。该运算符会自动将左边的对象，作为上下文环境（即this对象），绑定到右边的函数上面。</p>
+<blockquote>
+<p>foo::bar;<br>// 等同于<br>bar.bind(foo);</p>
+<p>foo::bar(…arguments);<br>// 等同于<br>bar.apply(foo, arguments);</p>
+<p>const hasOwnProperty = Object.prototype.hasOwnProperty;<br>function hasOwn(obj, key) {<br>  return obj::hasOwnProperty(key);<br>}</p>
+</blockquote>
+<p>如果双冒号左边为空，右边是一个对象的方法，则等于将该方法绑定在该对象上面。</p>
+<blockquote>
+<p>var method = obj::obj.foo;<br>// 等同于<br>var method = ::obj.foo;</p>
+<p>let log = ::console.log;<br>// 等同于<br>var log = console.log.bind(console);</p>
+</blockquote>
+<p>由于双冒号运算符返回的还是原对象，因此可以采用链式写法。</p>
+<blockquote>
+<p>// 例一<br>import { map, takeWhile, forEach } from “iterlib”;</p>
+<p>getPlayers()<br>::map(x =&gt; x.character())<br>::takeWhile(x =&gt; x.strength &gt; 100)<br>::forEach(x =&gt; console.log(x));</p>
+<p>// 例二<br>let { find, html } = jake;</p>
+<p>document.querySelectorAll(“div.myClass”)<br>::find(“p”)<br>::html(“hahaha”);</p>
+</blockquote>
+<h2 id="尾调用优化"><a href="#尾调用优化" class="headerlink" title="尾调用优化"></a>尾调用优化</h2><p>什么是尾调用？</p>
+<p>尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。</p>
+<blockquote>
+<p>function f(x){<br>  return g(x);<br>}</p>
+</blockquote>
+<p>上面代码中，函数f的最后一步是调用函数g，这就叫尾调用。</p>
+<p>以下三种情况，都不属于尾调用。</p>
+<blockquote>
+<p>// 情况一<br>function f(x){<br>  let y = g(x);<br>  return y;<br>}</p>
+<p>// 情况二<br>function f(x){<br>  return g(x) + 1;<br>}</p>
+<p>// 情况三<br>function f(x){<br>  g(x);<br>}</p>
+</blockquote>
+<p>上面代码中，情况一是调用函数g之后，还有赋值操作，所以不属于尾调用，即使语义完全一样。情况二也属于调用后还有操作，即使写在一行内。情况三等同于下面的代码。</p>
+<blockquote>
+<p>function f(x){<br>  g(x);<br>  return undefined;<br>}</p>
+<p>尾调用不一定出现在函数尾部，只要是最后一步操作即可。</p>
+<p>function f(x) {<br>  if (x &gt; 0) {<br>    return m(x)<br>  }<br>  return n(x);<br>}</p>
+<p>上面代码中，函数m和n都属于尾调用，因为它们都是函数f的最后一步操作。<br>尾调用优化</p>
+</blockquote>
+<p>尾调用之所以与其他调用不同，就在于它的特殊的调用位置。</p>
+<p>我们知道，函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。</p>
+<p>尾调用由于是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为调用位置、内部变量等信息都不会再用到了，只要直接用内层函数的调用帧，取代外层函数的调用帧就可以了。</p>
+<blockquote>
+<p>function f() {<br>  let m = 1;<br>  let n = 2;<br>  return g(m + n);<br>}<br>f();</p>
+<p>// 等同于<br>function f() {<br>  return g(3);<br>}<br>f();</p>
+<p>// 等同于<br>g(3);</p>
+</blockquote>
+<p>上面代码中，如果函数g不是尾调用，函数f就需要保存内部变量m和n的值、g的调用位置等信息。但由于调用g之后，函数f就结束了，所以执行到最后一步，完全可以删除 f(x) 的调用帧，只保留 g(3) 的调用帧。</p>
+<p>这就叫做“尾调用优化”（Tail call optimization），即只保留内层函数的调用帧。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。这就是“尾调用优化”的意义。</p>
+<p>注意，只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。</p>
+<blockquote>
+<p>function addOne(a){<br>  var one = 1;<br>  function inner(b){<br>    return b + one;<br>  }<br>  return inner(a);<br>}</p>
+</blockquote>
+<p>上面的函数不会进行尾调用优化，因为内层函数inner用到了外层函数addOne的内部变量one。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android应用开发中三种常见的图片压缩方法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="url">
+                  Android应用开发中三种常见的图片压缩方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:38:25+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>   Android应用开发中三种常见的图片压缩方法，分别是：质量压缩法、比例压缩法（根据路径获取图片并压缩）和比例压缩法（根据Bitmap图片压缩）。</p>
+<h3 id="1、质量压缩法"><a href="#1、质量压缩法" class="headerlink" title="1、质量压缩法"></a>1、质量压缩法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private Bitmap compressImage(Bitmap image) &#123;</div><div class="line"> </div><div class="line">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中</div><div class="line">        int options = 100;</div><div class="line">        while ( baos.toByteArray().length / 1024&gt;100) &#123; //循环判断如果压缩后图片是否大于100kb,大于继续压缩</div><div class="line">            baos.reset();//重置baos即清空baos</div><div class="line">            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中</div><div class="line">            options -= 10;//每次都减少10</div><div class="line">        &#125;</div><div class="line">        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片</div><div class="line">        return bitmap;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"><a href="#2、图片按比例大小压缩方法（根据路径获取图片并压缩）" class="headerlink" title="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"></a>2、图片按比例大小压缩方法（根据路径获取图片并压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private Bitmap getimage(String srcPath) &#123;</div><div class="line">        BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">        //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">        newOpts.inJustDecodeBounds = true;</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空</div><div class="line">         </div><div class="line">        newOpts.inJustDecodeBounds = false;</div><div class="line">        int w = newOpts.outWidth;</div><div class="line">        int h = newOpts.outHeight;</div><div class="line">        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">        float hh = 800f;//这里设置高度为800f</div><div class="line">        float ww = 480f;//这里设置宽度为480f</div><div class="line">        //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">        int be = 1;//be=1表示不缩放</div><div class="line">        if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outWidth / ww);</div><div class="line">        &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outHeight / hh);</div><div class="line">        &#125;</div><div class="line">        if (be &lt;= 0)</div><div class="line">            be = 1;</div><div class="line">        newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">        //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);</div><div class="line">        return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"><a href="#3、图片按比例大小压缩方法（根据Bitmap图片压缩）" class="headerlink" title="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"></a>3、图片按比例大小压缩方法（根据Bitmap图片压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private Bitmap comp(Bitmap image) &#123;</div><div class="line">     </div><div class="line">    ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">    image.compress(Bitmap.CompressFormat.JPEG, 100, baos);</div><div class="line">    if( baos.toByteArray().length / 1024&gt;1024) &#123;//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出</div><div class="line">        baos.reset();//重置baos即清空baos</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 50, baos);//这里压缩50%，把压缩后的数据存放到baos中</div><div class="line">    &#125;</div><div class="line">    ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">    //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">    newOpts.inJustDecodeBounds = true;</div><div class="line">    Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    newOpts.inJustDecodeBounds = false;</div><div class="line">    int w = newOpts.outWidth;</div><div class="line">    int h = newOpts.outHeight;</div><div class="line">    //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">    float hh = 800f;//这里设置高度为800f</div><div class="line">    float ww = 480f;//这里设置宽度为480f</div><div class="line">    //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">    int be = 1;//be=1表示不缩放</div><div class="line">    if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outWidth / ww);</div><div class="line">    &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outHeight / hh);</div><div class="line">    &#125;</div><div class="line">    if (be &lt;= 0)</div><div class="line">        be = 1;</div><div class="line">    newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">    //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">    isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/" itemprop="url">
+                  React-Native中navigator.pop()后如何更新前一个页面
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:37:13+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、问题提出"><a href="#1、问题提出" class="headerlink" title="1、问题提出"></a>1、问题提出</h2><p>   React-Native中navigator.pop()后如何更新前一个页面，这是一个最为常见得问题。</p>
+<h2 id="2、问题的描述"><a href="#2、问题的描述" class="headerlink" title="2、问题的描述"></a>2、问题的描述</h2><p>比如说，我们开发应用的时候，上传头像是一个最为常见的功能，我点击选择打开图库的按钮之后，push到图库的页面，我们在上传成功后，需要pop回到当前页面，并把图片路径传到当前页面。</p>
+<h2 id="3、React-Native中的解决办法"><a href="#3、React-Native中的解决办法" class="headerlink" title="3、React-Native中的解决办法"></a>3、React-Native中的解决办法</h2><p>这个问题对于一个有Android和ios开发经验的程序员首先想到的就是回调函数或者广播机制等。其实在React-Native中同样也可用回调函数来解决这个问题。本来想以android来举例实现，最后还是算了直接上React-Native吧。</p>
 <ol>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53868659" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（一）Dubbo的使用</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53870144" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53982620" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53978250" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb</a></li>
+<li>在A页面中实现一个声明一个函数refresView()</li>
+<li>在A页面push参数中增加一个回掉函数callBack(msg)</li>
+<li>在B页面pop时候调用callBack将值传回，更新界面</li>
 </ol>
-<p>今天继续写一篇关于Spring中spring-data-redis的使用。</p>
-<p>Redis是一种特殊的类型的数据库，它被称为一种key-value存储。key-value存储保存的是键值对。实际上，key-value存储于哈希Map有很大的相似。<br>spring data是一种面向模板的数据访问，能够在使用Redis的时候，为我们提供了帮助。于是就有了spring-data-redis。</p>
-<h3 id="1-spring-data-redis的简介"><a href="#1-spring-data-redis的简介" class="headerlink" title="1. spring-data-redis的简介"></a>1. spring-data-redis的简介</h3><p>spring-data-redis包含了多个模板实现，用来完成Redis数据库的存取功能。创建spring-data-redis模板之前，我们首先需要一个Redis连接工厂，spring-data-redis提供了四个连接工厂供我们选择。</p>
-<h3 id="2-spring-data-redis所需要依赖"><a href="#2-spring-data-redis所需要依赖" class="headerlink" title="2.spring-data-redis所需要依赖"></a>2.spring-data-redis所需要依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      &lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;redis.clients&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;jedis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.8.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.6.2.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h3 id="3-spring-data-redis的使用"><a href="#3-spring-data-redis的使用" class="headerlink" title="3. spring-data-redis的使用"></a>3. spring-data-redis的使用</h3><h4 id="3-1-连接到Redis"><a href="#3-1-连接到Redis" class="headerlink" title="3.1 连接到Redis"></a>3.1 连接到Redis</h4><p>   Redis连接工厂会生成到Redis数据库服务器的连接。spring-data-redis为四种Redis客户端实现了连接工厂：</p>
-<ul>
-<li>JedisConnectionFactory</li>
-<li>JredisConnectionFactory</li>
-<li>LettuceConnectionFactory</li>
-<li><p>SrpConnectionFactory</p>
-<p>具体选择哪一种取决于自己。</p>
-</li>
-</ul>
-<p>(1)创建redis.properties:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">maxTotal=8</div><div class="line">#最大空闲时间</div><div class="line">maxIdle=8</div><div class="line">#最短空闲时间</div><div class="line">minIdle=0</div><div class="line">#最大的等待时间</div><div class="line">maxWaitMillis=6000</div><div class="line">#Redis的连接地址</div><div class="line">hostR=127.0.0.1</div><div class="line">#端口</div><div class="line">portR=6379</div></pre></td></tr></table></figure>
-<p>(2)创建spring-redis.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns:rabbit=&quot;http://www.springframework.org/schema/rabbit&quot;</div><div class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">http://www.springframework.org/schema/beans</div><div class="line">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</div><div class="line">http://www.springframework.org/schema/context</div><div class="line">http://www.springframework.org/schema/context/spring-context-3.0.xsd</div><div class="line">http://www.springframework.org/schema/rabbit</div><div class="line">http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入redis.properties配置文件--&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:redis.properties&quot; /&gt; &lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redis连接池的配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisPoolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;</div><div class="line">		&lt;property name=&quot;maxTotal&quot; value=&quot;$&#123;maxTotal&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxIdle&quot; value=&quot;$&#123;maxIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWaitMillis&quot; value=&quot;10000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;numTestsPerEvictionRun&quot; value=&quot;3&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot;&gt;&lt;/property&gt;</div><div class="line">   &lt;/bean&gt;</div><div class="line">	&lt;!-- 工厂类配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisConnectionFactory&quot;</div><div class="line">		class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;&gt;</div><div class="line">		&lt;property name=&quot;hostName&quot; value=&quot;$&#123;hostR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;port&quot; value=&quot;$&#123;portR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolConfig&quot; ref=&quot;jedisPoolConfig&quot; /&gt;</div><div class="line">		 &lt;property name=&quot;timeout&quot; value=&quot;15000&quot;&gt;&lt;/property&gt;</div><div class="line">	    &lt;property name=&quot;usePool&quot; value=&quot;true&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redisTemplate配置 --&gt;</div><div class="line">	&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.RedisTemplate&quot;&gt;</div><div class="line">		&lt;property name=&quot;connectionFactory&quot; ref=&quot;jedisConnectionFactory&quot; /&gt;</div><div class="line">		&lt;property name=&quot;keySerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.StringRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;valueSerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.JdkSerializationRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;enableTransactionSupport&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>以上是我配置的jedisPoolConfig，jedisConnectionFactory，redisTemplate。</p>
-<h4 id="3-2-使用RedisTemplate"><a href="#3-2-使用RedisTemplate" class="headerlink" title="3.2 使用RedisTemplate"></a>3.2 使用RedisTemplate</h4><p>Redis连接工厂会生成到Redis key-value存储的连接（以RedisConnection的形式。）借助RedisConnection，可以存储和读取数据。</p>
-<p>spring-redis-data以模板的形式提供了较好等级的数据访问方案。实际上，spring-data-redis提供了两个模板：</p>
-<ul>
-<li>RedisTemplate</li>
-<li>StringRedisTemplate</li>
-</ul>
-<p>其中RedisTemplate使用两个类型进行了参数。第一个参数是key的类型,第二个参数是value的类型，而StringRedisTemplate是RedisTemplate的扩展，只关注String类型，也就是key和vlaue都是String类型。</p>
-<h5 id="3-2-1-RedisTemplate使用简单值"><a href="#3-2-1-RedisTemplate使用简单值" class="headerlink" title="3.2.1 RedisTemplate使用简单值"></a>3.2.1 RedisTemplate使用简单值</h5><p>假设我们想通过RedisTemplate<string, user=""> 保存User，其中key是users属性的值。借助opsForValue()方法完成该功能：</string,></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User findById(String key) &#123;</div><div class="line">		return (User) redisTemplate.opsForValue().get(key);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForValue().set(key, user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="3-2-2-RedisTemplate使用List值"><a href="#3-2-2-RedisTemplate使用List值" class="headerlink" title="3.2.2 RedisTemplate使用List值"></a>3.2.2 RedisTemplate使用List值</h5><p>使用List类型的value与之类似，只需要使用opForList()方法，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.dao;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import com.lidong.model.user.User;</div><div class="line">import com.lidong.util.AbstractBaseRedisTemplete;</div><div class="line"></div><div class="line">public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getUserList(String key,long start,long end) &#123;</div><div class="line">		 return  redisTemplate.opsForList().range(key, 0, end);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Long addUserToUserList(String key, User user) &#123;</div><div class="line">		return redisTemplate.opsForList().leftPush(key, user);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="3-2-3-RedisTemplate使用Set值"><a href="#3-2-3-RedisTemplate使用Set值" class="headerlink" title="3.2.3 RedisTemplate使用Set值"></a>3.2.3 RedisTemplate使用Set值</h5><p>除了使用List类型和value类型，我们还可以使用opForSet()的方法操作Set，最为常用的的就是向Set中添加一个元素：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForSet().add(key, user);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>在我们有多个Set,并对这些Set集合进行差、交、并的操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Set&lt;User&gt; difference = redisTemplate.opsForSet().difference(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; union = redisTemplate.opsForSet().union(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; intersect = redisTemplate.opsForSet().intersect(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  //我还可以移除Set中的元素</div><div class="line">	  Long remove = redisTemplate.opsForSet().remove(&quot;user1&quot;, user);</div></pre></td></tr></table></figure>
-<h5 id="3-2-4-RedisTemplete绑定到某个key上"><a href="#3-2-4-RedisTemplete绑定到某个key上" class="headerlink" title="3.2.4 RedisTemplete绑定到某个key上"></a>3.2.4 RedisTemplete绑定到某个key上</h5><p>我们可以将Value、List、Set等可以绑定到指定的key上。这些用个的不太多，但是也简单。这里就不具体写了。</p>
-<h5 id="3-2-5-构造AbstractBaseRedisTemplete"><a href="#3-2-5-构造AbstractBaseRedisTemplete" class="headerlink" title="3.2.5 构造AbstractBaseRedisTemplete"></a>3.2.5 构造AbstractBaseRedisTemplete</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.springframework.beans.BeansException;</div><div class="line">import org.springframework.context.ApplicationContext;</div><div class="line">import org.springframework.context.ApplicationContextAware;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line">/**</div><div class="line"> * 基础的RedisTemplete</div><div class="line"> * @author lidong</div><div class="line"> * @param &lt;T&gt;</div><div class="line"> * @date 2017-1-5</div><div class="line"> */</div><div class="line">public abstract class AbstractBaseRedisTemplete&lt;T&gt; implements</div><div class="line">		ApplicationContextAware &#123;</div><div class="line"></div><div class="line"></div><div class="line">	protected RedisTemplate&lt;String,T&gt;  redisTemplate;</div><div class="line"></div><div class="line">	 /**</div><div class="line">     * @Description RedisTemplate</div><div class="line">     * @param redisTemplate</div><div class="line">     */  </div><div class="line">    public void setRedisTemplate(RedisTemplate&lt;String,T&gt; redisTemplate) &#123;  </div><div class="line">        this.redisTemplate = redisTemplate;  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void setApplicationContext(ApplicationContext applicationContext)</div><div class="line">			throws BeansException &#123;</div><div class="line">		@SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">		RedisTemplate&lt;String,T&gt; redisTemplate = applicationContext.getBean(  </div><div class="line">                &quot;redisTemplate&quot;, RedisTemplate.class);  </div><div class="line">		setRedisTemplate(redisTemplate);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Spring-Data-Redis的使用基本最常用 的就是这三种类型value类型、List类型、Set类型。</p>
-<blockquote>
-<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
-</blockquote>
+<h2 id="4-代码的实现"><a href="#4-代码的实现" class="headerlink" title="4.代码的实现"></a>4.代码的实现</h2><h3 id="4-A页面的实现"><a href="#4-A页面的实现" class="headerlink" title="4.A页面的实现"></a>4.A页面的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Sample React Native App</div><div class="line"> * https://github.com/facebook/react-native</div><div class="line"> * @flow</div><div class="line"> */</div><div class="line"></div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  Navigator,</div><div class="line">  ToastAndroid,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">import Button from &apos;./Button&apos;;</div><div class="line">import Test from &apos;./test&apos;;</div><div class="line">var _navigator;</div><div class="line"> var d;</div><div class="line">class Hello2 extends Component &#123;</div><div class="line"></div><div class="line">  constructor(props)&#123;</div><div class="line">     super(props);</div><div class="line">      d = this;</div><div class="line">      this.state = &#123;city:&apos;&apos;&#125;</div><div class="line">    //  this.refeshView = this.refeshView.bind(this);                      </div><div class="line">  &#125;</div><div class="line"></div><div class="line"> configureScene(route)&#123;</div><div class="line">      return Navigator.SceneConfigs.FadeAndroid;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    refeshView(msg)&#123;</div><div class="line">    console.log(&apos;刷新&apos;);</div><div class="line">    d.setState(&#123;&apos;city&apos;:msg&#125;);</div><div class="line">    console.log(&apos;end&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    renderScene(router, navigator)&#123;</div><div class="line">      console.log(d);</div><div class="line">      _navigator = navigator;</div><div class="line">      if(router.id === &apos;main&apos;)&#123;</div><div class="line">      return &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">      &lt;Button  onPress=&#123;() =&gt; &#123;</div><div class="line">               console.log(&apos;start&apos;);</div><div class="line">                _navigator.push(&#123;title:&apos;MainPage&apos;,id:&apos;page&apos;,callBack:(msg)=&gt;&#123;</div><div class="line">                 console.log(d);</div><div class="line">                 d.refeshView(msg);</div><div class="line">                 console.log(&apos;end&apos;);&#125;&#125;);     </div><div class="line">          &#125;&#125; text=&#123;&apos;打开&apos;&#125; style=&#123;styles.instructions&#125; disabled = &#123;false&#125;/&gt;</div><div class="line">     </div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">          &#123;d.state.city&#125;</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">         </div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          Press Cmd+R to reload,&#123;&apos;\n&apos;&#125;</div><div class="line">          Cmd+D or shake for dev menu</div><div class="line">        &lt;/Text&gt;</div><div class="line"></div><div class="line">        </div><div class="line">      &lt;/View&gt;</div><div class="line">      &#125;else if(router.id === &apos;page&apos;)&#123;</div><div class="line"></div><div class="line">        return (</div><div class="line">        &lt;Test navigator=&#123;navigator&#125; router=&#123;router&#125;/&gt;</div><div class="line">      );</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line"> &lt;Navigator</div><div class="line">                initialRoute=&#123;&#123; title: &apos;Main&apos;, id:&apos;main&apos;&#125;&#125;</div><div class="line">                configureScene=&#123;this.configureScene&#125;</div><div class="line">                renderScene=&#123;this.renderScene&#125; /&gt;</div><div class="line">      </div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent(&apos;Hello2&apos;, () =&gt; Hello2);</div></pre></td></tr></table></figure>
+<h2 id="4-2、B页面的实现"><a href="#4-2、B页面的实现" class="headerlink" title="4.2、B页面的实现"></a>4.2、B页面的实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">var _navigator;</div><div class="line">import Button from &apos;./Button&apos;;</div><div class="line">class Test extends Component &#123;</div><div class="line"></div><div class="line">render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;&#123;flex:1&#125;&#125;&gt;</div><div class="line"></div><div class="line">        &lt;Button  onPress=&#123;() =&gt; &#123;</div><div class="line">             console.log(this.props);</div><div class="line">             this.props.router.callBack(&apos;I am a Student&apos;);</div><div class="line">             this.props.navigator.pop();</div><div class="line">          &#125;&#125; text=&#123;&apos;返回&apos;&#125; style=&#123;styles.instructions&#125; disabled = &#123;false&#125;/&gt;</div><div class="line">     </div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#126798&apos;,</div><div class="line">    marginTop: 50,</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">module.exports = Test;</div></pre></td></tr></table></figure>
+<p>代码非常的简单，谢谢大家学习。</p>
+<h2 id="5、效果展示"><a href="#5、效果展示" class="headerlink" title="5、效果展示"></a>5、效果展示</h2><p><img src="http://img.blog.csdn.net/20160906212709417" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160906212729182" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20160906212748979" alt="这里写图片描述"></p>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:32:25+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1、面向切面编程的一些术语"><a href="#1、面向切面编程的一些术语" class="headerlink" title="1、面向切面编程的一些术语"></a>1、面向切面编程的一些术语</h2><ul>
-<li>切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。</li>
-<li>连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。</li>
-<li>增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。</li>
-<li>切入点（Pointcut）：可以插入增强处理的连接点。简而言之，当某个连接点满足指定的要求时，该连接点将添加增强处理，该连接点也就变成了切入点。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pointcut xxxPointcut（）：execution（void H*.say*()）</div></pre></td></tr></table></figure>
-<ul>
-<li>引入：将方法或字段添加到被代理的类中，Spring允许将新的接口引入到任何被调用的处理对象中。例如：你可以使用一个引入，使任何对象实现IsModified接口，以此来简化缓存。</li>
-<li>目标对象：被AOP框架进行增强处理的对象，也被称为被增强对象，如果AOP框架采用的是动态的AOP实现 ，那该对象就是一个被代理对象。</li>
-<li>AOP代理：AOP框架创建的对象，简单说，代理就是对目标对象的加强，Spring中的AOP代理可以是JDK的动态代理，也可以是cglib的动态代理，前者是实现接口 的目标对象的代理，后者为不实现接口的目标对象的代理。</li>
-<li>织入（Weaving）：将增强处理添加到目标对象中，并创一个被增强对象（AOP代理）的过程就是织入。织入有l两种实现方式—–编译时增强（AspectJ）和运行时增强（如Spring AOP）。Spring和其他纯Java AOP框架一样，在运行时织入。</li>
-</ul>
-<h2 id="2、AOP的基本概念"><a href="#2、AOP的基本概念" class="headerlink" title="2、AOP的基本概念"></a>2、AOP的基本概念</h2><p>AOP是从程序运行角度考虑程序的流程，提取业务处理的过程的切面，AOP面向的是程序运行中各个步骤，希望以更好的方式来组合业务处理的各个步骤。</p>
-<p>AOP框架并不会与特定的代码耦合，AOP框架能处理程序执行中特定的切入点（PointCut），而不是某个具体类的耦合。</p>
-<h1 id="3、AOP框架具有如下的两个特征。"><a href="#3、AOP框架具有如下的两个特征。" class="headerlink" title="3、AOP框架具有如下的两个特征。"></a>3、AOP框架具有如下的两个特征。</h1><ul>
-<li><p>各个步骤之间良好的隔离。</p>
-</li>
-<li><p>源代码无关。</p>
-<p>注：Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式处理。从而提高了更多的复用。</p>
-<h2 id="4-如何在Spring中引入AOP功能"><a href="#4-如何在Spring中引入AOP功能" class="headerlink" title="4.如何在Spring中引入AOP功能"></a>4.如何在Spring中引入AOP功能</h2></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;srping.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.aspectj&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.7.2&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h2 id="5、实现Web层的日志切面"><a href="#5、实现Web层的日志切面" class="headerlink" title="5、实现Web层的日志切面"></a>5、实现Web层的日志切面</h2><p>实现AOP的切面主要有以下几个要素：</p>
-<ul>
-<li>使用 @Aspect 注解将一个java类定义为切面类。</li>
-<li>使用 @Pointcut 定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。</li>
-<li>根据需要在切入点不同位置的切入内容</li>
-<li>使用 @Before 在切入点开始处切入内容</li>
-<li>使用 @After 在切入点结尾处切入内容</li>
-<li>使用 @AfterReturning 在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）</li>
-<li>使用 @Around 在切入点前后切入内容，并自己控制何时执行切入点自身的内容</li>
-<li>使用 @AfterThrowing 用来处理当切入内容部分抛出异常之后的处理逻辑</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Enumeration;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.springframework.core.annotation.Order;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import org.springframework.web.context.request.RequestContextHolder;</div><div class="line">import org.springframework.web.context.request.ServletRequestAttributes;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">/**</div><div class="line"> 1. 保存请求数据到mongodb</div><div class="line"> 2. @author lidong</div><div class="line"> 3. @createTime 2016年12月24日</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Order(1)</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line"></div><div class="line">    private Logger logger = Logger.getLogger(&quot;mongodb&quot;);</div><div class="line">    ThreadLocal&lt;Long&gt; startTime = new ThreadLocal&lt;&gt;();</div><div class="line">    HttpServletRequest request;</div><div class="line">    JoinPoint mJoinPoint;</div><div class="line">	@Pointcut(&quot;execution (* com.lidong.*.controller.*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">    	    startTime.set(System.currentTimeMillis());   </div><div class="line">       	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</div><div class="line">        request = attributes.getRequest();</div><div class="line">        mJoinPoint = joinPoint;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private BasicDBObject getBasicDBObject(HttpServletRequest request, JoinPoint joinPoint) &#123;</div><div class="line">        BasicDBObject r = new BasicDBObject();</div><div class="line">        r.append(&quot;requestURL&quot;, request.getRequestURL().toString());</div><div class="line">        r.append(&quot;requestURI&quot;, request.getRequestURI());</div><div class="line">        r.append(&quot;queryString&quot;, request.getQueryString());</div><div class="line">        r.append(&quot;remoteAddr&quot;, request.getRemoteAddr());</div><div class="line">        r.append(&quot;remoteHost&quot;, request.getRemoteHost());</div><div class="line">        r.append(&quot;remotePort&quot;, request.getRemotePort());</div><div class="line">        r.append(&quot;localAddr&quot;, request.getLocalAddr());</div><div class="line">        r.append(&quot;localName&quot;, request.getLocalName());</div><div class="line">        r.append(&quot;method&quot;, request.getMethod());</div><div class="line">        r.append(&quot;headers&quot;, getHeadersInfo(request));</div><div class="line">        r.append(&quot;parameters&quot;, request.getParameterMap());</div><div class="line">        r.append(&quot;classMethod&quot;, joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());</div><div class="line">        r.append(&quot;args&quot;, Arrays.toString(joinPoint.getArgs()));</div><div class="line">        return r;</div><div class="line">    &#125;</div><div class="line">  /**</div><div class="line">     * 获取请求头部的信息</div><div class="line">     * @param request</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private Map&lt;String, String&gt; getHeadersInfo(HttpServletRequest request) &#123;</div><div class="line">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</div><div class="line">        Enumeration headerNames = request.getHeaderNames();</div><div class="line">        while (headerNames.hasMoreElements()) &#123;</div><div class="line">            String key = (String) headerNames.nextElement();</div><div class="line">            String value = request.getHeader(key);</div><div class="line">            map.put(key, value);</div><div class="line">        &#125;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">    	     BasicDBObject logInfo = getBasicDBObject(request, mJoinPoint);    </div><div class="line">    	     // 处理完请求，返回内容</div><div class="line">    	     logInfo.append(&quot;response&quot;,ret.toString());</div><div class="line">    	     logInfo.append(&quot;spend_time&quot;, (System.currentTimeMillis() - startTime.get()));</div><div class="line">    	     logger.info(logInfo);</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>注意：</strong>在WebLogAspect切面中，分别通过doBefore和doAfterReturning两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore处记录时间，并在doAfterReturning处通过当前时间与开始处记录的时间计算得到请求处理的消耗时间。</p>
-<h2 id="6、实现Web层的日志的日志保存到mongodb数据库中"><a href="#6、实现Web层的日志的日志保存到mongodb数据库中" class="headerlink" title="6、实现Web层的日志的日志保存到mongodb数据库中"></a>6、实现Web层的日志的日志保存到mongodb数据库中</h2><h4 id="6-1-通过自定义appender实现"><a href="#6-1-通过自定义appender实现" class="headerlink" title="6.1.通过自定义appender实现"></a>6.1.通过自定义appender实现</h4><p>思路：log4j提供的输出器实现自Appender接口，要自定义appender输出到MongoDB，只需要继承AppenderSkeleton类，并实现几个方法即可完成。</p>
-<ul>
-<li>引入mongodb的驱动，在pom.xml中引入下面依赖</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;  </div><div class="line">    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.2.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>实现MongoAppender</li>
-</ul>
-<p>编写MongoAppender类继承AppenderSkeleton，实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.apache.log4j.AppenderSkeleton;</div><div class="line">import org.apache.log4j.spi.LoggingEvent;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">import com.mongodb.MongoClient;</div><div class="line">import com.mongodb.MongoClientURI;</div><div class="line">import com.mongodb.client.MongoCollection;</div><div class="line">import com.mongodb.client.MongoDatabase;</div><div class="line">/**</div><div class="line"> * 自定义appender实现输出日志MongoDB</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class MongoAppender  extends AppenderSkeleton &#123;</div><div class="line"></div><div class="line">    private MongoClient mongoClient;</div><div class="line">    private MongoDatabase mongoDatabase;</div><div class="line">    private MongoCollection&lt;BasicDBObject&gt; logsCollection;</div><div class="line">    /**</div><div class="line">     * mongodb连接的url</div><div class="line">     */</div><div class="line">    private String connectionUrl;</div><div class="line">    /**</div><div class="line">     * 数据库的名称</div><div class="line">     */</div><div class="line">    private String databaseName;</div><div class="line">    /**</div><div class="line">     * 集合的名称</div><div class="line">     */</div><div class="line">    private String collectionName;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void append(LoggingEvent loggingEvent) &#123;</div><div class="line"></div><div class="line">        if(mongoDatabase == null) &#123;</div><div class="line">            MongoClientURI connectionString = new MongoClientURI(connectionUrl);</div><div class="line">            mongoClient = new MongoClient(connectionString);</div><div class="line">            mongoDatabase = mongoClient.getDatabase(databaseName);</div><div class="line">            logsCollection = mongoDatabase.getCollection(collectionName, BasicDBObject.class);</div><div class="line">        &#125;</div><div class="line">        //将日志插入到集合</div><div class="line">        logsCollection.insertOne((BasicDBObject) loggingEvent.getMessage());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void close() &#123;</div><div class="line">        if(mongoClient != null) &#123;</div><div class="line">            mongoClient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean requiresLayout() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	public MongoClient getMongoClient() &#123;</div><div class="line">		return mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoClient(MongoClient mongoClient) &#123;</div><div class="line">		this.mongoClient = mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoDatabase getMongoDatabase() &#123;</div><div class="line">		return mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoDatabase(MongoDatabase mongoDatabase) &#123;</div><div class="line">		this.mongoDatabase = mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoCollection&lt;BasicDBObject&gt; getLogsCollection() &#123;</div><div class="line">		return logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setLogsCollection(MongoCollection&lt;BasicDBObject&gt; logsCollection) &#123;</div><div class="line">		this.logsCollection = logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getConnectionUrl() &#123;</div><div class="line">		return connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setConnectionUrl(String connectionUrl) &#123;</div><div class="line">		this.connectionUrl = connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getDatabaseName() &#123;</div><div class="line">		return databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setDatabaseName(String databaseName) &#123;</div><div class="line">		this.databaseName = databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getCollectionName() &#123;</div><div class="line">		return collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setCollectionName(String collectionName) &#123;</div><div class="line">		this.collectionName = collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-3-在log4j-prperties中配置"><a href="#6-3-在log4j-prperties中配置" class="headerlink" title="6.3 在log4j.prperties中配置"></a>6.3 在log4j.prperties中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># mongodb输出</div><div class="line">log4j.logger.mongodb=INFO, mongodb</div><div class="line">log4j.appender.mongodb=com.lidong.util.MongoAppender</div><div class="line">log4j.appender.mongodb.connectionUrl=mongodb://127.0.0.1:27017</div><div class="line">log4j.appender.mongodb.databaseName=logs</div><div class="line">log4j.appender.mongodb.collectionName=logs_request</div></pre></td></tr></table></figure>
-<h3 id="6-4在spring-mvc-xml中开启统一处理请求日志"><a href="#6-4在spring-mvc-xml中开启统一处理请求日志" class="headerlink" title="6.4在spring-mvc.xml中开启统一处理请求日志"></a>6.4在spring-mvc.xml中开启统一处理请求日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- web统一管理  --&gt;</div><div class="line">&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</div><div class="line">&lt;bean class=&quot;com.lidong.util.WebLogAspect&quot; /&gt;</div></pre></td></tr></table></figure>
-<h3 id="6-5在数据库中查看保存的日志"><a href="#6-5在数据库中查看保存的日志" class="headerlink" title="6.5在数据库中查看保存的日志"></a>6.5在数据库中查看保存的日志</h3><p><img src="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
           
         
       
@@ -1114,7 +1127,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1157,8 +1170,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1168,8 +1181,8 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -1217,7 +1230,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

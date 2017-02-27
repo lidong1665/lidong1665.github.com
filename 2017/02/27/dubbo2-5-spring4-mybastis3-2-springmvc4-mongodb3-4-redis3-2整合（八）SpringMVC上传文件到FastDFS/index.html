@@ -1,0 +1,767 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="目前项目中需要存储一些文件、视频等。于是乎，查找了一些关于文件服务器资料。其中有Lustre、HDFS、Gluster、Alluxio、Ceph 、FastDFS。下面简单介绍一下:
+
+Lustre 是一个大规模的、安全可靠的、具备高可用性的集群文件系统，它是由SUN公司开发和维护的。该项目主要的目的就是开发下一代的集群文件系统，目前可以支持超过10000个节点，数以PB的数据存储量。
+
+HDFS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS">
+<meta property="og:url" content="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="目前项目中需要存储一些文件、视频等。于是乎，查找了一些关于文件服务器资料。其中有Lustre、HDFS、Gluster、Alluxio、Ceph 、FastDFS。下面简单介绍一下:
+
+Lustre 是一个大规模的、安全可靠的、具备高可用性的集群文件系统，它是由SUN公司开发和维护的。该项目主要的目的就是开发下一代的集群文件系统，目前可以支持超过10000个节点，数以PB的数据存储量。
+
+HDFS">
+<meta property="og:image" content="http://img.blog.csdn.net/20170207092622126?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170207093234745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170207094547397?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170207094715367?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-02-27T04:33:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS">
+<meta name="twitter:description" content="目前项目中需要存储一些文件、视频等。于是乎，查找了一些关于文件服务器资料。其中有Lustre、HDFS、Gluster、Alluxio、Ceph 、FastDFS。下面简单介绍一下:
+
+Lustre 是一个大规模的、安全可靠的、具备高可用性的集群文件系统，它是由SUN公司开发和维护的。该项目主要的目的就是开发下一代的集群文件系统，目前可以支持超过10000个节点，数以PB的数据存储量。
+
+HDFS">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170207092622126?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/"/>
+
+
+
+
+
+  <title> dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T12:32:01+08:00">
+                2017-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>目前项目中需要存储一些文件、视频等。于是乎，查找了一些关于文件服务器资料。其中有Lustre、HDFS、Gluster、Alluxio、Ceph 、FastDFS。下面简单介绍一下:</p>
+<ol>
+<li><p>Lustre 是一个大规模的、安全可靠的、具备高可用性的集群文件系统，它是由SUN公司开发和维护的。该项目主要的目的就是开发下一代的集群文件系统，目前可以支持超过10000个节点，数以PB的数据存储量。</p>
+</li>
+<li><p>HDFS Hadoop Distributed File System，简称HDFS，是一个分布式文件系统。HDFS是一个高度容错性的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，非常适合大规模数据集上的应用。</p>
+</li>
+<li><p>GlusterFS 是一个集群的文件系统，支持PB级的数据量。GlusterFS 通过RDMA和TCP/IP方式将分布到不同服务器上的存储空间汇集成一个大的网络化并行文件系统。</p>
+</li>
+<li><p>Alluxio 前身是Tachyon，是以内存为中心的分布式文件系统，拥有高性能和容错能力，能够为集群框架（如Spark、MapReduce）提供可靠的内存级速度的文件共享服务。</p>
+</li>
+<li><p>Ceph 是新一代开源分布式文件系统，主要目标是设计成基于POSIX的没有单点故障的分布式文件系统，提高数据的容错性并实现无缝的复制。</p>
+</li>
+<li><p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载等服务。<br>通过以上6中文件的服务器的介绍，我们业务非常适合选择用FastDFS，所以就了解学习了一番，感觉确实颇为强大，在此再次感谢淘宝资深架构师余庆大神开源了如此优秀的轻量级分布式文件系统，本篇文章就记录一下FastDFS的最新版本5.0.9在CentOS7中的安装与配置。</p>
+</li>
+</ol>
+<h3 id="1-Fastdfs的简介"><a href="#1-Fastdfs的简介" class="headerlink" title="1.Fastdfs的简介"></a>1.Fastdfs的简介</h3><p>了解一下基础概念，FastDFS是一个开源的轻量级分布式文件系统，由跟踪服务器（tracker server）、存储服务器（storage server）和客户端（client）三个部分组成，主要解决了海量数据存储问题，特别适合以中小文件（建议范围：4KB &lt; file_size &lt;500MB）为载体的在线服务。</p>
+<p>FastDFS系统结构如下图所示：</p>
+<p><img src="http://img.blog.csdn.net/20170207092622126?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>跟踪器和存储节点都可以由一台多台服务器构成。跟踪器和存储节点中的服务器均可以随时增加或下线而不会影响线上服务。其中跟踪器中的所有服务器都是对等的，可以根据服务器的压力情况随时增加或减少。</p>
+<p>为了支持大容量，存储节点（服务器）采用了分卷（或分组）的组织方式。存储系统由一个或多个卷组成，卷与卷之间的文件是相互独立的，所有卷 的文件容量累加就是整个存储系统中的文件容量。一个卷可以由一台或多台存储服务器组成，一个卷下的存储服务器中的文件都是相同的，卷中的多台存储服务器起 到了冗余备份和负载均衡的作用。</p>
+<p>在卷中增加服务器时，同步已有的文件由系统自动完成，同步完成后，系统自动将新增服务器切换到线上提供服务。</p>
+<p>当存储空间不足或即将耗尽时，可以动态添加卷。只需要增加一台或多台服务器，并将它们配置为一个新的卷，这样就扩大了存储系统的容量。</p>
+<h3 id="2-FastDFS的下载"><a href="#2-FastDFS的下载" class="headerlink" title="2.FastDFS的下载"></a>2.FastDFS的下载</h3><p><a href="https://github.com/happyfish100/fastdfs/releases" target="_blank" rel="external">Fastdfs的稳定版下载地址</a><br><img src="http://img.blog.csdn.net/20170207093234745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="3-FastDFS的-安装"><a href="#3-FastDFS的-安装" class="headerlink" title="3.FastDFS的 安装"></a>3.FastDFS的 安装</h3><p>详细见<br><a href="http://www.linuxidc.com/Linux/2016-09/135537.htm" target="_blank" rel="external">CentOS 7 安装配置分布式文件系统 FastDFS 5.0.5</a></p>
+<h3 id="4-SpringMVC上传文件到FastDFS"><a href="#4-SpringMVC上传文件到FastDFS" class="headerlink" title="4.SpringMVC上传文件到FastDFS"></a>4.SpringMVC上传文件到FastDFS</h3><p>####4.1 fast_client.cnf配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">connect_timeout = 2</div><div class="line">#网络超时时间</div><div class="line">network_timeout = 30</div><div class="line">#字符集</div><div class="line">charset = UTF-8</div><div class="line">#跟踪服务器的端口</div><div class="line">http.tracker_http_port = 9099</div><div class="line">http.anti_steal_token = no</div><div class="line">http.secret_key = FastDFS1234567890</div><div class="line">#跟踪服务器地址 。跟踪服务器主要是起到负载均衡的作用</div><div class="line">tracker_server = 192.168.0.116:22122</div></pre></td></tr></table></figure>
+<h4 id="4-2-fastdfs文件上传的流程"><a href="#4-2-fastdfs文件上传的流程" class="headerlink" title="4.2 fastdfs文件上传的流程"></a>4.2 fastdfs文件上传的流程</h4><p><img src="http://img.blog.csdn.net/20170207094547397?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>上传文件交互过程：</p>
+<ol>
+<li>client询问tracker上传到的storage，不需要附加参数；</li>
+<li>tracker返回一台可用的storage；</li>
+<li>client直接和storage通讯完成文件上传。 </li>
+</ol>
+<h4 id="4-3-FastDFS文件下载的流程"><a href="#4-3-FastDFS文件下载的流程" class="headerlink" title="4.3 FastDFS文件下载的流程"></a>4.3 FastDFS文件下载的流程</h4><p><img src="http://img.blog.csdn.net/20170207094715367?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>下载文件交互过程：</p>
+<ol>
+<li>client询问tracker下载文件的storage，参数为文件标识（卷名和文件名）；</li>
+<li>tracker返回一台可用的storage；</li>
+<li>client直接和storage通讯完成文件下载。</li>
+</ol>
+<p>需要说明的是，client为使用FastDFS服务的调用方，client也应该是一台服务器，它对tracker和storage的调用均为服务器间的调用。</p>
+<h4 id="4-4-FastDFSUtil-的封装"><a href="#4-4-FastDFSUtil-的封装" class="headerlink" title="4.4 FastDFSUtil 的封装"></a>4.4 FastDFSUtil 的封装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div></pre></td><td class="code"><pre><div class="line">package com.lidong.dubbo.util;</div><div class="line"></div><div class="line">import org.csource.common.MyException;</div><div class="line">import org.csource.common.NameValuePair;</div><div class="line">import org.csource.fastdfs.*;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.core.io.ClassPathResource;</div><div class="line">import org.springframework.web.multipart.MultipartFile;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletResponse;</div><div class="line">import java.io.*;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @项目名称:lidong-dubbo</div><div class="line"> * @类名:FastDFSUtil</div><div class="line"> * @类的描述: FastDFS 上传文件到文件服务器</div><div class="line"> * @作者:lidong</div><div class="line"> * @创建时间:2017/2/6 下午5:23</div><div class="line"> * @公司:chni</div><div class="line"> * @QQ:1561281670</div><div class="line"> * @邮箱:lidong1665@163.com</div><div class="line"> */</div><div class="line">public class FastDFSUtil &#123;</div><div class="line"></div><div class="line">    private final static</div><div class="line"></div><div class="line">    Logger logger = LoggerFactory.getLogger(FastDFSUtil.class);</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     *上传服务器本地文件-通过Linux客户端,调用客户端命令上传</div><div class="line">     * @param filePath 文件绝对路径</div><div class="line">     * @return Map&lt;String,Object&gt; code-返回代码, group-文件组, msg-文件路径/错误信息</div><div class="line">     */</div><div class="line">    public static Map&lt;String, Object&gt; uploadLocalFile(String filePath) &#123;</div><div class="line">        Map&lt;String, Object&gt; retMap = new HashMap&lt;String, Object&gt;();</div><div class="line">        /**</div><div class="line">         * 1.上传文件的命令</div><div class="line">         */</div><div class="line">        String command = &quot;fdfs_upload_file /etc/fdfs/client.conf  &quot; + filePath;</div><div class="line">        /**</div><div class="line">         * 2.定义文件的返回信息</div><div class="line">         */</div><div class="line">        String fileId = &quot;&quot;;</div><div class="line">        InputStreamReader inputStreamReader = null;</div><div class="line">        BufferedReader bufferedReader = null;</div><div class="line">        try &#123;</div><div class="line">            /**</div><div class="line">             * 3.通过调用api, 执行linux命令上传文件</div><div class="line">             */</div><div class="line">            Process process = Runtime.getRuntime().exec(command);</div><div class="line">            /**</div><div class="line">             * 4.读取上传后返回的信息</div><div class="line">             */</div><div class="line">             inputStreamReader = new InputStreamReader(process.getInputStream());</div><div class="line">             bufferedReader = new BufferedReader(inputStreamReader);</div><div class="line">            String line;</div><div class="line">            if ((line = bufferedReader.readLine()) != null) &#123;</div><div class="line">                fileId = line;</div><div class="line">            &#125;</div><div class="line">            /**</div><div class="line">             * 5.如果fileId包含M00，说明文件已经上传成功。否则文件上传失败</div><div class="line">             */</div><div class="line">            if (fileId.contains(&quot;M00&quot;)) &#123;</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0000&quot;);</div><div class="line">                retMap.put(&quot;group&quot;, fileId.substring(0, 6));</div><div class="line">                retMap.put(&quot;msg&quot;, fileId.substring(7, fileId.length()));</div><div class="line">            &#125; else &#123;</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0001&quot;);  //上传错误</div><div class="line">                retMap.put(&quot;msg&quot;, fileId);   //返回信息</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            logger.error(&quot;IOException:&quot; + e.getMessage());</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0002&quot;);</div><div class="line">            retMap.put(&quot;msg&quot;, e.getMessage());</div><div class="line">        &#125;finally &#123;</div><div class="line">            if (inputStreamReader!=null)&#123;</div><div class="line">                try &#123;</div><div class="line">                    inputStreamReader.close();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            if (bufferedReader != null) &#123;</div><div class="line">                try &#123;</div><div class="line">                    bufferedReader.close();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return retMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * Description: 直接通过fdfs java客户端上传到服务器-读取本地文件上传</div><div class="line">     *</div><div class="line">     * @param filePath 本地文件绝对路径</div><div class="line">     * @return Map&lt;String,Object&gt; code-返回代码, group-文件组, msg-文件路径/错误信息</div><div class="line">     */</div><div class="line">    public static Map&lt;String, Object&gt; upload(String filePath) &#123;</div><div class="line">        Map&lt;String, Object&gt; retMap = new HashMap&lt;String, Object&gt;();</div><div class="line">        File file = new File(filePath);</div><div class="line">        TrackerServer trackerServer = null;</div><div class="line">        StorageServer storageServer = null;</div><div class="line">        if (file.isFile()) &#123;</div><div class="line">            try &#123;</div><div class="line">                String tempFileName = file.getName();</div><div class="line">                byte[] fileBuff = FileUtil.getBytesFromFile(file);</div><div class="line">                String fileId = &quot;&quot;;</div><div class="line">                //截取后缀</div><div class="line">                String fileExtName = tempFileName.substring(tempFileName.lastIndexOf(&quot;.&quot;) + 1);</div><div class="line">                ConfigAndConnectionServer configAndConnectionServer = new ConfigAndConnectionServer().invoke(1);</div><div class="line">                StorageClient1 storageClient1 = configAndConnectionServer.getStorageClient1();</div><div class="line">                storageServer = configAndConnectionServer.getStorageServer();</div><div class="line">                trackerServer = configAndConnectionServer.getTrackerServer();</div><div class="line"></div><div class="line">                /**</div><div class="line">              * 4.设置文件的相关属性。调用客户端的upload_file1的方法上传文件</div><div class="line">              */</div><div class="line">                NameValuePair[] metaList = new NameValuePair[3];</div><div class="line">                //原始文件名称</div><div class="line">                metaList[0] = new NameValuePair(&quot;fileName&quot;, tempFileName);</div><div class="line">                //文件后缀</div><div class="line">                metaList[1] = new NameValuePair(&quot;fileExtName&quot;, fileExtName);</div><div class="line">                //文件大小</div><div class="line">                metaList[2] = new NameValuePair(&quot;fileLength&quot;, String.valueOf(file.length()));</div><div class="line">                //开始上传文件</div><div class="line">                fileId = storageClient1.upload_file1(fileBuff, fileExtName, metaList);</div><div class="line">                retMap = handleResult(retMap, fileId);</div><div class="line">            &#125; catch (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0002&quot;);</div><div class="line">                retMap.put(&quot;msg&quot;, e.getMessage());</div><div class="line">            &#125;finally &#123;</div><div class="line">                /**</div><div class="line">                 * 5.关闭跟踪服务器的连接</div><div class="line">                 */</div><div class="line">                colse(storageServer, trackerServer);</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0001&quot;);</div><div class="line">            retMap.put(&quot;msg&quot;, &quot;error:本地文件不存在!&quot;);</div><div class="line">        &#125;</div><div class="line">        return retMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * Description:远程选择上传文件-通过MultipartFile</div><div class="line">     *</div><div class="line">     * @param file 文件流</div><div class="line">     * @return Map&lt;String,Object&gt; code-返回代码, group-文件组, msg-文件路径/错误信息</div><div class="line">     */</div><div class="line">    public static Map&lt;String, Object&gt; upload(MultipartFile file) &#123;</div><div class="line">        Map&lt;String, Object&gt; retMap = new HashMap&lt;String, Object&gt;();</div><div class="line">        TrackerServer trackerServer = null;</div><div class="line">        StorageServer storageServer = null;</div><div class="line">        try &#123;</div><div class="line">            if (file.isEmpty()) &#123;</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0001&quot;);</div><div class="line">                retMap.put(&quot;msg&quot;, &quot;error:文件为空!&quot;);</div><div class="line">            &#125; else &#123;</div><div class="line">                ConfigAndConnectionServer configAndConnectionServer = new ConfigAndConnectionServer().invoke(1);</div><div class="line">                StorageClient1 storageClient1 = configAndConnectionServer.getStorageClient1();</div><div class="line">                storageServer = configAndConnectionServer.getStorageServer();</div><div class="line">                trackerServer = configAndConnectionServer.getTrackerServer();</div><div class="line">                String tempFileName = file.getOriginalFilename();</div><div class="line">                //设置元信息</div><div class="line">                NameValuePair[] metaList = new NameValuePair[3];</div><div class="line">                //原始文件名称</div><div class="line">                metaList[0] = new NameValuePair(&quot;fileName&quot;, tempFileName);</div><div class="line">                //文件后缀</div><div class="line">                byte[] fileBuff = file.getBytes();</div><div class="line">                String fileId = &quot;&quot;;</div><div class="line">                //截取后缀</div><div class="line">                String fileExtName = tempFileName.substring(tempFileName.lastIndexOf(&quot;.&quot;) + 1);</div><div class="line"></div><div class="line">                metaList[1] = new NameValuePair(&quot;fileExtName&quot;, fileExtName);</div><div class="line">                //文件大小</div><div class="line">                metaList[2] = new NameValuePair(&quot;fileLength&quot;, String.valueOf(file.getSize()));</div><div class="line">                /**</div><div class="line">                 * 4.调用客户端呢的upload_file1的方法开始上传文件</div><div class="line">                 */</div><div class="line">                fileId = storageClient1.upload_file1(fileBuff, fileExtName, metaList);</div><div class="line">                retMap = handleResult(retMap, fileId);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0002&quot;);</div><div class="line">            retMap.put(&quot;msg&quot;, &quot;error:文件上传失败!&quot;);</div><div class="line">        &#125;finally &#123;</div><div class="line">            /**</div><div class="line">             * 5.关闭跟踪服务器的连接</div><div class="line">             */</div><div class="line">            colse(storageServer, trackerServer);</div><div class="line">        &#125;</div><div class="line">        return retMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 下载文件</div><div class="line">     *</div><div class="line">     * @param response</div><div class="line">     * @param filepath 数据库存的文件路径</div><div class="line">     * @param downname 下载后的名称</div><div class="line">     *                 filepath M00/开头的文件路径</div><div class="line">     *                 group 文件所在的组 如：group0</div><div class="line">     * @throws IOException</div><div class="line">     */</div><div class="line">    public static void download(HttpServletResponse response, String group, String filepath, String downname) &#123;</div><div class="line">        StorageServer storageServer = null;</div><div class="line">        TrackerServer trackerServer = null;</div><div class="line">        try &#123;</div><div class="line">            ConfigAndConnectionServer configAndConnectionServer = new ConfigAndConnectionServer().invoke(0);</div><div class="line">            StorageClient storageClient = configAndConnectionServer.getStorageClient();</div><div class="line">            storageServer = configAndConnectionServer.getStorageServer();</div><div class="line">            trackerServer = configAndConnectionServer.getTrackerServer();</div><div class="line"></div><div class="line">            /**</div><div class="line">             *4.调用客户端的下载download_file的方法</div><div class="line">             */</div><div class="line">            byte[] b = storageClient.download_file(group, filepath);</div><div class="line">            if (b == null) &#123;</div><div class="line">                logger.error(&quot;Error1 : file not Found!&quot;);</div><div class="line">                response.getWriter().write(&quot;Error1 : file not Found!&quot;);</div><div class="line">            &#125; else &#123;</div><div class="line">                logger.info(&quot;下载文件..&quot;);</div><div class="line">                downname = new String(downname.getBytes(&quot;utf-8&quot;), &quot;ISO8859-1&quot;);</div><div class="line">                response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment;fileName=&quot; + downname);</div><div class="line">                OutputStream out = response.getOutputStream();</div><div class="line">                out.write(b);</div><div class="line">                out.close();</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            try &#123;</div><div class="line">                response.getWriter().write(&quot;Error1 : file not Found!&quot;);</div><div class="line">            &#125; catch (IOException e1) &#123;</div><div class="line">                e1.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;finally &#123;</div><div class="line">            /**</div><div class="line">             * 5.关闭跟踪服务器的连接</div><div class="line">             */</div><div class="line">            colse(storageServer, trackerServer);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 删除文件</div><div class="line">     *</div><div class="line">     * @param group 文件分组,  filepath 已M00/ 开头的文件路径</div><div class="line">     * @return Map&lt;String,Object&gt; code-返回代码,  msg-错误信息</div><div class="line">     */</div><div class="line">    public static Map&lt;String, Object&gt; delete(String group, String filepath) &#123;</div><div class="line">        Map&lt;String, Object&gt; retMap = new HashMap&lt;String, Object&gt;();</div><div class="line">        StorageServer storageServer = null;</div><div class="line">        TrackerServer trackerServer = null;</div><div class="line">        try &#123;</div><div class="line">            ConfigAndConnectionServer configAndConnectionServer = new ConfigAndConnectionServer().invoke(0);</div><div class="line">            StorageClient storageClient = configAndConnectionServer.getStorageClient();</div><div class="line">            storageServer = configAndConnectionServer.getStorageServer();</div><div class="line">            trackerServer = configAndConnectionServer.getTrackerServer();</div><div class="line">            /**</div><div class="line">             * 4.调用客户端的delete_file方法删除文件</div><div class="line">             */</div><div class="line">            int i = storageClient.delete_file(group, filepath);</div><div class="line">            if (i == 0) &#123;</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0000&quot;);</div><div class="line">                retMap.put(&quot;msg&quot;, &quot;删除成功！&quot;);</div><div class="line">            &#125; else &#123;</div><div class="line">                retMap.put(&quot;code&quot;, &quot;0001&quot;);</div><div class="line">                retMap.put(&quot;msg&quot;, &quot;文件不存在!&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0002&quot;);</div><div class="line">            retMap.put(&quot;msg&quot;, &quot;删除失败！&quot;);</div><div class="line">        &#125; finally &#123;</div><div class="line">            /**</div><div class="line">             * 5.关闭跟踪服务器的连接</div><div class="line">             */</div><div class="line">            colse(storageServer, trackerServer);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return retMap;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 关闭服务器</div><div class="line">     *</div><div class="line">     * @param storageServer</div><div class="line">     * @param trackerServer</div><div class="line">     */</div><div class="line">    private static void colse(StorageServer storageServer, TrackerServer trackerServer) &#123;</div><div class="line">        if (storageServer != null &amp;&amp; trackerServer != null) &#123;</div><div class="line">            try &#123;</div><div class="line">                storageServer.close();</div><div class="line">                trackerServer.close();</div><div class="line">            &#125; catch (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 处理上传到文件服务器之后，返回来的结果</div><div class="line">     *</div><div class="line">     * @param retMap</div><div class="line">     * @param fileId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private static Map&lt;String, Object&gt; handleResult(Map&lt;String, Object&gt; retMap, String fileId) &#123;</div><div class="line">        if (!fileId.equals(&quot;&quot;) &amp;&amp; fileId != null) &#123;</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0000&quot;);</div><div class="line">            retMap.put(&quot;group&quot;, fileId.substring(0, 6));</div><div class="line">            retMap.put(&quot;msg&quot;, fileId.substring(7, fileId.length()));</div><div class="line">        &#125; else &#123;</div><div class="line">            retMap.put(&quot;code&quot;, &quot;0003&quot;);</div><div class="line">            retMap.put(&quot;msg&quot;, &quot;error:上传失败!&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return retMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * @项目名称:lidong-dubbo</div><div class="line">     * @类名:FastDFSUtil</div><div class="line">     * @类的描述: ConfigAndConnectionServer</div><div class="line">     * @作者:lidong</div><div class="line">     * @创建时间:2017/2/7 上午8:47</div><div class="line">     * @公司:chni</div><div class="line">     * @QQ:1561281670</div><div class="line">     * @邮箱:lidong1665@163.com</div><div class="line">     */</div><div class="line">    private static class ConfigAndConnectionServer &#123;</div><div class="line">        private TrackerServer trackerServer;</div><div class="line">        private StorageServer storageServer;</div><div class="line">        private StorageClient storageClient;</div><div class="line">        private StorageClient1 storageClient1;</div><div class="line"></div><div class="line"></div><div class="line">        public TrackerServer getTrackerServer() &#123;</div><div class="line">            return trackerServer;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public StorageServer getStorageServer() &#123;</div><div class="line">            return storageServer;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public StorageClient getStorageClient() &#123;</div><div class="line">            return storageClient;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public StorageClient1 getStorageClient1() &#123;</div><div class="line">            return storageClient1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public ConfigAndConnectionServer invoke(int flag) throws IOException, MyException &#123;</div><div class="line">            /**</div><div class="line">             * 1.读取fastDFS客户端配置文件</div><div class="line">             */</div><div class="line">            ClassPathResource cpr = new ClassPathResource(&quot;fdfs_client.conf&quot;);</div><div class="line">            /**</div><div class="line">             * 2.配置文件的初始化信息</div><div class="line">             */</div><div class="line">            ClientGlobal.init(cpr.getClassLoader().getResource(&quot;fdfs_client.conf&quot;).getPath());</div><div class="line">            TrackerClient tracker = new TrackerClient();</div><div class="line">            /**</div><div class="line">             * 3.建立连接</div><div class="line">             */</div><div class="line">            trackerServer = tracker.getConnection();</div><div class="line">            storageServer = null;</div><div class="line">            /**</div><div class="line">             * 如果flag=0时候，构造StorageClient对象否则构造StorageClient1</div><div class="line">             */</div><div class="line">            if (flag == 0) &#123;</div><div class="line">                storageClient = new StorageClient(trackerServer, storageServer);</div><div class="line">            &#125; else &#123;</div><div class="line">                storageClient1 = new StorageClient1(trackerServer, storageServer);</div><div class="line">            &#125;</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-5-SpringMVC-上传文件到Fastdfs文件服务器"><a href="#4-5-SpringMVC-上传文件到Fastdfs文件服务器" class="headerlink" title="4.5 SpringMVC 上传文件到Fastdfs文件服务器"></a>4.5 SpringMVC 上传文件到Fastdfs文件服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@RequestMapping(&quot;/upload&quot;)</div><div class="line">    public String addUser(@RequestParam(&quot;file&quot;) CommonsMultipartFile[] files,</div><div class="line">                          HttpServletRequest request)&#123;</div><div class="line"></div><div class="line">        for(int i = 0;i&lt;files.length;i++)&#123;</div><div class="line">            logger.info(&quot;fileName--&gt;&quot; + files[i].getOriginalFilename()+&quot;     file-size---&gt;&quot;+files[i].getSize());</div><div class="line">            Map&lt;String, Object&gt; retMap = FastDFSUtil.upload(files[i]);</div><div class="line">            String code = (String) retMap.get(&quot;code&quot;);</div><div class="line">            String group = (String) retMap.get(&quot;group&quot;);</div><div class="line">            String msg = (String) retMap.get(&quot;msg&quot;);</div><div class="line"></div><div class="line">            if (&quot;0000&quot;.equals(code))&#123;</div><div class="line">                logger.info(&quot;文件上传成功&quot;);</div><div class="line">                //TODO:将上传文件的路径保存到mysql数据库</div><div class="line">            &#125;else &#123;</div><div class="line">                logger.info(&quot;文件上传失败&quot;);</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        return &quot;/success&quot;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>基本上就这么多。大家在学习的过程中如果遇到问题。可以直接在下面评论、吐槽。</p>
+<blockquote>
+<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag"># spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/RabbitMQ工作原理和Spring的集成/" rel="next" title="RabbitMQ工作原理和Spring的集成">
+                <i class="fa fa-chevron-left"></i> RabbitMQ工作原理和Spring的集成
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（九）之-spring中定时器quartz的整合/" rel="prev" title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（九）之 spring中定时器quartz的整合">
+                dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（九）之 spring中定时器quartz的整合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/"
+     data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS"
+     data-content=""
+     data-url="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/"
+           data-title="dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（八）SpringMVC上传文件到FastDFS" data-url="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（八）SpringMVC上传文件到FastDFS/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Fastdfs的简介"><span class="nav-number">1.</span> <span class="nav-text">1.Fastdfs的简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-FastDFS的下载"><span class="nav-number">2.</span> <span class="nav-text">2.FastDFS的下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FastDFS的-安装"><span class="nav-number">3.</span> <span class="nav-text">3.FastDFS的 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SpringMVC上传文件到FastDFS"><span class="nav-number">4.</span> <span class="nav-text">4.SpringMVC上传文件到FastDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-fastdfs文件上传的流程"><span class="nav-number">4.1.</span> <span class="nav-text">4.2 fastdfs文件上传的流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-FastDFS文件下载的流程"><span class="nav-number">4.2.</span> <span class="nav-text">4.3 FastDFS文件下载的流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-FastDFSUtil-的封装"><span class="nav-number">4.3.</span> <span class="nav-text">4.4 FastDFSUtil 的封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-SpringMVC-上传文件到Fastdfs文件服务器"><span class="nav-number">4.4.</span> <span class="nav-text">4.5 SpringMVC 上传文件到Fastdfs文件服务器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

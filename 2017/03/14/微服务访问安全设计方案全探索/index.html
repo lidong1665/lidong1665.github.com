@@ -1,0 +1,896 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微服务," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="文章来源：https://segmentfault.com/a/1190000006785852
+今天给大家带来的是 数人云工程师文权在高效运维线上群的分享实录。从传统单体应用架构到微服务架构，安全问题一直是人们关注的重点，文权与大家分享了关于微服务访问安全设计方案的探索与实践。
+我们首先从传统单体应用架构下的访问安全设计说起，然后分析现代微服务架构下，访问安全涉及的原则，接着讨论目前常用的几种微">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务访问安全设计方案全探索">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="文章来源：https://segmentfault.com/a/1190000006785852
+今天给大家带来的是 数人云工程师文权在高效运维线上群的分享实录。从传统单体应用架构到微服务架构，安全问题一直是人们关注的重点，文权与大家分享了关于微服务访问安全设计方案的探索与实践。
+我们首先从传统单体应用架构下的访问安全设计说起，然后分析现代微服务架构下，访问安全涉及的原则，接着讨论目前常用的几种微">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDqL">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDqQ">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDqU">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDqU">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDqZ/view">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDq1">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDrz">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDrt">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDrN">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDrR">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDrY">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDsh">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDsk">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDso">
+<meta property="og:image" content="https://segmentfault.com/img/bVCDsD">
+<meta property="og:updated_time" content="2017-03-14T00:49:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务访问安全设计方案全探索">
+<meta name="twitter:description" content="文章来源：https://segmentfault.com/a/1190000006785852
+今天给大家带来的是 数人云工程师文权在高效运维线上群的分享实录。从传统单体应用架构到微服务架构，安全问题一直是人们关注的重点，文权与大家分享了关于微服务访问安全设计方案的探索与实践。
+我们首先从传统单体应用架构下的访问安全设计说起，然后分析现代微服务架构下，访问安全涉及的原则，接着讨论目前常用的几种微">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVCDqL">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/"/>
+
+
+
+
+
+  <title> 微服务访问安全设计方案全探索 | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                微服务访问安全设计方案全探索
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T08:49:31+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/微服务访问安全设计方案全探索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/微服务访问安全设计方案全探索/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章来源：<a href="https://segmentfault.com/a/1190000006785852" target="_blank" rel="external">https://segmentfault.com/a/1190000006785852</a></p>
+<p>今天给大家带来的是 数人云工程师文权在高效运维线上群的分享实录。从传统单体应用架构到微服务架构，安全问题一直是人们关注的重点，文权与大家分享了关于微服务访问安全设计方案的探索与实践。</p>
+<p>我们首先从传统单体应用架构下的访问安全设计说起，然后分析现代微服务架构下，访问安全涉及的原则，接着讨论目前常用的几种微服务架构下的访问安全设计方案。最后，详析Spring Cloud微服务架构下如何解决访问安全的问题。</p>
+<h2 id="1-传统单体应用的访问安全设计"><a href="#1-传统单体应用的访问安全设计" class="headerlink" title="1.传统单体应用的访问安全设计"></a>1.传统单体应用的访问安全设计</h2><p><img src="https://segmentfault.com/img/bVCDqL" alt="这里写图片描述"></p>
+<p>上面的示意图展示了单体应用的访问逻辑。用户通过客户端发出http或者https请求，经过负载均衡后，单体应用收到请求。接着经过auth层，进行身份验证和权限批准，这里，一般会有跟后端数据库的交互。通过后，将请求分发到对应的功能逻辑层中去。完成相关操作后，返回结果给客户端。</p>
+<h4 id="1-1传统单体应用的访问安全设计——原则"><a href="#1-1传统单体应用的访问安全设计——原则" class="headerlink" title="1.1传统单体应用的访问安全设计——原则"></a>1.1传统单体应用的访问安全设计——原则</h4><p><img src="https://segmentfault.com/img/bVCDqQ" alt="这里写图片描述"><br>从以上分析可以看到，传统单体应用的访问安全设计原则为：</p>
+<p>第一，每次的用户请求都需要验证是否安全，这里可以分两种情况：</p>
+<p>一种是没有session的请求，需要经过几个步骤完成session化。一般为验证当前用户的credential，获取当前用户的identity，这两步都需要访问数据库等持久化对象来完成，最后一步是为当前可用创建session，返回给客户端后，启用该session。</p>
+<p>另一种是有session的请求，只需验证请求中当前session的有效性，即可继续请求。</p>
+<p>第二，用户的操作请求都在后端单个进程中执行完成，完全依赖后端调用方法的可靠性。一旦出错，应用是无法再次重复请求。</p>
+<h4 id="1-2-传统单体应用的访问安全设计——优势和注意点"><a href="#1-2-传统单体应用的访问安全设计——优势和注意点" class="headerlink" title="1.2 传统单体应用的访问安全设计——优势和注意点"></a>1.2 传统单体应用的访问安全设计——优势和注意点</h4><p><img src="https://segmentfault.com/img/bVCDqU" alt="这里写图片描述"></p>
+<p>传统单体应用由于设计相对简单单一，暴露给外界的入口相对较少，从而具有被攻击并造成危害性的可能小的优势。</p>
+<p>也正是由于单体应用简单单一的特点，需要注意相关问题：</p>
+<p>应用后端保存了所有的credential等敏感信息<br>一旦入侵了对这个应用的请求，就有可能拿到所有的保存在后端的信息<br>应用的每次操作一般都需要和数据库进行交互，造成数据库负载变高</p>
+<h2 id="2-微服务架构下，访问安全设计原则"><a href="#2-微服务架构下，访问安全设计原则" class="headerlink" title="2.微服务架构下，访问安全设计原则"></a>2.微服务架构下，访问安全设计原则</h2><p><img src="https://segmentfault.com/img/bVCDqU" alt="这里写图片描述"></p>
+<p>来看下这张典型的微服务设计架构图，如图所示，有以下几点特征：</p>
+<ul>
+<li>每个服务只有权限去操作自己负责的那部分功能。</li>
+<li>用户请求的身份验证和权限批准都由独立的gateway服务来保障</li>
+<li>对外服务的LB层无法直接与提供业务服务的应用层进行访问</li>
+</ul>
+<p><img src="https://segmentfault.com/img/bVCDqZ/view" alt="这里写图片描述"></p>
+<p>从上面的特征分析来看，想要给出一份访问安全设计的原则说明，就要看看微服务架构下，访问安全有哪些痛点，以下罗列了几点：</p>
+<ul>
+<li>单点登录，即在微服务这种多独立服务的架构下，实现用户只需要登录一次就能访问所有相互信任的应用系统</li>
+<li>微服务架构下的应用一般都是无状态的，导致用户的请求每次都需要鉴权，可能引发Auth服务的性能瓶颈</li>
+<li>微服务架构下，每个组件都管理着各自的功能权限，这种细粒度的鉴权机制需要事先良好的规划</li>
+<li>微服务架构下，需要考虑到那些非浏览器端的客户请求，是否具有良好的可操作性</li>
+</ul>
+<p>根据实际情况，还有一些其他痛点，这里不再一一赘述，而这些痛点，就形成了我们在为微服务架构设计访问安全的原则。</p>
+<h2 id="3-微服务架构下，常用的访问安全设计方案"><a href="#3-微服务架构下，常用的访问安全设计方案" class="headerlink" title="3.微服务架构下，常用的访问安全设计方案"></a>3.微服务架构下，常用的访问安全设计方案</h2><ul>
+<li>HTTP Basic Authentication + Independent Auth DB</li>
+<li>HTTP Basic Authentication + Central Auth DB</li>
+<li>API Tokens</li>
+<li>SAML</li>
+</ul>
+<p>这里列出4种，首先简单介绍下，然后一一叙述。</p>
+<p>第一种，使用HTTP Basic Auth协议，加上独立的Auth数据库。<br>第二种，也是使用HTTP Basic Auth协议，跟第一种不同的是，使用集中式的Auth数据库<br>第三种，API Tokens协议，这种大家应该比较熟悉，很多公有服务（比如Github、Twitter等）的API都是用这种方式。<br>第四种，SAML，即Security Assertion Markup Language，翻译过来，是『安全声明标记语言』，它是基于XML的一种协议，企业内使用得较多。</p>
+<p>下面一一做介绍。</p>
+<h4 id="3-1-微服务常用访问安全设计方案——Basic-Auth-Independent-Auth-DB"><a href="#3-1-微服务常用访问安全设计方案——Basic-Auth-Independent-Auth-DB" class="headerlink" title="3.1 微服务常用访问安全设计方案——Basic Auth + Independent Auth DB"></a>3.1 微服务常用访问安全设计方案——Basic Auth + Independent Auth DB</h4><p><img src="https://segmentfault.com/img/bVCDq1" alt="这里写图片描述"></p>
+<p>一种，如上示意图所示，使用Basic Auth协议，配合每个服务自己都拥有存储Credential敏感数据的数据库（或者其他持久化仓库）。</p>
+<p>简单介绍下Basic Auth协议，它是在用户的请求中添加一个Authorization消息头，这个消息头的值是一个固定格式：Basic base64encode(username+“:”+password)</p>
+<p>完整的消息头列子为：Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</p>
+<p>Basic Auth协议基本上被所有流行的网页浏览器都支持。</p>
+<p>这种方案的特点：</p>
+<ul>
+<li>每个提供功能的服务都拥有自己独立的鉴权和授权机制</li>
+<li>每个提供功能的服务都拥有自己独立的数据库，来保存敏感信息</li>
+<li>每次用户请求都需要携带用户的credential来完成操作</li>
+</ul>
+<p>小结下使用这种方案的好处：</p>
+<ul>
+<li>微服务的应用可以实现100%无状态化</li>
+<li>基于Basic Auth开发简单</li>
+</ul>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>由于每个服务都有自己存储credential的机制，需要事先为每个服务设计好如何存储和查找用户的Credential由于每次用户请求都会携带用户的Credential，需要事先设计好如何管理鉴权机制。</p>
+<h4 id="3-2微服务常用访问安全设计方案——Basic-Auth-Central-Auth-DB"><a href="#3-2微服务常用访问安全设计方案——Basic-Auth-Central-Auth-DB" class="headerlink" title="3.2微服务常用访问安全设计方案——Basic Auth + Central Auth DB"></a>3.2微服务常用访问安全设计方案——Basic Auth + Central Auth DB</h4><p><img src="https://segmentfault.com/img/bVCDrz" alt="这里写图片描述"></p>
+<p>二种，如上示意图所示，使用Basic Auth协议，与第一种方案相比，每个服务共用有同一个Auth DB。</p>
+<p>第二种方案的特点和第一种很相似：</p>
+<ul>
+<li>每个提供功能的服务都拥有自己独立的鉴权和授权机制</li>
+<li>每个提供功能的服务共用同一个DB，来保存Credential等敏感信息</li>
+<li>每次用户请求都需要携带用户的credential来完成操作</li>
+</ul>
+<p>小结下使用第二种方案的好处：</p>
+<p>除了拥有第一种方案相似的好处外，由于共用了同一个持久化仓库来管理用户信息，简化了原来独立管理的机制</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<ul>
+<li>中心化Auth DB会被每次用户请求来访问连接，可能引发AuthDB性能瓶颈</li>
+<li>需要在每个服务中实现对共有Auth DB查找用户信息的逻辑</li>
+</ul>
+<h4 id="3-3微服务常用访问安全设计方案——API-Tokens"><a href="#3-3微服务常用访问安全设计方案——API-Tokens" class="headerlink" title="3.3微服务常用访问安全设计方案——API Tokens"></a>3.3微服务常用访问安全设计方案——API Tokens</h4><p><img src="https://segmentfault.com/img/bVCDrt" alt="这里写图片描述"><br>第三种，如上示意图所示，使用Token Based协议来对用户请求进行操作鉴权。</p>
+<p>简单介绍下最基本的Token Based的交互方式：</p>
+<ul>
+<li>用户使用包含用户名和密码的credential从客户端发起资源请求</li>
+<li>后端接受请求，通过授权中心，生产有效token字符串，返回给客户端</li>
+<li>客户端获得token后，再次发出资源请求</li>
+<li>后端接受带token的请求，通过授权中心，获取相关资源，返回给客户端<br>业界常用的OAuth就是基于Token Based这套逻辑，实现的互联网级的鉴权机制。</li>
+</ul>
+<p>第三种方案的特点明显：</p>
+<p>使用token来进行鉴权，替换用户本身的用户名和密码，提高了交互安全性每次用户请求需要携带有效token，与Auth服务进行交互验证</p>
+<p>小结下使用第三种方案的好处：</p>
+<p>由于使用了token来鉴权，业务服务不会看到用户的敏感信息</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>Auth服务可能需要处理大量的生产token的操作</p>
+<h4 id="3-4微服务常用访问安全设计方案——SAML"><a href="#3-4微服务常用访问安全设计方案——SAML" class="headerlink" title="3.4微服务常用访问安全设计方案——SAML"></a>3.4微服务常用访问安全设计方案——SAML</h4><p><img src="https://segmentfault.com/img/bVCDrN" alt="这里写图片描述"></p>
+<p>第四种，如上示意图所示，使用SAML协议来对用户请求进行操作鉴权。它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。在SAML标准定义了身份提供者(identity provider)和服务提供者(service provider)，这两者构成了前面所说的不同的安全域。</p>
+<p>以上图Google提供的Apps SSO的机制，简单介绍下SAML鉴权的交互方式：</p>
+<ul>
+<li>用户请求访问自建的google application</li>
+<li>当前application 生成一个 SAML 身份验证请求。SAML 请求将进行编码并嵌入到SSO 服务的网址中。</li>
+<li>当前application将重定向发送到用户的浏览器。重定向网址包含应向SSO 服务提交的编码 SAML 身份验证请求。</li>
+<li>SSO（统一认证中心或叫Identity Provider）解码 SAML 请求，并提取当前application的 ACS（声明客户服务）网址以及用户的目标网址（RelayState 参数）。然后，统一认证中心对用户进行身份验证。</li>
+<li>统一认证中心生成一个 SAML 响应，其中包含经过验证的用户的用户名。按照 SAML 2.0 规范，此响应将使用统一认证中心的 DSA/RSA 公钥和私钥进行数字签名。</li>
+<li>统一认证中心对 SAML 响应和 RelayState 参数进行编码，并将该信息返回到用户的浏览器。统一认证中心提供了一种机制，以便浏览器可以将该信息转发到当前application ACS。</li>
+<li>当前application使用统一认证中心的公钥验证 SAML 响应。如果成功验证该响应，ACS 则会将用户重定向到目标网址。</li>
+<li>用户将重定向到目标网址并登录到当前application。</li>
+</ul>
+<p>目前SAML在业界也有相当的使用度，包括IBM Weblogic等产品。</p>
+<p>第四种方案的特点有：</p>
+<p>由Identity Provider提供可信的签名声明服务的访问安全由可信的Identity Provider提供</p>
+<p>小结下使用第四种方案的好处：标准的可信访问模型</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>基于XML协议，传输相对复杂对非浏览器客户端适配不方便。</p>
+<h2 id="4-Spring-Cloud-Security解决方案"><a href="#4-Spring-Cloud-Security解决方案" class="headerlink" title="4.Spring Cloud Security解决方案"></a>4.Spring Cloud Security解决方案</h2><p>Spring Cloud Security特点有：</p>
+<ul>
+<li>基于OAuth2 和OpenID协议的可配置的SSO登录机制</li>
+<li>基于tokens保障资源访问安全</li>
+<li>引入UAA鉴权服务，UAA是一个Web服务，用于管理账户、Oauth2客户端和用户用于鉴权的问题令牌(Issue Token)。UAA实现了Oauth2授权框架和基于JWT(JSON web tokens)的问题令牌。 </li>
+</ul>
+<p><img src="https://segmentfault.com/img/bVCDrR" alt="这里写图片描述"></p>
+<p>下面简单介绍下UAA，事实上，它是由CloudFoundry发起的，也是CloudFoundry平台的身份管理服务（<a href="https://docs.cloudfoundry.org...）。" target="_blank" rel="external">https://docs.cloudfoundry.org...）。</a></p>
+<p>主要功能是基于OAuth2，当用户访问客户端应用时，生成并发放token给目标客户端。</p>
+<p>UAA认证服务包含如下几个方面的内容：</p>
+<ul>
+<li>认证对象。如用户、客户端以及目标资源服务器</li>
+<li>认证类型。主要有授权码模式、密码模式以及客户端模式</li>
+<li>认证范围，即认证权限，并作为一个命名的参数附加到AccessToken上。</li>
+</ul>
+<p>接下来，结合实例，一起来看下UAA在Spring Cloud中的实践。</p>
+<p><img src="https://segmentfault.com/img/bVCDrY" alt="这里写图片描述"></p>
+<p>如图所示，这是一个简单的基于Spring Cloud微服务架构的例子，它的主要组件有：</p>
+<ul>
+<li>Eureka组件提供服务发现功能</li>
+<li>独立的Config组件提供类似配置中心的服务，持久化层可以是文件系统，也可是git repository</li>
+<li>Auth组件提供基于UAA的鉴权服务</li>
+<li>Account组件保存用户的业务信息 其他组件不一一介绍了</li>
+</ul>
+<p>这里主要讲Auth组件和Account组件是如何基于UAA服务进行认证和授权。</p>
+<p><img src="https://segmentfault.com/img/bVCDsh" alt="这里写图片描述"><br>一为Auth组件业务代码中定义了不同客户端的认证类型和认证范围，其中：</p>
+<p>浏览器端的认证类型是password，认证范围是uiaccount组件端的认证类型是client_credentials，认证范围是server</p>
+<p>图二为config组件（配置中心）定义的请求路由的规则，其中：</p>
+<p>使用/uaa/<strong>来转发基于uaa的认证请求至auth组件<br>使用/accouts/</strong>来转发请求至account组件，并标记serviceId为account-service，与图一中的withClient对应。</p>
+<p><img src="https://segmentfault.com/img/bVCDsk" alt="这里写图片描述"></p>
+<p>一为浏览器打开应用入口后，输入用户名和密码后，发出的认证请求：</p>
+<p>认证url为/uaa/oauth/token，这是uaa模式下标准的请求获取token的url表单中包含了字段scope（认证范围）和字段password（认证类型）</p>
+<p>图二为图一发出认证请求的返回结果：</p>
+<p>Access_token为有效认证token，将来被其他请求使用</p>
+<p>图三为发出获取当前用户的信息的请求：</p>
+<p>在请求里的Authorization的值为图二中获得的access_token<br><img src="https://segmentfault.com/img/bVCDso" alt="这里写图片描述"></p>
+<p>图一为Account组件在Config组件（配置中心）定义的OAuth2协议下获取token的方式，这里定义了：</p>
+<p>clientID和clientSecret<br>accessTokenUrl，这里指定了auth组件的uaa获取token的url<br>grant-type，即认证类型，这里指定为client_credentials<br>scope，这里指定了server，说明是这个认证请求只适用在各微服务之间的访问。</p>
+<p>图二为Accout组件业务代码中定义了需要使用Auth组件进行事先鉴权的方法：</p>
+<p>使用@PreAuthorize<br>annotation中可以指定认证范围的具体条件，这里是限定了server或者是demo账户，才有权限发起认证。<br><img src="https://segmentfault.com/img/bVCDsD" alt="这里写图片描述"><br>最后小结下Spring Cloud Security的特点：</p>
+<ul>
+<li>基于UAA，使用OAuth2协议。不会暴露用户的敏感信息</li>
+<li>基于认证类型和认证范围，实现细粒度的鉴权机制</li>
+<li>非浏览器客户端下良好的操作性</li>
+</ul>
+<h2 id="5-Q-amp-A"><a href="#5-Q-amp-A" class="headerlink" title="5.Q&amp;A"></a>5.Q&amp;A</h2><p>问题：Basic Auth + Central Auth DB这种方式中，每个服务有自己的鉴权DB，这块只是一个缓冲吗？如果中途通过别的方式修改了中心DB的数据，而缓冲又没过期，这个时候有什么解决方案吗？答：不是缓冲，这里的Central Auth DB是指各个微服务共用一个数据库。</p>
+<p>问题：微服务架构需要服务路由和服务注册么？跟esb的区别在哪里？答：服务路由组件和服务注册组件和是相对必要的，他们保证了用户请求能发到正确的微服务中去。ESB企业服务总线是相对比较重的组件，而不是像微服务组件一样只负责单个业务。</p>
+<p>问题:在微服务中，对于数据权限的粒度，是可以集中在在gateway中进行还是由每个微服务自己独立配置？答：推荐由那个专门负载权限的微服务组件来配置。</p>
+<p>问题：您好，辛苦了，请问现在有类似SAML协议，但是不基于XML，而是基于JSON或者其他简化格式的协议吗？答：目前据我所知没有基于JSON的SAML协议。有个叫JWT（JSON web token）的协议，它是完全基于JSON的，Spring Cloud架构中也使用了JWT。</p>
+<p>问题：对于这个架构，服务划分的粒度有没有什么好的建议？另外登录凭证保存在客户端如何解决报文被拦截的安全漏洞？答：服务划分需要按具体业务来说，一般来说，一个业务实体作为一个微服务。使用https可以一定程度上提高安全性。</p>
+<p>问题:spring cloud security可以解决token重放攻击么？答：token重放攻击不是特别了解，可能是数据弱一致性导致的，建议设计尽可能短的过期时间。</p>
+<p>问题：我们公司现在在设计DMP，从行业的状况来看，采用了微服务，但是有一点，首先对于应用本身暴露出来的服务，是和应用一起部署的，也就是并非单独的部署，那么业务组件接口暴露部署是否合理呢？答：业务组件的接口一般可以通过统一网关来管理。也可以对业务接口像spring cloud中设置访问scope限制。</p>
+<p>问题：所有暴露的微服务是否需要一个统一的服务管控和治理平台？答：是的，一般有服务网关和服务发现组件来管理用户请求。</p>
+<p>问题：微服务的gateway需要实现底层多个细粒度的API组合的场景，我们现在一部分使用异步，但是遇到了没办法全面的解藕。我想问问，对于此，使用响应式？还是异步回调式？它们的区别点会有哪些呢？答：使用哪种API方案，其实要看业务。如果后端业务需要强数据一致性，建议使用响应式的。反之，可以使用异步回调或者消息队列。</p>
+<p>问题：uaa和netflix zull集成 可行吗？是否做过这方面的尝试？<br>答：可以。Zuul组件提供网关服务，uaa是基于OAuth2协议，提供授权服务的。微服务架构下，他们是独立的，是可以自由组合的。举个例子，可以在zuul组件的配置文件中，为授权服务（auth-service）组件的指定路由表。</p>
+<p>可以参考：<a href="https://gist.github.com/nevermosby/875b9f7b1799a6207832010d6eafcfc3" target="_blank" rel="external">https://gist.github.com/nevermosby/875b9f7b1799a6207832010d6eafcfc3</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/Spring-Security-OAuth2-开发指南/" rel="next" title="Spring Security OAuth2 开发指南">
+                <i class="fa fa-chevron-left"></i> Spring Security OAuth2 开发指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/Consul-简介、安装、常用命令的使用/" rel="prev" title="Consul 简介、安装、常用命令的使用">
+                Consul 简介、安装、常用命令的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/14/微服务访问安全设计方案全探索/"
+     data-title="微服务访问安全设计方案全探索"
+     data-content=""
+     data-url="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/14/微服务访问安全设计方案全探索/"
+           data-title="微服务访问安全设计方案全探索" data-url="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-传统单体应用的访问安全设计"><span class="nav-number">1.</span> <span class="nav-text">1.传统单体应用的访问安全设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1传统单体应用的访问安全设计——原则"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.1传统单体应用的访问安全设计——原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-传统单体应用的访问安全设计——优势和注意点"><span class="nav-number">1.0.2.</span> <span class="nav-text">1.2 传统单体应用的访问安全设计——优势和注意点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-微服务架构下，访问安全设计原则"><span class="nav-number">2.</span> <span class="nav-text">2.微服务架构下，访问安全设计原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-微服务架构下，常用的访问安全设计方案"><span class="nav-number">3.</span> <span class="nav-text">3.微服务架构下，常用的访问安全设计方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-微服务常用访问安全设计方案——Basic-Auth-Independent-Auth-DB"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 微服务常用访问安全设计方案——Basic Auth + Independent Auth DB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2微服务常用访问安全设计方案——Basic-Auth-Central-Auth-DB"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2微服务常用访问安全设计方案——Basic Auth + Central Auth DB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3微服务常用访问安全设计方案——API-Tokens"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.3微服务常用访问安全设计方案——API Tokens</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4微服务常用访问安全设计方案——SAML"><span class="nav-number">3.0.4.</span> <span class="nav-text">3.4微服务常用访问安全设计方案——SAML</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Spring-Cloud-Security解决方案"><span class="nav-number">4.</span> <span class="nav-text">4.Spring Cloud Security解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Q-amp-A"><span class="nav-number">5.</span> <span class="nav-text">5.Q&A</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

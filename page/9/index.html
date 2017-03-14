@@ -1,0 +1,845 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="细节决定成败，点滴铸就辉煌">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小东子的个人技术专栏">
+<meta property="og:url" content="http://yoursite.com/page/9/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="细节决定成败，点滴铸就辉煌">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小东子的个人技术专栏">
+<meta name="twitter:description" content="细节决定成败，点滴铸就辉煌">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/9/"/>
+
+
+
+
+
+  <title> 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/12/android设置toolbar的menu-itemTextView颜色/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/12/android设置toolbar的menu-itemTextView颜色/" itemprop="url">
+                  android设置toolbar的menu itemTextView颜色
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-12T13:01:09+08:00">
+                2016-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/12/android设置toolbar的menu-itemTextView颜色/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/12/android设置toolbar的menu-itemTextView颜色/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>大家可以能会修改Toolbar中menu的文字颜色，直接使用style是没有用的，使用theme就可以让你完成想要的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;!-- ToolBar --&gt;</div><div class="line"> &lt;style name=&quot;ToolBarStyle&quot; parent=&quot;@style/ThemeOverlay.AppCompat.ActionBar&quot;&gt;</div><div class="line">     &lt;item name=&quot;android:textColorPrimary&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textColorSecondary&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:actionMenuTextColor&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;actionMenuTextColor&quot;&gt;@android:color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textColor&quot;&gt;@color/white&lt;/item&gt;</div><div class="line">     &lt;item name=&quot;android:textSize&quot;&gt;18sp&lt;/item&gt; &lt;!--  修改字体大小--&gt;</div><div class="line"> &lt;/style&gt;</div></pre></td></tr></table></figure>
+<p>app:theme=”@style/ToolBarStyle”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;android.support.v7.widget.Toolbar</div><div class="line">    android:id=&quot;@+id/id_tool_bar&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;?attr/actionBarSize&quot;</div><div class="line">    android:background=&quot;?attr/colorPrimary&quot;</div><div class="line">    app:navigationIcon=&quot;?attr/homeAsUpIndicator&quot;</div><div class="line">    app:theme=&quot;@style/ToolBarStyle&quot;&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/12/Macaca自动化测试Android和IOS应用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/12/Macaca自动化测试Android和IOS应用/" itemprop="url">
+                  Macaca自动化测试Android和IOS应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-12T12:44:30+08:00">
+                2016-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/01/12/Macaca自动化测试Android和IOS应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/12/Macaca自动化测试Android和IOS应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Macaca简介"><a href="#1-Macaca简介" class="headerlink" title="1.Macaca简介"></a>1.Macaca简介</h2><p>Macaca是阿里巴巴集团开发的一套完整的自动化测试解决方案。</p>
+<h2 id="2-Macaca特性："><a href="#2-Macaca特性：" class="headerlink" title="2.Macaca特性："></a>2.Macaca特性：</h2><ul>
+<li>支持移动端和PC端</li>
+<li>支持Native, Hybrid, H5 等多种应用类型</li>
+<li>提供客户端工具和持续集成服务</li>
+</ul>
+<h2 id="3-macaca-cli客户端的安装："><a href="#3-macaca-cli客户端的安装：" class="headerlink" title="3.macaca-cli客户端的安装："></a>3.macaca-cli客户端的安装：</h2><h4 id="3-1安装-Node-js"><a href="#3-1安装-Node-js" class="headerlink" title="3.1安装 Node.js"></a>3.1安装 Node.js</h4><p>请安装 Node.js v4.0 或者更高版本，装好 Node.js 后命令行里就已经集成了 npm 工具，为了提高安装模块的速度，请使用国内的 cnpm。</p>
+<h4 id="3-2-iOS-环境安装"><a href="#3-2-iOS-环境安装" class="headerlink" title="3.2 iOS 环境安装"></a>3.2 iOS 环境安装</h4><p>请安装 Xcode8 或者更高版本<br>需要安装 usbmuxd 以便于通过 USB 通道测试 iOS 真机，不需要测试真机则不用安装</p>
+<blockquote>
+<p>$ brew install usbmuxd</p>
+</blockquote>
+<p>应用中如含有 WebView，请安装 ios-webkit-debug-proxy</p>
+<blockquote>
+<p>$ brew install ios-webkit-debug-proxy</p>
+</blockquote>
+<p><strong>备注：</strong>使用brew命令需要安装Homebrew（一款常用的 MacOS 的包管理器），请按照官网提示安装。<br>准备 App 包：如需要测试 iOS 应用，请使用 Scheme 设置为 debug 的 .app 包。</p>
+<h4 id="3-3-Android环境安装"><a href="#3-3-Android环境安装" class="headerlink" title="3.3 Android环境安装"></a>3.3 Android环境安装</h4><h5 id="3-3-1-安装-JDK"><a href="#3-3-1-安装-JDK" class="headerlink" title="3.3.1 安装 JDK"></a>3.3.1 安装 JDK</h5><p>配置 JAVA_HOME，根据你所使用的 shell 工具修改不同的文件，比如 ~/.bashrc, ~/.bash_profile, ~/.zshrc</p>
+<blockquote>
+<p>shell export JAVA_HOME=path/to/your/Java/Home</p>
+</blockquote>
+<h4 id="3-3-2安装安卓-SDK"><a href="#3-3-2安装安卓-SDK" class="headerlink" title="3.3.2安装安卓 SDK"></a>3.3.2安装安卓 SDK</h4><p>运行 brew install android-sdk，然后安装18-24版本中的任一 SDK<br>shell 环境设置 ANDROID_HOME 根据你所使用的Terminal修改不同的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件，比如~/.bashrc, ~/.bash_profile, ~/.zshrc</div><div class="line"># 如果是通过homebrew安装的android-sdk，则路径如下</div><div class="line"></div><div class="line">export ANDROID_HOME = /usr/local/opt/android-sdk</div><div class="line"></div><div class="line"># 如果通过其他方式安装的sdk，路径设置为对应的android sdk的路径</div><div class="line"></div><div class="line">export ANDROID_HOME = path/to/your/Android/sdk</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong>准备 App 包：如需要测试 Android 应用，请使用 .apk 格式的包。</p>
+<h4 id="3-4-全局安装macaca"><a href="#3-4-全局安装macaca" class="headerlink" title="3.4 全局安装macaca"></a>3.4 全局安装macaca</h4><blockquote>
+<p> $ npm i -g macaca-cli</p>
+</blockquote>
+<p>如果看到如下可爱的小猴子，那恭喜你安装成功啦！重新安装则会覆盖更新。</p>
+<p><img src="http://ww4.sinaimg.cn/large/6d308bd9gw1faie2w55hnj20rs0ov4fu.jpg" alt="这里写图片描述"></p>
+<h4 id="3-5安装驱动"><a href="#3-5安装驱动" class="headerlink" title="3.5安装驱动"></a>3.5安装驱动</h4><p><img src="http://img.blog.csdn.net/20170104170953073?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>####3.6 环境检查<br>通过 macaca doctor 可以检查环境是否配置成功</p>
+<blockquote>
+<p>$ macaca doctor<br><img src="http://img.blog.csdn.net/20170104171206181?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</blockquote>
+<p>如上图所示则表示环境均配置正常，如果有错误，会出现红色的提示。</p>
+<h2 id="4-运行官方示例"><a href="#4-运行官方示例" class="headerlink" title="4 运行官方示例"></a>4 运行官方示例</h2><p>将官方示例(mobile-app-sample-nodejs)克隆到本地，更多的示例请访问macaca-sample。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/macaca-sample/mobile-app-sample-nodejs.git --depth=1</div><div class="line">$ cd mobile-app-sample-nodejs</div><div class="line">$ npm i</div><div class="line"># 更多运行方式见Makefile</div><div class="line">$ macaca run --verbose</div></pre></td></tr></table></figure>
+<h3 id="4-1-Android-的自动化测试"><a href="#4-1-Android-的自动化测试" class="headerlink" title="4.1 Android 的自动化测试"></a>4.1 Android 的自动化测试</h3><p>先在mobile-app-sample-nodejs/macaca-test/mobile-app-sample.test.js脚本文件中如果是ios该为Android。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var platform = process.env.platform || &apos;Android&apos;;</div><div class="line">platform = platform.toLowerCase();</div></pre></td></tr></table></figure>
+<p>在mobile-app-sample-nodejs目录下执行</p>
+<blockquote>
+<p>macaca run</p>
+</blockquote>
+<p>测试的过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:mobile-app-sample-nodejs lidong$ macaca run ./macaca-test/macaca-mobile-sample.test.js</div><div class="line">&gt;&gt; webdriver sdk launched</div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;   macaca mobile sample</div><div class="line"></div><div class="line">&gt;&gt; get /Users/lidong/.macaca-temp/android_app_bootstrap-debug.apk from cache</div><div class="line">&gt;&gt; sha:e2ca601f9ee1ec101326d12377a2e8d4</div><div class="line">INSTRUMENTATION_STATUS: numtests=1</div><div class="line">INSTRUMENTATION_STATUS: stream=</div><div class="line">com.android.uiautomator.client.Initialize:</div><div class="line">INSTRUMENTATION_STATUS: id=UiAutomatorTestRunner</div><div class="line">INSTRUMENTATION_STATUS: test=testStartServer</div><div class="line">INSTRUMENTATION_STATUS: class=com.android.uiautomator.client.Initialize</div><div class="line">INSTRUMENTATION_STATUS: current=1</div><div class="line">INSTRUMENTATION_STATUS_CODE: 1</div><div class="line"></div><div class="line">uiautomator start socket server.</div><div class="line"></div><div class="line">&gt;&gt; socket server ready</div><div class="line">&gt;&gt; socket client ready</div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;wake&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getWindowSize&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:&quot;&#123;\&quot;width\&quot;:1080,\&quot;height\&quot;:1794&#125;&quot;&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt; current window size &#123;&quot;width&quot;:1080,&quot;height&quot;:1794&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;1&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;2&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;setText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;,&quot;text&quot;:&quot;中文+Test+12345678&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;3&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;4&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;4&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;setText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;4&quot;,&quot;text&quot;:&quot;111111&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;name&quot;,&quot;selector&quot;:&quot;Login&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;5&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;click&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;5&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line">&gt;&gt;     ✓ #1 should login success (19613ms)</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getSource&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line"></div><div class="line">&gt;&gt; &#123; hierarchy:</div><div class="line">   &#123; rotation: &apos;0&apos;,</div><div class="line">     node:</div><div class="line">      &#123; index: &apos;0&apos;,</div><div class="line">        class: &apos;android.widget.FrameLayout&apos;,</div><div class="line">        package: &apos;com.github.android_app_bootstrap&apos;,</div><div class="line">        checkable: &apos;false&apos;,</div><div class="line">        checked: &apos;false&apos;,</div><div class="line">        clickable: &apos;false&apos;,</div><div class="line">        enabled: &apos;true&apos;,</div><div class="line">        focusable: &apos;false&apos;,</div><div class="line">        focused: &apos;false&apos;,</div><div class="line">        scrollable: &apos;false&apos;,</div><div class="line">        &apos;long-clickable&apos;: &apos;false&apos;,</div><div class="line">        password: &apos;false&apos;,</div><div class="line">        selected: &apos;false&apos;,</div><div class="line">        bounds: &apos;[0,0][1080,1794]&apos;,</div><div class="line">        node: [Object] &#125; &#125; &#125;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line">&gt;&gt;     ✓ #2 should display home (911ms)</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;name&quot;,&quot;selector&quot;:&quot;list&quot;,&quot;multiple&quot;:false&#125;&#125;</div><div class="line">等等</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20170104172206402?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="4-2-IOS-的自动化测试"><a href="#4-2-IOS-的自动化测试" class="headerlink" title="4.2 IOS 的自动化测试"></a>4.2 IOS 的自动化测试</h3><p>先在mobile-app-sample-nodejs/macaca-test/mobile-app-sample.test.js脚本文件中如果是Android改为ios。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var platform = process.env.platform || &apos;ios&apos;;</div><div class="line">platform = platform.toLowerCase();</div></pre></td></tr></table></figure>
+<p>在mobile-app-sample-nodejs目录下执行</p>
+<blockquote>
+<p>macaca run</p>
+</blockquote>
+<p>测试过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:mobile-app-sample-nodejs lidong$ macaca run ./macaca-test/macaca-mobile-sample.test.js</div><div class="line">&gt;&gt; webdriver sdk launched</div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;</div><div class="line"></div><div class="line">&gt;&gt;   macaca mobile sample</div><div class="line"></div><div class="line">&gt;&gt; get /Users/lidong/.macaca-temp/android_app_bootstrap-debug.apk from cache</div><div class="line">&gt;&gt; sha:e2ca601f9ee1ec101326d12377a2e8d4</div><div class="line">INSTRUMENTATION_STATUS: numtests=1</div><div class="line">INSTRUMENTATION_STATUS: stream=</div><div class="line">com.android.uiautomator.client.Initialize:</div><div class="line">INSTRUMENTATION_STATUS: id=UiAutomatorTestRunner</div><div class="line">INSTRUMENTATION_STATUS: test=testStartServer</div><div class="line">INSTRUMENTATION_STATUS: class=com.android.uiautomator.client.Initialize</div><div class="line">INSTRUMENTATION_STATUS: current=1</div><div class="line">INSTRUMENTATION_STATUS_CODE: 1</div><div class="line"></div><div class="line">uiautomator start socket server.</div><div class="line"></div><div class="line">&gt;&gt; socket server ready</div><div class="line">&gt;&gt; socket client ready</div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;wake&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;getWindowSize&quot;,&quot;args&quot;:&#123;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:&quot;&#123;\&quot;width\&quot;:1080,\&quot;height\&quot;:1794&#125;&quot;&#125;&#125;</div><div class="line"></div><div class="line">&gt;&gt; current window size &#123;&quot;width&quot;:1080,&quot;height&quot;:1794&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;find&quot;,&quot;args&quot;:&#123;&quot;strategy&quot;:&quot;class name&quot;,&quot;selector&quot;:&quot;android.widget.EditText&quot;,&quot;multiple&quot;:true&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:[&#123;&quot;ELEMENT&quot;:&quot;1&quot;&#125;,&#123;&quot;ELEMENT&quot;:&quot;2&quot;&#125;]&#125;&#125;</div><div class="line"></div><div class="line">recive: &#123;&quot;cmd&quot;:&quot;clearText&quot;,&quot;args&quot;:&#123;&quot;elementId&quot;:&quot;1&quot;&#125;&#125;</div><div class="line"></div><div class="line">return: &#123;&quot;success&quot;:true,&quot;data&quot;:&#123;&quot;status&quot;:0,&quot;value&quot;:true&#125;&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20170104172747363?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="5-脚本初始化参数"><a href="#5-脚本初始化参数" class="headerlink" title="5.脚本初始化参数"></a>5.脚本初始化参数</h2><h4 id="5-1-常见的参数"><a href="#5-1-常见的参数" class="headerlink" title="5.1 常见的参数"></a>5.1 常见的参数</h4><ol>
+<li>platformName  String   当前用例运行的平台 { iOS / Android / Desktop }</li>
+<li>browserName      String    当前测试的浏览器名称 { iOS: Safari } { Android: Chrome } { Desktop: Chrome / Electron }</li>
+</ol>
+<h4 id="5-2-App-相关参数"><a href="#5-2-App-相关参数" class="headerlink" title="5.2 App 相关参数"></a>5.2 App 相关参数</h4><ol>
+<li><p>deviceName    String    模拟器的名称，例如 ‘iPhone 6’ 或者 ‘Nexus 5x’。</p>
+</li>
+<li><p>app    Stirng    .ipa，.app 或者 .apk 文件的绝对地址或者远程地址，或者是包含上述文件格式的 Zip 文件。</p>
+</li>
+<li><p>udid    String    测试设备的唯一设备 ID。</p>
+<h4 id="5-3-Android-的参数介绍"><a href="#5-3-Android-的参数介绍" class="headerlink" title="5.3 Android 的参数介绍"></a>5.3 Android 的参数介绍</h4></li>
+<li><p>reuse    Number    0: 启动并安装 app。{1 (默认): 卸载并重装 app。 2: 仅重装 app。3: 在测试结束后保持 app 状态。}</p>
+</li>
+<li>package    String    Android app 的 package name。</li>
+<li>activity    String    启动时的 Activity name。</li>
+</ol>
+<h4 id="5-4-iOS-的参数介绍"><a href="#5-4-iOS-的参数介绍" class="headerlink" title="5.4 iOS 的参数介绍"></a>5.4 iOS 的参数介绍</h4><ol>
+<li>reuse       Number      0: 清楚数据并重装 app。 1: (默认) 卸载并重装 app。 2: 仅重装 app。 3: 在测试结束后保持 app 状态。</li>
+<li>bundleId      String    应用的 Bundle ID，例如 com.apple.Maps。</li>
+<li>autoAcceptAlerts      Boolean      自动接受所有的系统弹窗信息。默认是 false。</li>
+<li>autoDismissAlerts    Boolean    自动拒绝所有的系统弹窗信息。默认是 false。<h3 id="5-5-基本用法"><a href="#5-5-基本用法" class="headerlink" title="5.5 基本用法"></a>5.5 基本用法</h3></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">require(&apos;should&apos;);</div><div class="line">var xml2map = require(&apos;xml2map&apos;);</div><div class="line"></div><div class="line">var platform = process.env.platform || &apos;ios&apos;;</div><div class="line">platform = platform.toLowerCase();</div><div class="line"></div><div class="line">var pkg = require(&apos;../package&apos;);</div><div class="line"></div><div class="line">/**</div><div class="line"> * download app form npm</div><div class="line"> *</div><div class="line"> * or use online resource: https://npmcdn.com/ios-app-bootstrap@latest/build/ios-app-bootstrap.zip</div><div class="line"> *</div><div class="line"> * npm i ios-app-bootstrap --save-dev</div><div class="line"> *</div><div class="line"> * var opts = &#123;</div><div class="line"> *   app: path.join(__dirname, &apos;..&apos;, &apos;node_modules&apos;, &apos;ios-app-bootstrap&apos;, &apos;build&apos;, &apos;ios-app-bootstrap.zip&apos;);</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"></div><div class="line">// see: https://macacajs.github.io/desired-caps</div><div class="line"></div><div class="line">var iOSOpts = &#123;</div><div class="line">  deviceName: &apos;iPhone 5s&apos;,</div><div class="line">  platformName: &apos;iOS&apos;,</div><div class="line">  autoAcceptAlerts: false,</div><div class="line">  //reuse: 3,</div><div class="line">  //udid: &apos;&apos;,</div><div class="line">  //bundleId: &apos;xudafeng.ios-app-bootstrap&apos;,</div><div class="line">  app: &apos;http://localhost:8087/ios-app-bootstrap.zip&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var androidOpts = &#123;</div><div class="line">  platformName: &apos;Android&apos;,</div><div class="line">  autoAcceptAlerts: false,</div><div class="line">  // reuse: 3,</div><div class="line">  // udid: &apos;&apos;,</div><div class="line">  // package: &apos;com.github.android_app_bootstrap&apos;,</div><div class="line">  // activity: &apos;com.github.android_app_bootstrap.activity.WelcomeActivity&apos;,</div><div class="line">  app: &apos;http://localhost:8087/android_app_bootstrap-debug.apk&apos;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const isIOS = platform === &apos;ios&apos;;</div><div class="line">const infoBoardId = isIOS ? &apos;info&apos; : &apos;com.github.android_app_bootstrap:id/info&apos;;</div><div class="line"></div><div class="line">const wd = require(&apos;macaca-wd&apos;);</div><div class="line"></div><div class="line">// override custom wd</div><div class="line">require(&apos;./wd-extend&apos;)(wd, isIOS);</div><div class="line"></div><div class="line">describe(&apos;macaca mobile sample&apos;, function() &#123;</div><div class="line">  this.timeout(5 * 60 * 1000);</div><div class="line"></div><div class="line">  const driver = wd.promiseChainRemote(&#123;</div><div class="line">    host: &apos;localhost&apos;,</div><div class="line">    port: 3456</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  driver.configureHttp(&#123;</div><div class="line">    timeout: 600 * 1000</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  before(function() &#123;</div><div class="line">    return driver</div><div class="line">      .init(isIOS ? iOSOpts : androidOpts);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  after(function() &#123;</div><div class="line">    return driver</div><div class="line">      .sleep(1000)</div><div class="line">      .quit();</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  it(&apos;#1 should login success&apos;, function() &#123;</div><div class="line">    return driver</div><div class="line">      .getWindowSize()</div><div class="line">      .then(size =&gt; &#123;</div><div class="line">        console.log(`current window size $&#123;JSON.stringify(size)&#125;`);</div><div class="line">      &#125;)</div><div class="line">      .appLogin(&apos;中文+Test+12345678&apos;, &apos;111111&apos;)</div><div class="line">      .sleep(1000);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>Macaca自动化测试Android和IOS应用,基本上说到这里就要结束。后面我们还是学习如何自己写测试脚本。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+  </nav>
+
+
+          
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lidong1665"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

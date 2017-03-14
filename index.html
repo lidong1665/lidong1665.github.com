@@ -141,6 +141,16 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 
 
   <script type="text/javascript">
@@ -246,6 +256,1130 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/Consul-简介、安装、常用命令的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/Consul-简介、安装、常用命令的使用/" itemprop="url">
+                  Consul 简介、安装、常用命令的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T08:50:57+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/Consul-简介、安装、常用命令的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/Consul-简介、安装、常用命令的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-Consul简介"><a href="#1-Consul简介" class="headerlink" title="1 Consul简介"></a>1 Consul简介</h3><p>Consul 是 HashiCorp 公司推出的开源工具，用于实现分布式系统的服务发现与配置。与其他分布式服务注册与发现的方案，Consul的方案更“一站式”，内置了服务注册与发现框 架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如ZooKeeper等）。使用起来也较 为简单。Consul使用Go语言编写，因此具有天然可移植性(支持Linux、windows和Mac OS X)；安装包仅包含一个可执行文件，方便部署，与Docker等轻量级容器可无缝配合 。</p>
+<h3 id="2-Consul安装"><a href="#2-Consul安装" class="headerlink" title="2 Consul安装"></a>2 Consul安装</h3><p>安装环境：<br>mac：64bit（查看mac位数：打开终端–&gt;”uname -a”）<br>consul_0.6.4_darwin_amd64.zip和consul_0.6.4_web_ui.zip，从consul官网<a href="https://www.consul.io/downloads.html进行下载就好（选择好OS和位数）" target="_blank" rel="external">https://www.consul.io/downloads.html进行下载就好（选择好OS和位数）</a></p>
+<p>1、解压consul_0.6.4_darwin_amd64.zip<br>2、将解压后的二进制文件consul（上边画红框的部分拷贝到/usr/local/bin下）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo scp consul /usr/local/bin/</div></pre></td></tr></table></figure>
+<p>说明：使用sudo是因为权限问题。<br>3、查看是否安装成功,</p>
+<p>直接在家目录下执行consul命令即可。出现如下结果，表示安装成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:bin lidong$ consul</div><div class="line">usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]</div><div class="line"></div><div class="line">Available commands are:</div><div class="line">    agent          Runs a Consul agent</div><div class="line">    configtest     Validate config file</div><div class="line">    event          Fire a new event</div><div class="line">    exec           Executes a command on Consul nodes</div><div class="line">    force-leave    Forces a member of the cluster to enter the &quot;left&quot; state</div><div class="line">    info           Provides debugging information for operators</div><div class="line">    join           Tell Consul agent to join cluster</div><div class="line">    keygen         Generates a new encryption key</div><div class="line">    keyring        Manages gossip layer encryption keys</div><div class="line">    kv             Interact with the key-value store</div><div class="line">    leave          Gracefully leaves the Consul cluster and shuts down</div><div class="line">    lock           Execute a command holding a lock</div><div class="line">    maint          Controls node or service maintenance mode</div><div class="line">    members        Lists the members of a Consul cluster</div><div class="line">    monitor        Stream logs from a Consul agent</div><div class="line">    operator       Provides cluster-level tools for Consul operators</div><div class="line">    reload         Triggers the agent to reload configuration files</div><div class="line">    rtt            Estimates network round trip time between nodes</div><div class="line">    snapshot       Saves, restores and inspects snapshots of Consul server state</div><div class="line">    version        Prints the Consul version</div><div class="line">    watch          Watch for changes in Consul</div></pre></td></tr></table></figure></p>
+<h3 id="3-Consul-启动"><a href="#3-Consul-启动" class="headerlink" title="3 Consul 启动"></a>3 Consul 启动</h3><p>1、执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./consul agent -dev           # -dev表示开发模式运行，另外还有-server表示服务模式运行</div></pre></td></tr></table></figure>
+<p>查看显示结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:bin lidong$ consul agent -dev</div><div class="line">==&gt; Starting Consul agent...</div><div class="line">==&gt; Starting Consul agent RPC...</div><div class="line">==&gt; Consul agent running!</div><div class="line">           Version: &apos;v0.7.5&apos;</div><div class="line">           Node ID: &apos;c67a8d03-deac-35b8-8f68-06ff7b687215&apos;</div><div class="line">         Node name: &apos;lidongdeMacBook-Pro.local&apos;</div><div class="line">        Datacenter: &apos;dc1&apos;</div><div class="line">            Server: true (bootstrap: false)</div><div class="line">       Client Addr: 127.0.0.1 (HTTP: 8500, HTTPS: -1, DNS: 8600, RPC: 8400)</div><div class="line">      Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)</div><div class="line">    Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false</div><div class="line">             Atlas: &lt;disabled&gt;</div><div class="line"></div><div class="line">==&gt; Log data will now stream in as it occurs:</div><div class="line"></div><div class="line">    2017/03/13 12:44:31 [DEBUG] Using unique ID &quot;c67a8d03-deac-35b8-8f68-06ff7b687215&quot; from host as node ID</div><div class="line">    2017/03/13 12:44:31 [INFO] raft: Initial configuration (index=1): [&#123;Suffrage:Voter ID:127.0.0.1:8300 Address:127.0.0.1:8300&#125;]</div><div class="line">    2017/03/13 12:44:31 [INFO] raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: &quot;&quot;)</div><div class="line">    2017/03/13 12:44:31 [INFO] serf: EventMemberJoin: lidongdeMacBook-Pro.local 127.0.0.1</div><div class="line">    2017/03/13 12:44:31 [INFO] consul: Adding LAN server lidongdeMacBook-Pro.local (Addr: tcp/127.0.0.1:8300) (DC: dc1)</div><div class="line">    2017/03/13 12:44:31 [INFO] serf: EventMemberJoin: lidongdeMacBook-Pro.local.dc1 127.0.0.1</div><div class="line">    2017/03/13 12:44:31 [INFO] consul: Adding WAN server lidongdeMacBook-Pro.local.dc1 (Addr: tcp/127.0.0.1:8300) (DC: dc1)</div><div class="line">    2017/03/13 12:44:36 [WARN] raft: Heartbeat timeout from &quot;&quot; reached, starting election</div><div class="line">    2017/03/13 12:44:36 [INFO] raft: Node at 127.0.0.1:8300 [Candidate] entering Candidate state in term 2</div><div class="line">    2017/03/13 12:44:36 [DEBUG] raft: Votes needed: 1</div><div class="line">    2017/03/13 12:44:36 [DEBUG] raft: Vote granted from 127.0.0.1:8300 in term 2. Tally: 1</div><div class="line">    2017/03/13 12:44:36 [INFO] raft: Election won. Tally: 1</div><div class="line">    2017/03/13 12:44:36 [INFO] raft: Node at 127.0.0.1:8300 [Leader] entering Leader state</div><div class="line">    2017/03/13 12:44:36 [INFO] consul: cluster leadership acquired</div><div class="line">    2017/03/13 12:44:36 [INFO] consul: New leader elected: lidongdeMacBook-Pro.local</div><div class="line">    2017/03/13 12:44:36 [DEBUG] consul: reset tombstone GC to index 3</div><div class="line">    2017/03/13 12:44:36 [INFO] consul: member &apos;lidongdeMacBook-Pro.local&apos; joined, marking health alive</div><div class="line">    2017/03/13 12:44:37 [INFO] agent: Synced service &apos;consul&apos;</div><div class="line">    2017/03/13 12:44:37 [DEBUG] agent: Node info in sync</div><div class="line">    2017/03/13 12:44:39 [INFO] agent.rpc: Accepted client: 127.0.0.1:54095</div><div class="line">    2017/03/13 12:44:50 [DEBUG] http: Request GET /v1/catalog/datacenters (580.862µs) from=127.0.0.1:54114</div><div class="line">    2017/03/13 12:44:50 [DEBUG] http: Request GET /v1/catalog/datacenters (34.955µs) from=127.0.0.1:54114</div><div class="line">    2017/03/13 12:44:50 [DEBUG] http: Request GET /v1/internal/ui/nodes?dc=dc1&amp;token=&lt;hidden&gt; (1.024476ms) from=127.0.0.1:54112</div><div class="line">    2017/03/13 12:44:50 [DEBUG] http: Request GET /v1/coordinate/nodes?dc=dc1&amp;token=&lt;hidden&gt; (361.25µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:50 [DEBUG] http: Request GET /v1/internal/ui/services?dc=dc1&amp;token=&lt;hidden&gt; (315.405µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:53 [DEBUG] http: Request GET /v1/internal/ui/nodes?dc=dc1&amp;token=&lt;hidden&gt; (140.095µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:54 [DEBUG] http: Request GET /v1/kv/?keys&amp;seperator=/&amp;dc=dc1&amp;token=&lt;hidden&gt; (1.368486ms) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:55 [DEBUG] http: Request GET /v1/acl/list?dc=dc1&amp;token=&lt;hidden&gt; (9.253µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:57 [DEBUG] http: Request GET /v1/internal/ui/services?dc=dc1&amp;token=&lt;hidden&gt; (109.196µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:44:59 [DEBUG] http: Request GET /v1/internal/ui/services?dc=dc1&amp;token=&lt;hidden&gt; (98.48µs) from=127.0.0.1:54111</div><div class="line">    2017/03/13 12:45:58 [DEBUG] agent: Service &apos;consul&apos; in sync</div><div class="line">    2017/03/13 12:45:58 [DEBUG] agent: Node info in sync</div><div class="line">    2017/03/13 12:47:55 [DEBUG] agent: Service &apos;consul&apos; in sync</div><div class="line">    2017/03/13 12:47:55 [DEBUG] agent: Node info in sync</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>-dev（该节点的启动不能用于生产环境，因为该模式下不会持久化任何状态），该启动模式仅仅是为了快速便捷的启动单节点consul<br>该节点处于server模式<br>该节点是leader<br>该节点是一个健康节点<br>2、查看consul cluster中的每一个consul节点的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">lidongdeMacBook-Pro:~ lidong$ consul members</div><div class="line">Node                       Address         Status  Type    Build  Protocol  DC</div><div class="line">lidongdeMacBook-Pro.local  127.0.0.1:8301  alive   server  0.7.5  2         dc1</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>Address：节点地址</li>
+<li>Status：alive表示节点健康</li>
+<li>Type：server运行状态是server状态</li>
+<li>DC：dc1表示该节点属于DataCenter1<br>注意：</li>
+</ul>
+<p>members命令的输出是基于gossip协议的，并且是最终一致的（也就是说，某一个时刻你去运用该命令查到的consul节点的状态信息可能是有误的）</p>
+<p> 输入<a href="http://127.0.0.1:8500/ui/" target="_blank" rel="external">http://127.0.0.1:8500/ui/</a> 访问Consul，可查看到如下界面：<br><img src="http://img.blog.csdn.net/20170313125508216?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="4-停止服务（优雅退出）"><a href="#4-停止服务（优雅退出）" class="headerlink" title="4 停止服务（优雅退出）"></a>4 停止服务（优雅退出）</h3><p>命令：CTRL+C</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">^C==&gt; Caught signal: interrupt</div><div class="line">    2017/03/13 12:50:42 [DEBUG] http: Shutting down http server (127.0.0.1:8500)</div><div class="line">    2017/03/13 12:50:42 [INFO] agent: requesting shutdown</div><div class="line">    2017/03/13 12:50:42 [INFO] consul: shutting down server</div><div class="line">    2017/03/13 12:50:42 [WARN] serf: Shutdown without a Leave</div><div class="line">    2017/03/13 12:50:42 [WARN] serf: Shutdown without a Leave</div><div class="line">    2017/03/13 12:50:42 [ERR] dns: error starting tcp server: accept tcp 127.0.0.1:8600: use of closed network connection</div><div class="line">    2017/03/13 12:50:42 [INFO] agent: shutdown complete</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>该节点离开后，会通知cluster中的其他节点</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>安装部分参考自：<a href="https://www.consul.io/intro/getting-started/install.html" target="_blank" rel="external">https://www.consul.io/intro/getting-started/install.html</a></li>
+<li>启动和停止服务部分参考自：<a href="https://www.consul.io/intro/getting-started/agent.html" target="_blank" rel="external">https://www.consul.io/intro/getting-started/agent.html</a></li>
+</ul>
+<h3 id="5-Consul常用命令"><a href="#5-Consul常用命令" class="headerlink" title="5 Consul常用命令"></a>5 Consul常用命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agent</td>
+<td>运行一个consul agent</td>
+<td>consul agent -dev</td>
+</tr>
+<tr>
+<td>join</td>
+<td>将agent加入到consul集群</td>
+<td>consul join IP</td>
+</tr>
+<tr>
+<td>members</td>
+<td>列出consul cluster集群中的members</td>
+<td>consul members</td>
+</tr>
+<tr>
+<td>leave</td>
+<td>将节点移除所在集群</td>
+<td>consul leave</td>
+</tr>
+</tbody>
+</table>
+<h4 id="consul-agent-命令详解"><a href="#consul-agent-命令详解" class="headerlink" title="consul agent 命令详解"></a>consul agent 命令详解</h4><p>输入<code>consul agent --help</code> ，可以看到<code>consul agent</code> 的选项，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-advertise=addr          Sets the advertise address to use</div><div class="line">-advertise-wan=addr      Sets address to advertise on wan instead of advertise addr</div><div class="line">-atlas=org/name          Sets the Atlas infrastructure name, enables SCADA.</div><div class="line">-atlas-join              Enables auto-joining the Atlas cluster</div><div class="line">-atlas-token=token       Provides the Atlas API token</div><div class="line">-atlas-endpoint=1.2.3.4  The address of the endpoint for Atlas integration.</div><div class="line">-bootstrap               Sets server to bootstrap mode</div><div class="line">-bind=0.0.0.0            Sets the bind address for cluster communication</div><div class="line">-http-port=8500          Sets the HTTP API port to listen on</div><div class="line">-bootstrap-expect=0      Sets server to expect bootstrap mode.</div><div class="line">-client=127.0.0.1        Sets the address to bind for client access.</div><div class="line">                         This includes RPC, DNS, HTTP and HTTPS (if configured)</div><div class="line">-config-file=foo         Path to a JSON file to read configuration from.</div><div class="line">                         This can be specified multiple times.</div><div class="line">-config-dir=foo          Path to a directory to read configuration files</div><div class="line">                         from. This will read every file ending in &quot;.json&quot;</div><div class="line">                         as configuration in this directory in alphabetical</div><div class="line">                         order. This can be specified multiple times.</div><div class="line">-data-dir=path           Path to a data directory to store agent state</div><div class="line">-dev                     Starts the agent in development mode.</div><div class="line">-recursor=1.2.3.4        Address of an upstream DNS server.</div><div class="line">                         Can be specified multiple times.</div><div class="line">-dc=east-aws             Datacenter of the agent (deprecated: use &apos;datacenter&apos; instead).</div><div class="line">-datacenter=east-aws     Datacenter of the agent.</div><div class="line">-encrypt=key             Provides the gossip encryption key</div><div class="line">-join=1.2.3.4            Address of an agent to join at start time.</div><div class="line">                         Can be specified multiple times.</div><div class="line">-join-wan=1.2.3.4        Address of an agent to join -wan at start time.</div><div class="line">                         Can be specified multiple times.</div><div class="line">-retry-join=1.2.3.4      Address of an agent to join at start time with</div><div class="line">                         retries enabled. Can be specified multiple times.</div><div class="line">-retry-interval=30s      Time to wait between join attempts.</div><div class="line">-retry-max=0             Maximum number of join attempts. Defaults to 0, which</div><div class="line">                         will retry indefinitely.</div><div class="line">-retry-join-wan=1.2.3.4  Address of an agent to join -wan at start time with</div><div class="line">                         retries enabled. Can be specified multiple times.</div><div class="line">-retry-interval-wan=30s  Time to wait between join -wan attempts.</div><div class="line">-retry-max-wan=0         Maximum number of join -wan attempts. Defaults to 0, which</div><div class="line">                         will retry indefinitely.</div><div class="line">-log-level=info          Log level of the agent.</div><div class="line">-node=hostname           Name of this node. Must be unique in the cluster</div><div class="line">-protocol=N              Sets the protocol version. Defaults to latest.</div><div class="line">-rejoin                  Ignores a previous leave and attempts to rejoin the cluster.</div><div class="line">-server                  Switches agent to server mode.</div><div class="line">-syslog                  Enables logging to syslog</div><div class="line">-ui                      Enables the built-in static web UI server</div><div class="line">-ui-dir=path             Path to directory containing the Web UI resources</div><div class="line">-pid-file=path           Path to file to store agent PID</div></pre></td></tr></table></figure>
+<p><code>consul agent</code> 命令的常用选项，如下：</p>
+<ul>
+<li>-data-dir<ul>
+<li>作用：指定agent储存状态的数据目录</li>
+<li>这是所有agent都必须的</li>
+<li>对于server尤其重要，因为他们必须持久化集群的状态</li>
+</ul>
+</li>
+<li>-config-dir<ul>
+<li>作用：指定service的配置文件和检查定义所在的位置</li>
+<li>通常会指定为”某一个路径/consul.d”（通常情况下，.d表示一系列配置文件存放的目录）</li>
+</ul>
+</li>
+<li>-config-file<ul>
+<li>作用：指定一个要装载的配置文件</li>
+<li>该选项可以配置多次，进而配置多个配置文件（后边的会合并前边的，相同的值覆盖）</li>
+</ul>
+</li>
+<li>-dev<ul>
+<li>作用：创建一个开发环境下的server节点</li>
+<li>该参数配置下，不会有任何持久化操作，即不会有任何数据写入到磁盘</li>
+<li>这种模式不能用于生产环境（因为第二条）</li>
+</ul>
+</li>
+<li>-bootstrap-expect<ul>
+<li>作用：该命令通知consul server我们现在准备加入的server节点个数，该参数是为了延迟日志复制的启动直到我们指定数量的server节点成功的加入后启动。</li>
+</ul>
+</li>
+<li>-node<ul>
+<li>作用：指定节点在集群中的名称</li>
+<li>该名称在集群中必须是唯一的（默认采用机器的host）</li>
+<li>推荐：直接采用机器的IP</li>
+</ul>
+</li>
+<li>-bind<ul>
+<li>作用：指明节点的IP地址</li>
+<li>有时候不指定绑定IP，会报<code>Failed to get advertise address: Multiple private IPs found. Please configure one.</code> 的异常</li>
+</ul>
+</li>
+<li>-server<ul>
+<li>作用：指定节点为server</li>
+<li>每个数据中心（DC）的server数推荐至少为1，至多为5</li>
+<li>所有的server都采用raft一致性算法来确保事务的一致性和线性化，事务修改了集群的状态，且集群的状态保存在每一台server上保证可用性</li>
+<li>server也是与其他DC交互的门面（gateway）</li>
+</ul>
+</li>
+<li>-client<ul>
+<li>作用：指定节点为client，指定客户端接口的绑定地址，包括：HTTP、DNS、RPC</li>
+<li>默认是127.0.0.1，只允许回环接口访问</li>
+<li>若不指定为-server，其实就是-client</li>
+</ul>
+</li>
+<li>-join<ul>
+<li>作用：将节点加入到集群</li>
+</ul>
+</li>
+<li>-datacenter（老版本叫-dc，-dc已经失效）<ul>
+<li>作用：指定机器加入到哪一个数据中心中</li>
+</ul>
+</li>
+</ul>
+<p>使用-client 参数可指定允许客户端使用什么ip去访问，例如-client 192.168.11.143 表示可以使用<a href="http://192.168.11.143:8500/ui" target="_blank" rel="external">http://192.168.11.143:8500/ui</a> 去访问。</p>
+<p>我们尝试一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -dev -client 192.168.11.143</div></pre></td></tr></table></figure>
+<p>发现果然可以使用<a href="http://192.168.11.143:8500/ui" target="_blank" rel="external">http://192.168.11.143:8500/ui</a> 访问了。</p>
+<h3 id="6-Consul-的高可用"><a href="#6-Consul-的高可用" class="headerlink" title="6 Consul 的高可用"></a>6 Consul 的高可用</h3><p>Consul Cluster集群架构图如下：<br><img src="https://github.com/eacdy/spring-cloud-book/raw/master/2%20Spring%20Cloud/images/consul-3.png" alt="这里写图片描述"></p>
+<p>这边准备了三台CentOS 7的虚拟机，主机规划如下，供参考：</p>
+<table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>IP</th>
+<th>作用</th>
+<th>是否允许远程访问</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>node0</td>
+<td>192.168.11.143</td>
+<td>consul server</td>
+<td>是</td>
+</tr>
+<tr>
+<td>node1</td>
+<td>192.168.11.144</td>
+<td>consul client</td>
+<td>否</td>
+</tr>
+<tr>
+<td>node2</td>
+<td>192.168.11.145</td>
+<td>consul client</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<h4 id="6-1-搭建步骤："><a href="#6-1-搭建步骤：" class="headerlink" title="6.1 搭建步骤："></a>6.1 搭建步骤：</h4><ul>
+<li>启动node0机器上的Consul（node0机器上执行）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir /tmp/node0 -node=node0 -bind=192.168.11.143 -datacenter=dc1 -ui -client=192.168.11.143 -server -bootstrap-expect 1</div></pre></td></tr></table></figure>
+<ul>
+<li>启动node1机器上的Consul（node1机器上执行）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir /tmp/node1 -node=node1 -bind=192.168.11.144 -datacenter=dc1 -ui</div></pre></td></tr></table></figure>
+<ul>
+<li>启动node2机器上的Consul（node2机器上执行）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir /tmp/node2 -node=node2 -bind=192.168.11.145 -datacenter=dc1 -ui -client=192.168.11.145</div></pre></td></tr></table></figure>
+<ul>
+<li>将node1节点加入到node0上（node1机器上执行）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 192.168.11.143</div></pre></td></tr></table></figure>
+<ul>
+<li>将node2节点加入到node0上（node2机器上执行）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join -rpc-addr=192.168.11.145:8400  192.168.11.143</div></pre></td></tr></table></figure>
+<ul>
+<li>这样一个简单的Consul集群就搭建完成了，在node1上查看当前集群节点：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul members -rpc-addr=192.168.11.143:8400</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Node   Address              Status  Type    Build  Protocol  DC</div><div class="line">node0  192.168.11.143:8301  alive   server  0.7.0  2         dc1</div><div class="line">node1  192.168.11.144:8301  alive   client  0.7.0  2         dc1</div><div class="line">node2  192.168.11.145:8301  alive   client  0.7.0  2         dc1</div></pre></td></tr></table></figure>
+<p>说明集群已经搭建成功了。</p>
+<p>我们分析一下，为什么第5步和第6步需要加<code>-rpc-addr</code> 选项，而第4步不需要加任何选项呢？原因是<code>-client</code> 指定了客户端接口的绑定地址，包括：HTTP、DNS、RPC，而<code>consul join</code> 、<code>consul members</code> 都是通过RPC与Consul交互的。</p>
+<h4 id="6-2-访问集群"><a href="#6-2-访问集群" class="headerlink" title="6.2 访问集群"></a>6.2 访问集群</h4><p><img src="https://github.com/eacdy/spring-cloud-book/raw/master/2%20Spring%20Cloud/images/consul-2.png" alt="这里写图片描述"><br>如上，我们三个节点都加了<code>-ui</code> 参数启动了内建的界面。我们可以通过：<code>http://192.168.11.143:8500/ui/</code> 或者<code>http://192.168.11.145:8500/ui/</code>进行访问，也可以在node1机器上通过<code>http://127.0.0.1:8500/ui/</code> 进行访问，原因是node1没有开启远程访问 ，三种访问方式结果是一致的，如下：</p>
+<p><img src="images/consul-2.png" alt="consul cluster"></p>
+<h3 id="7-参考文档："><a href="#7-参考文档：" class="headerlink" title="7  参考文档："></a>7  参考文档：</h3><ol>
+<li><p>Consul官方文档：<a href="https://www.consul.io/intro/getting-started/install.html" target="_blank" rel="external">https://www.consul.io/intro/getting-started/install.html</a></p>
+</li>
+<li><p>Consul 系列博文：<a href="http://www.cnblogs.com/java-zhao/archive/2016/04/13/5387105.html" target="_blank" rel="external">http://www.cnblogs.com/java-zhao/archive/2016/04/13/5387105.html</a></p>
+</li>
+<li><p>使用consul实现分布式服务注册和发现：<a href="http://www.tuicool.com/articles/M3QFven" target="_blank" rel="external">http://www.tuicool.com/articles/M3QFven</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/微服务访问安全设计方案全探索/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/微服务访问安全设计方案全探索/" itemprop="url">
+                  微服务访问安全设计方案全探索
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T08:49:31+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/微服务访问安全设计方案全探索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/微服务访问安全设计方案全探索/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>文章来源：<a href="https://segmentfault.com/a/1190000006785852" target="_blank" rel="external">https://segmentfault.com/a/1190000006785852</a></p>
+<p>今天给大家带来的是 数人云工程师文权在高效运维线上群的分享实录。从传统单体应用架构到微服务架构，安全问题一直是人们关注的重点，文权与大家分享了关于微服务访问安全设计方案的探索与实践。</p>
+<p>我们首先从传统单体应用架构下的访问安全设计说起，然后分析现代微服务架构下，访问安全涉及的原则，接着讨论目前常用的几种微服务架构下的访问安全设计方案。最后，详析Spring Cloud微服务架构下如何解决访问安全的问题。</p>
+<h2 id="1-传统单体应用的访问安全设计"><a href="#1-传统单体应用的访问安全设计" class="headerlink" title="1.传统单体应用的访问安全设计"></a>1.传统单体应用的访问安全设计</h2><p><img src="https://segmentfault.com/img/bVCDqL" alt="这里写图片描述"></p>
+<p>上面的示意图展示了单体应用的访问逻辑。用户通过客户端发出http或者https请求，经过负载均衡后，单体应用收到请求。接着经过auth层，进行身份验证和权限批准，这里，一般会有跟后端数据库的交互。通过后，将请求分发到对应的功能逻辑层中去。完成相关操作后，返回结果给客户端。</p>
+<h4 id="1-1传统单体应用的访问安全设计——原则"><a href="#1-1传统单体应用的访问安全设计——原则" class="headerlink" title="1.1传统单体应用的访问安全设计——原则"></a>1.1传统单体应用的访问安全设计——原则</h4><p><img src="https://segmentfault.com/img/bVCDqQ" alt="这里写图片描述"><br>从以上分析可以看到，传统单体应用的访问安全设计原则为：</p>
+<p>第一，每次的用户请求都需要验证是否安全，这里可以分两种情况：</p>
+<p>一种是没有session的请求，需要经过几个步骤完成session化。一般为验证当前用户的credential，获取当前用户的identity，这两步都需要访问数据库等持久化对象来完成，最后一步是为当前可用创建session，返回给客户端后，启用该session。</p>
+<p>另一种是有session的请求，只需验证请求中当前session的有效性，即可继续请求。</p>
+<p>第二，用户的操作请求都在后端单个进程中执行完成，完全依赖后端调用方法的可靠性。一旦出错，应用是无法再次重复请求。</p>
+<h4 id="1-2-传统单体应用的访问安全设计——优势和注意点"><a href="#1-2-传统单体应用的访问安全设计——优势和注意点" class="headerlink" title="1.2 传统单体应用的访问安全设计——优势和注意点"></a>1.2 传统单体应用的访问安全设计——优势和注意点</h4><p><img src="https://segmentfault.com/img/bVCDqU" alt="这里写图片描述"></p>
+<p>传统单体应用由于设计相对简单单一，暴露给外界的入口相对较少，从而具有被攻击并造成危害性的可能小的优势。</p>
+<p>也正是由于单体应用简单单一的特点，需要注意相关问题：</p>
+<p>应用后端保存了所有的credential等敏感信息<br>一旦入侵了对这个应用的请求，就有可能拿到所有的保存在后端的信息<br>应用的每次操作一般都需要和数据库进行交互，造成数据库负载变高</p>
+<h2 id="2-微服务架构下，访问安全设计原则"><a href="#2-微服务架构下，访问安全设计原则" class="headerlink" title="2.微服务架构下，访问安全设计原则"></a>2.微服务架构下，访问安全设计原则</h2><p><img src="https://segmentfault.com/img/bVCDqU" alt="这里写图片描述"></p>
+<p>来看下这张典型的微服务设计架构图，如图所示，有以下几点特征：</p>
+<ul>
+<li>每个服务只有权限去操作自己负责的那部分功能。</li>
+<li>用户请求的身份验证和权限批准都由独立的gateway服务来保障</li>
+<li>对外服务的LB层无法直接与提供业务服务的应用层进行访问</li>
+</ul>
+<p><img src="https://segmentfault.com/img/bVCDqZ/view" alt="这里写图片描述"></p>
+<p>从上面的特征分析来看，想要给出一份访问安全设计的原则说明，就要看看微服务架构下，访问安全有哪些痛点，以下罗列了几点：</p>
+<ul>
+<li>单点登录，即在微服务这种多独立服务的架构下，实现用户只需要登录一次就能访问所有相互信任的应用系统</li>
+<li>微服务架构下的应用一般都是无状态的，导致用户的请求每次都需要鉴权，可能引发Auth服务的性能瓶颈</li>
+<li>微服务架构下，每个组件都管理着各自的功能权限，这种细粒度的鉴权机制需要事先良好的规划</li>
+<li>微服务架构下，需要考虑到那些非浏览器端的客户请求，是否具有良好的可操作性</li>
+</ul>
+<p>根据实际情况，还有一些其他痛点，这里不再一一赘述，而这些痛点，就形成了我们在为微服务架构设计访问安全的原则。</p>
+<h2 id="3-微服务架构下，常用的访问安全设计方案"><a href="#3-微服务架构下，常用的访问安全设计方案" class="headerlink" title="3.微服务架构下，常用的访问安全设计方案"></a>3.微服务架构下，常用的访问安全设计方案</h2><ul>
+<li>HTTP Basic Authentication + Independent Auth DB</li>
+<li>HTTP Basic Authentication + Central Auth DB</li>
+<li>API Tokens</li>
+<li>SAML</li>
+</ul>
+<p>这里列出4种，首先简单介绍下，然后一一叙述。</p>
+<p>第一种，使用HTTP Basic Auth协议，加上独立的Auth数据库。<br>第二种，也是使用HTTP Basic Auth协议，跟第一种不同的是，使用集中式的Auth数据库<br>第三种，API Tokens协议，这种大家应该比较熟悉，很多公有服务（比如Github、Twitter等）的API都是用这种方式。<br>第四种，SAML，即Security Assertion Markup Language，翻译过来，是『安全声明标记语言』，它是基于XML的一种协议，企业内使用得较多。</p>
+<p>下面一一做介绍。</p>
+<h4 id="3-1-微服务常用访问安全设计方案——Basic-Auth-Independent-Auth-DB"><a href="#3-1-微服务常用访问安全设计方案——Basic-Auth-Independent-Auth-DB" class="headerlink" title="3.1 微服务常用访问安全设计方案——Basic Auth + Independent Auth DB"></a>3.1 微服务常用访问安全设计方案——Basic Auth + Independent Auth DB</h4><p><img src="https://segmentfault.com/img/bVCDq1" alt="这里写图片描述"></p>
+<p>一种，如上示意图所示，使用Basic Auth协议，配合每个服务自己都拥有存储Credential敏感数据的数据库（或者其他持久化仓库）。</p>
+<p>简单介绍下Basic Auth协议，它是在用户的请求中添加一个Authorization消息头，这个消息头的值是一个固定格式：Basic base64encode(username+“:”+password)</p>
+<p>完整的消息头列子为：Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</p>
+<p>Basic Auth协议基本上被所有流行的网页浏览器都支持。</p>
+<p>这种方案的特点：</p>
+<ul>
+<li>每个提供功能的服务都拥有自己独立的鉴权和授权机制</li>
+<li>每个提供功能的服务都拥有自己独立的数据库，来保存敏感信息</li>
+<li>每次用户请求都需要携带用户的credential来完成操作</li>
+</ul>
+<p>小结下使用这种方案的好处：</p>
+<ul>
+<li>微服务的应用可以实现100%无状态化</li>
+<li>基于Basic Auth开发简单</li>
+</ul>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>由于每个服务都有自己存储credential的机制，需要事先为每个服务设计好如何存储和查找用户的Credential由于每次用户请求都会携带用户的Credential，需要事先设计好如何管理鉴权机制。</p>
+<h4 id="3-2微服务常用访问安全设计方案——Basic-Auth-Central-Auth-DB"><a href="#3-2微服务常用访问安全设计方案——Basic-Auth-Central-Auth-DB" class="headerlink" title="3.2微服务常用访问安全设计方案——Basic Auth + Central Auth DB"></a>3.2微服务常用访问安全设计方案——Basic Auth + Central Auth DB</h4><p><img src="https://segmentfault.com/img/bVCDrz" alt="这里写图片描述"></p>
+<p>二种，如上示意图所示，使用Basic Auth协议，与第一种方案相比，每个服务共用有同一个Auth DB。</p>
+<p>第二种方案的特点和第一种很相似：</p>
+<ul>
+<li>每个提供功能的服务都拥有自己独立的鉴权和授权机制</li>
+<li>每个提供功能的服务共用同一个DB，来保存Credential等敏感信息</li>
+<li>每次用户请求都需要携带用户的credential来完成操作</li>
+</ul>
+<p>小结下使用第二种方案的好处：</p>
+<p>除了拥有第一种方案相似的好处外，由于共用了同一个持久化仓库来管理用户信息，简化了原来独立管理的机制</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<ul>
+<li>中心化Auth DB会被每次用户请求来访问连接，可能引发AuthDB性能瓶颈</li>
+<li>需要在每个服务中实现对共有Auth DB查找用户信息的逻辑</li>
+</ul>
+<h4 id="3-3微服务常用访问安全设计方案——API-Tokens"><a href="#3-3微服务常用访问安全设计方案——API-Tokens" class="headerlink" title="3.3微服务常用访问安全设计方案——API Tokens"></a>3.3微服务常用访问安全设计方案——API Tokens</h4><p><img src="https://segmentfault.com/img/bVCDrt" alt="这里写图片描述"><br>第三种，如上示意图所示，使用Token Based协议来对用户请求进行操作鉴权。</p>
+<p>简单介绍下最基本的Token Based的交互方式：</p>
+<ul>
+<li>用户使用包含用户名和密码的credential从客户端发起资源请求</li>
+<li>后端接受请求，通过授权中心，生产有效token字符串，返回给客户端</li>
+<li>客户端获得token后，再次发出资源请求</li>
+<li>后端接受带token的请求，通过授权中心，获取相关资源，返回给客户端<br>业界常用的OAuth就是基于Token Based这套逻辑，实现的互联网级的鉴权机制。</li>
+</ul>
+<p>第三种方案的特点明显：</p>
+<p>使用token来进行鉴权，替换用户本身的用户名和密码，提高了交互安全性每次用户请求需要携带有效token，与Auth服务进行交互验证</p>
+<p>小结下使用第三种方案的好处：</p>
+<p>由于使用了token来鉴权，业务服务不会看到用户的敏感信息</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>Auth服务可能需要处理大量的生产token的操作</p>
+<h4 id="3-4微服务常用访问安全设计方案——SAML"><a href="#3-4微服务常用访问安全设计方案——SAML" class="headerlink" title="3.4微服务常用访问安全设计方案——SAML"></a>3.4微服务常用访问安全设计方案——SAML</h4><p><img src="https://segmentfault.com/img/bVCDrN" alt="这里写图片描述"></p>
+<p>第四种，如上示意图所示，使用SAML协议来对用户请求进行操作鉴权。它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。在SAML标准定义了身份提供者(identity provider)和服务提供者(service provider)，这两者构成了前面所说的不同的安全域。</p>
+<p>以上图Google提供的Apps SSO的机制，简单介绍下SAML鉴权的交互方式：</p>
+<ul>
+<li>用户请求访问自建的google application</li>
+<li>当前application 生成一个 SAML 身份验证请求。SAML 请求将进行编码并嵌入到SSO 服务的网址中。</li>
+<li>当前application将重定向发送到用户的浏览器。重定向网址包含应向SSO 服务提交的编码 SAML 身份验证请求。</li>
+<li>SSO（统一认证中心或叫Identity Provider）解码 SAML 请求，并提取当前application的 ACS（声明客户服务）网址以及用户的目标网址（RelayState 参数）。然后，统一认证中心对用户进行身份验证。</li>
+<li>统一认证中心生成一个 SAML 响应，其中包含经过验证的用户的用户名。按照 SAML 2.0 规范，此响应将使用统一认证中心的 DSA/RSA 公钥和私钥进行数字签名。</li>
+<li>统一认证中心对 SAML 响应和 RelayState 参数进行编码，并将该信息返回到用户的浏览器。统一认证中心提供了一种机制，以便浏览器可以将该信息转发到当前application ACS。</li>
+<li>当前application使用统一认证中心的公钥验证 SAML 响应。如果成功验证该响应，ACS 则会将用户重定向到目标网址。</li>
+<li>用户将重定向到目标网址并登录到当前application。</li>
+</ul>
+<p>目前SAML在业界也有相当的使用度，包括IBM Weblogic等产品。</p>
+<p>第四种方案的特点有：</p>
+<p>由Identity Provider提供可信的签名声明服务的访问安全由可信的Identity Provider提供</p>
+<p>小结下使用第四种方案的好处：标准的可信访问模型</p>
+<p>同时，小结下使用这种方案需要注意的地方：</p>
+<p>基于XML协议，传输相对复杂对非浏览器客户端适配不方便。</p>
+<h2 id="4-Spring-Cloud-Security解决方案"><a href="#4-Spring-Cloud-Security解决方案" class="headerlink" title="4.Spring Cloud Security解决方案"></a>4.Spring Cloud Security解决方案</h2><p>Spring Cloud Security特点有：</p>
+<ul>
+<li>基于OAuth2 和OpenID协议的可配置的SSO登录机制</li>
+<li>基于tokens保障资源访问安全</li>
+<li>引入UAA鉴权服务，UAA是一个Web服务，用于管理账户、Oauth2客户端和用户用于鉴权的问题令牌(Issue Token)。UAA实现了Oauth2授权框架和基于JWT(JSON web tokens)的问题令牌。 </li>
+</ul>
+<p><img src="https://segmentfault.com/img/bVCDrR" alt="这里写图片描述"></p>
+<p>下面简单介绍下UAA，事实上，它是由CloudFoundry发起的，也是CloudFoundry平台的身份管理服务（<a href="https://docs.cloudfoundry.org...）。" target="_blank" rel="external">https://docs.cloudfoundry.org...）。</a></p>
+<p>主要功能是基于OAuth2，当用户访问客户端应用时，生成并发放token给目标客户端。</p>
+<p>UAA认证服务包含如下几个方面的内容：</p>
+<ul>
+<li>认证对象。如用户、客户端以及目标资源服务器</li>
+<li>认证类型。主要有授权码模式、密码模式以及客户端模式</li>
+<li>认证范围，即认证权限，并作为一个命名的参数附加到AccessToken上。</li>
+</ul>
+<p>接下来，结合实例，一起来看下UAA在Spring Cloud中的实践。</p>
+<p><img src="https://segmentfault.com/img/bVCDrY" alt="这里写图片描述"></p>
+<p>如图所示，这是一个简单的基于Spring Cloud微服务架构的例子，它的主要组件有：</p>
+<ul>
+<li>Eureka组件提供服务发现功能</li>
+<li>独立的Config组件提供类似配置中心的服务，持久化层可以是文件系统，也可是git repository</li>
+<li>Auth组件提供基于UAA的鉴权服务</li>
+<li>Account组件保存用户的业务信息 其他组件不一一介绍了</li>
+</ul>
+<p>这里主要讲Auth组件和Account组件是如何基于UAA服务进行认证和授权。</p>
+<p><img src="https://segmentfault.com/img/bVCDsh" alt="这里写图片描述"><br>一为Auth组件业务代码中定义了不同客户端的认证类型和认证范围，其中：</p>
+<p>浏览器端的认证类型是password，认证范围是uiaccount组件端的认证类型是client_credentials，认证范围是server</p>
+<p>图二为config组件（配置中心）定义的请求路由的规则，其中：</p>
+<p>使用/uaa/<strong>来转发基于uaa的认证请求至auth组件<br>使用/accouts/</strong>来转发请求至account组件，并标记serviceId为account-service，与图一中的withClient对应。</p>
+<p><img src="https://segmentfault.com/img/bVCDsk" alt="这里写图片描述"></p>
+<p>一为浏览器打开应用入口后，输入用户名和密码后，发出的认证请求：</p>
+<p>认证url为/uaa/oauth/token，这是uaa模式下标准的请求获取token的url表单中包含了字段scope（认证范围）和字段password（认证类型）</p>
+<p>图二为图一发出认证请求的返回结果：</p>
+<p>Access_token为有效认证token，将来被其他请求使用</p>
+<p>图三为发出获取当前用户的信息的请求：</p>
+<p>在请求里的Authorization的值为图二中获得的access_token<br><img src="https://segmentfault.com/img/bVCDso" alt="这里写图片描述"></p>
+<p>图一为Account组件在Config组件（配置中心）定义的OAuth2协议下获取token的方式，这里定义了：</p>
+<p>clientID和clientSecret<br>accessTokenUrl，这里指定了auth组件的uaa获取token的url<br>grant-type，即认证类型，这里指定为client_credentials<br>scope，这里指定了server，说明是这个认证请求只适用在各微服务之间的访问。</p>
+<p>图二为Accout组件业务代码中定义了需要使用Auth组件进行事先鉴权的方法：</p>
+<p>使用@PreAuthorize<br>annotation中可以指定认证范围的具体条件，这里是限定了server或者是demo账户，才有权限发起认证。<br><img src="https://segmentfault.com/img/bVCDsD" alt="这里写图片描述"><br>最后小结下Spring Cloud Security的特点：</p>
+<ul>
+<li>基于UAA，使用OAuth2协议。不会暴露用户的敏感信息</li>
+<li>基于认证类型和认证范围，实现细粒度的鉴权机制</li>
+<li>非浏览器客户端下良好的操作性</li>
+</ul>
+<h2 id="5-Q-amp-A"><a href="#5-Q-amp-A" class="headerlink" title="5.Q&amp;A"></a>5.Q&amp;A</h2><p>问题：Basic Auth + Central Auth DB这种方式中，每个服务有自己的鉴权DB，这块只是一个缓冲吗？如果中途通过别的方式修改了中心DB的数据，而缓冲又没过期，这个时候有什么解决方案吗？答：不是缓冲，这里的Central Auth DB是指各个微服务共用一个数据库。</p>
+<p>问题：微服务架构需要服务路由和服务注册么？跟esb的区别在哪里？答：服务路由组件和服务注册组件和是相对必要的，他们保证了用户请求能发到正确的微服务中去。ESB企业服务总线是相对比较重的组件，而不是像微服务组件一样只负责单个业务。</p>
+<p>问题:在微服务中，对于数据权限的粒度，是可以集中在在gateway中进行还是由每个微服务自己独立配置？答：推荐由那个专门负载权限的微服务组件来配置。</p>
+<p>问题：您好，辛苦了，请问现在有类似SAML协议，但是不基于XML，而是基于JSON或者其他简化格式的协议吗？答：目前据我所知没有基于JSON的SAML协议。有个叫JWT（JSON web token）的协议，它是完全基于JSON的，Spring Cloud架构中也使用了JWT。</p>
+<p>问题：对于这个架构，服务划分的粒度有没有什么好的建议？另外登录凭证保存在客户端如何解决报文被拦截的安全漏洞？答：服务划分需要按具体业务来说，一般来说，一个业务实体作为一个微服务。使用https可以一定程度上提高安全性。</p>
+<p>问题:spring cloud security可以解决token重放攻击么？答：token重放攻击不是特别了解，可能是数据弱一致性导致的，建议设计尽可能短的过期时间。</p>
+<p>问题：我们公司现在在设计DMP，从行业的状况来看，采用了微服务，但是有一点，首先对于应用本身暴露出来的服务，是和应用一起部署的，也就是并非单独的部署，那么业务组件接口暴露部署是否合理呢？答：业务组件的接口一般可以通过统一网关来管理。也可以对业务接口像spring cloud中设置访问scope限制。</p>
+<p>问题：所有暴露的微服务是否需要一个统一的服务管控和治理平台？答：是的，一般有服务网关和服务发现组件来管理用户请求。</p>
+<p>问题：微服务的gateway需要实现底层多个细粒度的API组合的场景，我们现在一部分使用异步，但是遇到了没办法全面的解藕。我想问问，对于此，使用响应式？还是异步回调式？它们的区别点会有哪些呢？答：使用哪种API方案，其实要看业务。如果后端业务需要强数据一致性，建议使用响应式的。反之，可以使用异步回调或者消息队列。</p>
+<p>问题：uaa和netflix zull集成 可行吗？是否做过这方面的尝试？<br>答：可以。Zuul组件提供网关服务，uaa是基于OAuth2协议，提供授权服务的。微服务架构下，他们是独立的，是可以自由组合的。举个例子，可以在zuul组件的配置文件中，为授权服务（auth-service）组件的指定路由表。</p>
+<p>可以参考：<a href="https://gist.github.com/nevermosby/875b9f7b1799a6207832010d6eafcfc3" target="_blank" rel="external">https://gist.github.com/nevermosby/875b9f7b1799a6207832010d6eafcfc3</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/Spring-Security-OAuth2-开发指南/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/Spring-Security-OAuth2-开发指南/" itemprop="url">
+                  Spring Security OAuth2 开发指南
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T08:48:36+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/Spring-Security-OAuth2-开发指南/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/Spring-Security-OAuth2-开发指南/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-官网文档："><a href="#1-官网文档：" class="headerlink" title="1.官网文档："></a>1.官网文档：</h3><p><a href="http://projects.spring.io/spring-security-oauth/docs/oauth2.html" target="_blank" rel="external">http://projects.spring.io/spring-security-oauth/docs/oauth2.html</a></p>
+<h3 id="2-Spring-OAuth2-0-提供者实现原理"><a href="#2-Spring-OAuth2-0-提供者实现原理" class="headerlink" title="2. Spring OAuth2.0 提供者实现原理"></a>2. Spring OAuth2.0 提供者实现原理</h3><p>Spring OAuth2.0提供者实际上分为：</p>
+<ul>
+<li>授权服务 Authorization Service.</li>
+<li>资源服务 Resource Service.</li>
+</ul>
+<p><strong>注意：</strong>虽然这两个提供者有时候可能存在同一个应用程序中，但在Spring Security OAuth中你可以把他它们各自放在不同的应用上，而且你可以有多个资源服务，它们共享同一个中央授权服务。</p>
+<p>所有获取令牌的请求都将会在Spring MVC controller endpoints中进行处理，并且访问受保护的资源服务的处理流程将会放在标准的Spring Security请求过滤器中(filters)。</p>
+<h4 id="2-1-配置一个授权服务必须要实现的endpoints："><a href="#2-1-配置一个授权服务必须要实现的endpoints：" class="headerlink" title="2.1 配置一个授权服务必须要实现的endpoints："></a>2.1 配置一个授权服务必须要实现的endpoints：</h4><ul>
+<li>AuthorizationEndpoint：用来作为请求者获得授权的服务，默认的URL是/oauth/authorize.</li>
+<li>TokenEndpoint：用来作为请求者获得令牌（Token）的服务，默认的URL是/oauth/token.</li>
+</ul>
+<h4 id="2-2-配置一个资源服务必须要实现的过滤器："><a href="#2-2-配置一个资源服务必须要实现的过滤器：" class="headerlink" title="2.2 配置一个资源服务必须要实现的过滤器："></a>2.2 配置一个资源服务必须要实现的过滤器：</h4><ul>
+<li>OAuth2AuthenticationProcessingFilter：用来作为认证令牌（Token）的一个处理流程过滤器。只有当过滤器通过之后，请求者才能获得受保护的资源。</li>
+</ul>
+<p>配置提供者（授权、资源）都可以通过简单的Java注解@Configuration来进行适配或者也可以使用基于XML的声明式语法来进行配置，如果使用XML配置的的话，那么请使用<a href="http://www.springframework.org/schema/security/spring-security-oauth2.xsd来作为XML的schema（即XML概要定义）以及使用http://www.springframework.org/schema/security/oauth2来作为命名空间。" target="_blank" rel="external">http://www.springframework.org/schema/security/spring-security-oauth2.xsd来作为XML的schema（即XML概要定义）以及使用http://www.springframework.org/schema/security/oauth2来作为命名空间。</a></p>
+<h3 id="3-授权服务配置"><a href="#3-授权服务配置" class="headerlink" title="3. 授权服务配置"></a>3. 授权服务配置</h3><p>配置一个授权服务，你需要考虑几种授权类型（Grant Type），不同的授权类型为客户端（Client）提供了不同的获取令牌（Token）方式，为了实现并确定这几种授权，需要配置使用 <strong>ClientDetailsService</strong> 和 <strong>TokenService</strong> 来开启或者禁用这几种授权机制。到这里就请注意了，不管你使用什么样的授权类型（Grant Type），每一个客户端（Client）都能够通过明确的配置以及权限来实现不同的授权访问机制。这也就是说，假如你提供了一个支持”client_credentials”的授权方式，并不意味着客户端就需要使用这种方式来获得授权。下面是几种授权类型的列表，具体授权机制的含义可以参见<a href="https://github.com/jeansfish/RFC6749.zh-cn" target="_blank" rel="external">RFC6749(中文版本)</a>：</p>
+<ul>
+<li>authorization_code：授权码类型。</li>
+<li>implicit：隐式授权类型。</li>
+<li>password：资源所有者（即用户）密码类型。</li>
+<li>client_credentials：客户端凭据（客户端ID以及Key）类型。</li>
+<li>refresh_token：通过以上授权获得的刷新令牌来获取新的令牌。</li>
+</ul>
+<p>可以用 @EnableAuthorizationServer 注解来配置OAuth2.0 授权服务机制，通过使用@Bean注解的几个方法一起来配置这个授权服务。下面咱们介绍几个配置类，这几个配置是由Spring创建的独立的配置对象，它们会被Spring传入AuthorizationServerConfigurer中：</p>
+<ul>
+<li>ClientDetailsServiceConfigurer：用来配置客户端详情服务（ClientDetailsService），客户端详情信息在这里进行初始化，你能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息。</li>
+<li>AuthorizationServerSecurityConfigurer：用来配置令牌端点(Token Endpoint)的安全约束.</li>
+<li>AuthorizationServerEndpointsConfigurer：用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。</li>
+</ul>
+<p><strong>注意：</strong>以上的配置可以选择继承AuthorizationServerConfigurerAdapter并且覆写其中的三个configure方法来进行配置。）</p>
+<p>配置授权服务一个比较重要的方面就是提供一个授权码给一个OAuth客户端（通过 authorization_code 授权类型），一个授权码的获取是OAuth客户端跳转到一个授权页面，然后通过验证授权之后服务器重定向到OAuth客户端，并且在重定向连接中附带返回一个授权码。</p>
+<p>如果你是通过XML来进行配置的话，那么可以使用 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;authorization-server/&gt;</div></pre></td></tr></table></figure>
+<p> 标签来进行配置。</p>
+<h4 id="3-1-配置客户端详情信息（Client-Details-："><a href="#3-1-配置客户端详情信息（Client-Details-：" class="headerlink" title="3.1 配置客户端详情信息（Client Details)："></a>3.1 配置客户端详情信息（Client Details)：</h4><p>ClientDetailsServiceConfigurer (AuthorizationServerConfigurer 的一个回调配置项) 能够使用内存或者JDBC来实现客户端详情服务（ClientDetailsService），有几个重要的属性如下列表：</p>
+<ul>
+<li>clientId：（必须的）用来标识客户的Id。</li>
+<li>secret：（需要值得信任的客户端）客户端安全码，如果有的话。</li>
+<li>scope：用来限制客户端的访问范围，如果为空（默认）的话，那么客户端拥有全部的访问范围。</li>
+<li>authorizedGrantTypes：此客户端可以使用的授权类型，默认为空。</li>
+<li>authorities：此客户端可以使用的权限（基于Spring Security authorities）。</li>
+</ul>
+<p>客户端详情（Client Details）能够在应用程序运行的时候进行更新，可以通过访问底层的存储服务（例如将客户端详情存储在一个关系数据库的表中，就可以使用 JdbcClientDetailsService）或者通过 ClientDetailsService 接口（同时你也可以实现 ClientDetailsService 接口）来进行管理。</p>
+<h4 id="3-2-管理令牌（Managing-Token）："><a href="#3-2-管理令牌（Managing-Token）：" class="headerlink" title="3.2 管理令牌（Managing Token）："></a>3.2 管理令牌（Managing Token）：</h4><p>AuthorizationServerTokenServices 接口定义了一些操作使得你可以对令牌进行一些必要的管理，在使用这些操作的时候请注意以下几点：<br>当一个令牌被创建了，你必须对其进行保存，这样当一个客户端使用这个令牌对资源服务进行请求的时候才能够引用这个令牌。<br>当一个令牌是有效的时候，它可以被用来加载身份信息，里面包含了这个令牌的相关权限。</p>
+<p>当你自己创建 AuthorizationServerTokenServices 这个接口的实现时，你可能需要考虑一下使用 DefaultTokenServices 这个类，里面包含了一些有用实现，你可以使用它来修改令牌的格式和令牌的存储。默认的，当它尝试创建一个令牌的时候，是使用随机值来进行填充的，除了持久化令牌是委托一个 TokenStore 接口来实现以外，这个类几乎帮你做了所有的事情。并且 TokenStore 这个接口有一个默认的实现，它就是 InMemoryTokenStore ，如其命名，所有的令牌是被保存在了内存中。除了使用这个类以外，你还可以使用一些其他的预定义实现，下面有几个版本，它们都实现了TokenStore接口：</p>
+<ul>
+<li><p>InMemoryTokenStore：这个版本的实现是被默认采用的，它可以完美的工作在单服务器上（即访问并发量压力不大的情况下，并且它在失败的时候不会进行备份），大多数的项目都可以使用这个版本的实现来进行尝试，你可以在开发的时候使用它来进行管理，因为不会被保存到磁盘中，所以更易于调试。</p>
+</li>
+<li><p>JdbcTokenStore：这是一个基于JDBC的实现版本，令牌会被保存进关系型数据库。使用这个版本的实现时，你可以在不同的服务器之间共享令牌信息，使用这个版本的时候请注意把”spring-jdbc”这个依赖加入到你的classpath当中。</p>
+</li>
+<li><p>JwtTokenStore：这个版本的全称是 JSON Web Token（JWT），它可以把令牌相关的数据进行编码（因此对于后端服务来说，它不需要进行存储，这将是一个重大优势），但是它有一个缺点，那就是撤销一个已经授权令牌将会非常困难，所以它通常用来处理一个生命周期较短的令牌以及撤销刷新令牌（refresh_token）。另外一个缺点就是这个令牌占用的空间会比较大，如果你加入了比较多用户凭证信息。JwtTokenStore 不会保存任何数据，但是它在转换令牌值以及授权信息方面与 DefaultTokenServices 所扮演的角色是一样的。</p>
+</li>
+</ul>
+<h4 id="3-3-JWT令牌（JWT-Tokens）"><a href="#3-3-JWT令牌（JWT-Tokens）" class="headerlink" title="3.3 JWT令牌（JWT Tokens）"></a>3.3 JWT令牌（JWT Tokens）</h4><p>使用JWT令牌你需要在授权服务中使用 JwtTokenStore，资源服务器也需要一个解码的Token令牌的类 JwtAccessTokenConverter，JwtTokenStore依赖这个类来进行编码以及解码，因此你的授权服务以及资源服务都需要使用这个转换类。</p>
+<p>Token令牌默认是有签名的，并且资源服务需要验证这个签名，因此呢，你需要使用一个对称的Key值，用来参与签名计算，这个Key值存在于授权服务以及资源服务之中。或者你可以使用非对称加密算法来对Token进行签名，Public Key公布在/oauth/token_key这个URL连接中，默认的访问安全规则是”denyAll()”，即在默认的情况下它是关闭的，你可以注入一个标准的 SpEL 表达式到 AuthorizationServerSecurityConfigurer 这个配置中来将它开启（例如使用”permitAll()”来开启可能比较合适，因为它是一个公共密钥）。</p>
+<p>如果你要使用 JwtTokenStore，请务必把”spring-security-jwt”这个依赖加入到你的classpath中。</p>
+<h4 id="3-4-配置授权类型（Grant-Types）："><a href="#3-4-配置授权类型（Grant-Types）：" class="headerlink" title="3.4 配置授权类型（Grant Types）："></a>3.4 配置授权类型（Grant Types）：</h4><p>授权是使用 AuthorizationEndpoint 这个端点来进行控制的，你能够使用 AuthorizationServerEndpointsConfigurer 这个对象的实例来进行配置(AuthorizationServerConfigurer 的一个回调配置项，见上的概述) ，如果你不进行设置的话，默认是除了资源所有者密码（password）授权类型以外，支持其余所有标准授权类型的（RFC6749），我们来看一下这个配置对象有哪些属性可以设置吧，如下列表：</p>
+<ul>
+<li>authenticationManager：认证管理器，当你选择了资源所有者密码（password）授权类型的时候，请设置这个属性注入一个 AuthenticationManager 对象。</li>
+<li>userDetailsService：如果啊，你设置了这个属性的话，那说明你有一个自己的 UserDetailsService 接口的实现，或者你可以把这个东西设置到全局域上面去（例如 GlobalAuthenticationManagerConfigurer 这个配置对象），当你设置了这个之后，那么 “refresh_token” 即刷新令牌授权类型模式的流程中就会包含一个检查，用来确保这个账号是否仍然有效，假如说你禁用了这个账户的话。</li>
+<li>authorizationCodeServices：这个属性是用来设置授权码服务的（即 AuthorizationCodeServices 的实例对象），主要用于 “authorization_code” 授权码类型模式。</li>
+<li>implicitGrantService：这个属性用于设置隐式授权模式，用来管理隐式授权模式的状态。</li>
+<li>tokenGranter：这个属性就很牛B了，当你设置了这个东西（即 TokenGranter 接口实现），那么授权将会交由你来完全掌控，并且会忽略掉上面的这几个属性，这个属性一般是用作拓展用途的，即标准的四种授权模式已经满足不了你的需求的时候，才会考虑使用这个。</li>
+</ul>
+<p>在XML配置中呢，你可以使用 “authorization-server” 这个标签元素来进行设置。</p>
+<h4 id="3-5-配置授权端点的URL（Endpoint-URLs）："><a href="#3-5-配置授权端点的URL（Endpoint-URLs）：" class="headerlink" title="3.5 配置授权端点的URL（Endpoint URLs）："></a>3.5 配置授权端点的URL（Endpoint URLs）：</h4><p>AuthorizationServerEndpointsConfigurer 这个配置对象(AuthorizationServerConfigurer 的一个回调配置项，见上的概述) 有一个叫做 pathMapping() 的方法用来配置端点URL链接，它有两个参数：<br>第一个参数：String 类型的，这个端点URL的默认链接。<br>第二个参数：String 类型的，你要进行替代的URL链接。<br>以上的参数都将以 “/“ 字符为开始的字符串，框架的默认URL链接如下列表，可以作为这个 pathMapping() 方法的第一个参数：</p>
+<ul>
+<li>/oauth/authorize：授权端点。</li>
+<li>/oauth/token：令牌端点。</li>
+<li>/oauth/confirm_access：用户确认授权提交端点。</li>
+<li>/oauth/error：授权服务错误信息端点。</li>
+<li>/oauth/check_token：用于资源服务访问的令牌解析端点。</li>
+<li>/oauth/token_key：提供公有密匙的端点，如果你使用JWT令牌的话。</li>
+</ul>
+<p>需要注意的是授权端点这个URL应该被Spring Security保护起来只供授权用户访问，我们来看看在标准的Spring Security中 WebSecurityConfigurer 是怎么用的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void configure(HttpSecurity http) throws Exception &#123;</div><div class="line">    http .authorizeRequests().antMatchers(&quot;/login&quot;).permitAll().and()</div><div class="line">    // default protection for all resources (including /oauth/authorize)</div><div class="line">    .authorizeRequests() .anyRequest().hasRole(&quot;USER&quot;)</div><div class="line">    // ... more configuration, e.g. for form login</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：如果你的应用程序中既包含授权服务又包含资源服务的话，那么这里实际上是另一个的低优先级的过滤器来控制资源接口的，这些接口是被保护在了一个访问令牌（access token）中，所以请挑选一个URL链接来确保你的资源接口中有一个不需要被保护的链接用来取得授权，就如上面示例中的 /login 链接，你需要在 WebSecurityConfigurer 配置对象中进行设置。</p>
+<p>令牌端点默认也是受保护的，不过这里使用的是基于 HTTP Basic Authentication 标准的验证方式来验证客户端的，这在XML配置中是无法进行设置的（所以它应该被明确的保护）。</p>
+<p>在XML配置中可以使用 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;authorization-server/&gt;</div></pre></td></tr></table></figure>
+<p>元素标签来改变默认的端点URLs，注意在配置 /check_token 这个链接端点的时候，使用 check-token-enabled 属性标记启用。</p>
+<h4 id="3-6-强制使用SSL（Enforcing-SSL）："><a href="#3-6-强制使用SSL（Enforcing-SSL）：" class="headerlink" title="3.6 强制使用SSL（Enforcing SSL）："></a>3.6 强制使用SSL（Enforcing SSL）：</h4><p>使用简单的HTTP请求来进行测试是可以的，但是如果你要部署到产品环境上的时候，你应该永远都使用SSL来保护授权服务器在与客户端进行通讯的时候进行加密。你可以把授权服务应用程序放到一个安全的运行容器中，或者你可以使用一个代理，如果你设置正确了的话它们应该工作的很好（这样的话你就不需要设置任何东西了）。<br>但是也许你可能希望使用 Spring Security 的 requiresChannel() 约束来保证安全，对于授权端点来说（还记得上面的列表吗，就是那个 /authorize 端点），它应该成为应用程序安全连接的一部分，而对于 /token 令牌端点来说的话，它应该有一个标记被配置在 AuthorizationServerEndpointsConfigurer 配置对象中，你可以使用 sslOnly() 方法来进行设置。当然了，这两个设置是可选的，不过在以上两种情况中，会导致Spring Security 会把不安全的请求通道重定向到一个安全通道中。（注：即将HTTP请求重定向到HTTPS请求上）。</p>
+<h4 id="3-7自定义错误处理（Error-Handling）："><a href="#3-7自定义错误处理（Error-Handling）：" class="headerlink" title="3.7自定义错误处理（Error Handling）："></a>3.7自定义错误处理（Error Handling）：</h4><p>端点实际上就是一个特殊的Controller，它用于返回一些对象数据。<br>授权服务的错误信息是使用标准的Spring MVC来进行处理的，也就是 @ExceptionHandler 注解的端点方法，你也可以提供一个 WebResponseExceptionTranslator 对象。最好的方式是改变响应的内容而不是直接进行渲染。<br>假如说在呈现令牌端点的时候发生了异常，那么异常委托了 HttpMessageConverters 对象（它能够被添加到MVC配置中）来进行输出。假如说在呈现授权端点的时候未通过验证，则会被重定向到 /oauth/error 即错误信息端点中。whitelabel error （即Spring框架提供的一个默认错误页面）错误端点提供了HTML的响应，但是你大概可能需要实现一个自定义错误页面（例如只是简单的增加一个 @Controller 映射到请求路径上 @RequestMapping(“/oauth/error”)）。</p>
+<h4 id="3-8-映射用户角色到权限范围（Mapping-User-Roles-to-Scopes）："><a href="#3-8-映射用户角色到权限范围（Mapping-User-Roles-to-Scopes）：" class="headerlink" title="3.8 映射用户角色到权限范围（Mapping User Roles to Scopes）："></a>3.8 映射用户角色到权限范围（Mapping User Roles to Scopes）：</h4><p>有时候限制令牌的权限范围是很有用的，这不仅仅是针对于客户端，你还可以根据用户的权限来进行限制。如果你使用 DefaultOAuth2RequestFactory 来配置 AuthorizationEndpoint 的话你可以设置一个flag即 checkUserScopes=true来限制权限范围，不过这只能匹配到用户的角色。你也可以注入一个 OAuth2RequestFactory 到 TokenEnpoint 中，不过这只能工作在 password 授权模式下。如果你安装一个 TokenEndpointAuthenticationFilter 的话，你只需要增加一个过滤器到 HTTP BasicAuthenticationFilter 后面即可。当然了，你也可以实现你自己的权限规则到 scopes 范围的映射和安装一个你自己版本的 OAuth2RequestFactory。AuthorizationServerEndpointConfigurer 配置对象允许你注入一个你自定义的 OAuth2RequestFactory，因此你可以使用这个特性来设置这个工厂对象，前提是你使用 @EnableAuthorizationServer 注解来进行配置</p>
+<h4 id="4-资源服务配置"><a href="#4-资源服务配置" class="headerlink" title="4. 资源服务配置"></a>4. 资源服务配置</h4><p>一个资源服务（可以和授权服务在同一个应用中，当然也可以分离开成为两个不同的应用程序）提供一些受token令牌保护的资源，Spring OAuth提供者是通过Spring Security authentication filter 即验证过滤器来实现的保护，你可以通过 @EnableResourceServer 注解到一个 @Configuration 配置类上，并且必须使用 ResourceServerConfigurer 这个配置对象来进行配置（可以选择继承自 ResourceServerConfigurerAdapter 然后覆写其中的方法，参数就是这个对象的实例），下面是一些可以配置的属性：</p>
+<ul>
+<li>tokenServices：ResourceServerTokenServices 类的实例，用来实现令牌服务。</li>
+<li>resourceId：这个资源服务的ID，这个属性是可选的，但是推荐设置并在授权服务中进行验证。</li>
+<li>其他的拓展属性例如 tokenExtractor 令牌提取器用来提取请求中的令牌。</li>
+<li>请求匹配器，用来设置需要进行保护的资源路径，默认的情况下是受保护资源服务的全部路径。</li>
+<li>受保护资源的访问规则，默认的规则是简单的身份验证（plain authenticated）。</li>
+<li>其他的自定义权限保护规则通过 HttpSecurity 来进行配置。</li>
+</ul>
+<p>@EnableResourceServer 注解自动增加了一个类型为 OAuth2AuthenticationProcessingFilter 的过滤器链，</p>
+<p>在XML配置中，使用 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;resource-server /&gt;</div></pre></td></tr></table></figure>
+<p>标签元素并指定id为一个servlet过滤器就能够手动增加一个标准的过滤器链。</p>
+<p>ResourceServerTokenServices 是组成授权服务的另一半，如果你的授权服务和资源服务在同一个应用程序上的话，你可以使用 DefaultTokenServices ，这样的话，你就不用考虑关于实现所有必要的接口的一致性问题，这通常是很困难的。如果你的资源服务器是分离开的，那么你就必须要确保能够有匹配授权服务提供的 ResourceServerTokenServices，它知道如何对令牌进行解码。<br>在授权服务器上，你通常可以使用 DefaultTokenServices 并且选择一些主要的表达式通过 TokenStore（后端存储或者本地编码）。</p>
+<p>RemoteTokenServices 可以作为一个替代，它将允许资源服务器通过HTTP请求来解码令牌（也就是授权服务的 /oauth/check_token 端点）。如果你的资源服务没有太大的访问量的话，那么使用RemoteTokenServices 将会很方便（所有受保护的资源请求都将请求一次授权服务用以检验token值），或者你可以通过缓存来保存每一个token验证的结果。</p>
+<p>使用授权服务的 /oauth/check_token 端点你需要将这个端点暴露出去，以便资源服务可以进行访问，这在咱们授权服务配置中已经提到了，下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception &#123;</div><div class="line">    oauthServer.tokenKeyAccess(&quot;isAnonymous() || hasAuthority(&apos;ROLE_TRUSTED_CLIENT&apos;)&quot;)</div><div class="line">        .checkTokenAccess(&quot;hasAuthority(&apos;ROLE_TRUSTED_CLIENT&apos;)&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个例子中，我们配置了 /oauth/check_token 和 /oauth/token_key 这两个端点（受信任的资源服务能够获取到公有密匙，这是为了验证JWT令牌）。这两个端点使用了HTTP Basic Authentication 即HTTP基本身份验证，使用 client_credentials 授权模式可以做到这一点。</p>
+<h4 id="4-1-配置OAuth-Aware表达式处理器（OAuth-Aware-Expression-Handler）："><a href="#4-1-配置OAuth-Aware表达式处理器（OAuth-Aware-Expression-Handler）：" class="headerlink" title="4.1 配置OAuth-Aware表达式处理器（OAuth-Aware Expression Handler）："></a>4.1 配置OAuth-Aware表达式处理器（OAuth-Aware Expression Handler）：</h4><p>你也许希望使用 Spring Security’s expression-based access control 来获得一些优势，一个表达式处理器会被注册到默认的 @EnableResourceServer 配置中，这个表达式包含了 <strong>#oauth2.clientHasRole，#oauth2.clientHasAnyRole</strong> 以及 <strong>#oauth2.denyClient</strong> 所提供的方法来帮助你使用权限角色相关的功能（在 OAuth2SecurityExpressionMethods 中有完整的列表）。<br>在XML配置中你可以注册一个 OAuth-Aware 表达式处理器即 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;expression-handler /&gt;</div></pre></td></tr></table></figure>
+<p>元素标签到 常规的 <code>&lt;http /&gt;</code> 安全配置上。</p>
+<p> 资料来源：<a href="http://www.cnblogs.com/xingxueliao/p/5911292.html" target="_blank" rel="external">http://www.cnblogs.com/xingxueliao/p/5911292.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/jvm知识点总览/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/jvm知识点总览/" itemprop="url">
+                  jvm知识点总览
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T08:44:57+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/jvm知识点总览/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/jvm知识点总览/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转载 <strong>作者：纯洁的微笑</strong><br><strong>出处：<a href="http://www.ityouknow.com/java/2017/03/01/jvm-overview.html" target="_blank" rel="external">http://www.ityouknow.com/</a></strong><br>在江湖中要练就绝世武功必须内外兼备，精妙的招式和深厚的内功，武功的基础是内功。对于武功低（就像江南七怪）的人，招式更重要，因为他们不能靠内功直接去伤人，只能靠招式，利刃上优势来取胜了，但是练到高手之后，内功就更主要了。一个内功低的人招式在奇妙也打不过一个内功高的人。比如，你剑法再厉害，一剑刺过来，别人一掌打断你的剑，你还怎么使剑法，你一掌打到一个武功高的人身上，那人没什么事，却把你震伤了，你还怎么打。同样两者也是相辅相成的，内功深厚之后，原来普通的一招一式威力也会倍增。</p>
+<p>对于搞开发的我们其实也是一样，现在流行的框架越来越多，封装的也越来越完善，各种框架可以搞定一切，几乎不用关注底层的实现，初级程序员只要熟悉基本的使用方法，便可以快速的开发上线；但对于高级程序员来讲，内功的修炼却越发的重要，比如算法、设计模式、底层原理等，只有把这些基础熟练之后，才能在开发过程中知其然知其所以然，出现问题时能快速定位到问题的本质。</p>
+<p>对于Java程序员来讲，spring全家桶几乎可以搞定一切，spring全家桶便是精妙的招式，jvm就是内功心法很重要的一块，线上出现性能问题，jvm调优更是不可回避的问题。因此JVM基础知识对于高级程序员的重要性不必言语，我司在面试高级开发的时候，jvm相关知识也必定是考核的标准之一。本篇文章会根据之前写的jvm系列文章梳理出jvm需要关注的所有考察点。</p>
+<h2 id="jvm-总体梳理"><a href="#jvm-总体梳理" class="headerlink" title="jvm 总体梳理"></a>jvm 总体梳理</h2><p>jvm体系总体分四大块：</p>
+<ul>
+<li>类的加载机制    </li>
+<li>jvm内存结构  </li>
+<li>GC算法 垃圾回收</li>
+<li>GC分析 命令调优</li>
+</ul>
+<p><em>当然这些知识点在之前的文章中都有详细的介绍，这里只做主干的梳理</em></p>
+<p>这里画了一个思维导图，将所有的知识点进行了陈列，因为图比较大可以点击右键下载了放大查看。</p>
+<p>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/JVM.jpg" alt=""></p>
+<h2 id="类的加载机制"><a href="#类的加载机制" class="headerlink" title="类的加载机制"></a>类的加载机制</h2><p>主要关注点：</p>
+<ul>
+<li>什么是类的加载  </li>
+<li>类的生命周期  </li>
+<li>类加载器  </li>
+<li>双亲委派模型  </li>
+</ul>
+<p><strong>什么是类的加载</strong></p>
+<p>类的加载指的是将类的.class文件中的二进制数据读入到内存中，将其放在运行时数据区的方法区内，然后在堆区创建一个java.lang.Class对象，用来封装类在方法区内的数据结构。类的加载的最终产品是位于堆区中的Class对象，Class对象封装了类在方法区内的数据结构，并且向Java程序员提供了访问方法区内的数据结构的接口。 </p>
+<p><strong>类的生命周期</strong></p>
+<p>类的生命周期包括这几个部分，加载、连接、初始化、使用和卸载，其中前三部是类的加载的过程,如下图；</p>
+<p>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/class.png" alt=""></p>
+<ul>
+<li>加载，查找并加载类的二进制数据，在Java堆中也创建一个java.lang.Class类的对象  </li>
+<li>连接，连接又包含三块内容：验证、准备、初始化。1）验证，文件格式、元数据、字节码、符号引用验证；2）准备，为类的静态变量分配内存，并将其初始化为默认值；3）解析，把类中的符号引用转换为直接引用  </li>
+<li>初始化，为类的静态变量赋予正确的初始值  </li>
+<li>使用，new出对象程序中使用   </li>
+<li>卸载，执行垃圾回收  </li>
+</ul>
+<blockquote>
+<p> <em>几个小问题？</em><br> <em>1、JVM初始化步骤 ？ 2、类初始化时机 ？3、哪几种情况下，Java虚拟机将结束生命周期？</em><br> <em>答案参考这篇文章<a href="http://www.cnblogs.com/ityouknow/p/5603287.html" target="_blank" rel="external">jvm系列(一):java类的加载机制</a></em></p>
+</blockquote>
+<p><strong>类加载器</strong></p>
+<p>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/calssloader.png" alt=""></p>
+<ul>
+<li>启动类加载器：Bootstrap ClassLoader，负责加载存放在JDK\jre\lib(JDK代表JDK的安装目录，下同)下，或被-Xbootclasspath参数指定的路径中的，并且能被虚拟机识别的类库  </li>
+<li>扩展类加载器：Extension ClassLoader，该加载器由sun.misc.Launcher$ExtClassLoader实现，它负责加载DK\jre\lib\ext目录中，或者由java.ext.dirs系统变量指定的路径中的所有类库（如javax.*开头的类），开发者可以直接使用扩展类加载器。  </li>
+<li>应用程序类加载器：Application ClassLoader，该类加载器由sun.misc.Launcher$AppClassLoader来实现，它负责加载用户类路径（ClassPath）所指定的类，开发者可以直接使用该类加载器</li>
+</ul>
+<p><strong>类加载机制</strong></p>
+<ul>
+<li>全盘负责，当一个类加载器负责加载某个Class时，该Class所依赖的和引用的其他Class也将由该类加载器负责载入，除非显示使用另外一个类加载器来载入  </li>
+<li>父类委托，先让父类加载器试图加载该类，只有在父类加载器无法加载该类时才尝试从自己的类路径中加载该类  </li>
+<li>缓存机制，缓存机制将会保证所有加载过的Class都会被缓存，当程序中需要使用某个Class时，类加载器先从缓存区寻找该Class，只有缓存区不存在，系统才会读取该类对应的二进制数据，并将其转换成Class对象，存入缓存区。这就是为什么修改了Class后，必须重启JVM，程序的修改才会生效</li>
+</ul>
+<h2 id="jvm内存结构"><a href="#jvm内存结构" class="headerlink" title="jvm内存结构"></a>jvm内存结构</h2><p>主要关注点：</p>
+<ul>
+<li>jvm内存结构都是什么</li>
+<li>对象分配规则 </li>
+</ul>
+<p><strong>jvm内存结构</strong></p>
+<p>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/structure.png" alt="">  </p>
+<blockquote>
+<p>方法区和对是所有线程共享的内存区域；而java栈、本地方法栈和程序员计数器是运行是线程私有的内存区域。</p>
+</blockquote>
+<ul>
+<li>Java堆（Heap）,是Java虚拟机所管理的内存中最大的一块。Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。  </li>
+<li>方法区（Method Area）,方法区（Method Area）与Java堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。  </li>
+<li>程序计数器（Program Counter Register）,程序计数器（Program Counter Register）是一块较小的内存空间，它的作用可以看做是当前线程所执行的字节码的行号指示器。  </li>
+<li>JVM栈（JVM Stacks）,与程序计数器一样，Java虚拟机栈（Java Virtual Machine Stacks）也是线程私有的，它的生命周期与线程相同。虚拟机栈描述的是Java方法执行的内存模型：每个方法被执行的时候都会同时创建一个栈帧（Stack Frame）用于存储局部变量表、操作栈、动态链接、方法出口等信息。每一个方法被调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。  </li>
+<li>本地方法栈（Native Method Stacks）,本地方法栈（Native Method Stacks）与虚拟机栈所发挥的作用是非常相似的，其区别不过是虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则是为虚拟机使用到的Native方法服务。</li>
+</ul>
+<p><strong>对象分配规则</strong></p>
+<ul>
+<li>对象优先分配在Eden区，如果Eden区没有足够的空间时，虚拟机执行一次Minor GC。  </li>
+<li>大对象直接进入老年代（大对象是指需要大量连续内存空间的对象）。这样做的目的是避免在Eden区和两个Survivor区之间发生大量的内存拷贝（新生代采用复制算法收集内存）。  </li>
+<li>长期存活的对象进入老年代。虚拟机为每个对象定义了一个年龄计数器，如果对象经过了1次Minor GC那么对象会进入Survivor区，之后每经过一次Minor GC那么对象的年龄加1，知道达到阀值对象进入老年区。  </li>
+<li>动态判断对象的年龄。如果Survivor区中相同年龄的所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象可以直接进入老年代。  </li>
+<li>空间分配担保。每次进行Minor GC时，JVM会计算Survivor区移至老年区的对象的平均大小，如果这个值大于老年区的剩余值大小则进行一次Full GC，如果小于检查HandlePromotionFailure设置，如果true则只进行Monitor GC,如果false则进行Full GC。   </li>
+</ul>
+<blockquote>
+<p><em>如何通过参数来控制个各个内存区域</em><br><em>参考此文章：<a href="http://www.cnblogs.com/ityouknow/p/5610232.html" target="_blank" rel="external">jvm系列(二):JVM内存结构</a></em></p>
+</blockquote>
+<h2 id="GC算法-垃圾回收"><a href="#GC算法-垃圾回收" class="headerlink" title="GC算法 垃圾回收"></a>GC算法 垃圾回收</h2><p>主要关注点：</p>
+<ul>
+<li>对象存活判断</li>
+<li>GC算法   </li>
+<li>垃圾回收器 </li>
+</ul>
+<p><strong>对象存活判断</strong>  </p>
+<p>判断对象是否存活一般有两种方式： </p>
+<ul>
+<li>引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。  </li>
+<li>可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的，不可达对象。</li>
+</ul>
+<p><strong>GC算法</strong></p>
+<p>GC最基础的算法有三种：标记 -清除算法、复制算法、标记-压缩算法，我们常用的垃圾回收器一般都采用分代收集算法。</p>
+<ul>
+<li>标记 -清除算法，“标记-清除”（Mark-Sweep）算法，如它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。  </li>
+<li>复制算法，“复制”（Copying）的收集算法，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。  </li>
+<li>标记-压缩算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存  </li>
+<li>分代收集算法，“分代收集”（Generational Collection）算法，把Java堆分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。</li>
+</ul>
+<p><strong>垃圾回收器</strong></p>
+<ul>
+<li>Serial收集器，串行收集器是最古老，最稳定以及效率高的收集器，可能会产生较长的停顿，只使用一个线程去回收。  </li>
+<li>ParNew收集器，ParNew收集器其实就是Serial收集器的多线程版本。  </li>
+<li>Parallel收集器，Parallel Scavenge收集器类似ParNew收集器，Parallel收集器更关注系统的吞吐量。  </li>
+<li>Parallel Old 收集器，Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和“标记－整理”算法  </li>
+<li>CMS收集器，CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。</li>
+<li>G1收集器，G1 (Garbage-First)是一款面向服务器的垃圾收集器,主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足GC停顿时间要求的同时,还具备高吞吐量性能特征  </li>
+</ul>
+<blockquote>
+<p><em>GC算法和垃圾回收器算法图解以及更详细内容参考 <a href="http://www.cnblogs.com/ityouknow/p/5614961.html" target="_blank" rel="external">jvm系列(三):GC算法 垃圾收集器</a></em>  </p>
+</blockquote>
+<h2 id="GC分析-命令调优"><a href="#GC分析-命令调优" class="headerlink" title="GC分析 命令调优"></a>GC分析 命令调优</h2><p>主要关注点：</p>
+<ul>
+<li>GC日志分析   </li>
+<li>调优命令  </li>
+<li>调优工具</li>
+</ul>
+<p><strong>GC日志分析</strong></p>
+<p>摘录GC日志一部分（前部分为年轻代gc回收；后部分为full gc回收）：</p>
+<pre><code class="xml">2016-07-05T10:43:18.093+0800: 25.395: [GC [PSYoungGen: 274931K-&gt;10738K(274944K)] 371093K-&gt;147186K(450048K), 0.0668480 secs] [Times: user=0.17 sys=0.08, real=0.07 secs] 
+2016-07-05T10:43:18.160+0800: 25.462: [Full GC [PSYoungGen: 10738K-&gt;0K(274944K)] [ParOldGen: 136447K-&gt;140379K(302592K)] 147186K-&gt;140379K(577536K) [PSPermGen: 85411K-&gt;85376K(171008K)], 0.6763541 secs] [Times: user=1.75 sys=0.02, real=0.68 secs]
+</code></pre>
+<p>通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen属于Parallel收集器。其中PSYoungGen表示gc回收前后年轻代的内存变化；ParOldGen表示gc回收前后老年代的内存变化；PSPermGen表示gc回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少full gc的次数</p>
+<p>young gc 日志:<br>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/yong.jpg" alt="">  </p>
+<p>Full GC日志:<br>{:.center}<br><img src="http://www.ityouknow.com/assets/images/2017/jvm/full.jpg" alt="">  </p>
+<p><strong>调优命令</strong>  </p>
+<p>Sun JDK监控和故障处理命令有jps jstat jmap jhat jstack jinfo</p>
+<ul>
+<li>jps，JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </li>
+<li>jstat，JVM statistics Monitoring是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。  </li>
+<li>jmap，JVM Memory Map命令用于生成heap dump文件  </li>
+<li>jhat，JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看   </li>
+<li>jstack，用于生成java虚拟机当前时刻的线程快照。</li>
+<li>jinfo，JVM Configuration info 这个命令作用是实时查看和调整虚拟机运行参数。</li>
+</ul>
+<blockquote>
+<p> <em>详细的命令使用参考这里<a href="http://www.ityouknow.com/java/2016/01/01/jvm%E8%B0%83%E4%BC%98-%E5%91%BD%E4%BB%A4%E7%AF%87.html" target="_blank" rel="external">jvm系列(四):jvm调优-命令篇</a></em></p>
+</blockquote>
+<p><strong>调优工具</strong>  </p>
+<p>常用调优工具分为两类,jdk自带监控工具：jconsole和jvisualvm，第三方有：MAT(Memory Analyzer Tool)、GChisto。</p>
+<ul>
+<li>jconsole，Java Monitoring and Management Console是从java5开始，在JDK中自带的java监控和管理控制台，用于对JVM中内存，线程和类等的监控  </li>
+<li>jvisualvm，jdk自带全能工具，可以分析内存快照、线程快照；监控内存变化、GC变化等。  </li>
+<li>MAT，Memory Analyzer Tool，一个基于Eclipse的内存分析工具，是一个快速、功能丰富的Java heap分析工具，它可以帮助我们查找内存泄漏和减少内存消耗  </li>
+<li>GChisto，一款专业分析gc日志的工具  </li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -417,626 +1551,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/第一个-spring-Boot-应用通过Docker-来实现构建、运行、发布/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/27/第一个-spring-Boot-应用通过Docker-来实现构建、运行、发布/" itemprop="url">
-                  第一个 spring Boot 应用通过Docker 来实现构建、运行、发布
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T12:37:34+08:00">
-                2017-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/27/第一个-spring-Boot-应用通过Docker-来实现构建、运行、发布/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/第一个-spring-Boot-应用通过Docker-来实现构建、运行、发布/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-Docker-简介"><a href="#1-Docker-简介" class="headerlink" title="1. Docker 简介"></a>1. Docker 简介</h3><p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。Docker image 是用于运行容器化进程的方案，在本文中，我们将构建一个简单的 Spring Boot 应用程序。</p>
-<h3 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2.环境搭建"></a>2.环境搭建</h3><ul>
-<li>JDK 1.8+</li>
-<li>Maven 3.0+</li>
-<li>Docker 最新版。<h3 id="3-用-Maven-构建项目"><a href="#3-用-Maven-构建项目" class="headerlink" title="3.用 Maven 构建项目"></a>3.用 Maven 构建项目</h3><h4 id="3-1-创建目录结构"><a href="#3-1-创建目录结构" class="headerlink" title="3.1 创建目录结构"></a>3.1 创建目录结构</h4></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir -p src/main/java/com/lidong/demo</div></pre></td></tr></table></figure>
-<p>在linux或者mac系统中。<br><img src="http://img.blog.csdn.net/20170220095220622?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="3-2-创建-pom-xml-文件"><a href="#3-2-创建-pom-xml-文件" class="headerlink" title="3.2 创建 pom.xml 文件"></a>3.2 创建 pom.xml 文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</div><div class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">    &lt;groupId&gt;com.lidong.demo&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;lidong-spring-boot-demo&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">    &lt;parent&gt;</div><div class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.5.1.RELEASE&lt;/version&gt;</div><div class="line">        &lt;relativePath/&gt;</div><div class="line">    &lt;/parent&gt;</div><div class="line">    &lt;properties&gt;</div><div class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">        &lt;docker.image.prefix&gt;springio&lt;/docker.image.prefix&gt;</div><div class="line">    &lt;/properties&gt;</div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line"></div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line"></div><div class="line"></div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;com.spotify&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;0.4.13&lt;/version&gt;</div><div class="line">                &lt;configuration&gt;</div><div class="line">                    &lt;imageName&gt;$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;&lt;/imageName&gt;</div><div class="line">                    &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</div><div class="line">                    &lt;resources&gt;</div><div class="line">                        &lt;resource&gt;</div><div class="line">                            &lt;targetPath&gt;/&lt;/targetPath&gt;</div><div class="line">                            &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</div><div class="line">                            &lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</div><div class="line">                        &lt;/resource&gt;</div><div class="line">                    &lt;/resources&gt;</div><div class="line">                &lt;/configuration&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<ol>
-<li>Spring Boot Maven plugin 提供了很多方便的功能：<br>1）它收集的类路径上所有 jar 文件，并构建成一个单一的、可运行的jar，这使得它更方便地执行和传输服务。<br>2）它搜索的 public static void main() 方法来标记为可运行的类。<br>3）它提供了一个内置的依赖解析器，用于设置版本号以匹配 Spring Boot 的依赖。您可以覆盖任何你想要的版本，但它会默认选择的 Boot 的版本集。</li>
-</ol>
-<ol>
-<li>Spotify 的 docker-maven-plugin 插件是用于构建 Maven 的 Docker Image<br>1）imageName指定了镜像的名字，本例为 springio/lidong-spring-boot-demo<br>2）dockerDirectory指定 Dockerfile 的位置<br>3）resources是指那些需要和 Dockerfile 放在一起，在构建镜像时使用的文件，一般应用 jar 包需要纳入。</li>
-</ol>
-<h4 id="4-编写-第一个Spring-Boot-应用"><a href="#4-编写-第一个Spring-Boot-应用" class="headerlink" title="4.编写 第一个Spring Boot 应用"></a>4.编写 第一个Spring Boot 应用</h4><p>编写一个简单的 Spring Boot 应用 ：</p>
-<p>src/main/java/com/lidong/demo/SampleController.java:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo;</div><div class="line"></div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @项目名称:lidong-dubbo</div><div class="line"> * @类名:SampleController</div><div class="line"> * @类的描述:</div><div class="line"> * @作者:lidong</div><div class="line"> * @创建时间:2017/2/19 上午9:34</div><div class="line"> * @公司:chni</div><div class="line"> * @QQ:1561281670</div><div class="line"> * @邮箱:lidong1665@163.com</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">@SpringBootApplication</div><div class="line">public class SampleController &#123;</div><div class="line"></div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(value = &quot;/&quot;)</div><div class="line">    String home()&#123;</div><div class="line">        return &quot;Hello Docker World&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        SpringApplication.run(SampleController.class,&quot;--server.port=8081&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>类用 @SpringBootApplication @RestController 标识,可用 Spring MVC 来处理 Web 请求。</li>
-<li>@RequestMapping 将 / 映射到 home() ，并将”Hello Docker World” 文本作为响应。</li>
-<li>main() 方法使用 Spring Boot 的 SpringApplication.run() 方法来启动应用。<h3 id="5-运行程序"><a href="#5-运行程序" class="headerlink" title="5.运行程序"></a>5.运行程序</h3></li>
-</ul>
-<p>#####5.1使用Maven命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn package</div></pre></td></tr></table></figure>
-<p>运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar target/lidong-spring-boot-demo-1.0-SNAPSHOT.jar</div></pre></td></tr></table></figure>
-<p>访问项目</p>
-<p>如果程序正确运行，浏览器访问 <a href="http://localhost:8081/，可以看到页面" target="_blank" rel="external">http://localhost:8081/，可以看到页面</a> “Hello Docker World.” 字样。</p>
-<h5 id="5-2-使用IDEA-插件"><a href="#5-2-使用IDEA-插件" class="headerlink" title="5.2 使用IDEA 插件"></a>5.2 使用IDEA 插件</h5><p><img src="http://img.blog.csdn.net/20170220100454956?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="6-将项目容器化"><a href="#6-将项目容器化" class="headerlink" title="6.将项目容器化"></a>6.将项目容器化</h4><p>Docker 使用 Dockerfile 文件格式来指定 image 层，</p>
-<p>创建文件 src/main/docker/Dockerfile:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FROM frolvlad/alpine-oraclejdk8:slim</div><div class="line">VOLUME /tmp</div><div class="line">ADD lidong-spring-boot-demo-1.0-SNAPSHOT.jar app.jar</div><div class="line">RUN sh -c &apos;touch /app.jar&apos;</div><div class="line">ENV JAVA_OPTS=&quot;&quot;</div><div class="line">ENTRYPOINT [ &quot;sh&quot;, &quot;-c&quot;, &quot;java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar&quot; ]</div></pre></td></tr></table></figure>
-<p>解释下这个配置文件：</p>
-<p>VOLUME 指定了临时文件目录为/tmp。其效果是在主机 /var/lib/docker 目录下创建了一个临时文件，并链接到容器的/tmp。改步骤是可选的，如果涉及到文件系统的应用就很有必要了。/tmp目录用来持久化到 Docker 数据文件夹，因为 Spring Boot 使用的内嵌 Tomcat 容器默认使用/tmp作为工作目录<br>项目的 jar 文件作为 “app.jar” 添加到容器的<br>ENTRYPOINT 执行项目 app.jar。为了缩短 Tomcat 启动时间，添加一个系统属性指向 “/dev/urandom” 作为 Entropy Source<br>构建 Docker Image</p>
-<p>执行构建成为 docker image:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn package docker:build</div></pre></td></tr></table></figure>
-<p>运行</p>
-<p>运行 Docker Image</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -p 8081:8081 -t springio/lidong-spring-boot-demo</div></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20170220101315389?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>看到这个Spring的图标。就以为这我们在docker 上发布Spring boot 程序已经完成。</p>
-<p>接下来去访问在浏览器访问 <a href="http://localhost:8081/，可以看到页面" target="_blank" rel="external">http://localhost:8081/，可以看到页面</a> “Hello Docker World.” 字样。</p>
-<p>参考资料：<br><a href="http://spring.io/guides/gs/spring-boot-docker/" target="_blank" rel="external">http://spring.io/guides/gs/spring-boot-docker/</a></p>
-<p>在这里是一个简单的spring boot的入门。后面会详细介绍Spring-boot 构建微服务一些具体的知识。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十二）之-spring中RabbitMQ延迟队列的实现/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十二）之-spring中RabbitMQ延迟队列的实现/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（十二）之 spring中RabbitMQ延迟队列的实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T12:36:51+08:00">
-                2017-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十二）之-spring中RabbitMQ延迟队列的实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十二）之-spring中RabbitMQ延迟队列的实现/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在前面写过一篇<a href="http://blog.csdn.net/u010046908/article/details/56015388" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（七）RabbitMQ工作原理和Spring的集成</a><br>，今天在进一步使用一下RabbitMQ的延迟队列的实现。</p>
-<h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>RabbitMQ如何实现延迟队列：延迟队列存储的对象肯定是对应的延迟消息，所谓”延迟消息”是指当消息被发送以后，并不想让消费者立即拿到消息，而是等待指定时间后，消费者才拿到这个消息进行消费。</p>
-<h3 id="2-RabbitMQ的延迟队列使用场景"><a href="#2-RabbitMQ的延迟队列使用场景" class="headerlink" title="2. RabbitMQ的延迟队列使用场景"></a>2. RabbitMQ的延迟队列使用场景</h3><p>场景一：在订单系统中，一个用户下单之后通常有30分钟的时间进行支付，如果30分钟之内没有支付成功，那么这个订单将进行一场处理。这是就可以使用延迟队列将订单信息发送到延迟队列。</p>
-<p>场景二：用户希望通过手机远程遥控家里的智能设备在指定的时间进行工作。这时候就可以将用户指令发送到延迟队列，当指令设定的时间到了再将指令推送到只能设备。</p>
-<h3 id="3-RabbitMQ实现延迟队列"><a href="#3-RabbitMQ实现延迟队列" class="headerlink" title="3.RabbitMQ实现延迟队列"></a>3.RabbitMQ实现延迟队列</h3><p>AMQP协议，以及RabbitMQ本身没有直接支持延迟队列的功能，但是可以通过TTL和DLX模拟出延迟队列的功能。</p>
-<h4 id="3-1-TTL（Time-To-Live）"><a href="#3-1-TTL（Time-To-Live）" class="headerlink" title="3.1 TTL（Time To Live）"></a>3.1 TTL（Time To Live）</h4><p>RabbitMQ可以针对Queue和Message设置 x-message-tt，来控制消息的生存时间，如果超时，则消息变为dead letter<br>RabbitMQ针对队列中的消息过期时间有两种方法可以设置。</p>
-<ol>
-<li>通过队列属性设置，队列中所有消息都有相同的过期时间。 </li>
-<li>对消息进行单独设置，每条消息TTL可以不同。</li>
-</ol>
-<p>如果同时使用，则消息的过期时间以两者之间TTL较小的那个数值为准。消息在队列的生存时间一旦超过设置的TTL值，就成为dead letter</p>
-<p>详细可以参考：RabbitMQ之TTL（Time-To-Live 过期时间）</p>
-<h4 id="3-2-DLX-Dead-Letter-Exchange"><a href="#3-2-DLX-Dead-Letter-Exchange" class="headerlink" title="3.2 DLX (Dead-Letter-Exchange)"></a>3.2 DLX (Dead-Letter-Exchange)</h4><p>RabbitMQ的Queue可以配置x-dead-letter-exchange 和x-dead-letter-routing-key（可选）两个参数，如果队列内出现了dead letter，则按照这两个参数重新路由。</p>
-<p>x-dead-letter-exchange：出现dead letter之后将dead letter重新发送到指定exchange x-dead-letter-routing-key：指定routing-key发送队列出现dead letter的情况有：消息或者队列的TTL过期 队列达到最大长度 消息被消费端拒绝（basic.reject or basic.nack）并且requeue=false，利DLX，当消息在一个队列中变成死信后，它能被重新publish到另一个Exchange。这时候消息就可以重新被消费。</p>
-<h3 id="4-案例的实现"><a href="#4-案例的实现" class="headerlink" title="4.案例的实现"></a>4.案例的实现</h3><h4 id="4-1-rabbit-properties"><a href="#4-1-rabbit-properties" class="headerlink" title="4.1 rabbit.properties"></a>4.1 rabbit.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rabbit_username=lidong1665</div><div class="line">rabbit_password=123456</div><div class="line">rabbit_host=192.168.0.107</div><div class="line">rabbit_port=5672</div></pre></td></tr></table></figure>
-<h4 id="4-2-spring-rabbitmq-xml"><a href="#4-2-spring-rabbitmq-xml" class="headerlink" title="4.2 spring-rabbitmq.xml"></a>4.2 spring-rabbitmq.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:rabbit=&quot;http://www.springframework.org/schema/rabbit&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">     http://www.springframework.org/schema/beans</div><div class="line">     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">     http://www.springframework.org/schema/rabbit</div><div class="line">     http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd&quot;&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;!--配置connection-factory，指定连接rabbit server参数 --&gt;</div><div class="line">    &lt;rabbit:connection-factory id=&quot;rabbitConnectionFactory&quot;</div><div class="line">                               username=&quot;$&#123;rabbit_username&#125;&quot;</div><div class="line">                               password=&quot;$&#123;rabbit_password&#125;&quot;</div><div class="line">                               host=&quot;$&#123;rabbit_host&#125;&quot;</div><div class="line">                               port=&quot;$&#123;rabbit_port&#125;&quot;/&gt;</div><div class="line"></div><div class="line">    &lt;!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 --&gt;</div><div class="line">    &lt;rabbit:admin id=&quot;connectAdmin&quot; connection-factory=&quot;rabbitConnectionFactory&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;taskExecutor&quot; class=&quot;org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor&quot;&gt;</div><div class="line">        &lt;property name=&quot;corePoolSize&quot; value=&quot;3&quot;/&gt;</div><div class="line">        &lt;property name=&quot;maxPoolSize&quot; value=&quot;5&quot;/&gt;</div><div class="line">        &lt;property name=&quot;queueCapacity&quot; value=&quot;15&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    &lt;bean id=&quot;jsonMessageConverter&quot; class=&quot;org.springframework.amqp.support.converter.Jackson2JsonMessageConverter&quot; /&gt;</div><div class="line">    </div><div class="line">    &lt;rabbit:topic-exchange name=&quot;delayChangeTest&quot;</div><div class="line">declared-by=&quot;connectAdmin&quot; delayed=&quot;true&quot;&gt;</div><div class="line">    &lt;rabbit:bindings&gt;</div><div class="line">            &lt;rabbit:binding queue=&quot;delay_queue&quot;</div><div class="line">                    pattern=&quot;order.delay.notify&quot;</div><div class="line">            /&gt;</div><div class="line">        &lt;/rabbit:bindings&gt;</div><div class="line">    &lt;/rabbit:topic-exchange&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;!--定义queue  配置延迟队列的信息--&gt;</div><div class="line">    &lt;rabbit:queue name=&quot;delay_queue&quot;</div><div class="line">                  durable=&quot;true&quot;</div><div class="line">                  auto-declare=&quot;true&quot;</div><div class="line">                  auto-delete=&quot;false&quot;</div><div class="line">                  declared-by=&quot;connectAdmin&quot;&gt;</div><div class="line">    &lt;/rabbit:queue&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;rabbit:template id=&quot;rabbitTemplate2&quot; connection-factory=&quot;rabbitConnectionFactory&quot;</div><div class="line">                     exchange=&quot;delayChangeTest&quot;/&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;bean id=&quot;orderConsumer&quot; class=&quot;com.lidong.dubbo.core.util.customer.OrderConsumer&quot;&gt;&lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;rabbit:listener-container</div><div class="line">            connection-factory=&quot;rabbitConnectionFactory&quot;</div><div class="line">            acknowledge=&quot;manual&quot;</div><div class="line">            channel-transacted=&quot;false&quot;</div><div class="line">            message-converter=&quot;jsonMessageConverter&quot;&gt;</div><div class="line">        &lt;rabbit:listener queues=&quot;queueTest&quot;</div><div class="line">        ref=&quot;messageReceiver&quot;  method=&quot;onMessage&quot;/&gt;</div><div class="line">    &lt;/rabbit:listener-container&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>####4.3 创建生产者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">package com.lidong.dubbo.core.spittle.service;</div><div class="line"></div><div class="line">import com.lidong.dubbo.api.spittle.service.IMessageProducer;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.amqp.AmqpException;</div><div class="line">import org.springframework.amqp.core.*;</div><div class="line">import org.springframework.amqp.rabbit.core.RabbitTemplate;</div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line">import java.text.SimpleDateFormat;</div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @项目名称:lidong-dubbo</div><div class="line"> * @类名:MessageProducerImp</div><div class="line"> * @类的描述:</div><div class="line"> * @作者:lidong</div><div class="line"> * @创建时间:2017/2/4 上午10:01</div><div class="line"> * @公司:chni</div><div class="line"> * @QQ:1561281670</div><div class="line"> * @邮箱:lidong1665@163.com</div><div class="line"> */</div><div class="line">@Service</div><div class="line">public class MessageProducerServiceImp implements IMessageProducer &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    private Logger logger = LoggerFactory.getLogger(MessageProducerServiceImp.class);</div><div class="line">    @Resource</div><div class="line">    private RabbitTemplate rabbitTemplate2;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void sendMessage(Object message) &#123;</div><div class="line">        logger.info(&quot;to send message:&#123;&#125;&quot;,message);</div><div class="line">        final int xdelay= 300*1000;</div><div class="line">        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</div><div class="line"></div><div class="line">        //发送延迟消息</div><div class="line">        rabbitTemplate2.convertAndSend(&quot;order.delay.notify&quot;, message,</div><div class="line">                new MessagePostProcessor() &#123;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public Message postProcessMessage(Message message)</div><div class="line">                            throws AmqpException &#123;</div><div class="line">                        //设置消息持久化</div><div class="line">                        message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);</div><div class="line">                        //设置延迟时间（5分钟后执行）</div><div class="line">                        message.getMessageProperties().setDelay(xdelay);</div><div class="line">                        logger.info(&quot;----&quot;+sf.format(new Date()) + &quot; Delay sent.&quot;);</div><div class="line"></div><div class="line">                        return message;</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-4-创建消费者"><a href="#4-4-创建消费者" class="headerlink" title="4.4 创建消费者"></a>4.4 创建消费者</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">package com.lidong.dubbo.core.util.customer;</div><div class="line"></div><div class="line">import com.rabbitmq.client.Channel;</div><div class="line">import org.activiti.engine.impl.util.json.JSONObject;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.amqp.core.Message;</div><div class="line">import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @项目名称:lidong-dubbo</div><div class="line"> * @类名:OrderConsumer</div><div class="line"> * @类的描述:</div><div class="line"> * @作者:lidong</div><div class="line"> * @创建时间:2017/2/25 下午12:59</div><div class="line"> * @公司:chni</div><div class="line"> * @QQ:1561281670</div><div class="line"> * @邮箱:lidong1665@163.com</div><div class="line"> */</div><div class="line">public class OrderConsumer implements ChannelAwareMessageListener &#123;</div><div class="line">    private Logger logger = LoggerFactory.getLogger(OrderConsumer.class);</div><div class="line">    @Override</div><div class="line">    public void onMessage(Message message, Channel channel) throws Exception &#123;</div><div class="line"></div><div class="line">        logger.info(&quot;[延时消息]&quot; + message.getMessageProperties());</div><div class="line">        if (message != null) &#123;</div><div class="line">            long deliveryTag = message.getMessageProperties().getDeliveryTag();</div><div class="line">            logger.debug(&quot;deliveryTag= &quot;+deliveryTag);</div><div class="line">            //手动确认</div><div class="line">            channel.basicAck(deliveryTag,false);</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>发送消息之后。消费5分钟之后接受到消息，开始处理。</p>
-<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十一）之-spring中定时器quartz的整合续集（Quartz集群配置）/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十一）之-spring中定时器quartz的整合续集（Quartz集群配置）/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（十一）之 spring中定时器quartz的整合续集（Quartz集群配置）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T12:36:06+08:00">
-                2017-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十一）之-spring中定时器quartz的整合续集（Quartz集群配置）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（十一）之-spring中定时器quartz的整合续集（Quartz集群配置）/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前面写过一篇关于dubbo2.5-spring4-mybastis3.2-<a href="http://blog.csdn.net/u010046908/article/details/54930240" target="_blank" rel="external">springmvc4-mongodb3.4-redis3.2整合（九）之 spring中定时器quartz的整合</a>。今天主要来继续总结quartz在集群中的使用。</p>
-<h3 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h3><ol>
-<li>quartz可以通过jdbc直连连接到MYSQL数据库，读取配置在数据库里的job初始化信息，并且把job通过java序列化到数据库里，这样就使得每个job信息得到了持久化，即使在jvm或者容器挂掉的情况下，也能通过数据库感知到其他job的状态和信息。</li>
-<li>quartz集群各节点之间是通过同一个数据库实例(准确的说是同一个数据库实例的同一套表)来感知彼此的。<h3 id="2、数据库表的创建"><a href="#2、数据库表的创建" class="headerlink" title="2、数据库表的创建"></a>2、数据库表的创建</h3>创建quartz要用的数据库表，此sql文件在：quartz-2.2.3\docs\dbTables。此文件夹下有各个数据库的sql文件，mysql选择tables_mysql.sql。总共有11张表。  </li>
-</ol>
-<ul>
-<li>QRTZ_CALENDARS 以 Blob 类型存储 Quartz 的 Calendar 信息 </li>
-<li>QRTZ_CRON_TRIGGERS 存储 Cron Trigger，包括 Cron表达式和时区信息 </li>
-<li>QRTZ_FIRED_TRIGGERS 存储与已触发的 Trigger 相关的状态信息，以及相联 Job的执行信息 </li>
-<li>QRTZ_PAUSED_TRIGGER_GRPS 存储已暂停的 Trigger 组的信息 </li>
-<li>QRTZ_SCHEDULER_STATE 存储少量的有关 Scheduler 的状态信息，和别的 Scheduler实例(假如是用于一个集群中) </li>
-<li>QRTZ_LOCKS 存储程序的悲观锁的信息(假如使用了悲观锁) </li>
-<li>QRTZ_JOB_DETAILS 存储每一个已配置的 Job 的详细信息 </li>
-<li>QRTZ_JOB_LISTENERS 存储有关已配置的 JobListener 的信息 </li>
-<li>QRTZ_SIMPLE_TRIGGERS 存储简单的Trigger，包括重复次数，间隔，以及已触的次数</li>
-<li>QRTZ_BLOG_TRIGGERS Trigger 作为 Blob 类型存储(用于 Quartz 用户用 JDBC创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候) </li>
-<li>QRTZ_TRIGGER_LISTENERS 存储已配置的 TriggerListener 的信息 </li>
-<li>QRTZ_TRIGGERS 存储已配置的 Trigger 的信息</li>
-</ul>
-<p>####3、 quartz.properties的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#调度标识名 集群中每一个实例都必须使用相同的名称</div><div class="line">org.quartz.scheduler.instanceName = MyScheduler</div><div class="line">#线程数量</div><div class="line">org.quartz.threadPool.threadCount = 10</div><div class="line">#线程优先级</div><div class="line">org.quartz.threadPool.threadPriority = 5</div><div class="line">#数据保存方式为持久化</div><div class="line">org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX</div><div class="line">#数据库平台 </div><div class="line">org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate</div><div class="line">#表的前缀</div><div class="line">org.quartz.jobStore.tablePrefix = QRTZ_</div><div class="line">#库的别名</div><div class="line">org.quartz.jobStore.dataSource = myDS</div><div class="line"># Cluster开启集群</div><div class="line">org.quartz.jobStore.isClustered = true</div><div class="line">#ID设置为自动获取 每一个必须不同</div><div class="line">org.quartz.scheduler.instanceId = AUTO</div><div class="line"></div><div class="line">org.quartz.dataSource.myDS.driver = com.mysql.jdbc.Driver</div><div class="line">org.quartz.dataSource.myDS.URL = jdbc:mysql://localhost:3306/db_my?characterEncoding=utf-8</div><div class="line">org.quartz.dataSource.myDS.user = root</div><div class="line">org.quartz.dataSource.myDS.password = 123456</div><div class="line">org.quartz.dataSource.myDS.maxConnections = 5</div></pre></td></tr></table></figure>
-<p>####4.创建任务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">package com.lidong.dubbo.core.util.quartz;</div><div class="line"></div><div class="line">import java.io.Serializable;</div><div class="line">import java.text.SimpleDateFormat;</div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">import org.quartz.DisallowConcurrentExecution;</div><div class="line">import org.quartz.JobExecutionContext;</div><div class="line">import org.quartz.JobExecutionException;</div><div class="line">import org.quartz.PersistJobDataAfterExecution;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;</div><div class="line">import org.springframework.scheduling.quartz.QuartzJobBean;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @项目名称:lidong-dubbo</div><div class="line"> * @类名:SpringQtz</div><div class="line"> * @类的描述: 作业类的调度</div><div class="line"> * @作者:lidong</div><div class="line"> * @创建时间:2017/2/8 下午5:41</div><div class="line"> * @公司:chni</div><div class="line"> * @QQ:1561281670</div><div class="line"> * @邮箱:lidong1665@163.com</div><div class="line"> */</div><div class="line"></div><div class="line">public class SpringQtz extends QuartzJobBean&#123;</div><div class="line"></div><div class="line"></div><div class="line">    static Logger  logger = LoggerFactory.getLogger(SpringQtz.class);</div><div class="line"></div><div class="line">    private static int counter = 0;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException &#123;</div><div class="line">        long ms = System.currentTimeMillis();</div><div class="line">        logger.error(&quot; SpringQtz start  执行&quot;);</div><div class="line">        logger.info(&quot;-------&quot;+new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;).format(new Date(ms))+&quot;  &quot;+&quot;(&quot; + counter++ + &quot;)&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-spring-quartz-xml的配置"><a href="#5-spring-quartz-xml的配置" class="headerlink" title="5.spring-quartz.xml的配置"></a>5.spring-quartz.xml的配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;  </div><div class="line">        http://www.springframework.org/schema/beans  </div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line">	&lt;!-- 定义调用对象和调用对象的方法 --&gt;</div><div class="line">	&lt;bean id=&quot;SpringQtzJobDetail&quot;</div><div class="line">		class=&quot;org.springframework.scheduling.quartz.JobDetailFactoryBean&quot;&gt;</div><div class="line">		&lt;property name=&quot;jobClass&quot;  value=&quot;com.lidong.dubbo.core.util.quartz.SpringQtz&quot;/&gt;</div><div class="line">		&lt;property name=&quot;durability&quot; value=&quot;true&quot;/&gt;</div><div class="line"></div><div class="line">		&lt;property name=&quot;group&quot; value=&quot;job_work&quot;/&gt;</div><div class="line">		&lt;property name=&quot;name&quot; value=&quot;job_work_name&quot;/&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">	&lt;bean id=&quot;SpringQtzJobDetail1&quot;</div><div class="line">		class=&quot;org.springframework.scheduling.quartz.JobDetailFactoryBean&quot;&gt;</div><div class="line">		&lt;property name=&quot;jobClass&quot; value=&quot;com.lidong.dubbo.core.util.quartz.SpringQtzDemo&quot;/&gt;</div><div class="line">		&lt;property name=&quot;durability&quot; value=&quot;true&quot;/&gt;</div><div class="line"></div><div class="line">		&lt;property name=&quot;group&quot; value=&quot;job_work1&quot;/&gt;</div><div class="line">		&lt;property name=&quot;name&quot; value=&quot;job_work_name1&quot;/&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">	&lt;!-- ======================== 调度触发器 ======================== --&gt;</div><div class="line">	&lt;bean id=&quot;CronTriggerBean&quot;</div><div class="line">		class=&quot;org.springframework.scheduling.quartz.CronTriggerFactoryBean&quot;&gt;</div><div class="line">		&lt;property name=&quot;jobDetail&quot; ref=&quot;SpringQtzJobDetail&quot;&gt;&lt;/property&gt;</div><div class="line">		&lt;!-- cron表达式 --&gt;</div><div class="line">		&lt;property name=&quot;cronExpression&quot; value=&quot;0/20 * * * * ?&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;CronTriggerBean1&quot;</div><div class="line">		class=&quot;org.springframework.scheduling.quartz.CronTriggerFactoryBean&quot;&gt;</div><div class="line">		&lt;property name=&quot;jobDetail&quot; ref=&quot;SpringQtzJobDetail1&quot;&gt;&lt;/property&gt;</div><div class="line">		&lt;!-- cron表达式 --&gt;</div><div class="line">		&lt;property name=&quot;cronExpression&quot; value=&quot;0/30 * * * * ?&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- ======================== 调度工厂 ======================== --&gt;</div><div class="line">	&lt;bean id=&quot;SpringJobSchedulerFactoryBean&quot;</div><div class="line">		class=&quot;org.springframework.scheduling.quartz.SchedulerFactoryBean&quot;&gt;</div><div class="line"></div><div class="line">		&lt;property name=&quot;dataSource&quot;&gt;</div><div class="line">			&lt;ref bean=&quot;dataSource&quot;/&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;applicationContextSchedulerContextKey&quot; value=&quot;applicationContext&quot; /&gt;</div><div class="line">		&lt;property name=&quot;configLocation&quot; value=&quot;classpath:config/quartz.properties&quot;/&gt;</div><div class="line">		&lt;!--启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了--&gt;</div><div class="line">		&lt;property name=&quot;overwriteExistingJobs&quot; value=&quot;true&quot;/&gt;</div><div class="line">		&lt;property name=&quot;triggers&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;ref bean=&quot;CronTriggerBean&quot; /&gt;</div><div class="line">				&lt;ref bean=&quot;CronTriggerBean1&quot; /&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;jobDetails&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;ref bean=&quot;SpringQtzJobDetail&quot; /&gt;</div><div class="line">				&lt;ref bean=&quot;SpringQtzJobDetail1&quot; /&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>####6. 分别部署到两台Tomcat服务器查看效果</p>
-<p>第1个tomcat的结果：<br><img src="http://img.blog.csdn.net/20170220162813993?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>第2个omcat的结果：<br><img src="http://img.blog.csdn.net/20170220163032621?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>可以看到。任务不会重复执行。</p>
-<blockquote>
-<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/Error-Failed-to-complete-Gradle-execution-Cause-Unknown-command-line-option-X-解决方法/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/27/Error-Failed-to-complete-Gradle-execution-Cause-Unknown-command-line-option-X-解决方法/" itemprop="url">
-                  Error:Failed to complete Gradle execution. Cause: Unknown command-line option '-X'解决方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T12:35:22+08:00">
-                2017-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/27/Error-Failed-to-complete-Gradle-execution-Cause-Unknown-command-line-option-X-解决方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/Error-Failed-to-complete-Gradle-execution-Cause-Unknown-command-line-option-X-解决方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天新建android studio项目时候。突然遇到如下问题：</p>
-<p><img src="https://i.stack.imgur.com/pNMdj.png" alt="这里写图片描述"></p>
-<p>很是操蛋。最后发现时候用于Setting-&gt;compiler -<br>Command-line Optons：-Xmx2048m导致的。</p>
-<p>解决办法是将Command-line Optons的参数删除，设置为空就ok了</p>
-<p><img src="https://i.stack.imgur.com/GDCSQ.jpg" alt="这里写图片描述"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1079,7 +1598,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1090,7 +1609,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>

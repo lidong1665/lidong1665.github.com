@@ -141,6 +141,16 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 
 
   <script type="text/javascript">
@@ -246,6 +256,613 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/" itemprop="url">
+                  Node.js  http服务器搭建和发送http的get,post请求
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:31:43+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Node-js-http服务器搭建和发送http的get-post请求/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Node-js-搭建http服务器"><a href="#1-Node-js-搭建http服务器" class="headerlink" title="1.Node.js 搭建http服务器"></a>1.Node.js 搭建http服务器</h2><h3 id="1-1创建server-js"><a href="#1-1创建server-js" class="headerlink" title="1.1创建server.js"></a>1.1创建server.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line">http.createServer(function (request, response) &#123;</div><div class="line">    console.log(&apos;receive request&apos;);</div><div class="line">    response.writeHead(200, &#123; &apos;Content-Type&apos;: &apos;text-plain&apos; &#125;);</div><div class="line">    response.end(&apos;Hello World\n&apos;);</div><div class="line">&#125;).listen(8124);</div><div class="line">console.log(&quot;node server start ok  port &quot;+8124);</div></pre></td></tr></table></figure>
+<h3 id="1-2执行-server-js"><a href="#1-2执行-server-js" class="headerlink" title="1.2执行 server.js"></a>1.2执行 server.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node server.js</div></pre></td></tr></table></figure>
+<h3 id="1-3服务器启动"><a href="#1-3服务器启动" class="headerlink" title="1.3服务器启动"></a>1.3服务器启动</h3><p>如图：<br><img src="http://img.blog.csdn.net/20161006090853541" alt="这里写图片描述"></p>
+<p>通过浏览器地址请求：<a href="http://localhost:8124" target="_blank" rel="external">http://localhost:8124</a></p>
+<p><img src="http://img.blog.csdn.net/20161006091004463" alt="这里写图片描述"></p>
+<h2 id="2-发送GET请求"><a href="#2-发送GET请求" class="headerlink" title="2.发送GET请求"></a>2.发送GET请求</h2><h3 id="2-1发送get请求通过聚合服务器获取微信新闻数据"><a href="#2-1发送get请求通过聚合服务器获取微信新闻数据" class="headerlink" title="2.1发送get请求通过聚合服务器获取微信新闻数据"></a>2.1发送get请求通过聚合服务器获取微信新闻数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line"></div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line"></div><div class="line">http.get(&apos;http://v.juhe.cn/weixin/query?key=f16af393a63364b729fd81ed9fdd4b7d&amp;pno=1&amp;ps=10&apos;, function (response) &#123;</div><div class="line">    var body = [];</div><div class="line">    console.log(response.statusCode);</div><div class="line">    console.log(response.headers);</div><div class="line">    console.log(response);</div><div class="line">    response.on(&apos;data&apos;, function (chunk) &#123;</div><div class="line">        body.push(chunk);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    response.on(&apos;end&apos;, function () &#123;</div><div class="line">        body = Buffer.concat(body);</div><div class="line">        console.log(body.toString());</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="2-2-执行-get-demo-js"><a href="#2-2-执行-get-demo-js" class="headerlink" title="2.2 执行 get_demo.js"></a>2.2 执行 get_demo.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node get_demo.js</div></pre></td></tr></table></figure>
+<h3 id="2-3获取的结果打印"><a href="#2-3获取的结果打印" class="headerlink" title="2.3获取的结果打印"></a>2.3获取的结果打印</h3><p><img src="http://img.blog.csdn.net/20161006091828857" alt="这里写图片描述"></p>
+<h2 id="3-发送POST请求"><a href="#3-发送POST请求" class="headerlink" title="3.发送POST请求"></a>3.发送POST请求</h2><h3 id="3-1发送post请求通过聚合服务器获取微信闻数据"><a href="#3-1发送post请求通过聚合服务器获取微信闻数据" class="headerlink" title="3.1发送post请求通过聚合服务器获取微信闻数据"></a>3.1发送post请求通过聚合服务器获取微信闻数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">var http = require(&apos;http&apos;);</div><div class="line"></div><div class="line">var querystring = require(&apos;querystring&apos;);</div><div class="line"></div><div class="line">var postData = querystring.stringify(&#123;</div><div class="line">  &apos;key&apos; : &apos;f16af393a63364b729fd81ed9fdd4b7d&apos;,</div><div class="line">  &apos;pno&apos;:&apos;1&apos;,</div><div class="line">  &apos;ps&apos;:10</div><div class="line">&#125;);</div><div class="line"></div><div class="line">var options = &#123;</div><div class="line">  hostname: &apos;v.juhe.cn&apos;,</div><div class="line">  path: &apos;/weixin/query&apos;,</div><div class="line">  method: &apos;POST&apos;,</div><div class="line">  headers: &#123;</div><div class="line">    &apos;Content-Type&apos;: &apos;application/x-www-form-urlencoded&apos;,</div><div class="line">    &apos;Content-Length&apos;: Buffer.byteLength(postData)</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var req = http.request(options, (res) =&gt; &#123;</div><div class="line">  console.log(`STATUS: $&#123;res.statusCode&#125;`);</div><div class="line">  console.log(`HEADERS: $&#123;JSON.stringify(res.headers)&#125;`);</div><div class="line">  res.setEncoding(&apos;utf8&apos;);</div><div class="line">  res.on(&apos;data&apos;, (chunk) =&gt; &#123;</div><div class="line">    console.log(`BODY: $&#123;chunk&#125;`);</div><div class="line">  &#125;);</div><div class="line">  res.on(&apos;end&apos;, () =&gt; &#123;</div><div class="line">    console.log(&apos;No more data in response.&apos;)</div><div class="line">  &#125;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">req.on(&apos;error&apos;, (e) =&gt; &#123;</div><div class="line">  console.log(`problem with request: $&#123;e.message&#125;`);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// write data to request body</div><div class="line">req.write(postData);</div><div class="line">req.end();</div></pre></td></tr></table></figure>
+<h3 id="3-2-执行-post-demo-js"><a href="#3-2-执行-post-demo-js" class="headerlink" title="3.2 执行 post_demo.js"></a>3.2 执行 post_demo.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node post_demo.js</div></pre></td></tr></table></figure>
+<h3 id="3-3获取的结果打印"><a href="#3-3获取的结果打印" class="headerlink" title="3.3获取的结果打印"></a>3.3获取的结果打印</h3><p><img src="http://img.blog.csdn.net/20161006092255174" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/微信小程序初体验-列表的上拉加载和下拉刷新的实现/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/微信小程序初体验-列表的上拉加载和下拉刷新的实现/" itemprop="url">
+                  微信小程序初体验-列表的上拉加载和下拉刷新的实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:23:34+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/微信小程序初体验-列表的上拉加载和下拉刷新的实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/微信小程序初体验-列表的上拉加载和下拉刷新的实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>微信小程序可谓是9月21号之后最火的一个名词了，一经出现真是轰炸了整个开发人员，当然很多App开发人员有了一个担心，微信小程序的到来会不会让移动端App颠覆，让移动端的程序员失业，身为一个Android开发者我是不相信的，即使有，那也是需要个一两年的过度和打磨才能实现的吧。 </p>
+<p>不管微信小程序是否能颠覆当今的移动开发格局，我们都要积极向上的心态去接收，去学习。不排斥新技术，所以，心动不如行动，赶紧先搭建一个微信小程序开发工具。那么接下来就让我们来开始学习列表的上拉加载和下拉刷新的实现吧（通过聚合数据平台获取微信新闻）。</p>
+<h2 id="1-介绍几个组件"><a href="#1-介绍几个组件" class="headerlink" title="1.介绍几个组件"></a>1.介绍几个组件</h2><h3 id="1-1-scroll-view-组件"><a href="#1-1-scroll-view-组件" class="headerlink" title="1.1 scroll-view 组件"></a>1.1 scroll-view 组件</h3><p><img src="http://img.blog.csdn.net/20161004103844128" alt="这里写图片描述"></p>
+<p>  注意：使用竖向滚动时，需要给<scroll-view>一个固定高度，通过 WXSS 设置 height。</scroll-view></p>
+<h3 id="1-2-image组件"><a href="#1-2-image组件" class="headerlink" title="1.2 image组件"></a>1.2 image组件</h3><p><img src="http://img.blog.csdn.net/20161004110941566" alt="这里写图片描述"></p>
+<p>注意：mode有12种模式，其中3种是缩放模式，9种是裁剪模式。</p>
+<h3 id="1-3-Icon组件"><a href="#1-3-Icon组件" class="headerlink" title="1.3 Icon组件"></a>1.3 Icon组件</h3><p><img src="http://img.blog.csdn.net/20161004111410072" alt="这里写图片描述"></p>
+<p>iconType: [<br>      ‘success’, ‘info’, ‘warn’, ‘waiting’, ‘safe_success’, ‘safe_warn’,<br>      ‘success_circle’, ‘success_no_circle’, ‘waiting_circle’, ‘circle’, ‘download’,<br>      ‘info_circle’, ‘cancel’, ‘search’, ‘clear’<br>    ]</p>
+<h2 id="2-列表的上拉加载和下拉刷新的实现"><a href="#2-列表的上拉加载和下拉刷新的实现" class="headerlink" title="2.列表的上拉加载和下拉刷新的实现"></a>2.列表的上拉加载和下拉刷新的实现</h2><h2 id="2-1先来张效果图"><a href="#2-1先来张效果图" class="headerlink" title="2.1先来张效果图"></a>2.1先来张效果图</h2><p><img src="http://img.blog.csdn.net/20161004115244341" width="506" height="306"></p>
+<p><img src="" alt="这里写图片描述"></p>
+<h2 id="2-2逻辑很简单，直接上代码"><a href="#2-2逻辑很简单，直接上代码" class="headerlink" title="2.2逻辑很简单，直接上代码"></a>2.2逻辑很简单，直接上代码</h2><h3 id="2-2-1-detail-wxml-布局文件"><a href="#2-2-1-detail-wxml-布局文件" class="headerlink" title="2.2.1  detail.wxml 布局文件"></a>2.2.1  detail.wxml 布局文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;loading hidden=&quot;&#123;&#123;hidden&#125;&#125;&quot; bindchange=&quot;loadingChange&quot;&gt;</div><div class="line">    加载中...</div><div class="line">  &lt;/loading&gt;  </div><div class="line"> &lt;scroll-view scroll-y=&quot;true&quot; style=&quot;height: 100%;&quot; bindscrolltolower=&quot;loadMore&quot; bindscrolltoupper=&quot;refesh&quot;&gt;</div><div class="line">      &lt;view wx:if=&quot;&#123;&#123;hasRefesh&#125;&#125;&quot; style=&quot;display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;&quot;&gt;</div><div class="line">      &lt;icon type=&quot;waiting&quot; size=&quot;45&quot;/&gt;&lt;text&gt;刷新中...&lt;/text&gt;&lt;/view&gt;</div><div class="line">      &lt;view wx:else  style=&quot;display:none&quot; &gt;&lt;text&gt;&lt;/text&gt;&lt;/view&gt;</div><div class="line">  &lt;view class=&quot;lll&quot;  wx:for=&quot;&#123;&#123;list&#125;&#125;&quot; wx:for-item=&quot;item&quot; bindtap=&quot;bindViewTap&quot; </div><div class="line">         data-title=&quot;&#123;&#123;item.title&#125;&#125;&quot; &gt;</div><div class="line">      &lt;image style=&quot; width: 50px;height: 50px;margin: 20rpx;&quot; src=&quot;&#123;&#123;item.firstImg&#125;&#125;&quot;   &gt;&lt;/image&gt;</div><div class="line">      &lt;view  class=&quot;eee&quot; &gt; </div><div class="line">       &lt;view style=&quot;margin:5px;font-size:8px&quot;&gt; 标题:&#123;&#123;item.title&#125;&#125;&lt;/view&gt;</div><div class="line">       &lt;view style=&quot;margin:5px;color:red;font-size:6px&quot;&gt; 来源:&#123;&#123;item.source&#125;&#125;&lt;/view&gt;</div><div class="line">       &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div><div class="line">&lt;view class=&quot;tips1&quot;&gt;</div><div class="line">      &lt;view wx:if=&quot;&#123;&#123;hasMore&#125;&#125;&quot; style=&quot;display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;&quot;&gt;</div><div class="line">      &lt;icon type=&quot;waiting&quot; size=&quot;45&quot;/&gt;&lt;text&gt;玩命的加载中...&lt;/text&gt;&lt;/view&gt;</div><div class="line">      &lt;view wx:else&gt;&lt;text&gt;没有更多内容了&lt;/text&gt;&lt;/view&gt;</div><div class="line">    &lt;/view&gt;</div><div class="line"> &lt;/scroll-view&gt;</div></pre></td></tr></table></figure>
+<h3 id="2-2-2-detail-js逻辑代码文件"><a href="#2-2-2-detail-js逻辑代码文件" class="headerlink" title="2.2.2 detail.js逻辑代码文件"></a>2.2.2 detail.js逻辑代码文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var network_util = require(&apos;../../utils/network_util.js&apos;);</div><div class="line">var json_util = require(&apos;../../utils/json_util.js&apos;);</div><div class="line">Page(&#123;</div><div class="line">  data:&#123;</div><div class="line">    // text:&quot;这是一个页面&quot;</div><div class="line">    list:[],</div><div class="line">     dd:&apos;&apos;,</div><div class="line">     hidden:false,</div><div class="line">     page: 1,</div><div class="line">     size: 20,</div><div class="line">     hasMore:true,</div><div class="line">     hasRefesh:false</div><div class="line">  &#125;,</div><div class="line">  onLoad:function(options)&#123;</div><div class="line">    var that = this;</div><div class="line">    var url = &apos;http://v.juhe.cn/weixin/query?key=f16af393a63364b729fd81ed9fdd4b7d&amp;pno=1&amp;ps=10&apos;;</div><div class="line">    network_util._get(url,</div><div class="line">    function(res)&#123;</div><div class="line">    that.setData(&#123;</div><div class="line">       list:res.data.result.list,</div><div class="line">       hidden: true,</div><div class="line">    &#125;);</div><div class="line">    &#125;,function(res)&#123;</div><div class="line">     console.log(res);</div><div class="line"> &#125;);</div><div class="line">  &#125;,</div><div class="line">  onReady:function()&#123;</div><div class="line">    // 页面渲染完成</div><div class="line">  &#125;,</div><div class="line">  onShow:function()&#123;</div><div class="line">    // 页面显示</div><div class="line">  &#125;,</div><div class="line">  onHide:function()&#123;</div><div class="line">    // 页面隐藏</div><div class="line">  &#125;,</div><div class="line">  onUnload:function()&#123;</div><div class="line">    // 页面关闭</div><div class="line">  &#125;,</div><div class="line">   //点击事件处理</div><div class="line">  bindViewTap: function(e) &#123;</div><div class="line">    console.log(e.currentTarget.dataset.title);</div><div class="line">  &#125;,</div><div class="line">  //加载更多</div><div class="line">  loadMore: function(e) &#123;</div><div class="line">     var that = this;</div><div class="line">    that.setData(&#123;</div><div class="line">    hasRefesh:true,&#125;);</div><div class="line">    if (!this.data.hasMore) return</div><div class="line">    var url = &apos;http://v.juhe.cn/weixin/query?key=f16af393a63364b729fd81ed9fdd4b7d&amp;pno=&apos;+(++that.data.page)+&apos;&amp;ps=10&apos;;</div><div class="line">    network_util._get(url,</div><div class="line">    function(res)&#123;</div><div class="line">    that.setData(&#123;</div><div class="line">       list: that.data.list.concat(res.data.result.list),</div><div class="line">       hidden: true,</div><div class="line">       hasRefesh:false,</div><div class="line">    &#125;);</div><div class="line">    &#125;,function(res)&#123;</div><div class="line">     console.log(res);</div><div class="line">  &#125;)</div><div class="line">&#125;,</div><div class="line">//刷新处理</div><div class="line">refesh: function(e) &#123;</div><div class="line"> var that = this;</div><div class="line"> that.setData(&#123;</div><div class="line">    hasRefesh:true,</div><div class="line"> &#125;);</div><div class="line">    var url = &apos;http://v.juhe.cn/weixin/query?key=f16af393a63364b729fd81ed9fdd4b7d&amp;pno=1&amp;ps=10&apos;;</div><div class="line">    network_util._get(url,</div><div class="line">    function(res)&#123;</div><div class="line">    that.setData(&#123;</div><div class="line">      list:res.data.result.list,</div><div class="line">       hidden: true,</div><div class="line">       page:1,</div><div class="line">       hasRefesh:false,</div><div class="line">    &#125;);</div><div class="line">    &#125;,function(res)&#123;</div><div class="line">     console.log(res);</div><div class="line"> &#125;)</div><div class="line">&#125;,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>最后的效果：<br><img src="http://img.blog.csdn.net/20161004121453294" alt="这里写图片描述"></p>
+<p>关于新闻的详情实现，后面在实现，由于还不知道怎么加载h5页面。谢谢你学习，有问题直接QQ（1561281670）交流。</p>
+<p><a href="https://github.com/lidong1665/WeiXinProject" target="_blank" rel="external">代码地址：https://github.com/lidong1665/WeiXinProject</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Redis的安装、部署、主从配置/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/Redis的安装、部署、主从配置/" itemprop="url">
+                  Redis的安装、部署、主从配置
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:43:09+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Redis的简介"><a href="#1-Redis的简介" class="headerlink" title="1. Redis的简介"></a>1. Redis的简介</h2><p>Redis是一个开源的，先进的 key-value 存储可用于构建高性能，可扩展的 Web 应用程序的解决方案。</p>
+<p>Redis官方网网站是：<a href="http://www.redis.io/" target="_blank" rel="external">http://www.redis.io/</a>，如下：<br><img src="http://img.blog.csdn.net/20161226102106348?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>Redis 有三个主要使其有别于其它很多竞争对手的特点：<br>Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的；<br>Redis相比许多键值数据存储系统有相对丰富的数据类型；<br>Redis可以将数据复制到任意数量的从服务器中；</p>
+<h2 id="2-Redis优点"><a href="#2-Redis优点" class="headerlink" title="2. Redis优点"></a>2. Redis优点</h2><ul>
+<li>异常快速 : Redis是非常快的，每秒可以执行大约110000设置操作，81000个/每秒的读取操作。</li>
+<li><p>支持丰富的数据类型 : Redis支持最大多数开发人员已经知道如列表，集合，可排序集合，哈希等数据类型。这使得在应用中很容易解决的各种问题，因为我们知道哪些问题处理使用哪种数据类型更好解决。</p>
+</li>
+<li><p>操作都是原子的 : 所有 Redis 的操作都是原子，从而确保当两个客户同时访问 Redis 服务器得到的是更新后的值（最新值）。</p>
+</li>
+<li>MultiUtility工具：Redis是一个多功能实用工具，可以在很多如：缓存，消息传递队列中使用（Redis原生支持发布/订阅），在应用程序中，如：Web应用程序session，网站页面点击数等任何短暂的数据，最新的100条评论等；<h2 id="3-Redis环境"><a href="#3-Redis环境" class="headerlink" title="3.Redis环境"></a>3.Redis环境</h2>要在 Ubuntu 上安装 Redis，打开终端，然后输入以下命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$sudo apt-get update</div><div class="line">$sudo apt-get install redis-server</div></pre></td></tr></table></figure>
+<p>这将在您的计算机上安装Redis<br>启动 Redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-server</div></pre></td></tr></table></figure>
+<p>查看 redis 是否还在运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-cli</div></pre></td></tr></table></figure>
+<p>这将打开一个 Redis 提示符，如下图所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
+<p>在上面的提示信息中：127.0.0.1 是本机的IP地址，6379是 Redis 服务器运行的端口。现在输入 PING 命令，如下图所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis 127.0.0.1:6379&gt; ping</div><div class="line">PONG</div></pre></td></tr></table></figure>
+<p>这说明现在你已经成功地在计算机上安装了 Redis。<br>在Ubuntu上安装Redis桌面管理器<br>要在Ubuntu 上安装 Redis桌面管理，可以从 <a href="http://redisdesktop.com/download" target="_blank" rel="external">http://redisdesktop.com/download</a> 下载包并安装它。<br>Redis 桌面管理器会给你用户界面来管理 Redis 键和数据。<br><img src="http://img.blog.csdn.net/20161226102712366?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="4-Redis的主从配置（以window为例）"><a href="#4-Redis的主从配置（以window为例）" class="headerlink" title="4. Redis的主从配置（以window为例）"></a>4. Redis的主从配置（以window为例）</h2><p>在window中安装redis服务器，然后将文件复制一份，如下图：</p>
+<p><img src="http://img.blog.csdn.net/20161226103100055?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>修改文件夹名称分别为主服务器为Redis-master，从服务器为Redis - slave，<br>时候为修改从服务器redis.windows.conf文件中的端口prot为6380，在6380的redis.windows.conf中指定 是6379的slave，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#配置6379主服务器配置一个从服务器6380</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
+<p>这样Redis的一主一从就配置好了。接下来启动两个主从服务器：</p>
+<h4 id="4-1-启动Redis-master："><a href="#4-1-启动Redis-master：" class="headerlink" title="4.1. 启动Redis-master："></a>4.1. 启动Redis-master：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161226104237509?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="4-2-启动Redis-slave："><a href="#4-2-启动Redis-slave：" class="headerlink" title="4.2. 启动Redis - slave："></a>4.2. 启动Redis - slave：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">redis-server.exe redis.windows.conf</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161226104332776?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="4-3-连接主Redis-master服务并保存数据："><a href="#4-3-连接主Redis-master服务并保存数据：" class="headerlink" title="4.3 连接主Redis-master服务并保存数据："></a>4.3 连接主Redis-master服务并保存数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis-master&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; set test1  text_1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
+<h4 id="4-4-连接主Redis-slave服务查看数据："><a href="#4-4-连接主Redis-slave服务查看数据：" class="headerlink" title="4.4.连接主Redis - slave服务查看数据："></a>4.4.连接主Redis - slave服务查看数据：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Redis - slave&gt;redis-cli.exe</div><div class="line">127.0.0.1:6379&gt; get test1</div><div class="line">&quot;text_1&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure>
+<h4 id="4-5-用Redis-Desktop-Manager查看数据"><a href="#4-5-用Redis-Desktop-Manager查看数据" class="headerlink" title="4.5 用Redis Desktop Manager查看数据"></a>4.5 用Redis Desktop Manager查看数据</h4><p><img src="http://img.blog.csdn.net/20161226105125330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>总结：Redis简单使用就这么多，谢谢的的阅读。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/Zookeeper-安装和部署/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/Zookeeper-安装和部署/" itemprop="url">
+                  Zookeeper 安装和部署
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:40:47+08:00">
+                2017-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/12/Zookeeper-安装和部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/Zookeeper-安装和部署/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Zookeeper-简介"><a href="#1-Zookeeper-简介" class="headerlink" title="1. Zookeeper 简介"></a>1. Zookeeper 简介</h2><p>ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，是Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
+<p>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。<br>ZooKeeper包含一个简单的原语集， 提供Java和C的接口。<br>ZooKeeper代码版本中，提供了分布式独享锁、选举、队列的接口，代码在zookeeper-3.4.8\src\recipes。其中分布锁和队列有Java和C两个版本，选举只有Java版本。</p>
+<h2 id="2-Zookeeper原理"><a href="#2-Zookeeper原理" class="headerlink" title="2. Zookeeper原理"></a>2. Zookeeper原理</h2><p>ZooKeeper是以Fast Paxos算法为基础的，Paxos 算法存在活锁的问题，即当有多个proposer交错提交时，有可能互相排斥导致没有一个proposer能提交成功，而Fast Paxos作了一些优化，通过选举产生一个leader (领导者)，只有leader才能提交proposer，具体算法可见Fast Paxos。因此，要想弄懂ZooKeeper首先得对Fast Paxos有所了解。<br>ZooKeeper的基本运转流程：<br>1、选举Leader。<br>2、同步数据。<br>3、选举Leader过程中算法有很多，但要达到的选举标准是一致的。<br>4、Leader要具有最高的zxid。<br>5、集群中大多数的机器得到响应并follow选出的Leader。[3]</p>
+<h2 id="3-Zookeeper特点"><a href="#3-Zookeeper特点" class="headerlink" title="3. Zookeeper特点"></a>3. Zookeeper特点</h2><p>在Zookeeper中，znode是一个跟Unix文件系统路径相似的节点，可以往这个节点存储或获取数据。如果在创建znode时Flag设置为EPHEMERAL，那么当创建这个znode的节点和Zookeeper失去连接后，这个znode将不再存在在Zookeeper里，Zookeeper使用Watcher察觉事件信息。当客户端接收到事件信息，比如连接超时、节点数据改变、子节点改变，可以调用相应的行为来处理数据。Zookeeper的Wiki页面展示了如何使用Zookeeper来处理事件通知，队列，优先队列，锁，共享锁，可撤销的共享锁，两阶段提交。</p>
+<p>那么Zookeeper能做什么事情呢，简单的例子：假设我们有20个搜索引擎的服务器(每个负责总索引中的一部分的搜索任务)和一个总服务器(负责向这20个搜索引擎的服务器发出搜索请求并合并结果集)，一个备用的总服务器(负责当总服务器宕机时替换总服务器)，一个web的cgi(向总服务器发出搜索请求)。搜索引擎的服务器中的15个服务器提供搜索服务，5个服务器正在生成索引。这20个搜索引擎的服务器经常要让正在提供搜索服务的服务器停止提供服务开始生成索引，或生成索引的服务器已经把索引生成完成可以提供搜索服务了。使用Zookeeper可以保证总服务器自动感知有多少提供搜索引擎的服务器并向这些服务器发出搜索请求，当总服务器宕机时自动启用备用的总服务器。</p>
+<h2 id="4-Zookeeper的下载"><a href="#4-Zookeeper的下载" class="headerlink" title="4. Zookeeper的下载"></a>4. Zookeeper的下载</h2><p>可以从 <a href="https://zookeeper.apache.org/releases.html" target="_blank" rel="external">https://zookeeper.apache.org/releases.html</a> 下载ZooKeeper，目前最新的稳定版本为 3.4.8 版本，用户可以自行选择一个速度较快的镜像来下载即可。</p>
+<h2 id="5-Zookeeper的目录结构"><a href="#5-Zookeeper的目录结构" class="headerlink" title="5. Zookeeper的目录结构"></a>5. Zookeeper的目录结构</h2><p>下载并解压ZooKeeper软件压缩包后，可以看到zk包含以下的文件和目录：</p>
+<p><img src="http://img.blog.csdn.net/20161225192742067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20161225193818972?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>ZooKeeper软件的文件和目录</p>
+<ul>
+<li>bin目录<br>zk的可执行脚本目录，包括zk服务进程，zk客户端，等脚本。其中，.sh是Linux环境下的脚本，.cmd是Windows环境下的脚本。</li>
+<li>lib目录<br>zk依赖的包。</li>
+<li>libexec目录<br>一些用于操作zk的工具包。<h2 id="5-单机模式"><a href="#5-单机模式" class="headerlink" title="5.单机模式"></a>5.单机模式</h2></li>
+</ul>
+<p>ZooKeeper的安装包括单机模式安装，以及集群模式安装。</p>
+<p>单机模式较简单，是指只部署一个zk进程，客户端直接与该zk进程进行通信。<br>在开发测试环境下，通过来说没有较多的物理资源，因此我们常使用单机模式。当然在单台物理机上也可以部署集群模式，但这会增加单台物理机的资源消耗。故在开发环境中，我们一般使用单机模式。</p>
+<h4 id="5-1-运行配置"><a href="#5-1-运行配置" class="headerlink" title="5.1 运行配置"></a>5.1 运行配置</h4><p>在etc/zookeeper/目录下提供了zoo.cfg，打开zoo.cfg，可以看到默认的一些配置。</p>
+<p>tickTime<br>时长单位为毫秒，为zk使用的基本时间度量单位。例如，1 <em> tickTime是客户端与zk服务端的心跳时间，2 </em> tickTime是客户端会话的超时时间。<br>tickTime的默认值为2000毫秒，更低的tickTime值可以更快地发现超时问题，但也会导致更高的网络流量（心跳消息）和更高的CPU使用率（会话的跟踪处理）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div></pre></td></tr></table></figure>
+<p>clientPort<br>zk服务进程监听的TCP端口，默认情况下，服务端会监听2181端口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clientPort=2181</div></pre></td></tr></table></figure>
+<p>dataDir<br>无默认配置，必须配置，用于配置存储快照文件的目录。如果没有配置dataLogDir，那么事务日志也会存储在此目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dataDir=/usr/local/var/run/zookeeper/data</div><div class="line">dataLogDir=/usr/local/var/run/zookeeper/logs</div></pre></td></tr></table></figure>
+<h4 id="5-2-启动"><a href="#5-2-启动" class="headerlink" title="5.2 启动"></a>5.2 启动</h4><p>在mac环境下，将zookeeper的bin目录配置到环境变量中，直接执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkServer start</div></pre></td></tr></table></figure>
+<p>这个命令使得zk服务进程在后台进行。</p>
+<p><img src="http://img.blog.csdn.net/20161225195052441?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>如果想在前台中运行以便查看服务器进程的输出日志，可以通过以下命令运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkServer start-foreground</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161225195251828?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>执行此命令，可以看到大量详细信息的输出，以便允许查看服务器发生了什么。</p>
+<h4 id="5-3-连接"><a href="#5-3-连接" class="headerlink" title="5.3 连接"></a>5.3 连接</h4><p>如果是连接同一台主机上的zk进程，那么直接运行bin/目录下的zkCli.cmd（Windows环境下）或者zkCli.sh（mac环境下），即可连接上zk。<br>直接执行zkCli.cmd或者zkCli.sh命令默认以主机号 127.0.0.1，端口号 2181 来连接zk，如果要连接不同机器上的zk，可以使用 -server 参数，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkCli -server 192.168.0.1:2181</div></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20161225195602198?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="6-集群模式"><a href="#6-集群模式" class="headerlink" title="6.集群模式"></a>6.集群模式</h2><p>单机模式的zk进程虽然便于开发与测试，但并不适合在生产环境使用。在生产环境下，我们需要使用集群模式来对zk进行部署。</p>
+<p>注意<br>在集群模式下，建议至少部署3个zk进程，或者部署奇数个zk进程。如果只部署2个zk进程，当其中一个zk进程挂掉后，剩下的一个进程并不能构成一个quorum的大多数。因此，部署2个进程甚至比单机模式更不可靠，因为2个进程其中一个不可用的可能性比一个进程不可用的可能性还大。</p>
+<h4 id="6-1-运行配置"><a href="#6-1-运行配置" class="headerlink" title="6. 1 运行配置"></a>6. 1 运行配置</h4><p>在集群模式下，所有的zk进程可以使用相同的配置文件（是指各个zk进程部署在不同的机器上面），例如如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">dataDir=/home/lidong/zookeeper</div><div class="line">clientPort=2181</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">server.1=192.168.0.105:2888:3888</div><div class="line">server.2=192.168.0.108:2888:3888</div></pre></td></tr></table></figure>
+<p>initLimit<br>ZooKeeper集群模式下包含多个zk进程，其中一个进程为leader，余下的进程为follower。<br>当follower最初与leader建立连接时，它们之间会传输相当多的数据，尤其是follower的数据落后leader很多。initLimit配置follower与leader之间建立连接后进行同步的最长时间。<br>syncLimit<br>配置follower和leader之间发送消息，请求和应答的最大时间长度。<br>tickTime<br>tickTime则是上述两个超时配置的基本单位，例如对于initLimit，其配置值为5，说明其超时时间为 2000ms * 5 = 10秒。<br>server.id=host:port1:port2<br>其中id为一个数字，表示zk进程的id，这个id也是dataDir目录下myid文件的内容。<br>host是该zk进程所在的IP地址，port1表示follower和leader交换消息所使用的端口，port2表示选举leader所使用的端口。<br>dataDir<br>其配置的含义跟单机模式下的含义类似，不同的是集群模式下还有一个myid文件。myid文件的内容只有一行，且内容只能为1 - 255之间的数字，这个数字亦即上面介绍server.id中的id，表示zk进程的id。<br>注意<br>如果仅为了测试部署集群模式而在同一台机器上部署zk进程，server.id=host:port1:port2配置中的port参数必须不同。但是，为了减少机器宕机的风险，强烈建议在部署集群模式时，将zk进程部署不同的物理机器上面。</p>
+<h4 id="6-2启动"><a href="#6-2启动" class="headerlink" title="6. 2启动"></a>6. 2启动</h4><p>假如我们打算在两台不同的机器 192.168.0.105（windows），192.168.0.108（mac os）上各部署一个zk进程，以构成一个zk集群。<br>两个zk进程均使用相同的 zoo.cfg 配置：<br>192.168.0.105（windows）<br>tickTime=2000<br>dataDir=D:/zookeeper<br>clientPort=2181<br>initLimit=5<br>syncLimit=2<br>server.1=192.168.0.105:2888:3888<br>server.2=192.168.0.108:2888:3888<br><img src="http://img.blog.csdn.net/20161225212855701?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>192.168.0.100（mac os）<br>tickTime=2000<br>dataDir=/home/lidong/zookeeper<br>clientPort=2181<br>initLimit=5<br>syncLimit=2<br>server.1=192.168.0.105:2888:3888<br>server.2=192.168.0.108:2888:3888</p>
+<p><img src="http://img.blog.csdn.net/20161225212920389?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>在window主机器dataDir目录（ D:/zookeeper目录）下，分别生成一个myid文件，其内容分别为1，2。<br>在Mac os主机器dataDir目录（ /home/lidong/zookeeper）下，分别生成一个myid文件，其内容分别为1，2。<br>然后分别在这两台机器上启动zk进程，这样我们便将zk集群启动了起来。</p>
+<h4 id="6-3连接"><a href="#6-3连接" class="headerlink" title="6. 3连接"></a>6. 3连接</h4><p>可以使用以下命令来连接一个zk集群：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zkCli -server 192.168.0.105:2181,192.168.0.108:2181</div></pre></td></tr></table></figure>
+<p>成功连接后，可以看到如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Connecting to 192.168.0.105:2181,192.168.0.108:2181</div><div class="line">Welcome to ZooKeeper!</div><div class="line">JLine support is enabled</div><div class="line"></div><div class="line">WATCHER::</div><div class="line"></div><div class="line">WatchedEvent state:SyncConnected type:None path:null</div><div class="line">[zk: 192.168.0.105:2181,192.168.0.108:2181(CONNECTED) 0]</div></pre></td></tr></table></figure>
+<p>从日志输出可以看到，客户端连接的是192.168.0.108:2181进程，客户端已成功连接上zk集群。</p>
+<p>注意：连接到那个集群是随机的。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -434,714 +1051,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（五）Spring中spring-data-redis的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:34:37+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（五）Spring中spring-data-redis的使用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前面已经写了四篇关于dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合的文章：</p>
-<ol>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53868659" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（一）Dubbo的使用</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53870144" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53982620" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离</a></li>
-<li><a href="http://blog.csdn.net/u010046908/article/details/53978250" target="_blank" rel="external">dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb</a></li>
-</ol>
-<p>今天继续写一篇关于Spring中spring-data-redis的使用。</p>
-<p>Redis是一种特殊的类型的数据库，它被称为一种key-value存储。key-value存储保存的是键值对。实际上，key-value存储于哈希Map有很大的相似。<br>spring data是一种面向模板的数据访问，能够在使用Redis的时候，为我们提供了帮助。于是就有了spring-data-redis。</p>
-<h3 id="1-spring-data-redis的简介"><a href="#1-spring-data-redis的简介" class="headerlink" title="1. spring-data-redis的简介"></a>1. spring-data-redis的简介</h3><p>spring-data-redis包含了多个模板实现，用来完成Redis数据库的存取功能。创建spring-data-redis模板之前，我们首先需要一个Redis连接工厂，spring-data-redis提供了四个连接工厂供我们选择。</p>
-<h3 id="2-spring-data-redis所需要依赖"><a href="#2-spring-data-redis所需要依赖" class="headerlink" title="2.spring-data-redis所需要依赖"></a>2.spring-data-redis所需要依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      &lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;redis.clients&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;jedis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.8.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.6.2.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h3 id="3-spring-data-redis的使用"><a href="#3-spring-data-redis的使用" class="headerlink" title="3. spring-data-redis的使用"></a>3. spring-data-redis的使用</h3><h4 id="3-1-连接到Redis"><a href="#3-1-连接到Redis" class="headerlink" title="3.1 连接到Redis"></a>3.1 连接到Redis</h4><p>   Redis连接工厂会生成到Redis数据库服务器的连接。spring-data-redis为四种Redis客户端实现了连接工厂：</p>
-<ul>
-<li>JedisConnectionFactory</li>
-<li>JredisConnectionFactory</li>
-<li>LettuceConnectionFactory</li>
-<li><p>SrpConnectionFactory</p>
-<p>具体选择哪一种取决于自己。</p>
-</li>
-</ul>
-<p>(1)创建redis.properties:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">maxTotal=8</div><div class="line">#最大空闲时间</div><div class="line">maxIdle=8</div><div class="line">#最短空闲时间</div><div class="line">minIdle=0</div><div class="line">#最大的等待时间</div><div class="line">maxWaitMillis=6000</div><div class="line">#Redis的连接地址</div><div class="line">hostR=127.0.0.1</div><div class="line">#端口</div><div class="line">portR=6379</div></pre></td></tr></table></figure>
-<p>(2)创建spring-redis.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns:rabbit=&quot;http://www.springframework.org/schema/rabbit&quot;</div><div class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">http://www.springframework.org/schema/beans</div><div class="line">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</div><div class="line">http://www.springframework.org/schema/context</div><div class="line">http://www.springframework.org/schema/context/spring-context-3.0.xsd</div><div class="line">http://www.springframework.org/schema/rabbit</div><div class="line">http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入redis.properties配置文件--&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:redis.properties&quot; /&gt; &lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redis连接池的配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisPoolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;</div><div class="line">		&lt;property name=&quot;maxTotal&quot; value=&quot;$&#123;maxTotal&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxIdle&quot; value=&quot;$&#123;maxIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWaitMillis&quot; value=&quot;10000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;numTestsPerEvictionRun&quot; value=&quot;3&quot;&gt;&lt;/property&gt;</div><div class="line">        &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot;&gt;&lt;/property&gt;</div><div class="line">   &lt;/bean&gt;</div><div class="line">	&lt;!-- 工厂类配置 --&gt;</div><div class="line">	&lt;bean id=&quot;jedisConnectionFactory&quot;</div><div class="line">		class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;&gt;</div><div class="line">		&lt;property name=&quot;hostName&quot; value=&quot;$&#123;hostR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;port&quot; value=&quot;$&#123;portR&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolConfig&quot; ref=&quot;jedisPoolConfig&quot; /&gt;</div><div class="line">		 &lt;property name=&quot;timeout&quot; value=&quot;15000&quot;&gt;&lt;/property&gt;</div><div class="line">	    &lt;property name=&quot;usePool&quot; value=&quot;true&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- redisTemplate配置 --&gt;</div><div class="line">	&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.RedisTemplate&quot;&gt;</div><div class="line">		&lt;property name=&quot;connectionFactory&quot; ref=&quot;jedisConnectionFactory&quot; /&gt;</div><div class="line">		&lt;property name=&quot;keySerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.StringRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;valueSerializer&quot;&gt;</div><div class="line">			&lt;bean</div><div class="line">				class=&quot;org.springframework.data.redis.serializer.JdkSerializationRedisSerializer&quot; /&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;enableTransactionSupport&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>以上是我配置的jedisPoolConfig，jedisConnectionFactory，redisTemplate。</p>
-<h4 id="3-2-使用RedisTemplate"><a href="#3-2-使用RedisTemplate" class="headerlink" title="3.2 使用RedisTemplate"></a>3.2 使用RedisTemplate</h4><p>Redis连接工厂会生成到Redis key-value存储的连接（以RedisConnection的形式。）借助RedisConnection，可以存储和读取数据。</p>
-<p>spring-redis-data以模板的形式提供了较好等级的数据访问方案。实际上，spring-data-redis提供了两个模板：</p>
-<ul>
-<li>RedisTemplate</li>
-<li>StringRedisTemplate</li>
-</ul>
-<p>其中RedisTemplate使用两个类型进行了参数。第一个参数是key的类型,第二个参数是value的类型，而StringRedisTemplate是RedisTemplate的扩展，只关注String类型，也就是key和vlaue都是String类型。</p>
-<h5 id="3-2-1-RedisTemplate使用简单值"><a href="#3-2-1-RedisTemplate使用简单值" class="headerlink" title="3.2.1 RedisTemplate使用简单值"></a>3.2.1 RedisTemplate使用简单值</h5><p>假设我们想通过RedisTemplate<string, user=""> 保存User，其中key是users属性的值。借助opsForValue()方法完成该功能：</string,></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User findById(String key) &#123;</div><div class="line">		return (User) redisTemplate.opsForValue().get(key);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForValue().set(key, user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="3-2-2-RedisTemplate使用List值"><a href="#3-2-2-RedisTemplate使用List值" class="headerlink" title="3.2.2 RedisTemplate使用List值"></a>3.2.2 RedisTemplate使用List值</h5><p>使用List类型的value与之类似，只需要使用opForList()方法，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.dao;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import com.lidong.model.user.User;</div><div class="line">import com.lidong.util.AbstractBaseRedisTemplete;</div><div class="line"></div><div class="line">public class UserRedisDaoImp extends AbstractBaseRedisTemplete&lt;User&gt;</div><div class="line">              implements IUserRedisDao &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getUserList(String key,long start,long end) &#123;</div><div class="line">		 return  redisTemplate.opsForList().range(key, 0, end);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Long addUserToUserList(String key, User user) &#123;</div><div class="line">		return redisTemplate.opsForList().leftPush(key, user);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="3-2-3-RedisTemplate使用Set值"><a href="#3-2-3-RedisTemplate使用Set值" class="headerlink" title="3.2.3 RedisTemplate使用Set值"></a>3.2.3 RedisTemplate使用Set值</h5><p>除了使用List类型和value类型，我们还可以使用opForSet()的方法操作Set，最为常用的的就是向Set中添加一个元素：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	public void saveUser(String key,User user) &#123;</div><div class="line">		 redisTemplate.opsForSet().add(key, user);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>在我们有多个Set,并对这些Set集合进行差、交、并的操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Set&lt;User&gt; difference = redisTemplate.opsForSet().difference(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; union = redisTemplate.opsForSet().union(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  Set&lt;User&gt; intersect = redisTemplate.opsForSet().intersect(&quot;users1&quot;, &quot;users2&quot;);</div><div class="line">	  //我还可以移除Set中的元素</div><div class="line">	  Long remove = redisTemplate.opsForSet().remove(&quot;user1&quot;, user);</div></pre></td></tr></table></figure>
-<h5 id="3-2-4-RedisTemplete绑定到某个key上"><a href="#3-2-4-RedisTemplete绑定到某个key上" class="headerlink" title="3.2.4 RedisTemplete绑定到某个key上"></a>3.2.4 RedisTemplete绑定到某个key上</h5><p>我们可以将Value、List、Set等可以绑定到指定的key上。这些用个的不太多，但是也简单。这里就不具体写了。</p>
-<h5 id="3-2-5-构造AbstractBaseRedisTemplete"><a href="#3-2-5-构造AbstractBaseRedisTemplete" class="headerlink" title="3.2.5 构造AbstractBaseRedisTemplete"></a>3.2.5 构造AbstractBaseRedisTemplete</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.springframework.beans.BeansException;</div><div class="line">import org.springframework.context.ApplicationContext;</div><div class="line">import org.springframework.context.ApplicationContextAware;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line">/**</div><div class="line"> * 基础的RedisTemplete</div><div class="line"> * @author lidong</div><div class="line"> * @param &lt;T&gt;</div><div class="line"> * @date 2017-1-5</div><div class="line"> */</div><div class="line">public abstract class AbstractBaseRedisTemplete&lt;T&gt; implements</div><div class="line">		ApplicationContextAware &#123;</div><div class="line"></div><div class="line"></div><div class="line">	protected RedisTemplate&lt;String,T&gt;  redisTemplate;</div><div class="line"></div><div class="line">	 /**</div><div class="line">     * @Description RedisTemplate</div><div class="line">     * @param redisTemplate</div><div class="line">     */  </div><div class="line">    public void setRedisTemplate(RedisTemplate&lt;String,T&gt; redisTemplate) &#123;  </div><div class="line">        this.redisTemplate = redisTemplate;  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void setApplicationContext(ApplicationContext applicationContext)</div><div class="line">			throws BeansException &#123;</div><div class="line">		@SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">		RedisTemplate&lt;String,T&gt; redisTemplate = applicationContext.getBean(  </div><div class="line">                &quot;redisTemplate&quot;, RedisTemplate.class);  </div><div class="line">		setRedisTemplate(redisTemplate);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Spring-Data-Redis的使用基本最常用 的就是这三种类型value类型、List类型、Set类型。</p>
-<blockquote>
-<p><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（四）Spring AOP中使用log4j实现http请求日志入mongodb
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:32:25+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（四）Spring-AOP中使用log4j实现http请求日志入mongodb/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1、面向切面编程的一些术语"><a href="#1、面向切面编程的一些术语" class="headerlink" title="1、面向切面编程的一些术语"></a>1、面向切面编程的一些术语</h2><ul>
-<li>切面（Aspect）：切面用于组织多个Advice，Advice放在切面中的定义。</li>
-<li>连接点（Jionpoint）：程序执行过程中的明确的点，如方法的调用，或异常的抛出。在SpringAOP中，连接点总是方法的调用。</li>
-<li>增强的处理（Advice）：AOP框架在特定的切入点执行的增强处理。处理有around、brefore和after等类型。</li>
-<li>切入点（Pointcut）：可以插入增强处理的连接点。简而言之，当某个连接点满足指定的要求时，该连接点将添加增强处理，该连接点也就变成了切入点。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pointcut xxxPointcut（）：execution（void H*.say*()）</div></pre></td></tr></table></figure>
-<ul>
-<li>引入：将方法或字段添加到被代理的类中，Spring允许将新的接口引入到任何被调用的处理对象中。例如：你可以使用一个引入，使任何对象实现IsModified接口，以此来简化缓存。</li>
-<li>目标对象：被AOP框架进行增强处理的对象，也被称为被增强对象，如果AOP框架采用的是动态的AOP实现 ，那该对象就是一个被代理对象。</li>
-<li>AOP代理：AOP框架创建的对象，简单说，代理就是对目标对象的加强，Spring中的AOP代理可以是JDK的动态代理，也可以是cglib的动态代理，前者是实现接口 的目标对象的代理，后者为不实现接口的目标对象的代理。</li>
-<li>织入（Weaving）：将增强处理添加到目标对象中，并创一个被增强对象（AOP代理）的过程就是织入。织入有l两种实现方式—–编译时增强（AspectJ）和运行时增强（如Spring AOP）。Spring和其他纯Java AOP框架一样，在运行时织入。</li>
-</ul>
-<h2 id="2、AOP的基本概念"><a href="#2、AOP的基本概念" class="headerlink" title="2、AOP的基本概念"></a>2、AOP的基本概念</h2><p>AOP是从程序运行角度考虑程序的流程，提取业务处理的过程的切面，AOP面向的是程序运行中各个步骤，希望以更好的方式来组合业务处理的各个步骤。</p>
-<p>AOP框架并不会与特定的代码耦合，AOP框架能处理程序执行中特定的切入点（PointCut），而不是某个具体类的耦合。</p>
-<h1 id="3、AOP框架具有如下的两个特征。"><a href="#3、AOP框架具有如下的两个特征。" class="headerlink" title="3、AOP框架具有如下的两个特征。"></a>3、AOP框架具有如下的两个特征。</h1><ul>
-<li><p>各个步骤之间良好的隔离。</p>
-</li>
-<li><p>源代码无关。</p>
-<p>注：Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式处理。从而提高了更多的复用。</p>
-<h2 id="4-如何在Spring中引入AOP功能"><a href="#4-如何在Spring中引入AOP功能" class="headerlink" title="4.如何在Spring中引入AOP功能"></a>4.如何在Spring中引入AOP功能</h2></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;$&#123;srping.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.aspectj&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.7.2&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h2 id="5、实现Web层的日志切面"><a href="#5、实现Web层的日志切面" class="headerlink" title="5、实现Web层的日志切面"></a>5、实现Web层的日志切面</h2><p>实现AOP的切面主要有以下几个要素：</p>
-<ul>
-<li>使用 @Aspect 注解将一个java类定义为切面类。</li>
-<li>使用 @Pointcut 定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。</li>
-<li>根据需要在切入点不同位置的切入内容</li>
-<li>使用 @Before 在切入点开始处切入内容</li>
-<li>使用 @After 在切入点结尾处切入内容</li>
-<li>使用 @AfterReturning 在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）</li>
-<li>使用 @Around 在切入点前后切入内容，并自己控制何时执行切入点自身的内容</li>
-<li>使用 @AfterThrowing 用来处理当切入内容部分抛出异常之后的处理逻辑</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Enumeration;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.springframework.core.annotation.Order;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import org.springframework.web.context.request.RequestContextHolder;</div><div class="line">import org.springframework.web.context.request.ServletRequestAttributes;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">/**</div><div class="line"> 1. 保存请求数据到mongodb</div><div class="line"> 2. @author lidong</div><div class="line"> 3. @createTime 2016年12月24日</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Order(1)</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line"></div><div class="line">    private Logger logger = Logger.getLogger(&quot;mongodb&quot;);</div><div class="line">    ThreadLocal&lt;Long&gt; startTime = new ThreadLocal&lt;&gt;();</div><div class="line">    HttpServletRequest request;</div><div class="line">    JoinPoint mJoinPoint;</div><div class="line">	@Pointcut(&quot;execution (* com.lidong.*.controller.*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">    	    startTime.set(System.currentTimeMillis());   </div><div class="line">       	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</div><div class="line">        request = attributes.getRequest();</div><div class="line">        mJoinPoint = joinPoint;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private BasicDBObject getBasicDBObject(HttpServletRequest request, JoinPoint joinPoint) &#123;</div><div class="line">        BasicDBObject r = new BasicDBObject();</div><div class="line">        r.append(&quot;requestURL&quot;, request.getRequestURL().toString());</div><div class="line">        r.append(&quot;requestURI&quot;, request.getRequestURI());</div><div class="line">        r.append(&quot;queryString&quot;, request.getQueryString());</div><div class="line">        r.append(&quot;remoteAddr&quot;, request.getRemoteAddr());</div><div class="line">        r.append(&quot;remoteHost&quot;, request.getRemoteHost());</div><div class="line">        r.append(&quot;remotePort&quot;, request.getRemotePort());</div><div class="line">        r.append(&quot;localAddr&quot;, request.getLocalAddr());</div><div class="line">        r.append(&quot;localName&quot;, request.getLocalName());</div><div class="line">        r.append(&quot;method&quot;, request.getMethod());</div><div class="line">        r.append(&quot;headers&quot;, getHeadersInfo(request));</div><div class="line">        r.append(&quot;parameters&quot;, request.getParameterMap());</div><div class="line">        r.append(&quot;classMethod&quot;, joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());</div><div class="line">        r.append(&quot;args&quot;, Arrays.toString(joinPoint.getArgs()));</div><div class="line">        return r;</div><div class="line">    &#125;</div><div class="line">  /**</div><div class="line">     * 获取请求头部的信息</div><div class="line">     * @param request</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private Map&lt;String, String&gt; getHeadersInfo(HttpServletRequest request) &#123;</div><div class="line">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</div><div class="line">        Enumeration headerNames = request.getHeaderNames();</div><div class="line">        while (headerNames.hasMoreElements()) &#123;</div><div class="line">            String key = (String) headerNames.nextElement();</div><div class="line">            String value = request.getHeader(key);</div><div class="line">            map.put(key, value);</div><div class="line">        &#125;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">    	     BasicDBObject logInfo = getBasicDBObject(request, mJoinPoint);    </div><div class="line">    	     // 处理完请求，返回内容</div><div class="line">    	     logInfo.append(&quot;response&quot;,ret.toString());</div><div class="line">    	     logInfo.append(&quot;spend_time&quot;, (System.currentTimeMillis() - startTime.get()));</div><div class="line">    	     logger.info(logInfo);</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>注意：</strong>在WebLogAspect切面中，分别通过doBefore和doAfterReturning两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore处记录时间，并在doAfterReturning处通过当前时间与开始处记录的时间计算得到请求处理的消耗时间。</p>
-<h2 id="6、实现Web层的日志的日志保存到mongodb数据库中"><a href="#6、实现Web层的日志的日志保存到mongodb数据库中" class="headerlink" title="6、实现Web层的日志的日志保存到mongodb数据库中"></a>6、实现Web层的日志的日志保存到mongodb数据库中</h2><h4 id="6-1-通过自定义appender实现"><a href="#6-1-通过自定义appender实现" class="headerlink" title="6.1.通过自定义appender实现"></a>6.1.通过自定义appender实现</h4><p>思路：log4j提供的输出器实现自Appender接口，要自定义appender输出到MongoDB，只需要继承AppenderSkeleton类，并实现几个方法即可完成。</p>
-<ul>
-<li>引入mongodb的驱动，在pom.xml中引入下面依赖</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;  </div><div class="line">    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.2.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>实现MongoAppender</li>
-</ul>
-<p>编写MongoAppender类继承AppenderSkeleton，实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util;</div><div class="line"></div><div class="line">import org.apache.log4j.AppenderSkeleton;</div><div class="line">import org.apache.log4j.spi.LoggingEvent;</div><div class="line"></div><div class="line">import com.mongodb.BasicDBObject;</div><div class="line">import com.mongodb.MongoClient;</div><div class="line">import com.mongodb.MongoClientURI;</div><div class="line">import com.mongodb.client.MongoCollection;</div><div class="line">import com.mongodb.client.MongoDatabase;</div><div class="line">/**</div><div class="line"> * 自定义appender实现输出日志MongoDB</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class MongoAppender  extends AppenderSkeleton &#123;</div><div class="line"></div><div class="line">    private MongoClient mongoClient;</div><div class="line">    private MongoDatabase mongoDatabase;</div><div class="line">    private MongoCollection&lt;BasicDBObject&gt; logsCollection;</div><div class="line">    /**</div><div class="line">     * mongodb连接的url</div><div class="line">     */</div><div class="line">    private String connectionUrl;</div><div class="line">    /**</div><div class="line">     * 数据库的名称</div><div class="line">     */</div><div class="line">    private String databaseName;</div><div class="line">    /**</div><div class="line">     * 集合的名称</div><div class="line">     */</div><div class="line">    private String collectionName;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void append(LoggingEvent loggingEvent) &#123;</div><div class="line"></div><div class="line">        if(mongoDatabase == null) &#123;</div><div class="line">            MongoClientURI connectionString = new MongoClientURI(connectionUrl);</div><div class="line">            mongoClient = new MongoClient(connectionString);</div><div class="line">            mongoDatabase = mongoClient.getDatabase(databaseName);</div><div class="line">            logsCollection = mongoDatabase.getCollection(collectionName, BasicDBObject.class);</div><div class="line">        &#125;</div><div class="line">        //将日志插入到集合</div><div class="line">        logsCollection.insertOne((BasicDBObject) loggingEvent.getMessage());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void close() &#123;</div><div class="line">        if(mongoClient != null) &#123;</div><div class="line">            mongoClient.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean requiresLayout() &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	public MongoClient getMongoClient() &#123;</div><div class="line">		return mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoClient(MongoClient mongoClient) &#123;</div><div class="line">		this.mongoClient = mongoClient;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoDatabase getMongoDatabase() &#123;</div><div class="line">		return mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMongoDatabase(MongoDatabase mongoDatabase) &#123;</div><div class="line">		this.mongoDatabase = mongoDatabase;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MongoCollection&lt;BasicDBObject&gt; getLogsCollection() &#123;</div><div class="line">		return logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setLogsCollection(MongoCollection&lt;BasicDBObject&gt; logsCollection) &#123;</div><div class="line">		this.logsCollection = logsCollection;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getConnectionUrl() &#123;</div><div class="line">		return connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setConnectionUrl(String connectionUrl) &#123;</div><div class="line">		this.connectionUrl = connectionUrl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getDatabaseName() &#123;</div><div class="line">		return databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setDatabaseName(String databaseName) &#123;</div><div class="line">		this.databaseName = databaseName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getCollectionName() &#123;</div><div class="line">		return collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setCollectionName(String collectionName) &#123;</div><div class="line">		this.collectionName = collectionName;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-3-在log4j-prperties中配置"><a href="#6-3-在log4j-prperties中配置" class="headerlink" title="6.3 在log4j.prperties中配置"></a>6.3 在log4j.prperties中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># mongodb输出</div><div class="line">log4j.logger.mongodb=INFO, mongodb</div><div class="line">log4j.appender.mongodb=com.lidong.util.MongoAppender</div><div class="line">log4j.appender.mongodb.connectionUrl=mongodb://127.0.0.1:27017</div><div class="line">log4j.appender.mongodb.databaseName=logs</div><div class="line">log4j.appender.mongodb.collectionName=logs_request</div></pre></td></tr></table></figure>
-<h3 id="6-4在spring-mvc-xml中开启统一处理请求日志"><a href="#6-4在spring-mvc-xml中开启统一处理请求日志" class="headerlink" title="6.4在spring-mvc.xml中开启统一处理请求日志"></a>6.4在spring-mvc.xml中开启统一处理请求日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- web统一管理  --&gt;</div><div class="line">&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</div><div class="line">&lt;bean class=&quot;com.lidong.util.WebLogAspect&quot; /&gt;</div></pre></td></tr></table></figure>
-<h3 id="6-5在数据库中查看保存的日志"><a href="#6-5在数据库中查看保存的日志" class="headerlink" title="6.5在数据库中查看保存的日志"></a>6.5在数据库中查看保存的日志</h3><p><img src="http://img.blog.csdn.net/20170102142035787?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（三）使用Spring AOP实现mysql的读写分离
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:29:59+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（三）使用Spring-AOP实现mysql的读写分离/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-为什么要进行（主从复制）读写分离"><a href="#1-为什么要进行（主从复制）读写分离" class="headerlink" title="1. 为什么要进行（主从复制）读写分离"></a>1. 为什么要进行（主从复制）读写分离</h2><p>分布式环境下数据库的读写分离策略是解决数据库读写性能瓶颈的一个关键解决方案，更是最大限度了提高了应用中读取 （Read）数据的速度和并发量。</p>
-<p>在进行数据库读写分离的时候，我们首先要进行数据库的主从配置，最简单的是一台Master和一台Slave（大型网站系统的话，当然会很复杂，这里只是分析了最简单的情况）。通过主从配置主从数据库保持了相同的数据，我们在进行读操作的时候访问从数据库Slave，在进行写操作的时候访问主数据库Master。这样的话就减轻了一台服务器的压力。</p>
-<p>在进行读写分离案例分析的时候。首先，配置数据库的主从复制，使用mysqlreplicate命令快速搭建 Mysql 主从复制。</p>
-<h3 id="2-MySQL主从复制的原理"><a href="#2-MySQL主从复制的原理" class="headerlink" title="2.MySQL主从复制的原理"></a>2.MySQL主从复制的原理</h3><h4 id="2-1MySQL主从复制的原理"><a href="#2-1MySQL主从复制的原理" class="headerlink" title="2.1MySQL主从复制的原理"></a>2.1MySQL主从复制的原理</h4><p><img src="http://img.blog.csdn.net/20170102205919680?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h4 id="2-2MySQL主从复制的基本过程"><a href="#2-2MySQL主从复制的基本过程" class="headerlink" title="2.2MySQL主从复制的基本过程"></a>2.2MySQL主从复制的基本过程</h4><p> MySQL主从复制的两种情况：同步复制和异步复制，实际复制架构中大部分为异步复制。复制的基本过程如下：</p>
-<ol>
-<li>Slave上面的IO进程连接上Master，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容。</li>
-<li>Master接收到来自Slave的IO进程的请求后，负责复制的IO进程会根据请求信息读取日志指定位置之后的日志信息，返回给Slave的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到Master端的bin-log文件的名称以及bin-log的位置。</li>
-<li>Slave的IO进程接收到信息后，将接收到的日志内容依次添加到Slave端的relay-log文件的最末端，并将读取到的Master端的 bin-log的文件名和位置记录到master-info文件中，以便在下一次读取的时候能够清楚的告诉Master“我需要从某个bin-log的哪个位置开始往后的日志内容，请发给我”。</li>
-<li>Slave的Sql进程检测到relay-log中新增加了内容后，会马上解析relay-log的内容成为在Master端真实执行时候的那些可执行的内容，并在自身执行。</li>
-</ol>
-<h2 id="3-开始MySQL5-7-12的主从复制教程："><a href="#3-开始MySQL5-7-12的主从复制教程：" class="headerlink" title="3.开始MySQL5.7.12的主从复制教程："></a>3.开始MySQL5.7.12的主从复制教程：</h2><h4 id="3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"><a href="#3-1-MySQL5-6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。" class="headerlink" title="3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。"></a>3.1 MySQL5.6开始主从复制有两种方式：基于日志（binlog）；基于GTID（全局事务标示符）。</h4><p>需要注意的是：GTID方式不支持临时表！所以如果你的业务系统要用到临时表的话就不要考虑这种方式了，至少目前最新版本MySQL5.6.12的GTID复制还是不支持临时表的。</p>
-<p>所以此篇教程主要是告诉大家如何通过日志（binlog）方式做主从复制！</p>
-<h4 id="3-2-MySQL官方提供的MySQL-Replication教程："><a href="#3-2-MySQL官方提供的MySQL-Replication教程：" class="headerlink" title="3.2 MySQL官方提供的MySQL Replication教程："></a>3.2 MySQL官方提供的MySQL Replication教程：</h4><p><a href="http://dev.mysql.com/doc/refman/5.6/en/replication.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/replication.html</a></p>
-<p>这个官方教程强烈建议大家阅读。</p>
-<h4 id="3-3、准备工作："><a href="#3-3、准备工作：" class="headerlink" title="3.3、准备工作："></a>3.3、准备工作：</h4><ol>
-<li>配置MySQL主从复制（读写分离）之前，需要在主从两台服务器先安装好MySQL5.7。</li>
-<li>目前最新的MySQL5.7 GA版本是MySQL5.7.12（点此下载MySQL5.7.12源码包）。</li>
-<li>需要注意如下两点：</li>
-</ol>
-<p>（1）如果你需要用于生产环境，安教程安装MySQL时不要急着做mysql启动操作。建议把mysql初始化生成的/usr/local/mysql/mysql.cnf删除，然后把你优化好的mysql配置文件my.cnf放到/etc下。<br>（2）建议主备两台服务器在同一局域网，主备两台数据库网络需要互通。</p>
-<ol>
-<li>我的所使用的环境：</li>
-</ol>
-<blockquote>
-<p>主数据库IP：192.168.0.104</p>
-<p>从数据库IP：192.168.0.105</p>
-</blockquote>
-<h4 id="3-4-修改主数据库的的配置文件："><a href="#3-4-修改主数据库的的配置文件：" class="headerlink" title="3.4 修改主数据库的的配置文件："></a>3.4 修改主数据库的的配置文件：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=1</div><div class="line">3     log-bin=mysqlmaster-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10    log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
-<p>修改之后要重启mysql服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure></p>
-<h4 id="3-5、修改从数据库的的配置文件："><a href="#3-5、修改从数据库的的配置文件：" class="headerlink" title="3.5、修改从数据库的的配置文件："></a>3.5、修改从数据库的的配置文件：</h4><p><strong>注意：</strong>（server-id配置为大于主数据库的server-id即可）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1     [mysqld]</div><div class="line">2     server-id=2</div><div class="line">3     log-bin=mysqlslave-bin.log</div><div class="line">4     sync_binlog=1</div><div class="line">5     #注意：下面这个参数需要修改为服务器内存的70%左右</div><div class="line">6     innodb_buffer_pool_size = 512M</div><div class="line">7     innodb_flush_log_at_trx_commit=1</div><div class="line">8     sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_AUTO_VALUE_ON_ZERO</div><div class="line">9     lower_case_table_names=1</div><div class="line">10     log_bin_trust_function_creators=1</div></pre></td></tr></table></figure>
-<p>修改之后要重启mysql：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /etc/init.d/mysql restart</div></pre></td></tr></table></figure>
-<p>附一个我已优化过的从数据库配置文件：点此下载</p>
-<h4 id="3-6、SSH登录到主数据库："><a href="#3-6、SSH登录到主数据库：" class="headerlink" title="3.6、SSH登录到主数据库："></a>3.6、SSH登录到主数据库：</h4><h4 id="3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）："><a href="#3-6-1-在主数据库上创建用于主从复制的账户（192-168-0-104换成你的从数据库IP）：" class="headerlink" title="3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）："></a>3.6.1. 在主数据库上创建用于主从复制的账户（192.168.0.104换成你的从数据库IP）：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1     # mysql -uroot -p</div><div class="line">2     mysql&gt; GRANT REPLICATION SLAVE ON *.* TO &apos;repl&apos;@&apos;192.168.0.104&apos; IDENTIFIED BY &apos;repl&apos;;</div></pre></td></tr></table></figure>
-<h4 id="3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："><a href="#3-6-2-主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：" class="headerlink" title="3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）："></a>3.6.2. 主数据库锁表（禁止再插入数据以获取主数据库的的二进制日志坐标）：</h4><blockquote>
-<p>mysql&gt; FLUSH TABLES WITH READ LOCK;</p>
-</blockquote>
-<h4 id="3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："><a href="#3-6-3-然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：" class="headerlink" title="3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行："></a>3.6.3. 然后克隆一个SSH会话窗口，在这个窗口打开MySQL命令行：</h4><p><img src="http://img.blog.csdn.net/20170102202118690?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>在这个例子中，二进制日志文件是mysqlmaster-bin.000001，位置是332，记录下这两个值，稍后要用到。</p>
-<h4 id="3-6-4-在主数据库上使用mysqldump命令创建一个数据快照："><a href="#3-6-4-在主数据库上使用mysqldump命令创建一个数据快照：" class="headerlink" title="3.6.4 在主数据库上使用mysqldump命令创建一个数据快照："></a>3.6.4 在主数据库上使用mysqldump命令创建一个数据快照：</h4><blockquote>
-<p>mysqldump -uroot -p -h127.0.0.1 -P3306 –all-databases  –triggers –routines –events &gt;all.sql</p>
-</blockquote>
-<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导出完成。</p>
-<h4 id="3-6-5-解锁第2-6-2步主数据的锁表操作："><a href="#3-6-5-解锁第2-6-2步主数据的锁表操作：" class="headerlink" title="3.6.5 解锁第2.6.2步主数据的锁表操作："></a>3.6.5 解锁第2.6.2步主数据的锁表操作：</h4><blockquote>
-<p>mysql&gt; UNLOCK TABLES;</p>
-</blockquote>
-<h4 id="3-7、SSH登录到从数据库："><a href="#3-7、SSH登录到从数据库：" class="headerlink" title="3.7、SSH登录到从数据库："></a>3.7、SSH登录到从数据库：</h4><p>（1）通过FTP、SFTP或其他方式，将上一步备份的主数据库快照all.sql上传到从数据库某个路径，例如我放在了/home/lidong/目录下；</p>
-<p>（2）从导入主的快照：</p>
-<blockquote>
-<h1 id="cd-home-lidong"><a href="#cd-home-lidong" class="headerlink" title="cd /home/lidong"></a>cd /home/lidong</h1><pre><code># mysql -uroot -p -h127.0.0.1 -P3306 &lt; all.sql
-</code></pre></blockquote>
-<p>注意：接下来会提示你输入mysql数据库的root密码，输入完成后，如果当前数据库不大，很快就能导入完成。</p>
-<p>（3）给从数据库设置复制的主数据库信息（注意修改MASTER_LOG_FILE和MASTER_LOG_POS的值）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># mysql -uroot -p</div><div class="line">mysql&gt; CHANGE MASTER TO MASTER_HOST=&apos;192.168.100.2&apos;,MASTER_USER=&apos;repl&apos;,MASTER_PASSWORD=&apos;repl&apos;,MASTER_LOG_FILE=&apos;mysqlmaster-bin.000001&apos;,MASTER_LOG_POS=332;</div><div class="line"># 然后启动从数据库的复制线程：</div><div class="line">mysql&gt; START slave;</div><div class="line"># 接着查询数据库的slave状态：</div><div class="line">mysql&gt;  SHOW slave STATUS \G</div><div class="line"># 如果下面两个参数都是Yes，则说明主从配置成功！</div><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
-<p>（4）接下来我们可以在主数据库上创建数据库、表、插入数据，然后看从数据库是否同步了这些操作。</p>
-<p>一主一从的主从复制就实现了。</p>
-<h2 id="4、实现读写分离的两种方法"><a href="#4、实现读写分离的两种方法" class="headerlink" title="4、实现读写分离的两种方法"></a>4、实现读写分离的两种方法</h2><ol>
-<li>第一种方式是我们最常用的方式，就是定义2个数据库连接，一个是MasterDataSource,另一个是SlaveDataSource。更新数据时我们读取MasterDataSource，查询数据时我们读取SlaveDataSource。这种方式很简单。</li>
-<li>第二种方式动态数据源切换，就是在程序运行时，把数据源动态织入到程序中，从而选择读取主库还是从库。主要使用的技术是：Annotation，spring AOP ，反射。<h2 id="5-Spring-AOP-实现MySQL读写分离的具体实现"><a href="#5-Spring-AOP-实现MySQL读写分离的具体实现" class="headerlink" title="5.Spring AOP 实现MySQL读写分离的具体实现"></a>5.Spring AOP 实现MySQL读写分离的具体实现</h2><h4 id="5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java"><a href="#5-1创建用于配置动态分配的读写的数据源ChooseDataSource-java" class="headerlink" title="5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java"></a>5.1创建用于配置动态分配的读写的数据源ChooseDataSource.java</h4></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取数据源，用于动态切换数据源</div><div class="line"> */</div><div class="line">public class ChooseDataSource extends AbstractRoutingDataSource &#123;</div><div class="line"></div><div class="line">    public static Map&lt;String, List&lt;String&gt;&gt; METHOD_TYPE_MAP = new HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 实现父类中的抽象方法，获取数据源名称</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    protected Object determineCurrentLookupKey() &#123;</div><div class="line">        return DataSourceHandler.getDataSource();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 设置方法名前缀对应的数据源</div><div class="line">    public void setMethodType(Map&lt;String, String&gt; map) &#123;</div><div class="line">        for (String key : map.keySet()) &#123;</div><div class="line">            List&lt;String&gt; v = new ArrayList&lt;String&gt;();</div><div class="line">            String[] types = map.get(key).split(&quot;,&quot;);</div><div class="line">            for (String type : types) &#123;</div><div class="line">                if (StringUtils.isNotBlank(type)) &#123;</div><div class="line">                    v.add(type);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            METHOD_TYPE_MAP.put(key, v);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-2-DataSourceAspect进行具体方法的AOP拦截"><a href="#5-2-DataSourceAspect进行具体方法的AOP拦截" class="headerlink" title="5.2 DataSourceAspect进行具体方法的AOP拦截"></a>5.2 DataSourceAspect进行具体方法的AOP拦截</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.StringUtils;</div><div class="line">import org.aspectj.lang.JoinPoint;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.context.annotation.EnableAspectJAutoProxy;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 切换数据源(不同方法调用不同数据源)</div><div class="line"> */</div><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">@EnableAspectJAutoProxy(proxyTargetClass = true)</div><div class="line">public class DataSourceAspect &#123;</div><div class="line"></div><div class="line">    protected Logger logger = LoggerFactory.getLogger(this.getClass());</div><div class="line"></div><div class="line">    @Pointcut(&quot;execution(* com.lidong.core.*.dao.*.*(..))&quot;)</div><div class="line">    public void aspect() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 配置前置通知,使用在方法aspect()上注册的切入点</div><div class="line">     */</div><div class="line">    @Before(&quot;aspect()&quot;)</div><div class="line">    public void before(JoinPoint point) &#123;</div><div class="line">        String className = point.getTarget().getClass().getName();</div><div class="line">        String method = point.getSignature().getName();</div><div class="line">        logger.info(className + &quot;.&quot; + method + &quot;(&quot; + StringUtils.join(point.getArgs(), &quot;,&quot;) + &quot;)&quot;);</div><div class="line">        try &#123;</div><div class="line">            for (String key : ChooseDataSource.METHOD_TYPE_MAP.keySet()) &#123;</div><div class="line">                for (String type : ChooseDataSource.METHOD_TYPE_MAP.get(key)) &#123;</div><div class="line">                    if (method.startsWith(type)) &#123;</div><div class="line">                        DataSourceHandler.putDataSource(key);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-3-数据源的Handler类-DataSourceHandler-java"><a href="#5-3-数据源的Handler类-DataSourceHandler-java" class="headerlink" title="5.3 数据源的Handler类  DataSourceHandler.java"></a>5.3 数据源的Handler类  DataSourceHandler.java</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.lidong.util.aspect;</div><div class="line">/**</div><div class="line"> * 数据源的Handler类</div><div class="line"> * @author lidong</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class DataSourceHandler &#123;</div><div class="line">	 // 数据源名称线程池</div><div class="line">    public static final ThreadLocal&lt;String&gt; holder = new ThreadLocal&lt;String&gt;();</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 在项目启动的时候将配置的读、写数据源加到holder中</div><div class="line">     */</div><div class="line">    public static void putDataSource(String datasource) &#123;</div><div class="line">        holder.set(datasource);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 从holer中获取数据源字符串</div><div class="line">     */</div><div class="line">    public static String getDataSource() &#123;</div><div class="line">        return holder.get();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-4-spring-db-xml读写数据源配置"><a href="#5-4-spring-db-xml读写数据源配置" class="headerlink" title="5.4 spring-db.xml读写数据源配置"></a>5.4 spring-db.xml读写数据源配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">driver=com.mysql.jdbc.Driver</div><div class="line">url=jdbc:mysql://127.0.0.1:3306/hms</div><div class="line">url1=jdbc:mysql://192.168.0.105:3306/hms</div><div class="line">username=root</div><div class="line">password=123456</div><div class="line">password1=  </div><div class="line">initialSize=0</div><div class="line">maxActive=20</div><div class="line">maxIdle=20</div><div class="line">minIdle=1</div><div class="line">maxWait=60000</div><div class="line">timeBetweenEvictionRunsMillis=3000</div><div class="line">minEvictableIdleTimeMillis=300000</div><div class="line">maxPoolPreparedStatementPerConnectionSize=20</div><div class="line">druid.filters=</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans    </div><div class="line">                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/context    </div><div class="line">                        http://www.springframework.org/schema/context/spring-context-4.3.xsd    </div><div class="line">                        http://www.springframework.org/schema/mvc    </div><div class="line">                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd&quot;&gt;</div><div class="line"></div><div class="line">	&lt;!-- 引入配置文件 &lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;location&quot; value=&quot;classpath:jdbc.properties&quot; /&gt; &lt;/bean&gt; --&gt;</div><div class="line">	&lt;bean id=&quot;propertyConfigurer&quot;</div><div class="line">		class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">		&lt;property name=&quot;locations&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;value&gt;classpath:jdbc.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:mongo.properties&lt;/value&gt;</div><div class="line">				&lt;value&gt;classpath:redis.properties&lt;/value&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;statFilter&quot; class=&quot;com.alibaba.druid.filter.stat.StatFilter&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;logSlowSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;mergeSql&quot; value=&quot;true&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line"></div><div class="line">	&lt;bean id=&quot;readDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;stat&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;20&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;1&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;3000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;poolPreparedStatements&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot;</div><div class="line">			value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;bean id=&quot;writeDataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;</div><div class="line">		destroy-method=&quot;close&quot; init-method=&quot;init&quot; lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;url&quot; value=&quot;$&#123;url1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;username&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;initialSize&quot; value=&quot;$&#123;initialSize&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxActive&quot; value=&quot;$&#123;maxActive&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minIdle&quot; value=&quot;$&#123;minIdle&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;maxWait&quot; value=&quot;$&#123;maxWait&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;proxyFilters&quot;&gt;</div><div class="line">			&lt;list&gt;</div><div class="line">				&lt;ref bean=&quot;statFilter&quot; /&gt;</div><div class="line">			&lt;/list&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;filters&quot; value=&quot;$&#123;druid.filters&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;connectionProperties&quot; value=&quot;password=$&#123;password1&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line">		&lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenLogStatsMillis&quot; value=&quot;60000&quot; /&gt;</div><div class="line">		&lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;$&#123;minEvictableIdleTimeMillis&#125;&quot; /&gt;</div><div class="line">		&lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;$&#123;timeBetweenEvictionRunsMillis&#125;&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">	&lt;!-- 配置动态分配的读写 数据源 --&gt;</div><div class="line">	&lt;bean id=&quot;dataSource&quot; class=&quot;com.lidong.util.aspect.ChooseDataSource&quot;</div><div class="line">		lazy-init=&quot;true&quot;&gt;</div><div class="line">		&lt;property name=&quot;targetDataSources&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot; value-type=&quot;javax.sql.DataSource&quot;&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value-ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value-ref=&quot;readDataSource&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">		&lt;property name=&quot;defaultTargetDataSource&quot; ref=&quot;writeDataSource&quot; /&gt;</div><div class="line">		&lt;property name=&quot;methodType&quot;&gt;</div><div class="line">			&lt;map key-type=&quot;java.lang.String&quot;&gt;</div><div class="line">				&lt;!-- read --&gt;</div><div class="line">				&lt;entry key=&quot;read&quot; value=&quot;,get,select,count,list,query&quot; /&gt;</div><div class="line">				&lt;!-- write --&gt;</div><div class="line">				&lt;entry key=&quot;write&quot; value=&quot;,add,create,update,delete,remove,&quot; /&gt;</div><div class="line">			&lt;/map&gt;</div><div class="line">		&lt;/property&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>配置了readDataSource和writeDataSource两个数据源，但是交给<br>SqlSessionFactoryBean进行管理的只有dataSource,使用了com.lidong.util.aspect.ChooseDataSource来进行数据源的选择，默认的数据源是writeDataSource。methodType是定义了方法的关键字，那些是选择读库，那个是写库。</p>
-<h4 id="5-5-在Dao层通过切面选择数据源"><a href="#5-5-在Dao层通过切面选择数据源" class="headerlink" title="5.5 在Dao层通过切面选择数据源"></a>5.5 在Dao层通过切面选择数据源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">package com.lidong.core.user.service;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import javax.annotation.Resource;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.lidong.api.service.user.IUserService;</div><div class="line">import com.lidong.core.user.dao.IUserDao;</div><div class="line">import com.lidong.model.user.User;</div><div class="line">@Service(&quot;userService&quot;)</div><div class="line">public class UserServiceImp implements IUserService &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	IUserDao mIUserDao;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserById(int userId) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public User getUserByUsername(String username) &#123;</div><div class="line">		return mIUserDao.selectByPrimaryUsername(username);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void addUser(User user) &#123;</div><div class="line">	    mIUserDao.insert(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;User&gt; getAllUser() &#123;</div><div class="line">		return mIUserDao.selectAllUsers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int delUserById(Integer userId) &#123;</div><div class="line">		return mIUserDao.deleteByPrimaryKey(userId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public int updateUser(User user) &#123;</div><div class="line">		return mIUserDao.updateByPrimaryKey(user);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意：通过看com.alibaba.druid.pool.DruidDataSourceStatLoggerImpl 是一分钟发一次心跳，监听写数据源有没有宕机。如果宕机会进行重连。</p>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="[代码地址]"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">[代码地址]</a></h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/" itemprop="url">
-                  dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb3.4-redis3.2整合（二）之 JDBC连接池、监控组件 Druid
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T11:25:07+08:00">
-                2017-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/dubbo2-5-spring4-mybastis3-2-springmvc4-mongodb3-4-redis3-2整合（二）之-JDBC连接池、监控组件-Druid/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-Druid简介"><a href="#1-Druid简介" class="headerlink" title="1 Druid简介"></a>1 Druid简介</h2><p>Druid是阿里巴巴开源平台上的一个项目，整个项目由数据库连接池、插件框架和SQL解析器组成。该项目主要是为了扩展JDBC的一些限制，可以让程序员实现一些特殊的需求，比如向密钥服务请求凭证、统计SQL信息、SQL性能收集、SQL注入检查、SQL翻译等，程序员可以通过定制来实现自己需要的功能。</p>
-<p>Druid是目前最好的数据库连接池，在功能、性能、扩展性方面，都超过其他数据库连接池，包括DBCP、C3P0、BoneCP、Proxool、JBoss DataSource。Druid已经在阿里巴巴部署了超过600个应用，经过一年多生产环境大规模部署的严苛考验。</p>
-<h2 id="2-Druid的功能"><a href="#2-Druid的功能" class="headerlink" title="2.Druid的功能"></a>2.Druid的功能</h2><p>1、替换DBCP和C3P0。Druid提供了一个高效、功能强大、可扩展性好的数据库连接池。</p>
-<p>2、可以监控数据库访问性能，Druid内置提供了一个功能强大的StatFilter插件，能够详细统计SQL的执行性能，这对于线上分析数据库访问性能有帮助。</p>
-<p>3、数据库密码加密。直接把数据库密码写在配置文件中，这是不好的行为，容易导致安全问题。DruidDruiver和DruidDataSource都支持PasswordCallback。</p>
-<p>4、SQL执行日志，Druid提供了不同的LogFilter，能够支持Common-Logging、Log4j和JdkLog，你可以按需要选择相应的LogFilter，监控你应用的数据库访问情况。</p>
-<p>5、扩展JDBC，如果你要对JDBC层有编程的需求，可以通过Druid提供的Filter机制，很方便编写JDBC层的扩展插件。</p>
-<h2 id="3-Druid怎么配置maven"><a href="#3-Druid怎么配置maven" class="headerlink" title="3.Druid怎么配置maven"></a>3.Druid怎么配置maven</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">     &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">     &lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">     &lt;version&gt;$&#123;druid-version&#125;&lt;/version&gt;</div><div class="line"> &lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h2 id="4-Druid支持的数据库"><a href="#4-Druid支持的数据库" class="headerlink" title="4.Druid支持的数据库"></a>4.Druid支持的数据库</h2><p>理论上说，支持所有有jdbc驱动的数据库。实际测试过的有</p>
-<hr>
-<ol>
-<li>mysql     支持，大规模使用</li>
-<li>oracle     支持，大规模使用</li>
-<li>sqlserver     支持</li>
-<li>postgres     支持</li>
-<li>db2     支持</li>
-<li>h2     支持</li>
-<li>derby     支持</li>
-<li>sqlite     支持</li>
-<li>sybase     支持</li>
-</ol>
-<h2 id="5-配置DruidDataSource"><a href="#5-配置DruidDataSource" class="headerlink" title="5.配置DruidDataSource"></a>5.配置DruidDataSource</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot; init-method=&quot;init&quot; destroy-method=&quot;close&quot;&gt;</div><div class="line">      &lt;!-- 基本属性 url、user、password --&gt;</div><div class="line">      &lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc_url&#125;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc_user&#125;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc_password&#125;&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置初始化大小、最小、最大 --&gt;</div><div class="line">      &lt;property name=&quot;initialSize&quot; value=&quot;1&quot; /&gt;</div><div class="line">      &lt;property name=&quot;minIdle&quot; value=&quot;1&quot; /&gt;</div><div class="line">      &lt;property name=&quot;maxActive&quot; value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置获取连接等待超时的时间 --&gt;</div><div class="line">      &lt;property name=&quot;maxWait&quot; value=&quot;60000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 --&gt;</div><div class="line">      &lt;property name=&quot;timeBetweenEvictionRunsMillis&quot; value=&quot;60000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置一个连接在池中最小生存的时间，单位是毫秒 --&gt;</div><div class="line">      &lt;property name=&quot;minEvictableIdleTimeMillis&quot; value=&quot;300000&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;property name=&quot;validationQuery&quot; value=&quot;SELECT &apos;x&apos;&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testWhileIdle&quot; value=&quot;true&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testOnBorrow&quot; value=&quot;false&quot; /&gt;</div><div class="line">      &lt;property name=&quot;testOnReturn&quot; value=&quot;false&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 打开PSCache，并且指定每个连接上PSCache的大小 --&gt;</div><div class="line">      &lt;property name=&quot;poolPreparedStatements&quot; value=&quot;true&quot; /&gt;</div><div class="line">      &lt;property name=&quot;maxPoolPreparedStatementPerConnectionSize&quot; value=&quot;20&quot; /&gt;</div><div class="line"></div><div class="line">      &lt;!-- 配置监控统计拦截的filters --&gt;</div><div class="line">      &lt;property name=&quot;filters&quot; value=&quot;stat&quot; /&gt;</div><div class="line">  &lt;/bean&gt;</div></pre></td></tr></table></figure>
-<p>通常来说，只需要修改initialSize、minIdle、maxActive。</p>
-<p>如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。</p>
-<h2 id="6-配置-StatFilter"><a href="#6-配置-StatFilter" class="headerlink" title="6.配置_StatFilter"></a>6.配置_StatFilter</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;</div><div class="line">    &lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;</div><div class="line">    &lt;servlet-class&gt;com.alibaba.druid.support.http.StatViewServlet&lt;/servlet-class&gt;</div><div class="line">  &lt;/servlet&gt;</div><div class="line">  &lt;servlet-mapping&gt;</div><div class="line">    &lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;</div><div class="line">    &lt;url-pattern&gt;/druid/*&lt;/url-pattern&gt;</div><div class="line">  &lt;/servlet-mapping&gt;</div><div class="line">  &lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;com.alibaba.druid.support.http.WebStatFilter&lt;/filter-class&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;exclusions&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;profileEnable&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;true&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;principalCookieName&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;USER_COOKIE&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">      &lt;param-name&gt;principalSessionName&lt;/param-name&gt;</div><div class="line">      &lt;param-value&gt;USER_SESSION&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">  &lt;/filter&gt;</div><div class="line">  &lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">  &lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
-<h2 id="7-结果展示"><a href="#7-结果展示" class="headerlink" title="7.结果展示"></a>7.结果展示</h2><h4 id="7-1-首页"><a href="#7-1-首页" class="headerlink" title="7.1.首页"></a>7.1.首页</h4><p><img src="http://img.blog.csdn.net/20161225153519639?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h3 id="7-2-SQL监控"><a href="#7-2-SQL监控" class="headerlink" title="7.2 SQL监控"></a>7.2 SQL监控</h3><p><img src="http://img.blog.csdn.net/20161225153539468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDA0NjkwOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a><a href="https://github.com/lidong1665/dubbo2.5-spring4-mybastis3.2-springmvc4-mongodb-redis" target="_blank" rel="external">代码地址</a></h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1184,7 +1098,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1195,7 +1109,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>

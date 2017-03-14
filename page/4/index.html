@@ -141,6 +141,16 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 
 
   <script type="text/javascript">
@@ -246,6 +256,578 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/23/MySQL配置远程登录/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/23/MySQL配置远程登录/" itemprop="url">
+                  MySQL配置远程登录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:08:21+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/23/MySQL配置远程登录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/23/MySQL配置远程登录/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、修改数据表"><a href="#1、修改数据表" class="headerlink" title="1、修改数据表"></a>1、修改数据表</h2><p>可能是你的帐号不允许从远程登陆，只能在localhost。这个时候只要在 localhost 的那台电脑，登入MySQL后，更改 “MySQL” 数据库里的 “user” 表里的 “Host” 项，从“localhost”改称“%”，%表示所有机器都允许。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt; use mysql  </div><div class="line"></div><div class="line">mysql&gt; update user set Host=&apos;%&apos; where User=&apos;root&apos;;</div></pre></td></tr></table></figure></p>
+<h2 id="2、授权权限"><a href="#2、授权权限" class="headerlink" title="2、授权权限"></a>2、授权权限</h2><p>允许任何主机使用“myuser”账号和“mypwd”密码连接到 MySQL 服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON *.* TO &apos;myuser&apos;@&apos;%&apos; IDENTIFIED BY &apos;mypwd&apos; WITH GRANT OPTION;</div></pre></td></tr></table></figure></p>
+<p>即可生效。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure></p>
+<p>只要完成以上两个步骤就可以远程访问mysql数据库了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/23/nginx配置HTTPS/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/23/nginx配置HTTPS/" itemprop="url">
+                  nginx配置HTTPS
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T21:01:11+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/23/nginx配置HTTPS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/23/nginx配置HTTPS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用ssl模块配置同时支持http和https并存</p>
+<p>一，生成证书</p>
+<h1 id="1、首先，进入你想创建证书和私钥的目录，例如："><a href="#1、首先，进入你想创建证书和私钥的目录，例如：" class="headerlink" title="1、首先，进入你想创建证书和私钥的目录，例如："></a>1、首先，进入你想创建证书和私钥的目录，例如：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /etc/nginx/</div></pre></td></tr></table></figure>
+<h1 id="2、创建服务器私钥，命令会让你输入一个口令："><a href="#2、创建服务器私钥，命令会让你输入一个口令：" class="headerlink" title="2、创建服务器私钥，命令会让你输入一个口令："></a>2、创建服务器私钥，命令会让你输入一个口令：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl genrsa -des3 -out server.key 1024</div></pre></td></tr></table></figure>
+<h1 id="3、创建签名请求的证书（CSR）："><a href="#3、创建签名请求的证书（CSR）：" class="headerlink" title="3、创建签名请求的证书（CSR）："></a>3、创建签名请求的证书（CSR）：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl req -new -key server.key -out server.csr</div></pre></td></tr></table></figure>
+<h1 id="4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令："><a href="#4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令：" class="headerlink" title="4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令："></a>4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp server.key server.key.org</div><div class="line">openssl rsa -in server.key.org -out server.key</div></pre></td></tr></table></figure>
+<h1 id="5、最后标记证书使用上述私钥和CSR："><a href="#5、最后标记证书使用上述私钥和CSR：" class="headerlink" title="5、最后标记证书使用上述私钥和CSR："></a>5、最后标记证书使用上述私钥和CSR：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</div></pre></td></tr></table></figure>
+<p>二，配置nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">cd /etc/nginx</div><div class="line">vim nginx.conf</div><div class="line">#</div><div class="line"># HTTPS server configuration</div><div class="line">#</div><div class="line">server &#123;</div><div class="line">    listen       443;</div><div class="line">    server_name  本机的IP地址;</div><div class="line"></div><div class="line">    ssl                  on;</div><div class="line">    ssl_certificate      /etc/nginx/server.crt;</div><div class="line">    ssl_certificate_key  /etc/nginx/server.key;</div><div class="line"></div><div class="line">    ssl_session_timeout  5m;</div><div class="line"></div><div class="line">#    ssl_protocols  SSLv2 SSLv3 TLSv1;</div><div class="line">#    ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;</div><div class="line">#    ssl_prefer_server_ciphers   on;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        #root   html;</div><div class="line">        #index  testssl.html index.html index.htm;</div><div class="line">     proxy_redirect off;</div><div class="line">     proxy_set_header Host $host;</div><div class="line">     proxy_set_header X-Real-IP $remote_addr;</div><div class="line">     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">     proxy_pass http://IP地址/ssl/;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重启nginx，在浏览器输入：<a href="https://IP地址" target="_blank" rel="external">https://IP地址</a> 会跳转到 <a href="http://IP地址/ssl/" target="_blank" rel="external">http://IP地址/ssl/</a> 这个地址（后期调整为webservice接口地址即可）</p>
+<p>三、受浏览器信任的StartSSL免费SSL证书：</p>
+<p>跟VeriSign一样，StartSSL（网址：<a href="http://www.startssl.com，公司名：StartCom）也是一家CA机构，" target="_blank" rel="external">http://www.startssl.com，公司名：StartCom）也是一家CA机构，</a></p>
+<p>它的根证书很 久之前就被一些具有开源背景的浏览器支持（Firefox浏览器、谷歌Chrome浏览器、苹果Safari浏览器等）。</p>
+<p>四、项目需要，将访问目录 \services\ 由http访问 重定向到 https （解决方法：nginx rewrite 加上 location 方式实现）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">location ~ /services/.*$ &#123;</div><div class="line">        if ($server_port ~ &quot;^80$&quot;)&#123;</div><div class="line">            set $rule_0 1$rule_0;</div><div class="line">        &#125;</div><div class="line">        if ($rule_0 = &quot;1&quot;)&#123;</div><div class="line">            rewrite /(.*) https://IP地址/$1 permanent;                       break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>五，配置结束上传以后用nginx -t 测试下配置无误 就reload一下nginx服务 检查443端口是否在监听<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -t</div><div class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok  </div><div class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful (显示表示配置文件没有错误)</div><div class="line"></div><div class="line">service nginx reload (重新加载nginx服务)  </div><div class="line">netstat -lan | grep 443 (查看443端口)  </div><div class="line">tcp 0 0 0.0.0.0:443 0.0.0.0:* LISTEN (有看到这一行 就表示HTTPS已经在工作了)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android-BottomNavigationBar底部导航控制器的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/Android-BottomNavigationBar底部导航控制器的使用/" itemprop="url">
+                  Android BottomNavigationBar底部导航控制器的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:48:04+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Android-BottomNavigationBar底部导航控制器的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android-BottomNavigationBar底部导航控制器的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转载请标明出处:<a href="http://blog.csdn.net/u010046908/article/details/50962081本文出自:【李东的博客】" target="_blank" rel="external">http://blog.csdn.net/u010046908/article/details/50962081本文出自:【李东的博客】</a></p>
+<p>最近Google在自己推出的Material design中增加了Bottom Navigation导航控制。Android一直没有官方的导航控制器，自己实现确实是五花八门，有了这个规定之后，就类似苹果的底部Toolbar，以后我们的APP就会有一致的风格，先看一张效果：</p>
+<p><img src="http://www.jcodecraeer.com/uploads/20160318/1458286306136380.png" alt="这里写图片描述"></p>
+<p>这是官方在Material design中给出一张图，确实很不错。</p>
+<h1 id="1-BottomNavigationBar的下载地址"><a href="#1-BottomNavigationBar的下载地址" class="headerlink" title="1.BottomNavigationBar的下载地址"></a>1.BottomNavigationBar的下载地址</h1><p><a href="https://github.com/Ashok-Varma/BottomNavigation" target="_blank" rel="external">https://github.com/Ashok-Varma/BottomNavigation</a></p>
+<h1 id="2-使用的方法"><a href="#2-使用的方法" class="headerlink" title="2.使用的方法"></a>2.使用的方法</h1><h2 id="2-1在Gradle中添加"><a href="#2-1在Gradle中添加" class="headerlink" title="2.1在Gradle中添加"></a>2.1在Gradle中添加</h2><p>compile ‘com.ashokvarma.android:bottom-navigation-bar:0.9.5’</p>
+<h2 id="2-2布局实现"><a href="#2-2布局实现" class="headerlink" title="2.2布局实现"></a>2.2布局实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;com.ashokvarma.bottomnavigation.BottomNavigationBar</div><div class="line">       android:layout_gravity=&quot;bottom&quot;</div><div class="line">       android:id=&quot;@+id/bottom_navigation_bar&quot;</div><div class="line">       android:layout_width=&quot;match_parent&quot;</div><div class="line">       android:layout_height=&quot;wrap_content&quot;/&gt;</div></pre></td></tr></table></figure>
+<h2 id="2-3类中Activity中添加BottomNavigationItem"><a href="#2-3类中Activity中添加BottomNavigationItem" class="headerlink" title="2.3类中Activity中添加BottomNavigationItem"></a>2.3类中Activity中添加BottomNavigationItem</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);</div><div class="line"></div><div class="line">bottomNavigationBar</div><div class="line">                .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, &quot;Home&quot;))</div><div class="line">                .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, &quot;Books&quot;))</div><div class="line">                .addItem(new BottomNavigationItem(R.drawable.ic_music_note_white_24dp, &quot;Music&quot;))</div><div class="line">                .addItem(new BottomNavigationItem(R.drawable.ic_tv_white_24dp, &quot;Movies &amp; TV&quot;))</div><div class="line">                .addItem(new BottomNavigationItem(R.drawable.ic_videogame_asset_white_24dp, &quot;Games&quot;))</div><div class="line">                .initialise();</div></pre></td></tr></table></figure>
+<h2 id="2-4设置事件监听器TabChangeListener"><a href="#2-4设置事件监听器TabChangeListener" class="headerlink" title="2.4设置事件监听器TabChangeListener"></a>2.4设置事件监听器TabChangeListener</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener()&#123;</div><div class="line">           @Override</div><div class="line">           public void onTabSelected(int position) &#123;</div><div class="line">           &#125;</div><div class="line">           @Override</div><div class="line">           public void onTabUnselected(int position) &#123;]</div><div class="line">           &#125;</div><div class="line">           @Override</div><div class="line">           public void onTabReselected(int position) &#123;</div><div class="line">           &#125;</div><div class="line">       &#125;);</div></pre></td></tr></table></figure>
+<h1 id="3-案例的实现"><a href="#3-案例的实现" class="headerlink" title="3.案例的实现"></a>3.案例的实现</h1><p>布局文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot; android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</div><div class="line">    tools:showIn=&quot;@layout/activity_navigation_view_demo&quot;</div><div class="line">    tools:context=&quot;com.lidong.demo.navigation_view.BottomNavigationBarDemoActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:id=&quot;@+id/tb&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">         android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:orientation=&quot;vertical&quot; /&gt;</div><div class="line">    &lt;com.ashokvarma.bottomnavigation.BottomNavigationBar</div><div class="line">        android:id=&quot;@+id/bottom_navigation_bar&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;/&gt;</div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>Activity的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.navigation_view;</div><div class="line"></div><div class="line">import android.app.FragmentManager;</div><div class="line">import android.app.FragmentTransaction;</div><div class="line">import android.os.Bundle;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.support.v7.widget.Toolbar;</div><div class="line">import android.util.Log;</div><div class="line"></div><div class="line">import com.ashokvarma.bottomnavigation.BottomNavigationBar;</div><div class="line">import com.ashokvarma.bottomnavigation.BottomNavigationItem;</div><div class="line">import com.lidong.demo.R;</div><div class="line"></div><div class="line">/**</div><div class="line"> * BottomNavigationBar实现</div><div class="line"> */</div><div class="line">public class BottomNavigationBarDemoActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener &#123;</div><div class="line"></div><div class="line">    private BottomNavigationBar bottomNavigationBar;</div><div class="line">    int lastSelectedPosition = 0;</div><div class="line">    private String TAG = BottomNavigationBarDemoActivity.class.getSimpleName();</div><div class="line">    private LocationFragment mLocationFragment;</div><div class="line">    private FindFragment mFindFragment;</div><div class="line">    private FavoritesFragment mFavoritesFragment;</div><div class="line">    private BookFragment mBookFragment;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_navigation_view_demo);</div><div class="line">        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</div><div class="line">        setSupportActionBar(toolbar);</div><div class="line">        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);</div><div class="line"></div><div class="line">        bottomNavigationBar</div><div class="line">                .addItem(new BottomNavigationItem(R.mipmap.ic_location_on_white_24dp, &quot;位置&quot;).setActiveColor(R.color.orange))</div><div class="line">                .addItem(new BottomNavigationItem(R.mipmap.ic_find_replace_white_24dp, &quot;发现&quot;).setActiveColor(R.color.blue))</div><div class="line">                .addItem(new BottomNavigationItem(R.mipmap.ic_favorite_white_24dp, &quot;爱好&quot;).setActiveColor(R.color.green))</div><div class="line">                .addItem(new BottomNavigationItem(R.mipmap.ic_book_white_24dp, &quot;图书&quot;).setActiveColor(R.color.blue))</div><div class="line">                .setFirstSelectedPosition(lastSelectedPosition )</div><div class="line">                .initialise();</div><div class="line"></div><div class="line">        bottomNavigationBar.setTabSelectedListener(this);</div><div class="line">        setDefaultFragment();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 设置默认的</div><div class="line">     */</div><div class="line">    private void setDefaultFragment() &#123;</div><div class="line">        FragmentManager fm = getFragmentManager();</div><div class="line">        FragmentTransaction transaction = fm.beginTransaction();</div><div class="line">        mLocationFragment = LocationFragment.newInstance(&quot;位置&quot;);</div><div class="line">        transaction.replace(R.id.tabs, mLocationFragment);</div><div class="line">        transaction.commit();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onTabSelected(int position) &#123;</div><div class="line">        Log.d(TAG, &quot;onTabSelected() called with: &quot; + &quot;position = [&quot; + position + &quot;]&quot;);</div><div class="line">        FragmentManager fm = this.getFragmentManager();</div><div class="line">        //开启事务</div><div class="line">        FragmentTransaction transaction = fm.beginTransaction();</div><div class="line">        switch (position) &#123;</div><div class="line">            case 0:</div><div class="line">                if (mLocationFragment == null) &#123;</div><div class="line">                    mLocationFragment = LocationFragment.newInstance(&quot;位置&quot;);</div><div class="line">                &#125;</div><div class="line">                transaction.replace(R.id.tb, mLocationFragment);</div><div class="line">                break;</div><div class="line">            case 1:</div><div class="line">                if (mFindFragment == null) &#123;</div><div class="line">                    mFindFragment = FindFragment.newInstance(&quot;发现&quot;);</div><div class="line">                &#125;</div><div class="line">                transaction.replace(R.id.tb, mFindFragment);</div><div class="line">                break;</div><div class="line">            case 2:</div><div class="line">                if (mFavoritesFragment == null) &#123;</div><div class="line">                    mFavoritesFragment = FavoritesFragment.newInstance(&quot;爱好&quot;);</div><div class="line">                &#125;</div><div class="line">                transaction.replace(R.id.tb, mFavoritesFragment);</div><div class="line">                break;</div><div class="line">            case 3:</div><div class="line">                if (mBookFragment == null) &#123;</div><div class="line">                    mBookFragment = BookFragment.newInstance(&quot;图书&quot;);</div><div class="line">                &#125;</div><div class="line">                transaction.replace(R.id.tb, mBookFragment);</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">        // 事务提交</div><div class="line">        transaction.commit();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onTabUnselected(int position) &#123;</div><div class="line">        Log.d(TAG, &quot;onTabUnselected() called with: &quot; + &quot;position = [&quot; + position + &quot;]&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onTabReselected(int position) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>fragment的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.navigation_view;</div><div class="line"></div><div class="line">import android.app.Fragment;</div><div class="line">import android.os.Bundle;</div><div class="line">import android.view.LayoutInflater;</div><div class="line">import android.view.View;</div><div class="line">import android.view.ViewGroup;</div><div class="line">import android.widget.TextView;</div><div class="line"></div><div class="line">import com.lidong.demo.R;</div><div class="line"></div><div class="line">public class LocationFragment extends Fragment &#123;</div><div class="line"></div><div class="line"></div><div class="line">    public static LocationFragment newInstance(String param1) &#123;</div><div class="line">        LocationFragment fragment = new LocationFragment();</div><div class="line">        Bundle args = new Bundle();</div><div class="line">        args.putString(&quot;agrs1&quot;, param1);</div><div class="line">        fragment.setArguments(args);</div><div class="line">        return fragment;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public LocationFragment() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container,</div><div class="line">                             Bundle savedInstanceState) &#123;</div><div class="line">        View view = inflater.inflate(R.layout.fragment_location, container, false);</div><div class="line">        Bundle bundle = getArguments();</div><div class="line">        String agrs1 = bundle.getString(&quot;agrs1&quot;);</div><div class="line">        TextView tv = (TextView)view.findViewById(R.id.tv_location);</div><div class="line">        tv.setText(agrs1);</div><div class="line">        return view;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码实现起来很简单，就加载布局，添加BottomNavigationItem，设置TabChangeListener就这三步搞定底部导航控制器。</p>
+<p><a href="https://github.com/lidong1665/AndroidRapidLibrary" target="_blank" rel="external">代码下载地址</a></p>
+<p>效果实现：<br><img src="http://img.blog.csdn.net/20160323115759760" alt="这里写图片描述">     <img src="http://img.blog.csdn.net/20160323115734260" alt="这里写图片描述"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android数据库新王者-Realm入门教程/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/14/Android数据库新王者-Realm入门教程/" itemprop="url">
+                  Android数据库新王者-Realm入门教程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:43:18+08:00">
+                2017-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/14/Android数据库新王者-Realm入门教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android数据库新王者-Realm入门教程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>好长时间没有写关于Android方面的学习文章了，今天给大家带来的是堪称是一个可以替代SQLite以及ORMlibraries的轻量级数据库—Realm移动端数据库。</p>
+<p>相比SQLite，Realm更快并且具有很多现代数据库的特性，比如支持JSON，流式api，数据变更通知，以及加密支持，这些都为安卓开发者带来了方便。</p>
+<p>Ream提供了五种编程方式的实现。分别是Java，Objective C，Swift，React-Native，tamarin。在这里我着重介绍在Android中的使用。后面也会介绍在Swift中得使用。</p>
+<h2 id="1-先介绍一下打开数据Realm数据库的工具：Realm-Browser可视化工具"><a href="#1-先介绍一下打开数据Realm数据库的工具：Realm-Browser可视化工具" class="headerlink" title="1.先介绍一下打开数据Realm数据库的工具：Realm Browser可视化工具"></a>1.先介绍一下打开数据Realm数据库的工具：Realm Browser可视化工具</h2><p>Realm资源包中包含了一个很有用的实用工具，可以帮助我们更好地管理Realm数据库，那就是Realm Browser。Realm Browser可以让您轻松地读写Realm数据库（以.realm结尾），因此我们无需头疼如何去查看Realm专有数据库的逻辑结构以及其中的数据，可视化的操作就如同SQLite的其他数据库查看工具一样，十分简单、易用（虽然Realm Browser的功能还十分简陋，真的只能读写而已）。</p>
+<p><img src="http://img.blog.csdn.net/20160610225221541" alt="这里写图片描述"></p>
+<h2 id="2-Realm支持的数据类型"><a href="#2-Realm支持的数据类型" class="headerlink" title="2.Realm支持的数据类型"></a>2.Realm支持的数据类型</h2><ul>
+<li>支持基本数据结构：boolean, byte, short, ìnt, long, float, double, String, Dateand byte[]</li>
+<li>支持JSON等复杂的数据类型<h2 id="3-Realm的官方名词"><a href="#3-Realm的官方名词" class="headerlink" title="3.Realm的官方名词"></a>3.Realm的官方名词</h2></li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20160610230041746" alt="这里写图片描述"></p>
+<ul>
+<li>Realm：Realm是框架的核心所在，是我们构建数据库的访问点,使用建造者模式构建对象。</li>
+<li>RealmObject：这是我们自定义的realm数据模型。创建数据模型的行为将会影响到数据库的结构。要创建一个数据模型，我们只需要继承RealmObject，然后设计我们想要存储的属性即可。</li>
+<li>RealmQuery（查询）：要在数据库中检索信息，我们需要用到“检索”操作。如果需要检索更复杂的数据，那么还可以使用复合查询以及结果排序等等操作。</li>
+<li>RealmResults：这个类是执行任何查询请求后所返回的类，其中包含了一系列的Object对象。和List类似，我们可以用下标语法来对其进行访问，并且还可以决定它们之间的关系。不仅如此，它还拥有许多更强大的功能，包括排序、查找等等操作。</li>
+</ul>
+<h2 id="4、Realm在Android中的使用"><a href="#4、Realm在Android中的使用" class="headerlink" title="4、Realm在Android中的使用"></a>4、Realm在Android中的使用</h2><h2 id="4-1在项目的build-grade中配置下载库文件"><a href="#4-1在项目的build-grade中配置下载库文件" class="headerlink" title="4.1在项目的build.grade中配置下载库文件"></a>4.1在项目的build.grade中配置下载库文件</h2><p>在本案例中我使用的最新版本的1.0.0版本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;realm-android&apos;</div><div class="line"></div><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">        maven &#123; url &apos;https://jitpack.io&apos; &#125;</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath &quot;io.realm:realm-gradle-plugin:1.0.0&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="4-2创建数据库，获取去Realm"><a href="#4-2创建数据库，获取去Realm" class="headerlink" title="4.2创建数据库，获取去Realm"></a>4.2创建数据库，获取去Realm</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line">import io.realm.RealmConfiguration;</div><div class="line">/**</div><div class="line">*</div><div class="line">*@className:RealmUtil</div><div class="line">*@desc:RealmUtil工具类</div><div class="line">*@author:lidong</div><div class="line">*@datetime:16/6/10 下午9:55</div><div class="line"></div><div class="line">*/</div><div class="line">public class RealmUtil &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    private static  RealmUtil sIntance;</div><div class="line">    public final Context mContext;</div><div class="line">    private String realmName = &quot;realm_demo.realm&quot;;</div><div class="line"></div><div class="line">    public RealmUtil(Context mContext) &#123;</div><div class="line">        this.mContext = mContext;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 双检索单例</div><div class="line">     * @param context</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public  static  RealmUtil getIntance(Context context)&#123;</div><div class="line"></div><div class="line">        if (sIntance == null) &#123;</div><div class="line">            synchronized (RealmUtil.class) &#123;</div><div class="line">                if (sIntance == null) &#123;</div><div class="line">                    sIntance = new RealmUtil(context);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return  sIntance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">   * 获取realm对象</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">     public  Realm getRealm()&#123;</div><div class="line">Realm realm =Realm.getInstancenew RealmConfiguration.Builder(mContext)                             .name(realmName) .build());</div><div class="line">        return  realm;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-3创建一个RealmObject"><a href="#4-3创建一个RealmObject" class="headerlink" title="4.3创建一个RealmObject"></a>4.3创建一个RealmObject</h2><p>只要继承了RealmObject类，任意JavaBean都能存储在Realm中。必须有一个默认构造器，成员变量有相应的getter/setter方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import io.realm.RealmObject;</div><div class="line">import io.realm.annotations.PrimaryKey;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Person</div><div class="line"> */</div><div class="line">public class Person extends RealmObject &#123;</div><div class="line">    @PrimaryKey</div><div class="line">    private String code;//编号</div><div class="line">    private String name;//姓名</div><div class="line">    private int age;//年龄</div><div class="line"></div><div class="line">    public Person() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Person(int age, String code, String name) &#123;</div><div class="line">        this.age = age;</div><div class="line">        this.code = code;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getCode() &#123;</div><div class="line">        return code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setCode(String code) &#123;</div><div class="line">        this.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(int age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Person&#123;&quot; +</div><div class="line">                &quot;code=&apos;&quot; + code + &apos;\&apos;&apos; +</div><div class="line">                &quot;, name=&apos;&quot; + name + &apos;\&apos;&apos; +</div><div class="line">                &quot;, age=&quot; + age +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-4对数据Person进行增删改查操作"><a href="#4-4对数据Person进行增删改查操作" class="headerlink" title="4.4对数据Person进行增删改查操作"></a>4.4对数据Person进行增删改查操作</h2><p>PersonDao.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by lidong on 16/6/9.</div><div class="line"> */</div><div class="line">public interface PersonDao &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 插入Person</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">   void insert(Person person)throws  Exception;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取所有的用户</div><div class="line">     * @return</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">   List&lt;Person&gt; getAllPerson()throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *  更新用户</div><div class="line">      * @throws Exception</div><div class="line">     */</div><div class="line">   Person  updatePerson(Person person)throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 删除用户</div><div class="line">     * @param code</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    void   deletePerson(String code)throws Exception;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 异步插入Person</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    void insertPersonAsync(Person person)throws  Exception;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PersonDaoImp.java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line"></div><div class="line">/**</div><div class="line">*</div><div class="line">*@className:PersonDaoImpl</div><div class="line">*@desc:</div><div class="line">*@author:lidong</div><div class="line">*@datetime:16/6/10 下午10:01</div><div class="line"></div><div class="line">*/</div><div class="line">public class PersonDaoImpl implements PersonDao &#123;</div><div class="line"></div><div class="line">    private Context context;</div><div class="line">    private Realm mRealm;</div><div class="line"></div><div class="line">    public PersonDaoImpl(Context context)&#123;</div><div class="line">        mRealm = RealmUtil.getIntance(context).getRealm();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * @同步插入用户</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void insert(Person person) throws Exception &#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealm(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取所有的用户</div><div class="line">     *</div><div class="line">     * @return</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public List&lt;Person&gt; getAllPerson() throws Exception &#123;</div><div class="line">        List&lt;Person&gt; mlist = null;</div><div class="line">        mlist =  mRealm.where(Person.class).findAll();</div><div class="line">        mRealm.close();</div><div class="line">        return mlist;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public Person updatePerson(Person person) throws Exception &#123;</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        Person person1 = mRealm.copyToRealmOrUpdate(person);</div><div class="line">        mRealm.commitTransaction();</div><div class="line">        mRealm.close();</div><div class="line">        return  person1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void deletePerson(String code) throws Exception &#123;</div><div class="line">        Person person = mRealm.where(Person.class).equalTo(&quot;code&quot;,code).findFirst();</div><div class="line">        mRealm.beginTransaction();</div><div class="line">        person.deleteFromRealm();</div><div class="line">        mRealm.commitTransaction();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 异步插入Person</div><div class="line">     *</div><div class="line">     * @param person</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public void insertPersonAsync(final Person person) throws Exception &#123;</div><div class="line">       //一个Realm只能在同一个线程中访问，在子线程中进行数据库操作必须重新获取Realm对象：</div><div class="line">        mRealm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">            @Override</div><div class="line">            public void execute(Realm realm) &#123;</div><div class="line">                realm.beginTransaction();</div><div class="line">                Person person1 = realm.copyToRealm(person);</div><div class="line">                realm.commitTransaction();</div><div class="line">                realm.close();//并且要记得在离开线程时要关闭 realm.close();  </div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        mRealm.close();//关闭Realm对象</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="4-5在Activity中简单调用"><a href="#4-5在Activity中简单调用" class="headerlink" title="4.5在Activity中简单调用"></a>4.5在Activity中简单调用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">package com.lidong.demo.realm;</div><div class="line"></div><div class="line">import android.os.Bundle;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.util.Log;</div><div class="line"></div><div class="line">import com.lidong.demo.R;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import io.realm.Realm;</div><div class="line"></div><div class="line">public class DemoRealmActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    static final String TAG = DemoRealmActivity.class.getSimpleName();</div><div class="line">    Realm  mRealm;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_demo_realm);</div><div class="line"></div><div class="line">//         mRealm= RealmUtil.getIntance(this).getRealm();</div><div class="line">//</div><div class="line">//</div><div class="line">//        mRealm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">//            @Override</div><div class="line">//            public void execute(Realm realm) &#123;</div><div class="line">//                Person person = realm.createObject(Person.class);</div><div class="line">//                person.setName(&quot;李东&quot;);</div><div class="line">//                person.setAge(24);</div><div class="line">//                person.setCode(UUID.randomUUID().toString());</div><div class="line">//            &#125;</div><div class="line">//        &#125;);</div><div class="line">        Person person = new Person();</div><div class="line">                person.setName(&quot;李东1&quot;);</div><div class="line">                person.setAge(28);</div><div class="line">                person.setCode(&quot;6e56d3aa-7119-429e-8c59-7ad8241e838d&quot;);</div><div class="line">        PersonDao dao = new PersonDaoImpl(this);</div><div class="line">//        try &#123;</div><div class="line">//            dao.insert(person);</div><div class="line">//        &#125; catch (Exception e) &#123;</div><div class="line">//            e.printStackTrace();</div><div class="line">//        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            dao.deletePerson(&quot;6e56d3aa-7119-429e-8c59-7ad8241e838d&quot;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            List&lt;Person&gt; persons = dao.getAllPerson();</div><div class="line">            Log.d(TAG, &quot;onCreate: &quot;+persons);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：Android中使用Realm数据库基本上就这几点步骤，这是个入门，更加复杂的操作，我在后面会慢慢的深入。</p>
+<p><a href="https://github.com/lidong1665/AndroidRapidLibrary/tree/master/Android-Rapid-Development-Of-Library/app/src/main/java/com/lidong/demo/realm" target="_blank" rel="external">代码地址</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -385,749 +967,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" itemprop="url">
-                  Android中WebView加载本地Html，与JavaScript与Android方法相互传值
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:40:40+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android中WebView加载本地Html，与JavaScript与Android方法相互传值/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在做项目中，要使用HightChart来实现心电图，于是，使用WebView加载本地html页面，但是数据是通过蓝牙设备采集的数据，用Java代码获取的数据，需要将数据传到JavaScript中去，使用来绘制心电图。以前都加载服务器端返回的url地址，使用WebView加载，这次不同了，要自己实现心电图的绘制。于是细细的学习了JavaScript与Java代码相互传值，最后总结在这里。</p>
-<p>为了让WebView中的JavaScript脚本调用Android方法，WebView提供了一套WebSettings工具类，该工具了提供了大量的方法来管理WebView的选项设置，其中setJavaScriptEnable(true),是让WebView中的JavaScript脚本来调用Android方法。<br>还有一个最重要的方法addJavaScriptInterface(Object obj,String name)方法，该方法负责把object对象暴漏成JavaScript中的name对象。</p>
-<h2 id="1-在WebView调用Android只需要三步"><a href="#1-在WebView调用Android只需要三步" class="headerlink" title="1.在WebView调用Android只需要三步"></a>1.在WebView调用Android只需要三步</h2><ol>
-<li>调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</li>
-<li>调用WebView关联的WebSettings中addJavaScriptInterface(Object obj,String name)。</li>
-<li>在JavaScript中通过暴露出来的name调用Android中的方法。</li>
-</ol>
-<h3 id="1-1首先创建一个Java类"><a href="#1-1首先创建一个Java类" class="headerlink" title="1.1首先创建一个Java类"></a>1.1首先创建一个Java类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class MyObject &#123;</div><div class="line">    private Context mContext;</div><div class="line">    private String data;</div><div class="line">    private String time;</div><div class="line">    public MyObject(Context c,String data,String time)&#123;</div><div class="line">        this.data = data;</div><div class="line">        this.time = time;</div><div class="line">        mContext = c;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取心电数据</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getData()&#123;</div><div class="line">         String[] dd = new String[0];</div><div class="line">        try &#123;</div><div class="line">            dd = data.substring(data.indexOf(&quot;Ъ&quot;)+2, data.length()-1).split(&quot;,&quot;);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return Arrays.toString(dd).toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取测量时间</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    @JavascriptInterface</div><div class="line">    public String getTime()&#123;</div><div class="line">        return time;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="1-2创建在Activity中加载HTML页面"><a href="#1-2创建在Activity中加载HTML页面" class="headerlink" title="1.2创建在Activity中加载HTML页面"></a>1.2创建在Activity中加载HTML页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">WebSettings wSet =wb .getSettings();</div><div class="line">        //调用WebView关联的WebSettings中setJavaScriptEnable(true)方法。</div><div class="line">       wSet.setJavaScriptEnabled(true);</div><div class="line">       //加载本地HTML页面</div><div class="line">       wb.loadUrl(&quot;file:///android_asset/xd.html&quot;);</div><div class="line">       if (mList != null &amp;&amp; mList.size()&gt;0) &#123;</div><div class="line">       调用WebView关联的WebSettings中addJavaScriptInterface(Object obj,String name)。</div><div class="line">           wb.addJavascriptInterface(new MyObject(getActivity(),  mList.get(0).getResult(),mList.get(0).getDateTime()),&quot;myObj&quot;);//这里的myObj是javaScript对象，直接调用getTime()方法，即 myObj.getTime();</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
-<h3 id="1-3创建xd-hmtl文件"><a href="#1-3创建xd-hmtl文件" class="headerlink" title="1.3创建xd.hmtl文件"></a>1.3创建xd.hmtl文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;</div><div class="line"></div><div class="line">    &lt;title&gt;心电&lt;/title&gt;</div><div class="line"></div><div class="line">    &lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;description&quot; content=&quot;This is my page&quot;&gt;</div><div class="line"></div><div class="line">    &lt;!--</div><div class="line">    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;</div><div class="line">    --&gt;</div><div class="line">    &lt;!--&lt;script src=&quot;http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;--&gt;</div><div class="line">    &lt;!--&lt;script src=&quot;http://cdn.hcharts.cn/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;--&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;file:///android_asset/js/jquery-1.8.3.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;file:///android_asset/js/highcharts.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">$(function()&#123;</div><div class="line">    var data = myObj.getData();</div><div class="line">    var time = myObj.getTime();</div><div class="line">    dataHighchartXdDt(data,time);</div><div class="line">   &#125;)</div><div class="line">      //心电</div><div class="line">	function dataHighchartXdDt(dtxd,t)&#123;</div><div class="line">		//以下是绘制心电的逻辑</div><div class="line">		//省略</div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line"></div><div class="line">    &lt;/script&gt;</div><div class="line">    &lt;style&gt;</div><div class="line"> </div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div class=&quot;middlecenter-left-data-top&quot; id=&quot;container&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var data = myObj.getData();</div><div class="line">var time = myObj.getTime();</div></pre></td></tr></table></figure>
-<p>以上第一个方法就是获取心电数据，第二个方法就是获取测量时间。</p>
-<h2 id="2-在Android调用JavaScript方法"><a href="#2-在Android调用JavaScript方法" class="headerlink" title="2.在Android调用JavaScript方法"></a>2.在Android调用JavaScript方法</h2><h3 id="2-1webView调用js的基本格式为"><a href="#2-1webView调用js的基本格式为" class="headerlink" title="2.1webView调用js的基本格式为"></a>2.1webView调用js的基本格式为</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webView.loadUrl(“javascript:methodName(parameterValues)”)</div></pre></td></tr></table></figure>
-<h3 id="2-2调用js无参无返回值函数"><a href="#2-2调用js无参无返回值函数" class="headerlink" title="2.2调用js无参无返回值函数"></a>2.2调用js无参无返回值函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:sayHello()&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
-<h3 id="2-3调用js有参无返回值函数"><a href="#2-3调用js有参无返回值函数" class="headerlink" title="2.3调用js有参无返回值函数"></a>2.3调用js有参无返回值函数</h3><p>注意对于字符串作为参数值需要进行转义双引号。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:alertMessage(&quot;&quot; + &quot;content&quot; + &quot;&quot;)&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
-<h3 id="2-4调用js有参数有返回值的函数"><a href="#2-4调用js有参数有返回值的函数" class="headerlink" title="2.4调用js有参数有返回值的函数"></a>2.4调用js有参数有返回值的函数</h3><p>Android在4.4之前并没有提供直接调用js函数并获取值的方法，所以在此之前，常用的思路是 java调用js方法，js方法执行完毕，再次调用java代码将值返回。</p>
-<h4 id="2-4-1-Java调用js代码"><a href="#2-4-1-Java调用js代码" class="headerlink" title="2.4.1.Java调用js代码"></a>2.4.1.Java调用js代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String call = &quot;javascript:sumToJava(1,2)&quot;;</div><div class="line">webView.loadUrl(call);</div></pre></td></tr></table></figure>
-<h4 id="2-4-2-js函数处理，并将结果通过调用java方法返回"><a href="#2-4-2-js函数处理，并将结果通过调用java方法返回" class="headerlink" title="2.4.2 js函数处理，并将结果通过调用java方法返回"></a>2.4.2 js函数处理，并将结果通过调用java方法返回</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function sumToJava(number1, number2)&#123;</div><div class="line">       window.control.onSumResult(number1 + number2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-4-3-Java在回调方法中获取js函数返回值"><a href="#2-4-3-Java在回调方法中获取js函数返回值" class="headerlink" title="2.4.3.Java在回调方法中获取js函数返回值"></a>2.4.3.Java在回调方法中获取js函数返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@JavascriptInterface</div><div class="line">public void onSumResult(int result) &#123;</div><div class="line">  Log.i(LOGTAG, &quot;onSumResult result=&quot; + result);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-5-java代码时用evaluateJavascript方法调用"><a href="#2-5-java代码时用evaluateJavascript方法调用" class="headerlink" title="2.5 java代码时用evaluateJavascript方法调用"></a>2.5 java代码时用evaluateJavascript方法调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function getGreetings() &#123;</div><div class="line">      return 1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">private void testevaluateJavascript(WebView webView) &#123;</div><div class="line">  webView.evaluateJavascript(&quot;getGreetings()&quot;, new ValueCallback&lt;String&gt;() &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void onReceiveValue(String value) &#123;</div><div class="line">      Log.i(LOGTAG, &quot;onReceiveValue value=&quot; + value);</div><div class="line">  &#125;&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>输出结果</p>
-<p>I/MainActivity( 1432): onReceiveValue value=1<br>注意</p>
-<p>上面限定了结果返回结果为String，对于简单的类型会尝试转换成字符串返回，对于复杂的数据类型，建议以字符串形式的json返回。<br>evaluateJavascript方法必须在UI线程（主线程）调用，因此onReceiveValue也执行在主线程。</p>
-<p>总结，JavaScript与Android方法相互传值，基本上就这么多了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/ES6中箭头函数的使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/ES6中箭头函数的使用/" itemprop="url">
-                  ES6中箭头函数的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:39:24+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/ES6中箭头函数的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/ES6中箭头函数的使用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>ES6允许使用“箭头”（=&gt;）定义函数。</p>
-<blockquote>
-<p>var f = v =&gt; v;</p>
-</blockquote>
-<p>上面的箭头函数等同于：</p>
-<blockquote>
-<p>var f = function(v) {<br>  return v;<br>};</p>
-</blockquote>
-<p>如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。</p>
-<blockquote>
-<p>var f = () =&gt; 5;<br>// 等同于<br>var f = function () { return 5 };</p>
-<p>var sum = (num1, num2) =&gt; num1 + num2;<br>// 等同于<br>var sum = function(num1, num2) {<br>  return num1 + num2;<br>};</p>
-</blockquote>
-<p>如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回。</p>
-<blockquote>
-<p>var sum = (num1, num2) =&gt; { return num1 + num2; }</p>
-</blockquote>
-<p>由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号。</p>
-<blockquote>
-<p>var getTempItem = id =&gt; ({ id: id, name: “Temp” });</p>
-</blockquote>
-<h2 id="箭头函数可以与变量解构结合使用。"><a href="#箭头函数可以与变量解构结合使用。" class="headerlink" title="箭头函数可以与变量解构结合使用。"></a>箭头函数可以与变量解构结合使用。</h2><blockquote>
-<p>const full = ({ first, last }) =&gt; first + ‘ ‘ + last;</p>
-<p>// 等同于<br>function full(person) {<br>  return person.first + ‘ ‘ + person.last;<br>}</p>
-<p>箭头函数使得表达更加简洁。</p>
-<p>const isEven = n =&gt; n % 2 == 0;<br>const square = n =&gt; n * n;</p>
-</blockquote>
-<p>上面代码只用了两行，就定义了两个简单的工具函数。如果不用箭头函数，可能就要占用多行，而且还不如现在这样写醒目。</p>
-<h2 id="箭头函数的一个用处是简化回调函数。"><a href="#箭头函数的一个用处是简化回调函数。" class="headerlink" title="箭头函数的一个用处是简化回调函数。"></a>箭头函数的一个用处是简化回调函数。</h2><blockquote>
-<p>// 正常函数写法<br>[1,2,3].map(function (x) {<br>  return x * x;<br>});</p>
-<p>// 箭头函数写法<br> [1,2,3].map(x =&gt; x * x);</p>
-</blockquote>
-<p>另一个例子是</p>
-<p>// 正常函数写法<br>var result = values.sort(function (a, b) {<br>  return a - b;<br>});</p>
-<p>// 箭头函数写法</p>
-<blockquote>
-<p>var result = values.sort((a, b) =&gt; a - b);</p>
-</blockquote>
-<p>下面是rest参数与箭头函数结合的例子。</p>
-<blockquote>
-<p>const numbers = (…nums) =&gt; nums;</p>
-<p>numbers(1, 2, 3, 4, 5)<br>// [1,2,3,4,5]</p>
-<p>const headAndTail = (head, …tail) =&gt; [head, tail];</p>
-<p>headAndTail(1, 2, 3, 4, 5)<br>// [1,[2,3,4,5]]</p>
-</blockquote>
-<h2 id="使用注意点"><a href="#使用注意点" class="headerlink" title="使用注意点"></a>使用注意点</h2><p>箭头函数有几个使用注意点。</p>
-<ul>
-<li><p>（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</p>
-</li>
-<li><p>（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</p>
-</li>
-<li><p>（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</p>
-</li>
-<li><p>（4）不可以使用yield命令，因此箭头函数不能用作Generator函数。</p>
-</li>
-</ul>
-<p>上面四点中，第一点尤其值得注意。this对象的指向是可变的，但是在箭头函数中，它是固定的。</p>
-<blockquote>
-<p>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘id:’, this.id);<br>  }, 100);<br>}</p>
-<p>var id = 21;</p>
-<p>foo.call({ id: 42 });<br>// id: 42</p>
-</blockquote>
-<p>上面代码中，setTimeout的参数是一个箭头函数，这个箭头函数的定义生效是在foo函数生成时，而它的真正执行要等到100毫秒后。如果是普通函数，执行时this应该指向全局对象window，这时应该输出21。但是，箭头函数导致this总是指向函数定义生效时所在的对象（本例是{id: 42}），所以输出的是42。</p>
-<p>箭头函数可以让setTimeout里面的this，绑定定义时所在的作用域，而不是指向运行时所在的作用域。下面是另一个例子。</p>
-<blockquote>
-<p>function Timer() {<br>  this.s1 = 0;<br>  this.s2 = 0;<br>  // 箭头函数<br>  setInterval(() =&gt; this.s1++, 1000);<br>  // 普通函数<br>  setInterval(function () {<br>    this.s2++;<br>  }, 1000);<br>}</p>
-<p>var timer = new Timer();</p>
-<p>setTimeout(() =&gt; console.log(‘s1: ‘, timer.s1), 3100);<br>setTimeout(() =&gt; console.log(‘s2: ‘, timer.s2), 3100);<br>// s1: 3<br>// s2: 0</p>
-</blockquote>
-<p>上面代码中，Timer函数内部设置了两个定时器，分别使用了箭头函数和普通函数。前者的this绑定定义时所在的作用域（即Timer函数），后者的this指向运行时所在的作用域（即全局对象）。所以，3100毫秒之后，timer.s1被更新了3次，而timer.s2一次都没更新。</p>
-<h2 id="箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。"><a href="#箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。" class="headerlink" title="箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。"></a>箭头函数可以让this指向固定化，这种特性很有利于封装回调函数。下面是一个例子，DOM事件的回调函数封装在一个对象里面。</h2><blockquote>
-<p>var handler = {<br>  id: ‘123456’,</p>
-<p>  init: function() {<br>    document.addEventListener(‘click’,<br>      event =&gt; this.doSomething(event.type), false);<br>  },</p>
-<p>  doSomething: function(type) {<br>    console.log(‘Handling ‘ + type  + ‘ for ‘ + this.id);<br>  }<br>};</p>
-<p>上面代码的init方法中，使用了箭头函数，这导致这个箭头函数里面的this，总是指向handler对象。否则，回调函数运行时，this.doSomething这一行会报错，因为此时this指向document对象。</p>
-</blockquote>
-<p>this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</p>
-<p>所以，箭头函数转成ES5的代码如下。</p>
-<blockquote>
-<p>// ES6<br>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘id:’, this.id);<br>  }, 100);<br>}</p>
-<p>// ES5<br>function foo() {<br>  var _this = this;</p>
-<p>  setTimeout(function () {<br>    console.log(‘id:’, _this.id);<br>  }, 100);<br>}</p>
-<p>上面代码中，转换后的ES5版本清楚地说明了，箭头函数里面根本没有自己的this，而是引用外层的this。</p>
-</blockquote>
-<p>请问下面的代码之中有几个this？</p>
-<blockquote>
-<p>function foo() {<br>  return () =&gt; {<br>    return () =&gt; {<br>      return () =&gt; {<br>        console.log(‘id:’, this.id);<br>      };<br>    };<br>  };<br>}</p>
-<p>var f = foo.call({id: 1});</p>
-<p>var t1 = f.call({id: 2})()(); // id: 1<br>var t2 = f().call({id: 3})(); // id: 1<br>var t3 = f()().call({id: 4}); // id: 1</p>
-</blockquote>
-<p>上面代码之中，只有一个this，就是函数foo的this，所以t1、t2、t3都输出同样的结果。因为所有的内层函数都是箭头函数，都没有自己的this，它们的this其实都是最外层foo函数的this。</p>
-<p>除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target。</p>
-<blockquote>
-<p>function foo() {<br>  setTimeout(() =&gt; {<br>    console.log(‘args:’, arguments);<br>  }, 100);<br>}</p>
-<p>foo(2, 4, 6, 8)<br>// args: [2, 4, 6, 8]</p>
-</blockquote>
-<p>上面代码中，箭头函数内部的变量arguments，其实是函数foo的arguments变量。</p>
-<p>另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。</p>
-<blockquote>
-<p>(function() {<br>  return [<br>    (() =&gt; this.x).bind({ x: ‘inner’ })()<br>  ];<br>}).call({ x: ‘outer’ });<br>// [‘outer’]</p>
-</blockquote>
-<p>上面代码中，箭头函数没有自己的this，所以bind方法无效，内部的this指向外部的this。</p>
-<p>长期以来，JavaScript语言的this对象一直是一个令人头痛的问题，在对象方法中使用this，必须非常小心。箭头函数”绑定”this，很大程度上解决了这个困扰。<br>嵌套的箭头函数</p>
-<h2 id="箭头函数内部，还可以再使用箭头函数。"><a href="#箭头函数内部，还可以再使用箭头函数。" class="headerlink" title="箭头函数内部，还可以再使用箭头函数。"></a>箭头函数内部，还可以再使用箭头函数。</h2><p>下面是一个ES5语法的多重嵌套函数。</p>
-<blockquote>
-<p>function insert(value) {<br>  return {into: function (array) {<br>    return {after: function (afterValue) {<br>      array.splice(array.indexOf(afterValue) + 1, 0, value);<br>      return array;<br>    }};<br>  }};<br>}</p>
-<p>insert(2).into([1, 3]).after(1); //[1, 2, 3]</p>
-</blockquote>
-<p>上面这个函数，可以使用箭头函数改写。</p>
-<blockquote>
-<p>let insert = (value) =&gt; ({into: (array) =&gt; ({after: (afterValue) =&gt; {<br>  array.splice(array.indexOf(afterValue) + 1, 0, value);<br>  return array;<br>}})});</p>
-</blockquote>
-<p>insert(2).into([1, 3]).after(1); //[1, 2, 3]</p>
-<p>下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。</p>
-<blockquote>
-<p>const pipeline = (…funcs) =&gt;<br>  val =&gt; funcs.reduce((a, b) =&gt; b(a), val);</p>
-<p>const plus1 = a =&gt; a + 1;<br>const mult2 = a =&gt; a * 2;<br>const addThenMult = pipeline(plus1, mult2);</p>
-<p>addThenMult(5)<br>// 12</p>
-</blockquote>
-<p>如果觉得上面的写法可读性比较差，也可以采用下面的写法。</p>
-<blockquote>
-<p>const plus1 = a =&gt; a + 1;<br>const mult2 = a =&gt; a * 2;</p>
-<p>mult2(plus1(5))<br>// 12</p>
-</blockquote>
-<h2 id="箭头函数还有一个功能，就是可以很方便地改写λ演算。"><a href="#箭头函数还有一个功能，就是可以很方便地改写λ演算。" class="headerlink" title="箭头函数还有一个功能，就是可以很方便地改写λ演算。"></a>箭头函数还有一个功能，就是可以很方便地改写λ演算。</h2><blockquote>
-<p>// λ演算的写法<br>fix = λf.(λx.f(λv.x(x)(v)))(λx.f(λv.x(x)(v)))</p>
-<p>// ES6的写法<br>var fix = f =&gt; (x =&gt; f(v =&gt; x(x)(v)))<br>               (x =&gt; f(v =&gt; x(x)(v)));</p>
-</blockquote>
-<p>上面两种写法，几乎是一一对应的。由于λ演算对于计算机科学非常重要，这使得我们可以用ES6作为替代工具，探索计算机科学。<br>函数绑定</p>
-<p>箭头函数可以绑定this对象，大大减少了显式绑定this对象的写法（call、apply、bind）。但是，箭头函数并不适用于所有场合，所以ES7提出了“函数绑定”（function bind）运算符，用来取代call、apply、bind调用。虽然该语法还是ES7的一个提案，但是Babel转码器已经支持。</p>
-<p>函数绑定运算符是并排的两个双冒号（::），双冒号左边是一个对象，右边是一个函数。该运算符会自动将左边的对象，作为上下文环境（即this对象），绑定到右边的函数上面。</p>
-<blockquote>
-<p>foo::bar;<br>// 等同于<br>bar.bind(foo);</p>
-<p>foo::bar(…arguments);<br>// 等同于<br>bar.apply(foo, arguments);</p>
-<p>const hasOwnProperty = Object.prototype.hasOwnProperty;<br>function hasOwn(obj, key) {<br>  return obj::hasOwnProperty(key);<br>}</p>
-</blockquote>
-<p>如果双冒号左边为空，右边是一个对象的方法，则等于将该方法绑定在该对象上面。</p>
-<blockquote>
-<p>var method = obj::obj.foo;<br>// 等同于<br>var method = ::obj.foo;</p>
-<p>let log = ::console.log;<br>// 等同于<br>var log = console.log.bind(console);</p>
-</blockquote>
-<p>由于双冒号运算符返回的还是原对象，因此可以采用链式写法。</p>
-<blockquote>
-<p>// 例一<br>import { map, takeWhile, forEach } from “iterlib”;</p>
-<p>getPlayers()<br>::map(x =&gt; x.character())<br>::takeWhile(x =&gt; x.strength &gt; 100)<br>::forEach(x =&gt; console.log(x));</p>
-<p>// 例二<br>let { find, html } = jake;</p>
-<p>document.querySelectorAll(“div.myClass”)<br>::find(“p”)<br>::html(“hahaha”);</p>
-</blockquote>
-<h2 id="尾调用优化"><a href="#尾调用优化" class="headerlink" title="尾调用优化"></a>尾调用优化</h2><p>什么是尾调用？</p>
-<p>尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。</p>
-<blockquote>
-<p>function f(x){<br>  return g(x);<br>}</p>
-</blockquote>
-<p>上面代码中，函数f的最后一步是调用函数g，这就叫尾调用。</p>
-<p>以下三种情况，都不属于尾调用。</p>
-<blockquote>
-<p>// 情况一<br>function f(x){<br>  let y = g(x);<br>  return y;<br>}</p>
-<p>// 情况二<br>function f(x){<br>  return g(x) + 1;<br>}</p>
-<p>// 情况三<br>function f(x){<br>  g(x);<br>}</p>
-</blockquote>
-<p>上面代码中，情况一是调用函数g之后，还有赋值操作，所以不属于尾调用，即使语义完全一样。情况二也属于调用后还有操作，即使写在一行内。情况三等同于下面的代码。</p>
-<blockquote>
-<p>function f(x){<br>  g(x);<br>  return undefined;<br>}</p>
-<p>尾调用不一定出现在函数尾部，只要是最后一步操作即可。</p>
-<p>function f(x) {<br>  if (x &gt; 0) {<br>    return m(x)<br>  }<br>  return n(x);<br>}</p>
-<p>上面代码中，函数m和n都属于尾调用，因为它们都是函数f的最后一步操作。<br>尾调用优化</p>
-</blockquote>
-<p>尾调用之所以与其他调用不同，就在于它的特殊的调用位置。</p>
-<p>我们知道，函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。</p>
-<p>尾调用由于是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为调用位置、内部变量等信息都不会再用到了，只要直接用内层函数的调用帧，取代外层函数的调用帧就可以了。</p>
-<blockquote>
-<p>function f() {<br>  let m = 1;<br>  let n = 2;<br>  return g(m + n);<br>}<br>f();</p>
-<p>// 等同于<br>function f() {<br>  return g(3);<br>}<br>f();</p>
-<p>// 等同于<br>g(3);</p>
-</blockquote>
-<p>上面代码中，如果函数g不是尾调用，函数f就需要保存内部变量m和n的值、g的调用位置等信息。但由于调用g之后，函数f就结束了，所以执行到最后一步，完全可以删除 f(x) 的调用帧，只保留 g(3) 的调用帧。</p>
-<p>这就叫做“尾调用优化”（Tail call optimization），即只保留内层函数的调用帧。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。这就是“尾调用优化”的意义。</p>
-<p>注意，只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”。</p>
-<blockquote>
-<p>function addOne(a){<br>  var one = 1;<br>  function inner(b){<br>    return b + one;<br>  }<br>  return inner(a);<br>}</p>
-</blockquote>
-<p>上面的函数不会进行尾调用优化，因为内层函数inner用到了外层函数addOne的内部变量one。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/Android应用开发中三种常见的图片压缩方法/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="url">
-                  Android应用开发中三种常见的图片压缩方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:38:25+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/Android应用开发中三种常见的图片压缩方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/Android应用开发中三种常见的图片压缩方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>   Android应用开发中三种常见的图片压缩方法，分别是：质量压缩法、比例压缩法（根据路径获取图片并压缩）和比例压缩法（根据Bitmap图片压缩）。</p>
-<h3 id="1、质量压缩法"><a href="#1、质量压缩法" class="headerlink" title="1、质量压缩法"></a>1、质量压缩法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private Bitmap compressImage(Bitmap image) &#123;</div><div class="line"> </div><div class="line">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中</div><div class="line">        int options = 100;</div><div class="line">        while ( baos.toByteArray().length / 1024&gt;100) &#123; //循环判断如果压缩后图片是否大于100kb,大于继续压缩</div><div class="line">            baos.reset();//重置baos即清空baos</div><div class="line">            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中</div><div class="line">            options -= 10;//每次都减少10</div><div class="line">        &#125;</div><div class="line">        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片</div><div class="line">        return bitmap;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"><a href="#2、图片按比例大小压缩方法（根据路径获取图片并压缩）" class="headerlink" title="2、图片按比例大小压缩方法（根据路径获取图片并压缩）"></a>2、图片按比例大小压缩方法（根据路径获取图片并压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private Bitmap getimage(String srcPath) &#123;</div><div class="line">        BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">        //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">        newOpts.inJustDecodeBounds = true;</div><div class="line">        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空</div><div class="line">         </div><div class="line">        newOpts.inJustDecodeBounds = false;</div><div class="line">        int w = newOpts.outWidth;</div><div class="line">        int h = newOpts.outHeight;</div><div class="line">        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">        float hh = 800f;//这里设置高度为800f</div><div class="line">        float ww = 480f;//这里设置宽度为480f</div><div class="line">        //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">        int be = 1;//be=1表示不缩放</div><div class="line">        if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outWidth / ww);</div><div class="line">        &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">            be = (int) (newOpts.outHeight / hh);</div><div class="line">        &#125;</div><div class="line">        if (be &lt;= 0)</div><div class="line">            be = 1;</div><div class="line">        newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">        //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);</div><div class="line">        return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"><a href="#3、图片按比例大小压缩方法（根据Bitmap图片压缩）" class="headerlink" title="3、图片按比例大小压缩方法（根据Bitmap图片压缩）"></a>3、图片按比例大小压缩方法（根据Bitmap图片压缩）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private Bitmap comp(Bitmap image) &#123;</div><div class="line">     </div><div class="line">    ByteArrayOutputStream baos = new ByteArrayOutputStream();</div><div class="line">    image.compress(Bitmap.CompressFormat.JPEG, 100, baos);</div><div class="line">    if( baos.toByteArray().length / 1024&gt;1024) &#123;//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出</div><div class="line">        baos.reset();//重置baos即清空baos</div><div class="line">        image.compress(Bitmap.CompressFormat.JPEG, 50, baos);//这里压缩50%，把压缩后的数据存放到baos中</div><div class="line">    &#125;</div><div class="line">    ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    BitmapFactory.Options newOpts = new BitmapFactory.Options();</div><div class="line">    //开始读入图片，此时把options.inJustDecodeBounds 设回true了</div><div class="line">    newOpts.inJustDecodeBounds = true;</div><div class="line">    Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    newOpts.inJustDecodeBounds = false;</div><div class="line">    int w = newOpts.outWidth;</div><div class="line">    int h = newOpts.outHeight;</div><div class="line">    //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为</div><div class="line">    float hh = 800f;//这里设置高度为800f</div><div class="line">    float ww = 480f;//这里设置宽度为480f</div><div class="line">    //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可</div><div class="line">    int be = 1;//be=1表示不缩放</div><div class="line">    if (w &gt; h &amp;&amp; w &gt; ww) &#123;//如果宽度大的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outWidth / ww);</div><div class="line">    &#125; else if (w &lt; h &amp;&amp; h &gt; hh) &#123;//如果高度高的话根据宽度固定大小缩放</div><div class="line">        be = (int) (newOpts.outHeight / hh);</div><div class="line">    &#125;</div><div class="line">    if (be &lt;= 0)</div><div class="line">        be = 1;</div><div class="line">    newOpts.inSampleSize = be;//设置缩放比例</div><div class="line">    //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了</div><div class="line">    isBm = new ByteArrayInputStream(baos.toByteArray());</div><div class="line">    bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);</div><div class="line">    return compressImage(bitmap);//压缩好比例大小后再进行质量压缩</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="李东">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="小东子的个人技术专栏">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/" itemprop="url">
-                  React-Native中navigator.pop()后如何更新前一个页面
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-14T18:37:13+08:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/React-Native中navigator-pop-后如何更新前一个页面/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1、问题提出"><a href="#1、问题提出" class="headerlink" title="1、问题提出"></a>1、问题提出</h2><p>   React-Native中navigator.pop()后如何更新前一个页面，这是一个最为常见得问题。</p>
-<h2 id="2、问题的描述"><a href="#2、问题的描述" class="headerlink" title="2、问题的描述"></a>2、问题的描述</h2><p>比如说，我们开发应用的时候，上传头像是一个最为常见的功能，我点击选择打开图库的按钮之后，push到图库的页面，我们在上传成功后，需要pop回到当前页面，并把图片路径传到当前页面。</p>
-<h2 id="3、React-Native中的解决办法"><a href="#3、React-Native中的解决办法" class="headerlink" title="3、React-Native中的解决办法"></a>3、React-Native中的解决办法</h2><p>这个问题对于一个有Android和ios开发经验的程序员首先想到的就是回调函数或者广播机制等。其实在React-Native中同样也可用回调函数来解决这个问题。本来想以android来举例实现，最后还是算了直接上React-Native吧。</p>
-<ol>
-<li>在A页面中实现一个声明一个函数refresView()</li>
-<li>在A页面push参数中增加一个回掉函数callBack(msg)</li>
-<li>在B页面pop时候调用callBack将值传回，更新界面</li>
-</ol>
-<h2 id="4-代码的实现"><a href="#4-代码的实现" class="headerlink" title="4.代码的实现"></a>4.代码的实现</h2><h3 id="4-A页面的实现"><a href="#4-A页面的实现" class="headerlink" title="4.A页面的实现"></a>4.A页面的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Sample React Native App</div><div class="line"> * https://github.com/facebook/react-native</div><div class="line"> * @flow</div><div class="line"> */</div><div class="line"></div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  Navigator,</div><div class="line">  ToastAndroid,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">import Button from &apos;./Button&apos;;</div><div class="line">import Test from &apos;./test&apos;;</div><div class="line">var _navigator;</div><div class="line"> var d;</div><div class="line">class Hello2 extends Component &#123;</div><div class="line"></div><div class="line">  constructor(props)&#123;</div><div class="line">     super(props);</div><div class="line">      d = this;</div><div class="line">      this.state = &#123;city:&apos;&apos;&#125;</div><div class="line">    //  this.refeshView = this.refeshView.bind(this);                      </div><div class="line">  &#125;</div><div class="line"></div><div class="line"> configureScene(route)&#123;</div><div class="line">      return Navigator.SceneConfigs.FadeAndroid;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    refeshView(msg)&#123;</div><div class="line">    console.log(&apos;刷新&apos;);</div><div class="line">    d.setState(&#123;&apos;city&apos;:msg&#125;);</div><div class="line">    console.log(&apos;end&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    renderScene(router, navigator)&#123;</div><div class="line">      console.log(d);</div><div class="line">      _navigator = navigator;</div><div class="line">      if(router.id === &apos;main&apos;)&#123;</div><div class="line">      return &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">      &lt;Button  onPress=&#123;() =&gt; &#123;</div><div class="line">               console.log(&apos;start&apos;);</div><div class="line">                _navigator.push(&#123;title:&apos;MainPage&apos;,id:&apos;page&apos;,callBack:(msg)=&gt;&#123;</div><div class="line">                 console.log(d);</div><div class="line">                 d.refeshView(msg);</div><div class="line">                 console.log(&apos;end&apos;);&#125;&#125;);     </div><div class="line">          &#125;&#125; text=&#123;&apos;打开&apos;&#125; style=&#123;styles.instructions&#125; disabled = &#123;false&#125;/&gt;</div><div class="line">     </div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">          &#123;d.state.city&#125;</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">         </div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          Press Cmd+R to reload,&#123;&apos;\n&apos;&#125;</div><div class="line">          Cmd+D or shake for dev menu</div><div class="line">        &lt;/Text&gt;</div><div class="line"></div><div class="line">        </div><div class="line">      &lt;/View&gt;</div><div class="line">      &#125;else if(router.id === &apos;page&apos;)&#123;</div><div class="line"></div><div class="line">        return (</div><div class="line">        &lt;Test navigator=&#123;navigator&#125; router=&#123;router&#125;/&gt;</div><div class="line">      );</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line"> &lt;Navigator</div><div class="line">                initialRoute=&#123;&#123; title: &apos;Main&apos;, id:&apos;main&apos;&#125;&#125;</div><div class="line">                configureScene=&#123;this.configureScene&#125;</div><div class="line">                renderScene=&#123;this.renderScene&#125; /&gt;</div><div class="line">      </div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent(&apos;Hello2&apos;, () =&gt; Hello2);</div></pre></td></tr></table></figure>
-<h2 id="4-2、B页面的实现"><a href="#4-2、B页面的实现" class="headerlink" title="4.2、B页面的实现"></a>4.2、B页面的实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">var _navigator;</div><div class="line">import Button from &apos;./Button&apos;;</div><div class="line">class Test extends Component &#123;</div><div class="line"></div><div class="line">render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;&#123;flex:1&#125;&#125;&gt;</div><div class="line"></div><div class="line">        &lt;Button  onPress=&#123;() =&gt; &#123;</div><div class="line">             console.log(this.props);</div><div class="line">             this.props.router.callBack(&apos;I am a Student&apos;);</div><div class="line">             this.props.navigator.pop();</div><div class="line">          &#125;&#125; text=&#123;&apos;返回&apos;&#125; style=&#123;styles.instructions&#125; disabled = &#123;false&#125;/&gt;</div><div class="line">     </div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#126798&apos;,</div><div class="line">    marginTop: 50,</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">module.exports = Test;</div></pre></td></tr></table></figure>
-<p>代码非常的简单，谢谢大家学习。</p>
-<h2 id="5、效果展示"><a href="#5、效果展示" class="headerlink" title="5、效果展示"></a>5、效果展示</h2><p><img src="http://img.blog.csdn.net/20160906212709417" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160906212729182" alt="这里写图片描述"></p>
-<p><img src="http://img.blog.csdn.net/20160906212748979" alt="这里写图片描述"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1170,7 +1014,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1181,7 +1025,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>

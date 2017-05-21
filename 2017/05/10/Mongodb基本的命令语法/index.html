@@ -1,0 +1,826 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mongodb," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、MONGODB基本命令用法成功启动MongoDB后，再打开一个命令行窗口输入mongo，就可以进行数据库的一些操作。
+输入help可以看到基本操作命令：
+show dbs:显示数据库列表show collections：显示当前数据库中的集合（类似关系数据库中的表）show users：显示用户
+use ：切换当前数据库，这和MS-SQL里面的意思一样db.help()：显示数据库操作命令，里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongodb基本的命令语法">
+<meta property="og:url" content="http://yoursite.com/2017/05/10/Mongodb基本的命令语法/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="一、MONGODB基本命令用法成功启动MongoDB后，再打开一个命令行窗口输入mongo，就可以进行数据库的一些操作。
+输入help可以看到基本操作命令：
+show dbs:显示数据库列表show collections：显示当前数据库中的集合（类似关系数据库中的表）show users：显示用户
+use ：切换当前数据库，这和MS-SQL里面的意思一样db.help()：显示数据库操作命令，里">
+<meta property="og:updated_time" content="2017-05-10T05:52:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongodb基本的命令语法">
+<meta name="twitter:description" content="一、MONGODB基本命令用法成功启动MongoDB后，再打开一个命令行窗口输入mongo，就可以进行数据库的一些操作。
+输入help可以看到基本操作命令：
+show dbs:显示数据库列表show collections：显示当前数据库中的集合（类似关系数据库中的表）show users：显示用户
+use ：切换当前数据库，这和MS-SQL里面的意思一样db.help()：显示数据库操作命令，里">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/10/Mongodb基本的命令语法/"/>
+
+
+
+
+
+  <title> Mongodb基本的命令语法 | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/Mongodb基本的命令语法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mongodb基本的命令语法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T13:50:01+08:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+ 
+         
+         <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">1,992(字)</span>
+           
+         </span>
+	  
+      <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">9(分)</span>
+           
+         </span>
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/10/Mongodb基本的命令语法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、MONGODB基本命令用法"><a href="#一、MONGODB基本命令用法" class="headerlink" title="一、MONGODB基本命令用法"></a>一、MONGODB基本命令用法</h2><p>成功启动MongoDB后，再打开一个命令行窗口输入mongo，就可以进行数据库的一些操作。</p>
+<p>输入help可以看到基本操作命令：</p>
+<p>show dbs:显示数据库列表<br>show collections：显示当前数据库中的集合（类似关系数据库中的表）<br>show users：显示用户</p>
+<p>use <db name="">：切换当前数据库，这和MS-SQL里面的意思一样<br>db.help()：显示数据库操作命令，里面有很多的命令<br>db.foo.help()：显示集合操作命令，同样有很多的命令，foo指的是当前数据库下，一个叫foo的集合，并非真正意义上的命令<br>db.foo.find()：对于当前数据库中的foo集合进行数据查找（由于没有条件，会列出所有数据）<br>db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，条件是数据中有一个属性叫a，且a的值为1</db></p>
+<p>MongoDB没有创建数据库的命令，但有类似的命令。</p>
+<p>如：如果你想创建一个“myTest”的数据库，先运行use myTest命令，之后就做一些操作（如：db.createCollection(‘user’)）,这样就可以创建一个名叫“myTest”的数据库。</p>
+<h2 id="二、数据库常用命令"><a href="#二、数据库常用命令" class="headerlink" title="二、数据库常用命令"></a>二、数据库常用命令</h2><h3 id="1、Help查看命令提示"><a href="#1、Help查看命令提示" class="headerlink" title="1、Help查看命令提示"></a>1、Help查看命令提示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">help</div><div class="line"></div><div class="line">  db.help();</div><div class="line"></div><div class="line">  db.yourColl.help();</div><div class="line"></div><div class="line">  db.youColl.find().help();</div><div class="line"></div><div class="line">  rs.help();</div></pre></td></tr></table></figure>
+<h3 id="2、切换-创建数据库"><a href="#2、切换-创建数据库" class="headerlink" title="2、切换/创建数据库"></a>2、切换/创建数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">use yourDB;</div></pre></td></tr></table></figure>
+<p> 当创建一个集合(table)的时候会自动创建当前数据库</p>
+<h3 id="3、查询所有数据库"><a href="#3、查询所有数据库" class="headerlink" title="3、查询所有数据库"></a>3、查询所有数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show dbs;</div></pre></td></tr></table></figure>
+<h3 id="4、删除当前使用数据库"><a href="#4、删除当前使用数据库" class="headerlink" title="4、删除当前使用数据库"></a>4、删除当前使用数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.dropDatabase();</div></pre></td></tr></table></figure>
+<h3 id="5、从指定主机上克隆数据库"><a href="#5、从指定主机上克隆数据库" class="headerlink" title="5、从指定主机上克隆数据库"></a>5、从指定主机上克隆数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.cloneDatabase(“127.0.0.1”); //将指定机器上的数据库的数据克隆到当前数据库</div></pre></td></tr></table></figure>
+<h3 id="6、从指定的机器上复制指定数据库数据到某个数据库"><a href="#6、从指定的机器上复制指定数据库数据到某个数据库" class="headerlink" title="6、从指定的机器上复制指定数据库数据到某个数据库"></a>6、从指定的机器上复制指定数据库数据到某个数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.copyDatabase(&quot;mydb&quot;, &quot;temp&quot;, &quot;127.0.0.1&quot;);//将本机的mydb的数据复制到temp数据库中</div></pre></td></tr></table></figure>
+<h3 id="7、修复当前数据库"><a href="#7、修复当前数据库" class="headerlink" title="7、修复当前数据库"></a>7、修复当前数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.repairDatabase();</div></pre></td></tr></table></figure>
+<h3 id="8、查看当前使用的数据库"><a href="#8、查看当前使用的数据库" class="headerlink" title="8、查看当前使用的数据库"></a>8、查看当前使用的数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.getName();</div></pre></td></tr></table></figure>
+<p> db; db和getName方法是一样的效果，都可以查询当前使用的数据库</p>
+<h3 id="9、显示当前db状态"><a href="#9、显示当前db状态" class="headerlink" title="9、显示当前db状态"></a>9、显示当前db状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.stats();</div></pre></td></tr></table></figure>
+<h3 id="10、当前db版本"><a href="#10、当前db版本" class="headerlink" title="10、当前db版本"></a>10、当前db版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.version();</div></pre></td></tr></table></figure>
+<h3 id="11、查看当前db的链接机器地址"><a href="#11、查看当前db的链接机器地址" class="headerlink" title="11、查看当前db的链接机器地址"></a>11、查看当前db的链接机器地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.getMongo();</div></pre></td></tr></table></figure>
+<h2 id="三、Collection聚集集合"><a href="#三、Collection聚集集合" class="headerlink" title="三、Collection聚集集合"></a>三、Collection聚集集合</h2><h3 id="1、创建一个聚集集合（table）"><a href="#1、创建一个聚集集合（table）" class="headerlink" title="1、创建一个聚集集合（table）"></a>1、创建一个聚集集合（table）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.createCollection(“collName”, &#123;size: 20, capped: 5, max: 100&#125;);</div></pre></td></tr></table></figure>
+<h3 id="2、得到指定名称的聚集集合（table）"><a href="#2、得到指定名称的聚集集合（table）" class="headerlink" title="2、得到指定名称的聚集集合（table）"></a>2、得到指定名称的聚集集合（table）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.getCollection(&quot;account&quot;);</div></pre></td></tr></table></figure>
+<h3 id="3、得到当前db的所有聚集集合"><a href="#3、得到当前db的所有聚集集合" class="headerlink" title="3、得到当前db的所有聚集集合"></a>3、得到当前db的所有聚集集合</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.getCollectionNames();</div></pre></td></tr></table></figure>
+<h3 id="4、显示当前db所有聚集索引的状态"><a href="#4、显示当前db所有聚集索引的状态" class="headerlink" title="4、显示当前db所有聚集索引的状态"></a>4、显示当前db所有聚集索引的状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.printCollectionStats();</div></pre></td></tr></table></figure>
+<h2 id="四、用户相关"><a href="#四、用户相关" class="headerlink" title="四、用户相关"></a>四、用户相关</h2><h3 id="1、添加一个用户"><a href="#1、添加一个用户" class="headerlink" title="1、添加一个用户"></a>1、添加一个用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db.addUser(&quot;name&quot;);</div><div class="line"></div><div class="line">db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true);</div></pre></td></tr></table></figure>
+<p> 添加用户、设置密码、是否只读</p>
+<h3 id="2、数据库认证、安全模式"><a href="#2、数据库认证、安全模式" class="headerlink" title="2、数据库认证、安全模式"></a>2、数据库认证、安全模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.auth(&quot;userName&quot;, &quot;123123&quot;);</div></pre></td></tr></table></figure>
+<h3 id="3、显示当前所有用户"><a href="#3、显示当前所有用户" class="headerlink" title="3、显示当前所有用户"></a>3、显示当前所有用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show users;</div></pre></td></tr></table></figure>
+<h3 id="4、删除用户"><a href="#4、删除用户" class="headerlink" title="4、删除用户"></a>4、删除用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.removeUser(&quot;userName&quot;);</div></pre></td></tr></table></figure>
+<h2 id="五-其他"><a href="#五-其他" class="headerlink" title="五.其他"></a>五.其他</h2><h3 id="1、查询之前的错误信息"><a href="#1、查询之前的错误信息" class="headerlink" title="1、查询之前的错误信息"></a>1、查询之前的错误信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.getPrevError();</div></pre></td></tr></table></figure>
+<h3 id="2、清除错误记录"><a href="#2、清除错误记录" class="headerlink" title="2、清除错误记录"></a>2、清除错误记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.resetError();</div></pre></td></tr></table></figure>
+<h2 id="六-查看聚集集合基本信息"><a href="#六-查看聚集集合基本信息" class="headerlink" title="六.查看聚集集合基本信息"></a>六.查看聚集集合基本信息</h2><h3 id="1、查看帮助"><a href="#1、查看帮助" class="headerlink" title="1、查看帮助"></a>1、查看帮助</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.yourColl.help();</div></pre></td></tr></table></figure>
+<h3 id="2、查询当前集合的数据条数"><a href="#2、查询当前集合的数据条数" class="headerlink" title="2、查询当前集合的数据条数"></a>2、查询当前集合的数据条数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.yourColl.count();</div></pre></td></tr></table></figure>
+<h3 id="3、查看数据空间大小"><a href="#3、查看数据空间大小" class="headerlink" title="3、查看数据空间大小"></a>3、查看数据空间大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.dataSize();</div></pre></td></tr></table></figure>
+<h3 id="4、得到当前聚集集合所在的数据库"><a href="#4、得到当前聚集集合所在的数据库" class="headerlink" title="4、得到当前聚集集合所在的数据库"></a>4、得到当前聚集集合所在的数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db db.userInfo.getDB();</div></pre></td></tr></table></figure>
+<h3 id="5、得到当前聚集的状态"><a href="#5、得到当前聚集的状态" class="headerlink" title="5、得到当前聚集的状态"></a>5、得到当前聚集的状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.stats();</div></pre></td></tr></table></figure>
+<h3 id="6、得到聚集集合总大小"><a href="#6、得到聚集集合总大小" class="headerlink" title="6、得到聚集集合总大小"></a>6、得到聚集集合总大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.totalSize();</div></pre></td></tr></table></figure>
+<h3 id="7、聚集集合储存空间大小"><a href="#7、聚集集合储存空间大小" class="headerlink" title="7、聚集集合储存空间大小"></a>7、聚集集合储存空间大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.storageSize();</div></pre></td></tr></table></figure>
+<h3 id="8、Shard版本信息"><a href="#8、Shard版本信息" class="headerlink" title="8、Shard版本信息"></a>8、Shard版本信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.getShardVersion()</div></pre></td></tr></table></figure>
+<h3 id="9、聚集集合重命名"><a href="#9、聚集集合重命名" class="headerlink" title="9、聚集集合重命名"></a>9、聚集集合重命名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.renameCollection(&quot;users&quot;);</div></pre></td></tr></table></figure>
+<p> 将userInfo重命名为users</p>
+<h3 id="10、删除当前聚集集合"><a href="#10、删除当前聚集集合" class="headerlink" title="10、删除当前聚集集合"></a>10、删除当前聚集集合</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.drop();</div></pre></td></tr></table></figure>
+<h2 id="七、聚集集合查询"><a href="#七、聚集集合查询" class="headerlink" title="七、聚集集合查询"></a>七、聚集集合查询</h2><h3 id="1、查询所有记录"><a href="#1、查询所有记录" class="headerlink" title="1、查询所有记录"></a>1、查询所有记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find();</div></pre></td></tr></table></figure>
+<p>相当于：select* from userInfo;</p>
+<p>默认每页显示20条记录，当显示不下的情况下，可以用it迭代命令查询下一页数据。注意：键入it命令不能带“；”</p>
+<p>但是你可以设置每页显示数据的大小，用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。</p>
+<h2 id="2、查询去掉后的当前聚集集合中的某列的重复数据"><a href="#2、查询去掉后的当前聚集集合中的某列的重复数据" class="headerlink" title="2、查询去掉后的当前聚集集合中的某列的重复数据"></a>2、查询去掉后的当前聚集集合中的某列的重复数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.distinct(&quot;name&quot;);</div></pre></td></tr></table></figure>
+<p>会过滤掉name中的相同数据</p>
+<p>相当于：select distict name from userInfo;</p>
+<h3 id="3、查询age-22的记录"><a href="#3、查询age-22的记录" class="headerlink" title="3、查询age = 22的记录"></a>3、查询age = 22的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;&quot;age&quot;: 22&#125;);</div></pre></td></tr></table></figure>
+<p>相当于： select * from userInfo where age = 22;</p>
+<h3 id="4、查询age-gt-22的记录"><a href="#4、查询age-gt-22的记录" class="headerlink" title="4、查询age &gt; 22的记录"></a>4、查询age &gt; 22的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$gt: 22&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where age &gt;22;</p>
+<h3 id="5、查询age-lt-22的记录"><a href="#5、查询age-lt-22的记录" class="headerlink" title="5、查询age &lt; 22的记录"></a>5、查询age &lt; 22的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$lt: 22&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where age &lt;22;</p>
+<h3 id="6、查询age-gt-25的记录"><a href="#6、查询age-gt-25的记录" class="headerlink" title="6、查询age &gt;= 25的记录"></a>6、查询age &gt;= 25的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$gte: 25&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where age &gt;= 25;</p>
+<h3 id="7、查询age-lt-25的记录"><a href="#7、查询age-lt-25的记录" class="headerlink" title="7、查询age &lt;= 25的记录"></a>7、查询age &lt;= 25的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$lte: 25&#125;&#125;);</div></pre></td></tr></table></figure>
+<h3 id="8、查询age-gt-23-并且-age-lt-26"><a href="#8、查询age-gt-23-并且-age-lt-26" class="headerlink" title="8、查询age &gt;= 23 并且 age &lt;= 26"></a>8、查询age &gt;= 23 并且 age &lt;= 26</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$gte: 23, $lte: 26&#125;&#125;);</div></pre></td></tr></table></figure>
+<h3 id="9、查询name中包含-mongo的数据"><a href="#9、查询name中包含-mongo的数据" class="headerlink" title="9、查询name中包含 mongo的数据"></a>9、查询name中包含 mongo的数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;name: /mongo/&#125;);</div></pre></td></tr></table></figure>
+<p>//相当于%%</p>
+<p>select * from userInfo where name like ‘%mongo%’;</p>
+<h3 id="10、查询name中以mongo开头的"><a href="#10、查询name中以mongo开头的" class="headerlink" title="10、查询name中以mongo开头的"></a>10、查询name中以mongo开头的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;name: /^mongo/&#125;);</div></pre></td></tr></table></figure>
+<p>select * from userInfo where name like ‘mongo%’;</p>
+<h3 id="11、查询指定列name、age数据"><a href="#11、查询指定列name、age数据" class="headerlink" title="11、查询指定列name、age数据"></a>11、查询指定列name、age数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;&#125;, &#123;name: 1, age: 1&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select name, age from userInfo;</p>
+<p>当然name也可以用true或false,当用ture的情况下河name:1效果一样，如果用false就是排除name，显示name以外的列信息。</p>
+<h3 id="12、查询指定列name、age数据-age-gt-25"><a href="#12、查询指定列name、age数据-age-gt-25" class="headerlink" title="12、查询指定列name、age数据, age &gt; 25"></a>12、查询指定列name、age数据, age &gt; 25</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$gt: 25&#125;&#125;, &#123;name: 1, age: 1&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select name, age from userInfo where age &gt;25;</p>
+<h3 id="13、按照年龄排序"><a href="#13、按照年龄排序" class="headerlink" title="13、按照年龄排序"></a>13、按照年龄排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">升序：db.userInfo.find().sort(&#123;age: 1&#125;);</div><div class="line"></div><div class="line">降序：db.userInfo.find().sort(&#123;age: -1&#125;);</div></pre></td></tr></table></figure>
+<h3 id="14、查询name-zhangsan-age-22的数据"><a href="#14、查询name-zhangsan-age-22的数据" class="headerlink" title="14、查询name = zhangsan, age = 22的数据"></a>14、查询name = zhangsan, age = 22的数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;name: &apos;zhangsan&apos;, age: 22&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where name = ‘zhangsan’ and age = ‘22’;</p>
+<h3 id="15、查询前5条数据"><a href="#15、查询前5条数据" class="headerlink" title="15、查询前5条数据"></a>15、查询前5条数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find().limit(5);</div></pre></td></tr></table></figure>
+<p>相当于：selecttop 5 * from userInfo;</p>
+<h3 id="16、查询10条以后的数据"><a href="#16、查询10条以后的数据" class="headerlink" title="16、查询10条以后的数据"></a>16、查询10条以后的数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find().skip(10);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where id not in (</p>
+<p>selecttop 10 * from userInfo</p>
+<p>);</p>
+<h3 id="17、查询在5-10之间的数据"><a href="#17、查询在5-10之间的数据" class="headerlink" title="17、查询在5-10之间的数据"></a>17、查询在5-10之间的数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find().limit(10).skip(5);</div></pre></td></tr></table></figure>
+<p>可用于分页，limit是pageSize，skip是第几页*pageSize</p>
+<h3 id="18、or与-查询"><a href="#18、or与-查询" class="headerlink" title="18、or与 查询"></a>18、or与 查询</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;$or: [&#123;age: 22&#125;, &#123;age: 25&#125;]&#125;);</div></pre></td></tr></table></figure>
+<p>相当于：select * from userInfo where age = 22 or age = 25;</p>
+<h3 id="19、查询第一条数据"><a href="#19、查询第一条数据" class="headerlink" title="19、查询第一条数据"></a>19、查询第一条数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.findOne();</div></pre></td></tr></table></figure>
+<p>相当于：selecttop 1 * from userInfo;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find().limit(1);</div></pre></td></tr></table></figure>
+<h3 id="20、查询某个结果集的记录条数"><a href="#20、查询某个结果集的记录条数" class="headerlink" title="20、查询某个结果集的记录条数"></a>20、查询某个结果集的记录条数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;age: &#123;$gte: 25&#125;&#125;).count();</div></pre></td></tr></table></figure>
+<p>相当于：select count(*) from userInfo where age &gt;= 20;</p>
+<p>如果要返回限制之后的记录数量，要使用count(true)或者count(非0) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.find().skip(10).limit(5).count(true);</div></pre></td></tr></table></figure>
+<h3 id="21、按照某列进行排序"><a href="#21、按照某列进行排序" class="headerlink" title="21、按照某列进行排序"></a>21、按照某列进行排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.find(&#123;sex: &#123;$exists: true&#125;&#125;).count();</div></pre></td></tr></table></figure>
+<p>相当于：select count(sex) from userInfo;</p>
+<h2 id="八-索引"><a href="#八-索引" class="headerlink" title="八.索引"></a>八.索引</h2><h3 id="1、创建索引"><a href="#1、创建索引" class="headerlink" title="1、创建索引"></a>1、创建索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db.userInfo.ensureIndex(&#123;name: 1&#125;);</div><div class="line"></div><div class="line">db.userInfo.ensureIndex(&#123;name: 1, ts: -1&#125;);</div></pre></td></tr></table></figure>
+<h3 id="2、查询当前聚集集合所有索引"><a href="#2、查询当前聚集集合所有索引" class="headerlink" title="2、查询当前聚集集合所有索引"></a>2、查询当前聚集集合所有索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.getIndexes();</div></pre></td></tr></table></figure>
+<h3 id="3、查看总索引记录大小"><a href="#3、查看总索引记录大小" class="headerlink" title="3、查看总索引记录大小"></a>3、查看总索引记录大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.userInfo.totalIndexSize();</div></pre></td></tr></table></figure>
+<h3 id="4、读取当前集合的所有index信息"><a href="#4、读取当前集合的所有index信息" class="headerlink" title="4、读取当前集合的所有index信息"></a>4、读取当前集合的所有index信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.reIndex();</div></pre></td></tr></table></figure>
+<h3 id="5、删除指定索引"><a href="#5、删除指定索引" class="headerlink" title="5、删除指定索引"></a>5、删除指定索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.dropIndex(&quot;name_1&quot;);</div></pre></td></tr></table></figure>
+<h3 id="6、删除所有索引索引"><a href="#6、删除所有索引索引" class="headerlink" title="6、删除所有索引索引"></a>6、删除所有索引索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.dropIndexes();</div></pre></td></tr></table></figure>
+<h2 id="9-修改、添加、删除集合数据"><a href="#9-修改、添加、删除集合数据" class="headerlink" title="9.修改、添加、删除集合数据"></a>9.修改、添加、删除集合数据</h2><h3 id="1、添加"><a href="#1、添加" class="headerlink" title="1、添加"></a>1、添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.save(&#123;name: ‘zhangsan’, age: 25, sex: true&#125;);</div></pre></td></tr></table></figure>
+<p>添加的数据的数据列，没有固定，根据添加的数据为准</p>
+<h3 id="2、修改"><a href="#2、修改" class="headerlink" title="2、修改"></a>2、修改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.collection.update(criteria, objNew, upsert, multi )</div></pre></td></tr></table></figure>
+<p>criteria:update的查询条件，类似sql update查询内where后面的</p>
+<p>objNew:update的对象和一些更新的操作符（如$,$inc…）等，也可以理解为sql update查询内set后面的。</p>
+<p>upsert : 如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。</p>
+<p>multi : mongodb默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.update(&#123;age: 25&#125;, &#123;$set: &#123;name: &apos;changeName&apos;&#125;&#125;, false, true);</div></pre></td></tr></table></figure>
+<p>相当于：update users set name = ‘changeName’ where age = 25;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.update(&#123;name: &apos;Lisi&apos;&#125;, &#123;$inc: &#123;age: 50&#125;&#125;, false, true);</div></pre></td></tr></table></figure>
+<p>相当于：update users set age = age + 50 where name = ‘Lisi’;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.update(&#123;name: &apos;Lisi&apos;&#125;, &#123;$inc: &#123;age: 50&#125;, $set: &#123;name: &apos;hoho&apos;&#125;&#125;, false, true);</div></pre></td></tr></table></figure>
+<p>相当于：update users set age = age + 50, name = ‘hoho’ where name = ‘Lisi’;</p>
+<h3 id="3、删除"><a href="#3、删除" class="headerlink" title="3、删除"></a>3、删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.users.remove(&#123;age: 132&#125;);</div></pre></td></tr></table></figure>
+<h3 id="4、查询修改删除"><a href="#4、查询修改删除" class="headerlink" title="4、查询修改删除"></a>4、查询修改删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">db.users.findAndModify(&#123;</div><div class="line"></div><div class="line">    query: &#123;age: &#123;$gte: 25&#125;&#125;,</div><div class="line"></div><div class="line">    sort: &#123;age: -1&#125;,</div><div class="line"></div><div class="line">    update: &#123;$set: &#123;name: &apos;a2&apos;&#125;, $inc: &#123;age: 2&#125;&#125;,</div><div class="line"></div><div class="line">    remove: true</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">db.runCommand(&#123; findandmodify : &quot;users&quot;,</div><div class="line"></div><div class="line">    query: &#123;age: &#123;$gte: 25&#125;&#125;,</div><div class="line"></div><div class="line">    sort: &#123;age: -1&#125;,</div><div class="line"></div><div class="line">    update: &#123;$set: &#123;name: &apos;a2&apos;&#125;, $inc: &#123;age: 2&#125;&#125;,</div><div class="line"></div><div class="line">    remove: true</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/Consul-简介、安装、常用命令的使用/" rel="next" title="Consul 简介、安装、常用命令的使用">
+                <i class="fa fa-chevron-left"></i> Consul 简介、安装、常用命令的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/10/centos7安装MYSQL5-7并配置/" rel="prev" title="centos7安装MYSQL5.7并配置">
+                centos7安装MYSQL5.7并配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、MONGODB基本命令用法"><span class="nav-number">1.</span> <span class="nav-text">一、MONGODB基本命令用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、数据库常用命令"><span class="nav-number">2.</span> <span class="nav-text">二、数据库常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Help查看命令提示"><span class="nav-number">2.1.</span> <span class="nav-text">1、Help查看命令提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、切换-创建数据库"><span class="nav-number">2.2.</span> <span class="nav-text">2、切换/创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、查询所有数据库"><span class="nav-number">2.3.</span> <span class="nav-text">3、查询所有数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、删除当前使用数据库"><span class="nav-number">2.4.</span> <span class="nav-text">4、删除当前使用数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、从指定主机上克隆数据库"><span class="nav-number">2.5.</span> <span class="nav-text">5、从指定主机上克隆数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、从指定的机器上复制指定数据库数据到某个数据库"><span class="nav-number">2.6.</span> <span class="nav-text">6、从指定的机器上复制指定数据库数据到某个数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、修复当前数据库"><span class="nav-number">2.7.</span> <span class="nav-text">7、修复当前数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、查看当前使用的数据库"><span class="nav-number">2.8.</span> <span class="nav-text">8、查看当前使用的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、显示当前db状态"><span class="nav-number">2.9.</span> <span class="nav-text">9、显示当前db状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、当前db版本"><span class="nav-number">2.10.</span> <span class="nav-text">10、当前db版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、查看当前db的链接机器地址"><span class="nav-number">2.11.</span> <span class="nav-text">11、查看当前db的链接机器地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Collection聚集集合"><span class="nav-number">3.</span> <span class="nav-text">三、Collection聚集集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建一个聚集集合（table）"><span class="nav-number">3.1.</span> <span class="nav-text">1、创建一个聚集集合（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、得到指定名称的聚集集合（table）"><span class="nav-number">3.2.</span> <span class="nav-text">2、得到指定名称的聚集集合（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、得到当前db的所有聚集集合"><span class="nav-number">3.3.</span> <span class="nav-text">3、得到当前db的所有聚集集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、显示当前db所有聚集索引的状态"><span class="nav-number">3.4.</span> <span class="nav-text">4、显示当前db所有聚集索引的状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、用户相关"><span class="nav-number">4.</span> <span class="nav-text">四、用户相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加一个用户"><span class="nav-number">4.1.</span> <span class="nav-text">1、添加一个用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据库认证、安全模式"><span class="nav-number">4.2.</span> <span class="nav-text">2、数据库认证、安全模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、显示当前所有用户"><span class="nav-number">4.3.</span> <span class="nav-text">3、显示当前所有用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、删除用户"><span class="nav-number">4.4.</span> <span class="nav-text">4、删除用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-其他"><span class="nav-number">5.</span> <span class="nav-text">五.其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、查询之前的错误信息"><span class="nav-number">5.1.</span> <span class="nav-text">1、查询之前的错误信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、清除错误记录"><span class="nav-number">5.2.</span> <span class="nav-text">2、清除错误记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-查看聚集集合基本信息"><span class="nav-number">6.</span> <span class="nav-text">六.查看聚集集合基本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、查看帮助"><span class="nav-number">6.1.</span> <span class="nav-text">1、查看帮助</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查询当前集合的数据条数"><span class="nav-number">6.2.</span> <span class="nav-text">2、查询当前集合的数据条数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、查看数据空间大小"><span class="nav-number">6.3.</span> <span class="nav-text">3、查看数据空间大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、得到当前聚集集合所在的数据库"><span class="nav-number">6.4.</span> <span class="nav-text">4、得到当前聚集集合所在的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、得到当前聚集的状态"><span class="nav-number">6.5.</span> <span class="nav-text">5、得到当前聚集的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、得到聚集集合总大小"><span class="nav-number">6.6.</span> <span class="nav-text">6、得到聚集集合总大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、聚集集合储存空间大小"><span class="nav-number">6.7.</span> <span class="nav-text">7、聚集集合储存空间大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、Shard版本信息"><span class="nav-number">6.8.</span> <span class="nav-text">8、Shard版本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、聚集集合重命名"><span class="nav-number">6.9.</span> <span class="nav-text">9、聚集集合重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、删除当前聚集集合"><span class="nav-number">6.10.</span> <span class="nav-text">10、删除当前聚集集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、聚集集合查询"><span class="nav-number">7.</span> <span class="nav-text">七、聚集集合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、查询所有记录"><span class="nav-number">7.1.</span> <span class="nav-text">1、查询所有记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、查询去掉后的当前聚集集合中的某列的重复数据"><span class="nav-number">8.</span> <span class="nav-text">2、查询去掉后的当前聚集集合中的某列的重复数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3、查询age-22的记录"><span class="nav-number">8.1.</span> <span class="nav-text">3、查询age = 22的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、查询age-gt-22的记录"><span class="nav-number">8.2.</span> <span class="nav-text">4、查询age > 22的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、查询age-lt-22的记录"><span class="nav-number">8.3.</span> <span class="nav-text">5、查询age < 22的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、查询age-gt-25的记录"><span class="nav-number">8.4.</span> <span class="nav-text">6、查询age >= 25的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、查询age-lt-25的记录"><span class="nav-number">8.5.</span> <span class="nav-text">7、查询age <= 25的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、查询age-gt-23-并且-age-lt-26"><span class="nav-number">8.6.</span> <span class="nav-text">8、查询age >= 23 并且 age <= 26</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、查询name中包含-mongo的数据"><span class="nav-number">8.7.</span> <span class="nav-text">9、查询name中包含 mongo的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、查询name中以mongo开头的"><span class="nav-number">8.8.</span> <span class="nav-text">10、查询name中以mongo开头的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、查询指定列name、age数据"><span class="nav-number">8.9.</span> <span class="nav-text">11、查询指定列name、age数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、查询指定列name、age数据-age-gt-25"><span class="nav-number">8.10.</span> <span class="nav-text">12、查询指定列name、age数据, age > 25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、按照年龄排序"><span class="nav-number">8.11.</span> <span class="nav-text">13、按照年龄排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、查询name-zhangsan-age-22的数据"><span class="nav-number">8.12.</span> <span class="nav-text">14、查询name = zhangsan, age = 22的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15、查询前5条数据"><span class="nav-number">8.13.</span> <span class="nav-text">15、查询前5条数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16、查询10条以后的数据"><span class="nav-number">8.14.</span> <span class="nav-text">16、查询10条以后的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17、查询在5-10之间的数据"><span class="nav-number">8.15.</span> <span class="nav-text">17、查询在5-10之间的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18、or与-查询"><span class="nav-number">8.16.</span> <span class="nav-text">18、or与 查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19、查询第一条数据"><span class="nav-number">8.17.</span> <span class="nav-text">19、查询第一条数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20、查询某个结果集的记录条数"><span class="nav-number">8.18.</span> <span class="nav-text">20、查询某个结果集的记录条数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21、按照某列进行排序"><span class="nav-number">8.19.</span> <span class="nav-text">21、按照某列进行排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八-索引"><span class="nav-number">9.</span> <span class="nav-text">八.索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建索引"><span class="nav-number">9.1.</span> <span class="nav-text">1、创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查询当前聚集集合所有索引"><span class="nav-number">9.2.</span> <span class="nav-text">2、查询当前聚集集合所有索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、查看总索引记录大小"><span class="nav-number">9.3.</span> <span class="nav-text">3、查看总索引记录大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、读取当前集合的所有index信息"><span class="nav-number">9.4.</span> <span class="nav-text">4、读取当前集合的所有index信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、删除指定索引"><span class="nav-number">9.5.</span> <span class="nav-text">5、删除指定索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、删除所有索引索引"><span class="nav-number">9.6.</span> <span class="nav-text">6、删除所有索引索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-修改、添加、删除集合数据"><span class="nav-number">10.</span> <span class="nav-text">9.修改、添加、删除集合数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加"><span class="nav-number">10.1.</span> <span class="nav-text">1、添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、修改"><span class="nav-number">10.2.</span> <span class="nav-text">2、修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、删除"><span class="nav-number">10.3.</span> <span class="nav-text">3、删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、查询修改删除"><span class="nav-number">10.4.</span> <span class="nav-text">4、查询修改删除</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "95b2cee436ec4d489b6e0797b46a68d2",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

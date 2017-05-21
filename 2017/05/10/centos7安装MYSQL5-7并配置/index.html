@@ -1,0 +1,749 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="安装环境：CentOS7 64位 MINI版，安装MySQL5.7
+1、配置YUM源在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/
+下载mysql源安装包1shell&amp;gt; wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7安装MYSQL5.7并配置">
+<meta property="og:url" content="http://yoursite.com/2017/05/10/centos7安装MYSQL5-7并配置/index.html">
+<meta property="og:site_name" content="小东子的个人技术专栏">
+<meta property="og:description" content="安装环境：CentOS7 64位 MINI版，安装MySQL5.7
+1、配置YUM源在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/
+下载mysql源安装包1shell&amp;gt; wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm">
+<meta property="og:updated_time" content="2017-05-10T08:12:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7安装MYSQL5.7并配置">
+<meta name="twitter:description" content="安装环境：CentOS7 64位 MINI版，安装MySQL5.7
+1、配置YUM源在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/
+下载mysql源安装包1shell&amp;gt; wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/10/centos7安装MYSQL5-7并配置/"/>
+
+
+
+
+
+  <title> centos7安装MYSQL5.7并配置 | 小东子的个人技术专栏 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?626475154d06e56c249dfd85a364e659";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=60380052";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小东子的个人技术专栏</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">重点关注Android、Java、智能硬件、JavaEE、react-native，Swift，微信小程序</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/centos7安装MYSQL5-7并配置/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="李东">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://avatar.csdn.net/E/A/D/1_u010046908.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小东子的个人技术专栏">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小东子的个人技术专栏" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                centos7安装MYSQL5.7并配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T13:56:15+08:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+ 
+         
+         <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">847(字)</span>
+           
+         </span>
+	  
+      <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">4(分)</span>
+           
+         </span>
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/10/centos7安装MYSQL5-7并配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>安装环境：CentOS7 64位 MINI版，安装MySQL5.7</p>
+<h2 id="1、配置YUM源"><a href="#1、配置YUM源" class="headerlink" title="1、配置YUM源"></a>1、配置YUM源</h2><p>在MySQL官网中下载YUM源rpm安装包：<a href="http://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="external">http://dev.mysql.com/downloads/repo/yum/</a></p>
+<h3 id="下载mysql源安装包"><a href="#下载mysql源安装包" class="headerlink" title="下载mysql源安装包"></a>下载mysql源安装包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shell&gt; wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm</div></pre></td></tr></table></figure>
+<h3 id="安装mysql源"><a href="#安装mysql源" class="headerlink" title="安装mysql源"></a>安装mysql源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shell&gt; yum localinstall mysql57-community-release-el7-8.noarch.rpm</div></pre></td></tr></table></figure>
+<p>检查mysql源是否安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shell&gt; yum repolist enabled | grep &quot;mysql.*-community.*&quot;</div></pre></td></tr></table></figure>
+<p>看到上图所示表示安装成功</p>
+<h2 id="2、安装MySQL"><a href="#2、安装MySQL" class="headerlink" title="2、安装MySQL"></a>2、安装MySQL</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shell&gt; yum install mysql-community-server</div></pre></td></tr></table></figure>
+<h2 id="3、启动MySQL服务"><a href="#3、启动MySQL服务" class="headerlink" title="3、启动MySQL服务"></a>3、启动MySQL服务</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shell&gt; systemctl start mysqld</div></pre></td></tr></table></figure>
+<p>查看MySQL的启动状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">shell&gt; systemctl status mysqld</div><div class="line">● mysqld.service - MySQL Server</div><div class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; disabled; vendor preset: disabled)</div><div class="line">   Active: active (running) since 五 2016-06-24 04:37:37 CST; 35min ago</div><div class="line"> Main PID: 2888 (mysqld)</div><div class="line">   CGroup: /system.slice/mysqld.service</div><div class="line">           └─2888 /usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid</div><div class="line"></div><div class="line">6月 24 04:37:36 localhost.localdomain systemd[1]: Starting MySQL Server...</div><div class="line">6月 24 04:37:37 localhost.localdomain systemd[1]: Started MySQL Server.</div></pre></td></tr></table></figure>
+<h2 id="4、开机启动"><a href="#4、开机启动" class="headerlink" title="4、开机启动"></a>4、开机启动</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">shell&gt; systemctl enable mysqld</div><div class="line">shell&gt; systemctl daemon-reload</div></pre></td></tr></table></figure>
+<h2 id="5、修改root默认密码"><a href="#5、修改root默认密码" class="headerlink" title="5、修改root默认密码"></a>5、修改root默认密码</h2><p>mysql安装完成之后，在/var/log/mysqld.log文件中给root生成了一个默认密码。通过下面的方式找到root默认密码，然后登录mysql进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">shell&gt; grep &apos;temporary password&apos; /var/log/mysqld.log</div><div class="line">shell&gt; mysql -uroot -p</div><div class="line">mysql&gt; ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;MyNewPass4!&apos;;</div></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; set password for &apos;root&apos;@&apos;localhost&apos;=password(&apos;MyNewPass4!&apos;);</div></pre></td></tr></table></figure>
+<p>注意：mysql5.7默认安装了密码安全检查插件（validate_password），默认密码检查策略要求密码必须包含：大小写字母、数字和特殊符号，并且长度不能少于8位。否则会提示ERROR 1819 (HY000): Your password does not satisfy the current policy requirements错误，如下图所示： 通过msyql环境变量可以查看密码策略的相关信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like &apos;%password%&apos;;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">validate_password_policy：密码策略，默认为MEDIUM策略</div><div class="line">validate_password_dictionary_file：密码策略文件，策略为STRONG才需要  </div><div class="line">validate_password_length：密码最少长度</div><div class="line"></div><div class="line">validate_password_mixed_case_count：大小写字符长度，至少1个  </div><div class="line"></div><div class="line">validate_password_number_count ：数字至少1个</div><div class="line">validate_password_special_char_count：特殊字符至少1个</div></pre></td></tr></table></figure>
+<p>上述参数是默认策略MEDIUM的密码检查规则。</p>
+<p>共有以下几种密码策略：</p>
+<p>策略 检查规则 0 or LOW Length 1 or MEDIUM Length; numeric, lowercase/uppercase, and special characters 2 or STRONG Length; numeric, lowercase/uppercase, and special characters; dictionary file MySQL官网密码策略详细说明：<a href="http://dev.mysql.com/doc/refman/5.7/en/validate-password-options-variables.html#sysvar_validate_password_policy" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.7/en/validate-password-options-variables.html#sysvar_validate_password_policy</a></p>
+<p>修改密码策略</p>
+<p>在/etc/my.cnf文件添加validate_password_policy配置，指定密码策略</p>
+<h1 id="选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件"><a href="#选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件" class="headerlink" title="选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件"></a>选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件</h1><p>validate_password_policy=0 如果不需要密码策略，添加my.cnf文件中添加如下配置禁用即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">validate_password = off</div></pre></td></tr></table></figure>
+<p>重新启动mysql服务使配置生效：</p>
+<p>systemctl restart mysqld</p>
+<h2 id="6、添加远程登录用户"><a href="#6、添加远程登录用户" class="headerlink" title="6、添加远程登录用户"></a>6、添加远程登录用户</h2><hr>
+<p>默认只允许root帐户在本地登录，如果要在其它机器上连接mysql，必须修改root允许远程连接，或者添加一个允许远程连接的帐户，为了安全起见，我添加一个新的帐户：</p>
+<p>mysql&gt; GRANT ALL PRIVILEGES ON <em>.</em> TO ‘yangxin’@’%’ IDENTIFIED BY ‘Yangxin0917!’ WITH GRANT OPTION;</p>
+<h2 id="7、配置默认编码为utf8"><a href="#7、配置默认编码为utf8" class="headerlink" title="7、配置默认编码为utf8"></a>7、配置默认编码为utf8</h2><hr>
+<p>修改/etc/my.cnf配置文件，在[mysqld]下添加编码配置，如下所示：</p>
+<p>[mysqld] character_set_server=utf8 init_connect=’SET NAMES utf8’ 重新启动mysql服务，查看数据库默认编码如下所示：</p>
+<p>默认配置文件路径： 配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log 服务启动脚本：/usr/lib/systemd/system/mysqld.service socket文件：/var/run/mysqld/mysqld.pid</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/10/Mongodb基本的命令语法/" rel="next" title="Mongodb基本的命令语法">
+                <i class="fa fa-chevron-left"></i> Mongodb基本的命令语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/10/centos7安装zookeeper并配置集群/" rel="prev" title="centos7安装zookeeper并配置集群">
+                centos7安装zookeeper并配置集群 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://avatar.csdn.net/E/A/D/1_u010046908.jpg"
+               alt="李东" />
+          <p class="site-author-name" itemprop="name">李东</p>
+          <p class="site-description motion-element" itemprop="description">细节决定成败，点滴铸就辉煌</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、配置YUM源"><span class="nav-number">1.</span> <span class="nav-text">1、配置YUM源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载mysql源安装包"><span class="nav-number">1.1.</span> <span class="nav-text">下载mysql源安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql源"><span class="nav-number">1.2.</span> <span class="nav-text">安装mysql源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装MySQL"><span class="nav-number">2.</span> <span class="nav-text">2、安装MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、启动MySQL服务"><span class="nav-number">3.</span> <span class="nav-text">3、启动MySQL服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、开机启动"><span class="nav-number">4.</span> <span class="nav-text">4、开机启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、修改root默认密码"><span class="nav-number">5.</span> <span class="nav-text">5、修改root默认密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件"><span class="nav-number"></span> <span class="nav-text">选择0（LOW），1（MEDIUM），2（STRONG）其中一种，选择2需要提供密码字典文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6、添加远程登录用户"><span class="nav-number">1.</span> <span class="nav-text">6、添加远程登录用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、配置默认编码为utf8"><span class="nav-number">2.</span> <span class="nav-text">7、配置默认编码为utf8</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李东</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "95b2cee436ec4d489b6e0797b46a68d2",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

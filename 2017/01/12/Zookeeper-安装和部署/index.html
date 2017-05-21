@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-CN">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -119,12 +119,12 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"right","display":"post"},
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -147,7 +147,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
   <title> Zookeeper 安装和部署 | 小东子的个人技术专栏 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -184,7 +184,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -223,7 +223,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            首页
           </a>
         </li>
       
@@ -233,7 +233,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            归档
           </a>
         </li>
       
@@ -243,7 +243,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -313,7 +313,7 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">发表于</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-12T12:40:47+08:00">
                 2017-01-12
@@ -326,7 +326,27 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
           </span>
 
           
-
+ 
+         
+         <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">2,545(字)</span>
+           
+         </span>
+	  
+      <span class="post-time">
+	   &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">10(分)</span>
+           
+         </span>
           
             
               <span class="post-comments-count">
@@ -334,8 +354,8 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/01/12/Zookeeper-安装和部署/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/Zookeeper-安装和部署/" itemprop="commentCount"></span>
+                <a class="cloud-tie-join-count" href="/2017/01/12/Zookeeper-安装和部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -467,25 +487,6 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/01/12/Zookeeper-安装和部署/"
-     data-title="Zookeeper 安装和部署"
-     data-content=""
-     data-url="http://yoursite.com/2017/01/12/Zookeeper-安装和部署/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
   </div>
 
@@ -493,16 +494,11 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
           </div>
           
 
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
-
 
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/12/Zookeeper-安装和部署/"
-           data-title="Zookeeper 安装和部署" data-url="http://yoursite.com/2017/01/12/Zookeeper-安装和部署/">
-      </div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -527,10 +523,10 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            站点概览
           </li>
         </ul>
       
@@ -548,8 +544,8 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">文章</span>
               </a>
             </div>
           
@@ -559,8 +555,8 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -624,11 +620,11 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>
@@ -720,35 +716,31 @@ ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易�
 
   
 
-  
-    
+
+
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"lidong1665"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+
+
+
+	
+
+
+
+
 
   
     
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "95b2cee436ec4d489b6e0797b46a68d2",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
   
-
-
-
-
-
-
 
 
 
